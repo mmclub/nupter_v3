@@ -7,7 +7,7 @@ import org.nupter.nupter.utils.Weather;
 
 
 /**
- * Ö÷½çÃæActivity
+ * ä¸»ç•Œé¢Activity
  */
 
 public class MainActivity extends Activity {
