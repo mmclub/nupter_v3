@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
-  Ğ£Ô°ĞÂÎÅÖ÷½çÃæ
+  æ ¡å›­æ–°é—»æ¿å—ä¸»ç•Œé¢
  */
 public class NewsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
