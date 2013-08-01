@@ -3,6 +3,7 @@ package org.nupter.nupter.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.Weather;
 
 
 /**
