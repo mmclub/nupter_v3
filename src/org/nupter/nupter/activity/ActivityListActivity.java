@@ -20,7 +20,7 @@ public class ActivityListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_activity);
 
-        ListView mListView = (ListView)findViewById(R.id.listView);
+        ListView mListView = (ListView) findViewById(R.id.listView);
         // 添加ListItem，设置事件响应
         mListView.setAdapter(new DemoListAdapter());
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -34,14 +34,14 @@ public class ActivityListActivity extends Activity {
 
 
     private static final ActivityInfo[] demos = {
-               new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
-               new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
+            new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
+            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
+            new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
+
     };
 
 
-
-
-    private  class DemoListAdapter extends BaseAdapter {
+    private class DemoListAdapter extends BaseAdapter {
         public DemoListAdapter() {
             super();
         }
@@ -49,10 +49,10 @@ public class ActivityListActivity extends Activity {
         @Override
         public View getView(int index, View convertView, ViewGroup parent) {
             convertView = View.inflate(ActivityListActivity.this, R.layout.item_activty_info, null);
-            TextView title = (TextView)convertView.findViewById(R.id.title);
-            TextView desc = (TextView)convertView.findViewById(R.id.desc);
-            if ( demos[index].demoClass == MainActivity.class
-                    ){
+            TextView title = (TextView) convertView.findViewById(R.id.title);
+            TextView desc = (TextView) convertView.findViewById(R.id.desc);
+            if (demos[index].demoClass == MainActivity.class
+                    ) {
                 title.setTextColor(Color.YELLOW);
                 desc.setTextColor(Color.YELLOW);
             }
@@ -60,13 +60,15 @@ public class ActivityListActivity extends Activity {
             desc.setText(demos[index].desc);
             return convertView;
         }
+
         @Override
         public int getCount() {
             return demos.length;
         }
+
         @Override
         public Object getItem(int index) {
-            return  demos[index];
+            return demos[index];
         }
 
         @Override
@@ -76,7 +78,6 @@ public class ActivityListActivity extends Activity {
     }
 
 
-
     private static class ActivityInfo {
         private final int title;
         private final int desc;
@@ -84,7 +85,7 @@ public class ActivityListActivity extends Activity {
 
         public ActivityInfo(int title, int desc, Class<? extends android.app.Activity> demoClass) {
             this.title = title;
-            this.desc  = desc;
+            this.desc = desc;
             this.demoClass = demoClass;
         }
     }

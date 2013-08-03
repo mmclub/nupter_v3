@@ -7,4 +7,6 @@
     <string name="subtitle_activity_main">应用的入口主界面</string>
     <string name="title_activity_baidumap">校园地图</string>
     <string name="subtitle_activity_baidumap">仙林校区的地图</string>
+    <string name="title_activity_welcome">闪屏画面</string>
+    <string name="subtitle_activity_welcome">启动闪屏画面</string>
 </resources>
