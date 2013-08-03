@@ -1,7 +1,6 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -22,6 +21,8 @@ public class BaiduMapActivity extends Activity {
     private MapView mMapView = null;
     private MapController mMapController = null;
     MKMapViewListener mMapListener = null;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
