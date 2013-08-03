@@ -37,7 +37,7 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
             new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
             new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
-
+            new ActivityInfo(R.string.title_activity_lifeassistant,R.string.subtitle_activity_lifeassistant,LifeAssistantActivity.class),
     };
 
 

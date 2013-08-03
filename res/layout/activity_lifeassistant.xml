@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--这里是根节点布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <!-- 这是第一个tab对应的布局 -->
+    <LinearLayout 
+        android:id="@+id/widget_layout_schoolguide"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#27ae60"
+        android:layout_margin="10dp">
+        
+        
+    </LinearLayout>"
+    
+    <!-- 这是第二个tab对应的布局 -->
+    <LinearLayout 
+        android:id="@+id/widget_layout_busroute"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#2980b9"
+        android:layout_margin="10dp">
+        
+        
+    </LinearLayout>
+    <!-- 这是第三个tab对应的布局 -->
+    
+    <LinearLayout 
+        android:id="@+id/widget_layout_localnews"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#e67e22"
+        android:layout_margin="10dp">
+        
+        
+    </LinearLayout>
+    <!-- 这是第四个tab对应的布局 -->
+    <LinearLayout 
+        android:id="@+id/widget_layout_resttable"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#e74c3c"
+        android:layout_margin="10dp">
+        
+        
+    </LinearLayout>
+</LinearLayout>
