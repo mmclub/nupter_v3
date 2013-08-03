@@ -2,16 +2,17 @@ package org.nupter.nupter.utils;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import org.json.JSONObject;
 
 /**
- * »ñÈ¡ÄÏ¾©µØÇøµÄÌìÆø
+ * å¤©æ°”è¾…åŠ©ç±»
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  *
- * Ê¹ÓÃÁËÖĞ¹úÖĞÑëÆøÏóÌ¨µÄAPI
- * Êı¾İÀ´Ô´ÍøÖ·Ñ¡Ôñ:
- * - http://www.weather.com.cn/data/sk/101190101.html £¨µ±Ç°ÌìÆø£©
- * - http://m.weather.com.cn/data/101190101.html £¨Î´À´ÌìÆøÔ¤±¨£©
- * - http://www.weather.com.cn/data/cityinfo/101190101.html (µ±Ç°ÌìÆø)
+ * ä¸­å›½å¤©æ°”é¢„æŠ¥ç½‘ç«™APIï¼ˆå—äº¬åœ°åŒºï¼‰
+ *
+ * - http://www.weather.com.cn/data/sk/101190101.html å®æ—¶å¤©æ°”
+ * - http://m.weather.com.cn/data/101190101.html æœªæ¥å¤©æ°”é¢„æŠ¥
+ * - http://www.weather.com.cn/data/cityinfo/101190101.html å®æ—¶å¤©æ°”
  *
  */
 public class Weather {
@@ -27,6 +28,7 @@ public class Weather {
             @Override
             public void onSuccess(String response) {
                 Log.d(response);
+
 
             }
 

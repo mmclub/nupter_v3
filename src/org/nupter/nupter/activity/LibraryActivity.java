@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 
 /**
- 图书馆板块主界面
+ * 鍥句功棣嗕富鐣岄潰
  */
 
 public class LibraryActivity extends Activity {
