@@ -3,31 +3,24 @@ package org.nupter.nupter.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.MKMapViewListener;
-import com.baidu.mapapi.map.MapController;
-import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.Log;
+
+import java.io.IOException;
 
 public class BaiduMapActivity extends Activity {
 
     final static String TAG = "MainActivity";
-    /**
-     *  MapView 是地图主控件
-     */
     private MapView mMapView = null;
-    /**
-     *  用MapController完成地图控制
-     */
     private MapController mMapController = null;
-    /**
-     *  MKMapViewListener 用于处理地图事件回调
-     */
     MKMapViewListener mMapListener = null;
 
     @Override
@@ -51,37 +44,19 @@ public class BaiduMapActivity extends Activity {
          */
         setContentView(R.layout.activity_baidumap);
         mMapView = (MapView)findViewById(R.id.bmapView);
-        /**
-         * 获取地图控制器
-         */
         mMapController = mMapView.getController();
-        /**
-         *  设置地图是否响应点击事件  .
-         */
         mMapController.enableClick(true);
-        /**
-         * 设置地图缩放级别
-         */
-        mMapController.setZoom(12);
+        mMapController.setZoom(15);
 
         /**
          * 将地图移动至指定点
          * 使用百度经纬度坐标，可以通过http://api.map.baidu.com/lbsapi/getpoint/index.html查询地理坐标
-         * 如果需要在百度地图上显示使用其他坐标系统的位置，请发邮件至mapapi@baidu.com申请坐标转换接口
+         *
          */
         GeoPoint p ;
-        double cLat = 39.945 ;
-        double cLon = 116.404 ;
-        Intent intent = getIntent();
-        if ( intent.hasExtra("x") && intent.hasExtra("y") ){
-            //当用intent参数时，设置中心点为指定点
-            Bundle b = intent.getExtras();
-            p = new GeoPoint(b.getInt("y"), b.getInt("x"));
-        }else{
-            //设置中心点为天安门
-            p = new GeoPoint((int)(cLat * 1E6), (int)(cLon * 1E6));
-        }
-
+        double cLat = 32.120688 ;
+        double cLon = 118.93697 ;
+        p = new GeoPoint((int)(cLat * 1E6), (int)(cLon * 1E6));
         mMapController.setCenter(p);
 
         /**
@@ -127,6 +102,50 @@ public class BaiduMapActivity extends Activity {
                  */
             }
         };
+
+        /**
+         *  在想要添加Overlay的地方使用以下代码，
+         *  比如Activity的onCreate()中
+         */
+        //准备要添加的Overlay
+
+        double mLat1 = 32.117966;
+        double mLon1 = 118.93837;
+
+
+
+
+        // 用给定的经纬度构造GeoPoint，单位是微度 (度 * 1E6)
+        GeoPoint p1 = new GeoPoint((int) (mLat1 * 1E6), (int) (mLon1 * 1E6));
+
+        //准备overlay图像数据，根据实情情况修复
+        Drawable mark= getResources().getDrawable(R.drawable.icon_marka);
+        //用OverlayItem准备Overlay数据
+        OverlayItem item1 = new OverlayItem(p1,"图书馆","南邮的图书馆");
+        //使用setMarker()方法设置overlay图片,如果不设置则使用构建ItemizedOverlay时的默认设置
+
+        item1.setTitle("图书馆");
+        item1.setSnippet("南邮的图书馆");
+
+        //创建IteminizedOverlay
+        OverlayTest itemOverlay = new OverlayTest(mark, mMapView);
+        //将IteminizedOverlay添加到MapView中
+
+        mMapView.getOverlays().clear();
+        mMapView.getOverlays().add(itemOverlay);
+
+        //现在所有准备工作已准备好，使用以下方法管理overlay.
+        //添加overlay, 当批量添加Overlay时使用addItem(List<OverlayItem>)效率更高
+        itemOverlay.addItem(item1);
+
+        mMapView.refresh();
+        //删除overlay .
+        //itemOverlay.removeItem(itemOverlay.getItem(0));
+        //mMapView.refresh();
+        //清除overlay
+        // itemOverlay.removeAll();
+        // mMapView.refresh();
+
         mMapView.regMapViewListener(MyApplication.getInstance().mBMapManager, mMapListener);
     }
 
@@ -169,5 +188,59 @@ public class BaiduMapActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
         mMapView.onRestoreInstanceState(savedInstanceState);
     }
+
+
+
+    /*
+     * 要处理overlay点击事件时需要继承ItemizedOverlay
+     * 不处理点击事件时可直接生成ItemizedOverlay.
+     */
+    class OverlayTest extends ItemizedOverlay<OverlayItem> {
+        //用MapView构造ItemizedOverlay
+        PopupOverlay pop;
+        public OverlayTest(Drawable mark,MapView mapView){
+            super(mark,mapView);
+        }
+        protected boolean onTap(int index) {
+            //在此处理item点击事件
+            Log.d("item onTap: " + index);
+            Toast.makeText(BaiduMapActivity.this, this.getItem(index).getTitle(), Toast.LENGTH_SHORT).show();
+
+            //pop demo
+            //创建pop对象，注册点击事件监听接口
+           pop = new PopupOverlay(mMapView,new PopupClickListener() {
+                @Override
+                public void onClickedPopup(int index) {
+                    //在此处理pop点击事件，index为点击区域索引,点击区域最多可有三个
+                }
+            });
+
+            Bitmap[] bmps = new Bitmap[3];
+            try {
+                bmps[0] = BitmapFactory.decodeStream(getAssets().open("ic_launcher.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //弹窗弹出位置
+            GeoPoint ptTAM = new GeoPoint((int)(this.getItem(index).getPoint().getLatitudeE6() ), (int) (this.getItem(index).getPoint().getLongitudeE6()));
+            //弹出pop,隐藏pop
+            pop.showPopup(bmps, ptTAM, 32);
+            //隐藏弹窗
+            //
+
+
+            return true;
+        }
+        public boolean onTap(GeoPoint pt, MapView mapView){
+            //在此处理MapView的点击事件，当返回 true时
+            super.onTap(pt,mapView);
+            if (pop != null)
+                pop.hidePop();
+
+            return false;
+        }
+
+    }
+
 
 }
