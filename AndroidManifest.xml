@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MapListActivity"/>
+        <activity android:name=".activity.TouchImageViewActivity"/>
+        <activity android:name=".activity.Touch"/>
 
 
     </application>

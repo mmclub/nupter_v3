@@ -11,4 +11,8 @@
     <string name="subtitle_activity_welcome">启动闪屏画面</string>
     <string name="subtitle_activity_settings">设置页面</string>
     <string name="title_activity_settings">设置</string>
+    <string name="subtitle_activity_image">可缩放图片</string>
+    <string name="title_activity_image">图片</string>
+    <string name="subtitle_activity_image2">图片2</string>
+    <string name="title_activity_image2">图片2</string>
 </resources>
