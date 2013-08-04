@@ -14,6 +14,14 @@ import android.widget.TextView;
 import org.nupter.nupter.R;
 
 
+/**
+ * 所有Activity的列表
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ *
+ * 开发人员在完成一个Activity的雏形的时候，将其加入demos数组即可。
+ */
+
 public class ActivityListActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,8 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
             new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
             new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
+            new ActivityInfo(R.string.title_activity_settings, R.string.subtitle_activity_settings, SettingActivity.class),
+
 
     };
 

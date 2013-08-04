@@ -9,4 +9,6 @@
     <string name="subtitle_activity_baidumap">仙林校区的地图</string>
     <string name="title_activity_welcome">闪屏画面</string>
     <string name="subtitle_activity_welcome">启动闪屏画面</string>
+    <string name="subtitle_activity_settings">设置页面</string>
+    <string name="title_activity_settings">设置</string>
 </resources>
