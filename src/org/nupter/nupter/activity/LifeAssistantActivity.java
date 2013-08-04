@@ -41,7 +41,8 @@ public class LifeAssistantActivity extends TabActivity {
             lifeassTab.setIndicator("标签"+x);
             lifeassTab.setContent(layoutTab[x]);
             this.LifeassistantTabhost.addTab(lifeassTab);
-           
+            
+       
             
         }
        
