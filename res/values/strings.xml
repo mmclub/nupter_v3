@@ -17,4 +17,6 @@
     <string name="title_activity_image2">图片2</string>
     <string name="title_activity_refresh">刷新演示</string>
     <string name="subtitle_activity_refresh">刷新演示Activity</string>
+    <string name="title_activity_parse">Parse SDK演示</string>
+    <string name="subtitle_activity_parse">Pasre Activity</string>
 </resources>

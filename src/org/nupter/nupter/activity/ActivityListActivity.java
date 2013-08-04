@@ -49,6 +49,7 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
             new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, Touch.class),
             new ActivityInfo(R.string.title_activity_refresh, R.string.subtitle_activity_refresh, RefreshActivity.class),
+            new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
 
 
 
