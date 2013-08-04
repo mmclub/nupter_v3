@@ -15,6 +15,15 @@ import org.nupter.nupter.utils.Log;
 
 import java.io.IOException;
 
+
+/**
+ * 百度地图Activity
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ *
+ * 由百度地图Android SDK Demo修改而来
+ */
+
 public class BaiduMapActivity extends Activity {
 
     final static String TAG = "MainActivity";
