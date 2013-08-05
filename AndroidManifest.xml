@@ -38,6 +38,7 @@
         <activity android:name=".activity.RefreshActivity"/>
         <activity android:name=".activity.ParseActivity"/>
         <activity android:name=".activity.SugarDBActivity"/>
+        <activity android:name=".activity.ImageLoaderActivity"/>
 
 
     </application>

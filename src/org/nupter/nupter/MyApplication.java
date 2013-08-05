@@ -6,6 +6,8 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.MKEvent;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.orm.Database;
 import com.orm.SugarApp;
 import com.parse.Parse;
@@ -30,6 +32,10 @@ public class MyApplication extends SugarApp {
         Parse.initialize(this, "MqbhaZ0G5tX76IISHjbp4JekaYfyzIXWa0pdKHKv", "HF1zGCXpm5hfuvvCUS6taOmM0WiE6cLbhsUiI8JB");
 
         instance = this;
+
+        // Create global configuration and initialize ImageLoader with this configuration
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
+        ImageLoader.getInstance().init(config);
 
     }
 
