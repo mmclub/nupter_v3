@@ -45,11 +45,15 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
             new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapListActivity.class),
             new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
+
+            new ActivityInfo(R.string.title_activity_lifeassistant,R.string.subtitle_activity_lifeassistant,LifeAssistantActivity.class),
+
             new ActivityInfo(R.string.title_activity_settings, R.string.subtitle_activity_settings, SettingActivity.class),
             new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
             new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, Touch.class),
             new ActivityInfo(R.string.title_activity_refresh, R.string.subtitle_activity_refresh, RefreshActivity.class),
             new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
+
 
 
 

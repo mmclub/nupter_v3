@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--这里是根节点布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#ecf0f1">
+    <!-- 这是第一个tab对应的布局 -->
+    <LinearLayout 
+        android:id="@+id/widget_layout_schoolguide"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#27ae60"
+        android:layout_margin="10dp">
+        
+        <ScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginTop="0dp"
+                            android:background="#34495e"
+                            android:gravity="center_vertical"
+                            android:text="图书馆补充"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/tushuguanbuchong" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#34495e"
+                            android:gravity="center_vertical"
+                            android:text="起居指南"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/qijuzhinan" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#34495e"
+                            android:gravity="center_vertical"
+                            android:text="通信指南"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/tongxinzhinan" />
+                    </LinearLayout>
+                </ScrollView>
+        
+        
+    </LinearLayout>
+    
+    <!-- 这是第二个tab对应的布局 -->
+    <LinearLayout 
+        android:id="@+id/widget_layout_busroute"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#2980b9"
+        android:layout_margin="10dp">
+        <ScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginTop="0dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="107路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/route107" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="165路"
+                           
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                           
+                            android:text="@string/route165" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="177路"
+                           
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/route177" />
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="东上路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                           
+                            android:text="@string/routeDS" />
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="97路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                           
+                            android:text="@string/route97" />
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="310路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/route310" />
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="108路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/route108" />
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="146路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/route146" />
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="25dp"
+                            android:background="#7f8c8d"
+                            android:gravity="center_vertical"
+                            android:text="D1路"
+                            
+                            android:textSize="8pt" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="25dp"
+                            
+                            android:text="@string/routeD1" />
+                    </LinearLayout>
+                </ScrollView>
+        
+        
+    </LinearLayout>
+    <!-- 这是第三个tab对应的布局 -->
+    
+    <LinearLayout 
+        android:id="@+id/widget_layout_localnews"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#e67e22"
+        android:layout_margin="10dp">
+        <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" >
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:gravity="center_vertical"
+                    android:text="邮局"
+                    android:textSize="8pt" 
+                    android:background="#2c3e50"/>
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/youju"/>
+                <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="25dp"
+                   android:background="#2c3e50"
+                   android:gravity="center_vertical"
+                   android:text="派出所"
+                  
+                   android:textSize="8pt"
+                   android:layout_gravity="right|top"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/paichusuo"/>
+                <TextView 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="超市"
+                    android:textSize="8pt"/>
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:text="@string/chaoshi"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    
+                    android:text="@string/youju" />
+                <TextView 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="金融服务"
+                    
+                    android:textSize="8pt"/>
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    
+                    android:text="@string/jinrongfuwu"/>
+                <TextView 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="医院"
+                    
+                    android:textSize="8pt"/>
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                   
+                    android:text="@string/yiyuan"/>
+                <TextView 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="美容美发"
+                    
+                    android:textSize="8pt"/>
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    
+                    android:text="@string/meirongmeifa"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="药店"
+                    
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    
+                    android:text="@string/yaodian" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="配钥匙"
+                    
+                    android:textSize="8pt" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    
+                    android:text="@string/peiyaoshi" />
+                <TextView 
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    android:background="#2c3e50"
+                    android:gravity="center_vertical"
+                    android:text="修车点"
+                    
+                    android:textSize="8pt"/>
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25dp"
+                    
+                    android:text="@string/xiuchedian"/>
+                
+                </LinearLayout>
+                </ScrollView>
+        
+        
+    </LinearLayout>
+    <!-- 这是第四个tab对应的布局 -->
+    <LinearLayout 
+        android:id="@+id/widget_layout_resttable"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#e74c3c"
+        android:layout_margin="10dp">
+        
+         <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingBottom="15dp"
+            android:scrollbars="none" 
+            >
+
+            <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:src="@drawable/life_zuoxi" 
+                  android:layout_gravity="center_horizontal"/>
+          </ScrollView>
+        
+        
+    </LinearLayout>
+</LinearLayout>
