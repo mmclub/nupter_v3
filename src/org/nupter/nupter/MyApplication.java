@@ -6,17 +6,19 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.MKEvent;
+import com.orm.Database;
+import com.orm.SugarApp;
+import com.parse.Parse;
 
 
 /**
  * 应用的Application类
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
-public class MyApplication extends Application {
+public class MyApplication extends SugarApp {
 
     private static Context context;
     private static MyApplication instance;
-
     public boolean m_bKeyRight = true;
     public BMapManager mBMapManager = null;
 
@@ -25,7 +27,10 @@ public class MyApplication extends Application {
     public void onCreate(){
         super.onCreate();
         MyApplication.context = getApplicationContext();
+        Parse.initialize(this, "MqbhaZ0G5tX76IISHjbp4JekaYfyzIXWa0pdKHKv", "HF1zGCXpm5hfuvvCUS6taOmM0WiE6cLbhsUiI8JB");
+
         instance = this;
+
     }
 
 
@@ -83,6 +88,9 @@ public class MyApplication extends Application {
          */
         return MyApplication.context;
     }
+
+
+
 
 
 }

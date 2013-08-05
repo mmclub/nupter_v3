@@ -16,7 +16,6 @@ import com.parse.ParseAnalytics;
 public class ParseActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Parse.initialize(this, "MqbhaZ0G5tX76IISHjbp4JekaYfyzIXWa0pdKHKv", "HF1zGCXpm5hfuvvCUS6taOmM0WiE6cLbhsUiI8JB");
         setContentView(R.layout.activity_main);
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
