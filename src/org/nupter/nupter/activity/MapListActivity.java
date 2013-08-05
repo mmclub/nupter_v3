@@ -1,28 +1,33 @@
 package org.nupter.nupter.activity;
 
-
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.map.*;
+import com.baidu.platform.comapi.basestruct.GeoPoint;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.Log;
 
+import java.io.IOException;
 
 /**
- * 所有Activity的列表
- *
+ * 校园地图的列表
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  *
- * 开发人员在完成一个Activity的雏形的时候，将其加入demos数组即可。
  */
 
-public class ActivityListActivity extends Activity {
+
+public class MapListActivity extends Activity {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +38,8 @@ public class ActivityListActivity extends Activity {
         mListView.setAdapter(new DemoListAdapter());
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-                Intent intent = new Intent(ActivityListActivity.this, demos[index].demoClass);
-                ActivityListActivity.this.startActivity(intent);
+                Intent intent = new Intent(MapListActivity.this, demos[index].demoClass);
+                MapListActivity.this.startActivity(intent);
             }
         });
 
@@ -42,20 +47,7 @@ public class ActivityListActivity extends Activity {
 
 
     private static final ActivityInfo[] demos = {
-            new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
-            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapListActivity.class),
-            new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
-
-            new ActivityInfo(R.string.title_activity_lifeassistant,R.string.subtitle_activity_lifeassistant,LifeAssistantActivity.class),
-
-            new ActivityInfo(R.string.title_activity_settings, R.string.subtitle_activity_settings, SettingActivity.class),
-            new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
-            new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, Touch.class),
-            new ActivityInfo(R.string.title_activity_refresh, R.string.subtitle_activity_refresh, RefreshActivity.class),
-            new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
-
-
-
+            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
 
     };
 
@@ -67,7 +59,7 @@ public class ActivityListActivity extends Activity {
 
         @Override
         public View getView(int index, View convertView, ViewGroup parent) {
-            convertView = View.inflate(ActivityListActivity.this, R.layout.item_activty_info, null);
+            convertView = View.inflate(MapListActivity.this, R.layout.item_activty_info, null);
             TextView title = (TextView) convertView.findViewById(R.id.title);
             TextView desc = (TextView) convertView.findViewById(R.id.desc);
             if (demos[index].demoClass == MainActivity.class

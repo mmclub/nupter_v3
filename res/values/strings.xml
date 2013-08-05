@@ -9,6 +9,7 @@
     <string name="subtitle_activity_baidumap">仙林校区的地图</string>
     <string name="title_activity_welcome">闪屏画面</string>
     <string name="subtitle_activity_welcome">启动闪屏画面</string>
+
     <string name="title_activity_lifeassistant">生活秘书</string>
     <string name="subtitle_activity_lifeassistant">启动生活秘书</string>
     <string name="schoolguide_Tab">指南</string>
@@ -115,4 +116,16 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
 路 - 文苑路西站 - 亚东新城区 - 文苑路 - 财经大学[仙林] - 南京邮电大学[仙林] - 杉湖东路 - 中医药大学[仙林] - 外国语学校 - 仙林中心站(下客站) (26站) </string>
     <string name="routeD1">宁工新寓 - 龙江花园 - 清江花苑 - 虹桥(南京饭店) - 司背后 - 玄武湖隧道(公交总公司) - 新庄广场东 - 长途东站(北) - 徐庄软件园 - 仙隐北路 - 亚东新城区 - 文苑路 - 财经大学[仙林] 
 - 南京邮电大学[仙林] - 中医药大学[仙林] - 南大仙林校区 - 元化路 (17站)</string>
+
+    <string name="subtitle_activity_settings">设置页面</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="subtitle_activity_image">可缩放图片</string>
+    <string name="title_activity_image">图片</string>
+    <string name="subtitle_activity_image2">图片2</string>
+    <string name="title_activity_image2">图片2</string>
+    <string name="title_activity_refresh">刷新演示</string>
+    <string name="subtitle_activity_refresh">刷新演示Activity</string>
+    <string name="title_activity_parse">Parse SDK演示</string>
+    <string name="subtitle_activity_parse">Pasre Activity</string>
+
 </resources>

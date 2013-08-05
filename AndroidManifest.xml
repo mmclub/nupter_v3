@@ -32,6 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MapListActivity"/>
+        <activity android:name=".activity.TouchImageViewActivity"/>
+        <activity android:name=".activity.Touch"/>
+        <activity android:name=".activity.RefreshActivity"/>
+        <activity android:name=".activity.ParseActivity"/>
 
 
     </application>

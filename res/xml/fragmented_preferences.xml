@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory
+            android:title="我是一个分类">
+
+        <CheckBoxPreference
+                android:key="checkbox_preference2"
+                android:title="我是一个标题"
+                android:summary="我是标题的叙述" />
+
+    </PreferenceCategory>
+</PreferenceScreen>
