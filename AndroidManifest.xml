@@ -34,7 +34,7 @@
         </activity>
         <activity android:name=".activity.MapListActivity"/>
         <activity android:name=".activity.TouchImageViewActivity"/>
-        <activity android:name=".activity.Touch"/>
+        <activity android:name="org.nupter.nupter.activity.Touch"/>
         <activity android:name=".activity.RefreshActivity"/>
         <activity android:name=".activity.ParseActivity"/>
         <activity android:name=".activity.SugarDBActivity"/>
