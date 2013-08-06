@@ -135,5 +135,7 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
     <string name="subtitle_activity_sugar">SugarDB演示Activity</string>
     <string name="title_activity_imageloader">ImageLoader演示</string>
     <string name="subtitle_activity_imageloader">ImageLoader演示Activity</string>
+    <string name="title_activity_club">七彩社团</string>
+    <string name="subtitle_activity_club">信息来自人人主页</string>
 
 </resources>
