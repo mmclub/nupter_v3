@@ -47,7 +47,7 @@ public class BaiduMapActivity extends Activity {
             /**
              * 如果BMapManager没有初始化则初始化BMapManager
              */
-            app.mBMapManager.init(MyApplication.strKey,new MyApplication.MyGeneralListener());
+            app.mBMapManager.init(MyApplication.BaiduMapKey,new MyApplication.MyGeneralListener());
         }
         /**
          * 由于MapView在setContentView()中初始化,所以它需要在BMapManager初始化之后
