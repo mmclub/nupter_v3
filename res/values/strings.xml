@@ -16,6 +16,10 @@
     <string name="busroute_tab">出行</string>
     <string name="localnews_tab">周边</string>
     <string name="resttable_tab">作息</string>
+    <string name="title_activity_library">掌上图书馆</string>
+    <string name="subtitle_activity_library">搜索图书</string>
+    <string name="input_search_book">书名或关键词</string>
+    <string name="btn_search_book">搜索</string>
     
     
     

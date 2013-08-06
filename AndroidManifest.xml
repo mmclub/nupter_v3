@@ -24,6 +24,8 @@
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.MapActivity"/>
         <activity android:name=".activity.SchoolCardActivity"/>
+        <activity android:name=".activity.BookListActivity"/>
+        <activity android:name=".activity.BookViewActivity"/>
 
 
         <activity android:name=".activity.ActivityListActivity">
