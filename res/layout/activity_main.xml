@@ -3,12 +3,66 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
+
+              android:background="#ffffff">
+    <LinearLayout
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+    </LinearLayout>
+
+     <LinearLayout
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        
+         <ImageButton 
+             android:id="@+id/Iblibiary"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"/>
+         <ImageButton 
+             android:id="@+id/Iblibiary"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"/>
+
+    </LinearLayout>
+     <LinearLayout
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+    </LinearLayout>
+      <LinearLayout
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+    </LinearLayout>
+      <LinearLayout
+        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+    </LinearLayout>
+      
+
+
+
+        
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Hello World, MainActivity"
             android:id="@+id/textView"
             />
+
 </LinearLayout>
 
