@@ -5,7 +5,6 @@
           android:versionName="1.0">
 
 
-
     <uses-sdk android:minSdkVersion="8"
               android:targetSdkVersion="17"/>
 
@@ -24,6 +23,15 @@
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.MapActivity"/>
         <activity android:name=".activity.SchoolCardActivity"/>
+        <activity android:name=".activity.BookListActivity"/>
+        <activity android:name=".activity.BookViewActivity"/>
+        <activity android:name=".activity.MapListActivity"/>
+        <activity android:name=".activity.TouchImageViewActivity"/>
+        <activity android:name=".activity.Touch"/>
+        <activity android:name=".activity.RefreshActivity"/>
+        <activity android:name=".activity.ParseActivity"/>
+        <activity android:name=".activity.SugarDBActivity"/>
+        <activity android:name=".activity.ImageLoaderActivity"/>
 
 
         <activity android:name=".activity.ActivityListActivity">
@@ -32,57 +40,48 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MapListActivity"/>
-        <activity android:name=".activity.TouchImageViewActivity"/>
-        <activity android:name="org.nupter.nupter.activity.Touch"/>
-        <activity android:name=".activity.RefreshActivity"/>
-        <activity android:name=".activity.ParseActivity"/>
-        <activity android:name=".activity.SugarDBActivity"/>
-        <activity android:name=".activity.ImageLoaderActivity"/>
+
+
+
+
+
+        <!--Parse推送配置-->
+        <service android:name="com.parse.PushService"/>
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+            </intent-filter>
+        </receiver>
+
 
 
     </application>
+
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_GPS"></uses-permission>
+
+    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE"></permission>
 
 
-    <!--使用网络功能所需权限  -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
-    </uses-permission>
-    <uses-permission android:name="android.permission.INTERNET">
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
-    </uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
-    </uses-permission>
-    <!-- SDK离线地图和cache功能需要读写外部存储器 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
-    </uses-permission>
-    <!-- 获取设置信息和详情页直接拨打电话需要以下权限  -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE">
-    </uses-permission>
-    <uses-permission android:name="android.permission.CALL_PHONE">
-    </uses-permission>
-    <!-- 使用定位功能所需权限,demo已集成百度定位SDK,不使用定位功能可去掉以下6项 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
-    </uses-permission>
-    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE">
-    </permission>
-    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE">
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION">
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION">
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_GPS"/>
-
-
-    <meta-data android:name="DATABASE" android:value="sugar.db" />
-    <meta-data android:name="VERSION" android:value="2" />
-    <meta-data android:name="QUERY_LOG" android:value="true" />
-    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="org.nupter.nupter" />
-
+    <!--第三方库SugarDB配置-->
+    <meta-data android:name="DATABASE" android:value="sugar.db"/>
+    <meta-data android:name="VERSION" android:value="2"/>
+    <meta-data android:name="QUERY_LOG" android:value="true"/>
+    <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="org.nupter.nupter"/>
 
 </manifest>

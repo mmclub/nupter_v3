@@ -55,6 +55,9 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
             new ActivityInfo(R.string.title_activity_sugar, R.string.subtitle_activity_sugar, SugarDBActivity.class),
             new ActivityInfo(R.string.title_activity_imageloader, R.string.subtitle_activity_imageloader, ImageLoaderActivity.class),
+            new ActivityInfo(R.string.title_activity_library, R.string.subtitle_activity_library, LibraryActivity.class),
+            new ActivityInfo(R.string.title_activity_club, R.string.subtitle_activity_club, ClubActivity.class),
+
 
 
 

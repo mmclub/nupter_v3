@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+
               android:background="#ffffff">
     <LinearLayout
         android:layout_height="fill_parent"
@@ -54,5 +55,14 @@
       
 
 
+=======
+        >
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Hello World, MainActivity"
+            android:id="@+id/textView"
+            />
+>>>>>>> 6d80386474d01152a260fdfb111f6d5a3c379440
 </LinearLayout>
 
