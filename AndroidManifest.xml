@@ -40,8 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".activity.LostAndFoundActivity"/>
 
 
         <!--Parse推送配置-->

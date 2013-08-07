@@ -57,6 +57,8 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_imageloader, R.string.subtitle_activity_imageloader, ImageLoaderActivity.class),
             new ActivityInfo(R.string.title_activity_library, R.string.subtitle_activity_library, LibraryActivity.class),
             new ActivityInfo(R.string.title_activity_club, R.string.subtitle_activity_club, ClubActivity.class),
+            new ActivityInfo(R.string.title_activity_lost_and_found, R.string.subtitle_activity_lost_and_found, LostAndFoundActivity.class),
+
 
 
 
