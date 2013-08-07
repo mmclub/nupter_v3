@@ -42,6 +42,7 @@
         </activity>
         <activity android:name=".activity.LostAndFoundActivity"/>
         <activity android:name=".activity.Schedule"/>
+        <activity android:name=".activity.MessageListActivity"/>
 
 
         <!--Parse推送配置-->
