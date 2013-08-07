@@ -60,6 +60,7 @@ public class LifeAssistantActivity extends Activity {
        titleList.add("公交出行");
        titleList.add("周边信息");
        titleList.add("作息时间");
+       
             
        viewPager.setAdapter(new myAdapter());
        this.getActionBar().setDisplayHomeAsUpEnabled(true);
