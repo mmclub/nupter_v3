@@ -41,6 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LostAndFoundActivity"/>
+        <activity android:name=".activity.Schedule"/>
 
 
         <!--Parse推送配置-->
