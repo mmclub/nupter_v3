@@ -1,13 +1,6 @@
 package org.nupter.nupter.activity;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-6
- * Time: 上午11:13
- * To change this template use File | Settings | File Templates.
- */
-import java.util.jar.Attributes.Name;
+
 
 import android.app.Activity;
 import android.content.Intent;

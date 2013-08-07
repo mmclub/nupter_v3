@@ -11,7 +11,7 @@ import org.nupter.nupter.utils.Log;
 
 
 /**
- 七彩社团板块主界面
+ * 七彩社团板块主界面
  */
 
 public class ClubActivity extends Activity {

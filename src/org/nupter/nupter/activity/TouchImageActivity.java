@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import org.nupter.nupter.R;
 
-public class Touch extends Activity implements View.OnTouchListener {
+public class TouchImageActivity extends Activity implements View.OnTouchListener {
 
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();

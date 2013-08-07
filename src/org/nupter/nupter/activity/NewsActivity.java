@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
-  校园新闻板块主界面
+ * 校园新闻板块主界面
  */
 public class NewsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
