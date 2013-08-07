@@ -13,6 +13,7 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 import org.nupter.nupter.activity.MainActivity;
+import org.nupter.nupter.activity.MessageListActivity;
 
 
 /**
@@ -38,7 +39,7 @@ public class MyApplication extends SugarApp {
 
         // 初始化Parse SDK
         Parse.initialize(this, ParseAppID, ParseClientKey);
-        PushService.setDefaultPushCallback(this, MainActivity.class);
+        PushService.setDefaultPushCallback(this, MessageListActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         // 初始化 ImageLoader

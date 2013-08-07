@@ -13,8 +13,8 @@ import com.orm.SugarRecord;
 public class MessageRecord extends SugarRecord<MessageRecord> {
 
 
-    String title;
-    String content;
+    public  String title;
+    public  String content;
 
     public MessageRecord(Context context) {
         super(context);
