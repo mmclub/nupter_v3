@@ -9,13 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import org.nupter.nupter.R;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-5
- * Time: 下午12:56
- * To change this template use File | Settings | File Templates.
- */
+
 
 public class LibraryActivity extends Activity {
 

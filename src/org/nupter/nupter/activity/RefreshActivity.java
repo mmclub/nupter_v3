@@ -14,8 +14,6 @@ import org.nupter.nupter.R;
  * 刷新程序演示
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
- *
- *
  * 演示如何用ActionBar，后续会加入下拉刷新。
  */
 

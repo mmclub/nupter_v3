@@ -12,10 +12,9 @@ import android.widget.TabHost.TabSpec;
 
 
 /**
- 生活小秘书板块主界面
-*
-*
-*@author panlei
+ *  生活小秘书板块主界面
+
+ *  @author panlei
 */
 
 public class LifeAssistantActivity extends TabActivity {

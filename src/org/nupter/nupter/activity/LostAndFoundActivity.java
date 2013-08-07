@@ -16,19 +16,17 @@ import org.nupter.nupter.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: linxiangyu
- * Date: 13-8-7
- * Time: 上午8:52
- * To change this template use File | Settings | File Templates.
+ * 寻物平台
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ *
  */
 public class LostAndFoundActivity extends Activity {
 
     ViewPager mViewPager;
-    View view1,view2,view3;
+    View view1, view2, view3;
     PagerTitleStrip pagerTitleStrip;
     PagerTabStrip pagerTabStrip;
     List<View> viewList;
@@ -44,12 +42,15 @@ public class LostAndFoundActivity extends Activity {
         initView();
     }
 
-    public void initView(){
+    public void initView() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        pagerTabStrip = (PagerTabStrip)findViewById(R.id.pagertab);
+        pagerTabStrip = (PagerTabStrip) findViewById(R.id.pagertab);
         //pagerTitleStrip = (PagerTitleStrip)findViewById(R.id.pagertitle);
         pagerTabStrip.setDrawFullUnderline(false);
         pagerTabStrip.setTextSpacing(50);
+        //  pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.gold));
+        //  pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.azure));
+
 
         view1 = findViewById(R.layout.view_lost);
         view2 = findViewById(R.layout.view_found);
@@ -74,7 +75,7 @@ public class LostAndFoundActivity extends Activity {
 
             @Override
             public boolean isViewFromObject(View view, Object o) {
-                  return view == o;
+                return view == o;
             }
 
             @Override

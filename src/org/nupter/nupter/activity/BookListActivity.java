@@ -19,13 +19,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.nupter.nupter.R;
-/**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-6
- * Time: 上午10:59
- * To change this template use File | Settings | File Templates.
- */
+
 
 public class BookListActivity extends ListActivity {
     private String s_book_name;
