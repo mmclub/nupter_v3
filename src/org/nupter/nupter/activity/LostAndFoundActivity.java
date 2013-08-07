@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,6 +41,9 @@ public class LostAndFoundActivity extends FragmentActivity {
         titleList.add("title 1");
         titleList.add("title 2");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 
@@ -104,6 +108,21 @@ public class LostAndFoundActivity extends FragmentActivity {
             tv.setText(text);
             return v;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
 
