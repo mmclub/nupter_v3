@@ -41,7 +41,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LostAndFoundActivity"/>
-        <activity android:name=".activity.Schedule"/>
         <activity android:name=".activity.MessageListActivity"/>
 
 
@@ -53,6 +52,7 @@
                 <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
+
 
 
     </application>
