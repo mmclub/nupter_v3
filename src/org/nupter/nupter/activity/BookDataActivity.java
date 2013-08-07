@@ -5,13 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-6
- * Time: 上午11:02
- * To change this template use File | Settings | File Templates.
- */
+
 public class BookDataActivity {
     public static List<Map<String, String>> getMaps() {
         List<Map<String, String>> listMaps = new ArrayList<Map<String, String>>();

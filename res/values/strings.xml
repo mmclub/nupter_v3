@@ -128,13 +128,19 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
     <string name="title_activity_image">图片</string>
     <string name="subtitle_activity_image2">图片2</string>
     <string name="title_activity_image2">图片2</string>
-    <string name="title_activity_refresh">刷新演示</string>
-    <string name="subtitle_activity_refresh">刷新演示Activity</string>
+    <string name="title_activity_refresh">手机报</string>
+    <string name="subtitle_activity_refresh">手机报演示Activity</string>
     <string name="title_activity_parse">Parse SDK演示</string>
     <string name="subtitle_activity_parse">Pasre Activity</string>
     <string name="title_activity_sugar">SugarDB演示</string>
     <string name="subtitle_activity_sugar">SugarDB演示Activity</string>
     <string name="title_activity_imageloader">ImageLoader演示</string>
     <string name="subtitle_activity_imageloader">ImageLoader演示Activity</string>
+    <string name="title_activity_club">七彩社团</string>
+    <string name="subtitle_activity_club">信息来自人人主页</string>
+    <string name="title_activity_lost_and_found">寻物平台</string>
+    <string name="subtitle_activity_lost_and_found">寻物平台演示</string>
+    <string name="title_activity_message_list">消息列表</string>
+    <string name="subtitle_activity_message_list">历史推送消息</string>
 
 </resources>

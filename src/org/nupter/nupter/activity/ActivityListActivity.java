@@ -50,12 +50,18 @@ public class ActivityListActivity extends Activity {
 
             new ActivityInfo(R.string.title_activity_settings, R.string.subtitle_activity_settings, SettingActivity.class),
             new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
-            new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, Touch.class),
-            new ActivityInfo(R.string.title_activity_refresh, R.string.subtitle_activity_refresh, RefreshActivity.class),
+            new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, TouchImageActivity.class),
+            new ActivityInfo(R.string.title_activity_refresh, R.string.subtitle_activity_refresh, NewspaperActivity.class),
             new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
             new ActivityInfo(R.string.title_activity_sugar, R.string.subtitle_activity_sugar, SugarDBActivity.class),
             new ActivityInfo(R.string.title_activity_imageloader, R.string.subtitle_activity_imageloader, ImageLoaderActivity.class),
             new ActivityInfo(R.string.title_activity_library, R.string.subtitle_activity_library, LibraryActivity.class),
+            new ActivityInfo(R.string.title_activity_club, R.string.subtitle_activity_club, ClubActivity.class),
+            new ActivityInfo(R.string.title_activity_lost_and_found, R.string.subtitle_activity_lost_and_found, LostAndFoundActivity.class),
+            new ActivityInfo(R.string.title_activity_message_list, R.string.subtitle_activity_message_list, MessageListActivity.class),
+
+
+
 
 
 

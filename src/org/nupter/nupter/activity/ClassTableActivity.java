@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 
 /**
- 课表板块主界面
+ * 课表板块主界面
  */
 
 public class ClassTableActivity extends Activity {
