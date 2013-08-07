@@ -28,7 +28,7 @@
         <activity android:name=".activity.MapListActivity"/>
         <activity android:name=".activity.TouchImageViewActivity"/>
         <activity android:name=".activity.TouchImageActivity"/>
-        <activity android:name=".activity.RefreshActivity"/>
+        <activity android:name=".activity.NewspaperActivity"/>
         <activity android:name=".activity.ParseActivity"/>
         <activity android:name=".activity.SugarDBActivity"/>
         <activity android:name=".activity.ImageLoaderActivity"/>
