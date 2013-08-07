@@ -17,24 +17,24 @@ public class BookDataActivity {
         List<Map<String, String>> listMaps = new ArrayList<Map<String, String>>();
 
         Map<String, String> map1 = new HashMap<String, String>();
-        map1.put("r_book_name", "Android");
-        map1.put("r_book_address", "自然科学阅览室");
-        map1.put("r_book_num", "2");
+        map1.put("bookName", "Android");
+        map1.put("bookAuthor", "Hello");
+        map1.put("bookNum", "AK47");
 
         Map<String, String> map2 = new HashMap<String, String>();
-        map2.put("r_book_name", "IOS");
-        map2.put("r_book_address", "自然科学阅览室");
-        map2.put("r_book_num", "1");
+        map2.put("bookName", "IOS");
+        map2.put("bookAuthor", "World");
+        map2.put("bookNum", "AK48");
 
         Map<String, String> map3 = new HashMap<String, String>();
-        map3.put("r_book_name", "Java");
-        map3.put("r_book_address", "自然科学阅览室");
-        map3.put("r_book_num", "4");
+        map3.put("bookName", "Java");
+        map3.put("bookAuthor", "Are");
+        map3.put("bookNum", "AK49");
 
         Map<String, String> map4 = new HashMap<String, String>();
-        map4.put("r_book_name", "PHP");
-        map4.put("r_book_address", "自然科学阅览室");
-        map4.put("r_book_num", "5");
+        map4.put("bookName", "PHP");
+        map4.put("bookAuthor", "You");
+        map4.put("bookNum", "AK50");
 
         listMaps.add(map1);
         listMaps.add(map2);

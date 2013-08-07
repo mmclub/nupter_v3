@@ -21,7 +21,7 @@
 
 
         <Button
-                android:id="@+id/collect"
+                android:id="@+id/collectButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="收藏" />
@@ -33,7 +33,17 @@
             android:layout_height="wrap_content"
             android:textSize="25sp" />
     <TextView
-            android:id="@+id/book_info"
+            android:id="@+id/bookAuthorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
+    <TextView
+            android:id="@+id/bookNumTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
+    <TextView
+            android:id="@+id/bookInfoTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
