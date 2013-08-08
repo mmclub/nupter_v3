@@ -1,27 +1,74 @@
 package org.nupter.nupter.activity;
 
-
+/**
+ * Created with IntelliJ IDEA.
+ * User: Foci
+ * Date: 13-8-6
+ * Time: 上午11:13
+ * To change this template use File | Settings | File Templates.
+ */
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.data.BookCollection;
+
+import java.util.List;
 
 public class BookViewActivity extends Activity {
-    private  String info="这是一本关于ios开发的基本教程，哈哈，你哈哈，我哈哈，大家哈哈哈！(ˇˍˇ）";
-    private String[] book_Data;
-    private TextView book_name,book_info;
+    private  String info;
+    private String name, author, num;
+    private TextView bookNameTextView, bookAuthorTextView, bookNumTextView, bookInfoTextView;
+    private Button collectButton;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookview);
-        book_name = (TextView)this.findViewById(R.id.book_name);
-        book_info = (TextView)this.findViewById(R.id.book_info);
+        collectButton = (Button)this.findViewById(R.id.collectButton);
+        bookNameTextView = (TextView)this.findViewById(R.id.book_name);
+        bookAuthorTextView = (TextView)this.findViewById(R.id.bookAuthorTextView);
+        bookNumTextView = (TextView)this.findViewById(R.id.bookNumTextView);
+        bookInfoTextView = (TextView)this.findViewById(R.id.bookInfoTextview);
         Intent intent = getIntent();
-        book_Data = intent.getStringArrayExtra("this_bookData");
-        book_name.setText(book_Data[0]);
-        book_info.setText(info);
+        name = intent.getStringExtra(BookListActivity.EXTRA_BOOK_NAME);
+        author = intent.getStringExtra(BookListActivity.EXTRA_BOOK_AUTHOR);
+        num = intent.getStringExtra(BookListActivity.EXTRA_BOOK_NUM);
+        info = intent.getStringExtra(BookListActivity.EXTRA_BOOK_INFO);
+        //当从Jsoup拿来数据时再将info赋值
+        info = "这是一本关于ios开发的基本教程，哈哈，你哈哈，我哈哈，大家哈哈哈！(ˇˍˇ）";
+        bookNameTextView.setText(name);
+        bookAuthorTextView.setText("作者：" + author);
+        bookNumTextView.setText("书号：" + num);
+        bookInfoTextView.setText(info);
+
+
+        collectButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Boolean dataExit =  BookCollection.find(BookCollection.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                if(dataExit){
+                    BookCollection bookCollection = new BookCollection(BookViewActivity.this, name, author, num, info);
+                    bookCollection.save();
+                    Boolean dataAdded = BookCollection.find(BookCollection.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                    if(!dataAdded){
+                        Toast toast1 =  Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_LONG);
+                        toast1.show();
+                    }
+                }
+               else {
+                        Toast toast1 =  Toast.makeText(BookViewActivity.this, "收藏过了", Toast.LENGTH_LONG);
+                        toast1.show();
+                }
+              }
+        });
     }
+
+
 }
