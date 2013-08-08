@@ -45,6 +45,7 @@
         <activity android:name=".activity.MessageListActivity"/>
 
 
+
         <!--Parse推送配置-->
         <service android:name="com.parse.PushService"/>
         <receiver android:name="com.parse.ParseBroadcastReceiver">
