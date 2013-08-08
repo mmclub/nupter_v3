@@ -45,6 +45,7 @@
                 />
         <activity android:name=".activity.MessageListActivity"/>
         <activity android:name=".activity.NewspaperDetailActivity"/>
+        <activity android:name=".activity.WebviewActivity"/>
 
 
         <!--Parse推送配置-->

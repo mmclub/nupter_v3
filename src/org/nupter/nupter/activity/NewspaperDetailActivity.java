@@ -1,23 +1,19 @@
 package org.nupter.nupter.activity;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
+
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.nupter.nupter.R;
 
 import java.util.ArrayList;
@@ -28,6 +24,7 @@ public class NewspaperDetailActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
+    JSONObject json;
 
 
     @Override
@@ -35,11 +32,23 @@ public class NewspaperDetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newpaper_detail);
 
+
         ViewPager vp = (ViewPager)findViewById(R.id.viewPager);
-        fragmentList.add(new ViewPagerFragment("Page1"));
-        fragmentList.add(new ViewPagerFragment("Page2"));
-        titleList.add("title 1");
-        titleList.add("title 2");
+
+        try{
+            String rawString = getIntent().getStringExtra(NewspaperActivity.EXTRA_NEWSPAPER_JSON);
+            json = new JSONObject(rawString);
+            JSONArray textArray = json.getJSONArray("text");
+            for(int i = 0; i < json.length(); i++){
+                String s = textArray.getString(i);
+                fragmentList.add(new ViewPagerFragment(s));
+                titleList.add(s);
+            }
+
+        } catch (Exception e){
+
+        }
+
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
