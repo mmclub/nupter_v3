@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_marginRight="20dp"
-            android:text="29   ~   38"/>
+            android:text="气温"/>
       
         <ImageView
             android:id="@+id/weatherIcon" 
@@ -43,49 +43,54 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_marginRight="5dp"
-            android:text="nanjing"/>
+            android:text="城市"/>
 
 "
     </RelativeLayout>
     
+    <ScrollView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
       <LinearLayout 
           android:layout_width="fill_parent"
           android:layout_height="fill_parent"
           android:orientation="horizontal"
-          android:layout_weight="50">
+          >
 
           <LinearLayout
-              android:layout_width="170dp"
-              android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical" 
+              android:layout_weight="50">
 
               <ImageButton
                   android:id="@+id/libraryIB"
                   android:layout_width="120dp"
                   android:layout_height="80dp"
                   android:layout_marginTop="30dp"
-                  android:layout_marginLeft="30dp"
+                  
                    />
 
               <ImageButton
                   android:id="@+id/lifeAssistantIB"
                   android:layout_width="120dp"
                   android:layout_height="80dp"
-                  android:layout_marginLeft="30dp" 
+                  
                   android:layout_marginTop="15dp"/>
 
               <ImageButton
                   android:id="@+id/associationIB"
                   android:layout_width="120dp"
                   android:layout_height="80dp" 
-                  android:layout_marginLeft="30dp"
+                  
                   android:layout_marginTop="15dp"
                   />
               <ImageButton
                   android:id="@+id/lostAndFoundIB"
                   android:layout_width="120dp"
                   android:layout_height="80dp" 
-                  android:layout_marginLeft="30dp"
+                  
                   android:layout_marginTop="15dp"
                   android:onClick="click"
                   />
@@ -93,15 +98,18 @@
           </LinearLayout>
           
           <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical" >
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:layout_weight="50"
+              android:layout_marginLeft="20dp">
 
               <ImageButton
                   android:id="@+id/schedulIB"
                   android:layout_width="120dp"
                   android:layout_height="80dp"
-                  android:layout_marginTop="30dp" />
+                  android:layout_marginTop="30dp"
+                   />
 
               <ImageButton
                   android:id="@+id/nuptNewsIB"
@@ -120,13 +128,13 @@
                   android:id="@+id/schoolMapIB"
                   android:layout_width="120dp"
                   android:layout_height="80dp" 
-                  
+                 
                   android:layout_marginTop="15dp"/>
           </LinearLayout>
           
       </LinearLayout>
 
-
+</ScrollView>
 
         
    
