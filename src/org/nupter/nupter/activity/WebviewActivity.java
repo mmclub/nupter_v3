@@ -7,6 +7,7 @@ import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.Log;
 
 /**
  *
@@ -39,10 +40,14 @@ public class WebviewActivity extends Activity {
                     WebviewActivity.this.setTitle(R.string.app_name);
             }
         });
-        webView.loadUrl(getIntent().getStringExtra(EXTRA_URL));
+        String url = getIntent().getStringExtra(EXTRA_URL);
+        String mimeType = "text/html";
+         String encoding = "utf-8";
+
         setTitle(getIntent().getStringExtra(EXTRA_TITLE));
 
 
+        webView.loadUrl(url);
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
