@@ -18,8 +18,8 @@ import org.nupter.nupter.R;
  * 所有Activity的列表
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
- *
- * 开发人员在完成一个Activity的雏形的时候，将其加入demos数组即可。
+ *         <p/>
+ *         开发人员在完成一个Activity的雏形的时候，将其加入demos数组即可。
  */
 
 public class ActivityListActivity extends Activity {
@@ -45,24 +45,17 @@ public class ActivityListActivity extends Activity {
             new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
             new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapListActivity.class),
             new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
-
-            new ActivityInfo(R.string.title_activity_lifeassistant,R.string.subtitle_activity_lifeassistant,LifeAssistantActivity.class),
-
+            new ActivityInfo(R.string.title_activity_lifeassistant, R.string.subtitle_activity_lifeassistant, LifeAssistantActivity.class),
             new ActivityInfo(R.string.title_activity_settings, R.string.subtitle_activity_settings, SettingActivity.class),
-            new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
-            new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, TouchImageActivity.class),
             new ActivityInfo(R.string.title_activity_refresh, R.string.subtitle_activity_refresh, NewspaperActivity.class),
-            new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
-            new ActivityInfo(R.string.title_activity_sugar, R.string.subtitle_activity_sugar, SugarDBActivity.class),
-            new ActivityInfo(R.string.title_activity_imageloader, R.string.subtitle_activity_imageloader, ImageLoaderActivity.class),
             new ActivityInfo(R.string.title_activity_library, R.string.subtitle_activity_library, LibraryActivity.class),
             new ActivityInfo(R.string.title_activity_club, R.string.subtitle_activity_club, ClubActivity.class),
             new ActivityInfo(R.string.title_activity_lost_and_found, R.string.subtitle_activity_lost_and_found, LostAndFoundActivity.class),
             new ActivityInfo(R.string.title_activity_message_list, R.string.subtitle_activity_message_list, MessageListActivity.class),
 
-
-
-
+            //  new ActivityInfo(R.string.title_activity_parse, R.string.subtitle_activity_parse, ParseActivity.class),
+            //  new ActivityInfo(R.string.title_activity_sugar, R.string.subtitle_activity_sugar, SugarDBActivity.class),
+            //  new ActivityInfo(R.string.title_activity_imageloader, R.string.subtitle_activity_imageloader, ImageLoaderActivity.class),
 
 
     };
