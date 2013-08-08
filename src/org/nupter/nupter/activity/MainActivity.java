@@ -107,11 +107,11 @@ public class MainActivity extends Activity {
                 intent5.setClass(MainActivity.this, LibraryActivity.class);
                 startActivity(intent5);
                 break;*/
-            /*case R.id.newspaperIB:
+            case R.id.newspaperIB:
                  
-                intent.setClass(MainActivity.this, LibraryActivity.class);
+                intent.setClass(MainActivity.this, NewspaperActivity.class);
                 startActivity(intent);
-                break;*/
+                break;
             case R.id.lostAndFoundIB:
                  
                 intent.setClass(MainActivity.this, LostAndFoundActivity.class);

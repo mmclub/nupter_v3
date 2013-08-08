@@ -1,5 +1,6 @@
 package org.nupter.nupter.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -27,6 +28,7 @@ import org.nupter.nupter.utils.Log;
  */
 
 
+@SuppressLint("NewApi")
 public class NewspaperActivity extends ListActivity {
 
     JSONObject json;
