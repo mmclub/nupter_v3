@@ -44,6 +44,7 @@
                   android:screenOrientation="portrait"
                 />
         <activity android:name=".activity.MessageListActivity"/>
+        <activity android:name=".activity.NewspaperDetailActivity"/>
 
 
         <!--Parse推送配置-->
