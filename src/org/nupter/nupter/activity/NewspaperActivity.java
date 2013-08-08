@@ -2,12 +2,22 @@ package org.nupter.nupter.activity;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.preference.PreferenceManager;
+import android.view.*;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import org.json.JSONObject;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.Log;
 
 
 /**
@@ -18,16 +28,28 @@ import org.nupter.nupter.R;
 
 
 public class NewspaperActivity extends ListActivity {
+
+    JSONObject json;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String[] strs = {"手机报第1期-学校化粪池沼气爆炸",
-                "手机报第2期-装空调的梦泡汤啦",
-                "手机报第3期-下学期学费上涨400%",
-                "手机报第4期-南京明天最高气温50度，创历史新高",
-                "手机报第5期-教务系统发现漏洞，所有学生成绩被清空"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, strs);
-        setListAdapter(adapter);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+       String rawString =    preferences.getString("json", "null");
+       if (! rawString.equals("null")){
+           try{
+               json = new JSONObject(rawString);
+               onUpdateSuccess();
+           }catch (Exception e){
+
+           }
+
+       }
+
+
+
     }
 
 
@@ -42,7 +64,137 @@ public class NewspaperActivity extends ListActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        Toast.makeText(this, "刷新中", Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+                update();
+                break;
+        }
         return super.onMenuItemSelected(featureId, item);
     }
+
+
+
+    public void update(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://dl.dropboxusercontent.com/u/94363727/How%20to%20use%20the%20Public%20folder.txt", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String response) {
+
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("json", response);
+                    editor.commit();
+                    json = jsonObject;
+                    onUpdateSuccess();
+
+
+                }catch (Exception e){
+                      onUpdateFailure("no json");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable throwable, String s) {
+                 onUpdateFailure("no network");
+            }
+        });
+
+    }
+
+
+    public void onUpdateFailure(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onUpdateSuccess(){
+        Toast.makeText(this,PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext()).getString("json","null") , Toast.LENGTH_SHORT).show();
+        setListAdapter(new MyAdapter(this));
+
+
+    }
+
+
+
+    public final class ViewHolder{
+        public TextView title;
+        public TextView content;
+    }
+
+
+    public class MyAdapter extends BaseAdapter {
+
+        private LayoutInflater mInflater;
+
+
+        public MyAdapter(Context context){
+            this.mInflater = LayoutInflater.from(context);
+        }
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            try{
+                return json.getJSONArray("array").length();
+            } catch (Exception e){
+                 return 0;
+            }
+        }
+
+        @Override
+        public JSONObject getItem(int arg0) {
+            // TODO Auto-generated method stub
+            try{
+                return json.getJSONArray("array").getJSONObject(arg0);
+            } catch (Exception e){
+                return new JSONObject();
+            }
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            return arg0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+            if (convertView == null) {
+
+                holder=new ViewHolder();
+
+                convertView = mInflater.inflate(R.layout.item_message, null);
+                holder.title = (TextView)convertView.findViewById(R.id.message_content);
+                holder.content = (TextView)convertView.findViewById(R.id.message_content);
+                convertView.setTag(holder);
+
+            }else {
+
+                holder = (ViewHolder)convertView.getTag();
+            }
+
+            try{
+                JSONObject jsonObject = json.getJSONArray("array").getJSONObject(position);
+                holder.title.setText(jsonObject.getString("title"));
+                holder.content.setText(jsonObject.getString("title"));
+
+            }catch (Exception e){
+
+            }
+
+
+
+
+            return convertView;
+        }
+
+    }
+
+
 }
