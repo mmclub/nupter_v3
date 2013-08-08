@@ -40,9 +40,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LostAndFoundActivity"/>
+        <activity android:name=".activity.LostAndFoundActivity"
+                  android:screenOrientation="portrait"
+                />
         <activity android:name=".activity.MessageListActivity"/>
-
+        <activity android:name=".activity.NewspaperDetailActivity"/>
 
 
         <!--Parse推送配置-->
@@ -53,7 +55,6 @@
                 <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
-
 
 
     </application>
