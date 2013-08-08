@@ -21,7 +21,6 @@ public class NewspaperActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         String[] strs = {"手机报第1期-学校化粪池沼气爆炸",
                 "手机报第2期-装空调的梦泡汤啦",
                 "手机报第3期-下学期学费上涨400%",
