@@ -24,6 +24,7 @@ public class BookListActivity extends ListActivity {
     public static final String EXTRA_BOOK_NAME = "bookName";
     public static final String EXTRA_BOOK_AUTHOR = "bookAuthor";
     public static final String EXTRA_BOOK_NUM = "bookNum";
+    public static final String EXTRA_BOOK_INFO = "bookInfo";
     private String bookName, bookAuthor, bookNum;
     private List<Map<String, String>> bookListMap = null;
     private SimpleAdapter adapter;

@@ -25,6 +25,7 @@
         <activity android:name=".activity.SchoolCardActivity"/>
         <activity android:name=".activity.BookListActivity"/>
         <activity android:name=".activity.BookViewActivity"/>
+        <activity android:name=".activity.BookCollectionActivity"/>
         <activity android:name=".activity.MapListActivity"/>
         <activity android:name=".activity.TouchImageViewActivity"/>
         <activity android:name=".activity.TouchImageActivity"/>

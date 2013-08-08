@@ -12,7 +12,7 @@ import org.nupter.nupter.R;
 
 public class LibraryActivity extends Activity {
 
-    private Button searchBookBtton;
+    private Button searchBookButton;
     private EditText searchBookEditText;
     private Button showCollectionButton;
     @Override
@@ -20,13 +20,13 @@ public class LibraryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchbook);
         searchBookEditText = (EditText)this.findViewById(R.id.searchBookEditText);
-        searchBookBtton = (Button)this.findViewById(R.id.searchBookBtton);
+        searchBookButton = (Button)this.findViewById(R.id.searchBookBtton);
         showCollectionButton = (Button)this.findViewById(R.id.showCollectionButton);
-        searchBookBtton.setOnClickListener(new View.OnClickListener() {
+        searchBookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String s_book_name = searchBookEditText.getText().toString();
+                String searchBookName = searchBookEditText.getText().toString();
                 Intent intent = new Intent(LibraryActivity.this, BookListActivity.class);
-                intent.putExtra("s_book_name", s_book_name);
+                intent.putExtra("searchBookName", searchBookName);
                 startActivity(intent);
             }
         });
@@ -35,7 +35,6 @@ public class LibraryActivity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(LibraryActivity.this, BookCollectionActivity.class);
                 startActivity(intent);
-
             }
         });
 

@@ -11,10 +11,10 @@ import com.orm.SugarRecord;
  * To change this template use File | Settings | File Templates.
  */
 public class BookCollection extends SugarRecord<BookCollection> {
-    String name;
-    String author;
-    String bookNum;
-    String bookInfo;
+    public String name;
+    public String author;
+    public String bookNum;
+    public String bookInfo;
 
     public BookCollection(Context ctx){
         super(ctx);
@@ -26,4 +26,5 @@ public class BookCollection extends SugarRecord<BookCollection> {
         this.bookNum = bookNum;
         this.bookInfo = bookInfo;
     }
+
 }
