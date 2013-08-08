@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Toast;
-import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.BMapManager; 
 import com.baidu.mapapi.map.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import org.nupter.nupter.MyApplication;
