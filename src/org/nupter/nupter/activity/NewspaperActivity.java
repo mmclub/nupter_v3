@@ -29,6 +29,8 @@ import org.nupter.nupter.utils.Log;
 @SuppressLint("NewApi")
 public class NewspaperActivity extends ListActivity {
 
+    public static final String EXTRA_NEWSPAPER_JSON = "newspaper_json";
+
     JSONObject json;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -123,9 +125,14 @@ public class NewspaperActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(this, NewspaperDetailActivity.class);
-        startActivity(intent);
+        try{
+            Intent intent = new Intent(this, WebviewActivity.class);
+            intent.putExtra(WebviewActivity.EXTRA_TITLE, json.getJSONArray("array").getJSONObject(position).getString("title"));
+            intent.putExtra(WebviewActivity.EXTRA_URL, json.getJSONArray("array").getJSONObject(position).getString("text"));
+            startActivity(intent);
+        } catch (Exception e){
 
+        }
     }
 
     public final class ViewHolder{

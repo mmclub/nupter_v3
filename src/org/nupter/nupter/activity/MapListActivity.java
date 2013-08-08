@@ -48,6 +48,8 @@ public class MapListActivity extends Activity {
 
     private static final ActivityInfo[] demos = {
             new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
+            new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
+            new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, TouchImageActivity.class)
 
     };
 
