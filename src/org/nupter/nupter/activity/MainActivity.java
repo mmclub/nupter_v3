@@ -97,16 +97,16 @@ public class MainActivity extends Activity {
                 intent.setClass(MainActivity.this, LifeAssistantActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.nuptNewsIB:
+            case R.id.nuptNewsIB:
                 
-                intent.setClass(MainActivity.this, LibraryActivity.class);
+                intent.setClass(MainActivity.this, NewsActivity.class);
                 startActivity(intent);
-                break;*/
-            /*case R.id.associationIB:
+                break;
+            case R.id.associationIB:
                  
-                intent5.setClass(MainActivity.this, LibraryActivity.class);
-                startActivity(intent5);
-                break;*/
+                intent.setClass(MainActivity.this, ClubActivity.class);
+                startActivity(intent);
+                break;
             case R.id.newspaperIB:
                  
                 intent.setClass(MainActivity.this, NewspaperActivity.class);
