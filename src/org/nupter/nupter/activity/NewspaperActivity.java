@@ -118,8 +118,6 @@ public class NewspaperActivity extends ListActivity {
     public void onUpdateSuccess(){
         Toast.makeText(this,PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext()).getString("json","null") , Toast.LENGTH_SHORT).show();
         setListAdapter(new MyAdapter(this));
-
-
     }
 
     @Override
