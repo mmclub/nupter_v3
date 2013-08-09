@@ -77,7 +77,7 @@ public class ClubActivity extends Activity implements Runnable {
                 chooseIntent.putExtra("page_id",page_id);
                 startActivity(chooseIntent);
             } else
-                Log.i("目前没有网络连接");
+                Log.d("目前没有网络连接");
         }
     };
     public void run() {

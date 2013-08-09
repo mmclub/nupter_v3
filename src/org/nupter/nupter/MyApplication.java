@@ -3,7 +3,6 @@ package org.nupter.nupter;
 import com.baidu.mapapi.BMapManager;
 import android.content.Context;
 import android.widget.Toast;
-import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.MKEvent;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -12,7 +11,6 @@ import com.orm.SugarApp;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
-import org.nupter.nupter.activity.MainActivity;
 import org.nupter.nupter.activity.MessageListActivity;
 
 
@@ -23,16 +21,10 @@ import org.nupter.nupter.activity.MessageListActivity;
  */
 public class MyApplication extends SugarApp {
 
-    public static final boolean IS_DEBUG = true;
-
     private static Context context;
     private static MyApplication instance;
-    public boolean m_bKeyRight = true;
-    public BMapManager mBMapManager = null;
-
-    public static final String BaiduMapKey = "5C9714D31C7957714ED1061078A44CFFCE840A86";
-    public static final String ParseAppID = "upYCcciwbHWM2dydAjY5rTuTX8u4fNZ7bKidgVrU";
-    public static final String ParseClientKey = "JDTv72oswGvJ9hTZEAb4GdVy29qOxzhaC4YqqZdN";
+    public boolean isGetRightBaiduMapKey = true;
+    public BMapManager baiduMapManager = null;
 
     public void onCreate() {
         super.onCreate();
@@ -40,7 +32,7 @@ public class MyApplication extends SugarApp {
         instance = this;
 
         // 初始化Parse SDK
-        Parse.initialize(this, ParseAppID, ParseClientKey);
+        Parse.initialize(this, AppConstants.ParseAppID, AppConstants.ParseClientKey);
         PushService.setDefaultPushCallback(this, MessageListActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
@@ -70,11 +62,15 @@ public class MyApplication extends SugarApp {
 
 
     public void initEngineManager(Context context) {
-        if (mBMapManager == null) {
-            mBMapManager = new BMapManager(context);
+        /**
+         * 百度初始化
+         */
+
+        if (baiduMapManager == null) {
+            baiduMapManager = new BMapManager(context);
         }
 
-        if (!mBMapManager.init(BaiduMapKey, new MyGeneralListener())) {
+        if (!baiduMapManager.init(AppConstants.BaiduMapKey, new MyGeneralListener())) {
             Toast.makeText(MyApplication.instance.getApplicationContext(),
                     "BMapManager  初始化错误!", Toast.LENGTH_LONG).show();
         }
@@ -104,7 +100,7 @@ public class MyApplication extends SugarApp {
                 //授权Key错误：
                 Toast.makeText(context,
                         "请在 DemoApplication.java文件输入正确的授权Key！", Toast.LENGTH_LONG).show();
-                MyApplication.instance.m_bKeyRight = false;
+                MyApplication.instance.isGetRightBaiduMapKey = false;
             }
         }
     }
