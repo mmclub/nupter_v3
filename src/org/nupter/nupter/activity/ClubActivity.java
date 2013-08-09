@@ -14,12 +14,13 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
+import org.nupter.nupter.utils.NetUtils;
 
-import static org.nupter.nupter.utils.NetworkUtils.isNewworkConnected;
 
-/*
+/**
+ * 社团模块一级菜单
  *
- * 社团模块 一级菜单
+ * @author SuDongsheng
  */
 public class ClubActivity extends Activity implements Runnable {
 
@@ -82,7 +83,7 @@ public class ClubActivity extends Activity implements Runnable {
     };
     public void run() {
         while (true) {
-            check = isNewworkConnected();
+            check = NetUtils.isNewworkConnected();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

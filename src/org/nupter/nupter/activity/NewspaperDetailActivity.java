@@ -20,6 +20,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+/**
+ *
+ * 手机报详细视图（功能上已被WebviewActivity取代）
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ *
+ */
+
+
+
 public class NewspaperDetailActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();

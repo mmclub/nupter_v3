@@ -23,6 +23,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * 主界面Activity
+ *
+ * @author Panlei
+ *
  */
 
 public class MainActivity extends Activity {
@@ -84,7 +87,7 @@ public class MainActivity extends Activity {
             switch (v.getId()) {
             case R.id.libraryIB:
                  
-                intent.setClass(MainActivity.this, LibraryActivity.class);
+                intent.setClass(MainActivity.this, BookActivity.class);
                 startActivity(intent);
                 break;
             /*case R.id.schedulIB:
@@ -119,7 +122,7 @@ public class MainActivity extends Activity {
                 break;
             case R.id.schoolMapIB:
                  
-                intent.setClass(MainActivity.this, BaiduMapActivity.class);
+                intent.setClass(MainActivity.this, MapBaiduActivity.class);
                 startActivity(intent);
                 break;
             default:

@@ -9,11 +9,13 @@ import org.nupter.nupter.MyApplication;
 /**
  * 网络辅助类
  *
- * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ * @author <a href="mailto:lxyweb@gmail.com、
+ * ">Lin xiangyu</a>
  */
-public class NetworkUtils {
+public class NetUtils {
 
     public static boolean isNewworkConnected() {
+
         /**
          * 检测网络是否连接
          * usage:

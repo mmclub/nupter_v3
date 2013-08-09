@@ -10,7 +10,11 @@ import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
 
 /**
+ * 载入一个网页的Activity
+ * <p/>
+ * 目前作用是为手机报具体内容提供服务
  *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
 public class WebviewActivity extends Activity {
 
@@ -19,16 +23,17 @@ public class WebviewActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
-        getWindow().setFeatureInt( Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
-
-
         setContentView(R.layout.activity_webview);
 
+        WebView webView = (WebView) findViewById(R.id.webView);
 
-        WebView webView = (WebView)findViewById(R.id.webView);
+
+        /**
+         * 下面的代码用于在载入网页地时候显示加载进度条
+         */
+
+        this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
+        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 //Make the bar disappear after URL is loaded, and changes string to Loading...
@@ -40,21 +45,20 @@ public class WebviewActivity extends Activity {
                     WebviewActivity.this.setTitle(R.string.app_name);
             }
         });
+
+
         String url = getIntent().getStringExtra(EXTRA_URL);
-        String mimeType = "text/html";
-         String encoding = "utf-8";
-
         setTitle(getIntent().getStringExtra(EXTRA_TITLE));
-
-
         webView.loadUrl(url);
+
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
