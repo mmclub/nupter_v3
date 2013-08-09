@@ -5,12 +5,30 @@ import android.graphics.*;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.FloatMath;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.Log;
 
-public class TouchImageActivity extends Activity implements View.OnTouchListener {
+
+/**
+ * 图片浏览Activyt
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ *
+ * 启动此Actrivity的intent应传入图片的资源id和图片标题id，如
+ *
+ *  intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_ID, R.drawable.image1);
+ *  intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_TITLE, R.strings.image1);
+ */
+public class ImageBrowserActivity extends Activity implements View.OnTouchListener {
+
+
+    public static final String EXTRA_IMAGE_ID = "image_id";
+    public static final String EXTRA_IMAGE_TITLE = "image_title";
 
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
@@ -30,13 +48,37 @@ public class TouchImageActivity extends Activity implements View.OnTouchListener
     PointF mid = new PointF();
     float dist = 1f;
 
+
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return super.onMenuItemSelected(featureId, item);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scale);
+
+
         imgView = (ImageView) findViewById(R.id.imag);// 获取控件
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.xianlin
-        );// 获取图片资源
+
+        Log.d(getIntent().getStringExtra(EXTRA_IMAGE_TITLE));
+
+        setTitle(getString(getIntent().getIntExtra(EXTRA_IMAGE_TITLE, R.string.title_activity_xianlin_area)));
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Toast.makeText(this, "双指拖动可缩放图片~", Toast.LENGTH_SHORT).show();
+
+
+        bitmap = BitmapFactory.decodeResource(getResources(),getIntent().getIntExtra(EXTRA_IMAGE_ID, R.drawable.xianlin_area));// 获取图片资源
         imgView.setImageBitmap(bitmap);// 填充控件
         imgView.setOnTouchListener(this);// 设置触屏监听
         dm = new DisplayMetrics();
