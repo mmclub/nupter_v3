@@ -15,6 +15,8 @@ import org.nupter.nupter.data.BookRecord;
 
 
 /**
+ * 图书的具体视图
+ *
  * @author WangTao
  */
 

@@ -4,11 +4,9 @@ import android.content.Context;
 import com.orm.SugarRecord;
 
 /**
- * Created with IntelliJ IDEA.
- * User: linxiangyu
- * Date: 13-8-5
- * Time: 下午12:56
- * To change this template use File | Settings | File Templates.
+ * 推送消息的Model类
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
 public class MessageRecord extends SugarRecord<MessageRecord> {
 

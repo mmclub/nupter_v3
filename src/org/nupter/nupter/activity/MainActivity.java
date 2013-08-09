@@ -23,6 +23,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * 主界面Activity
+ *
+ * @author Panlei
+ *
  */
 
 public class MainActivity extends Activity {

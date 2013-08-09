@@ -16,6 +16,9 @@ import java.util.List;
 
 
 /**
+ *
+ * 收藏图书的具体视图
+ *
  * @author WangTao
  */
 public class BookCollectionActivity extends ListActivity {

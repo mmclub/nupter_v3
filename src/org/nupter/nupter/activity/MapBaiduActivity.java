@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager; 
 import com.baidu.mapapi.map.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import org.nupter.nupter.AppConstants;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
@@ -42,12 +43,12 @@ public class MapBaiduActivity extends Activity {
          * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
          */
         MyApplication app = (MyApplication)this.getApplication();
-        if (app.mBMapManager == null) {
-            app.mBMapManager = new BMapManager(this);
+        if (app.baiduMapManager == null) {
+            app.baiduMapManager = new BMapManager(this);
             /**
              * 如果BMapManager没有初始化则初始化BMapManager
              */
-            app.mBMapManager.init(MyApplication.BaiduMapKey,new MyApplication.MyGeneralListener());
+            app.baiduMapManager.init(AppConstants.BaiduMapKey,new MyApplication.MyGeneralListener());
         }
         /**
          * 由于MapView在setContentView()中初始化,所以它需要在BMapManager初始化之后
@@ -156,7 +157,7 @@ public class MapBaiduActivity extends Activity {
         // itemOverlay.removeAll();
         // mMapView.refresh();
 
-        mMapView.regMapViewListener(MyApplication.getInstance().mBMapManager, mMapListener);
+        mMapView.regMapViewListener(MyApplication.getInstance().baiduMapManager, mMapListener);
     }
 
     @Override
