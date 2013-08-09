@@ -29,7 +29,7 @@
         <activity android:name=".activity.BookCollectionActivity"/>
         <activity android:name=".activity.MapListActivity"/>
         <activity android:name=".activity.MapImageActivity"/>
-        <activity android:name=".activity.NewspaperActivity"/>
+        <activity android:name=".activity.NewsDetailActivity"/>
 
 
 

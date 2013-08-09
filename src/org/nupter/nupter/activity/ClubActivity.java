@@ -10,11 +10,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
+
+import android.widget.SimpleAdapter; 
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
+import android.widget.Toast;
 import org.nupter.nupter.utils.NetUtils;
+
 
 
 /**

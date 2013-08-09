@@ -1,6 +1,6 @@
 package org.nupter.nupter.activity;
 
-
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,9 +29,10 @@ import java.util.List;
 
 /**
  * 社团模块 二级菜单
- *
+ * 
  * @author sudongsheng
  */
+@SuppressLint({ "ValidFragment", "NewApi" })
 public class ClubDetailActivity extends FragmentActivity {
     private final static int status = 1;
     private final static int blog = 2;
@@ -39,7 +40,6 @@ public class ClubDetailActivity extends FragmentActivity {
     public Long page_id;
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +55,19 @@ public class ClubDetailActivity extends FragmentActivity {
         fragmentList.add(new StatusAndBlogFragment("status.gets", status));
         fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
         fragmentList.add(new PhotosFragment());
-        vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
+        vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),
+                fragmentList, titleList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
+    }
 
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
         private List<String> titleList;
 
-        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList) {
+        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList,
+                List<String> titleList) {
             super(fm);
             this.fragmentList = fragmentList;
             this.titleList = titleList;
@@ -76,7 +78,8 @@ public class ClubDetailActivity extends FragmentActivity {
          */
         @Override
         public Fragment getItem(int arg0) {
-            return (fragmentList == null || fragmentList.size() == 0) ? null : fragmentList.get(arg0);
+            return (fragmentList == null || fragmentList.size() == 0) ? null
+                    : fragmentList.get(arg0);
         }
 
         /**
@@ -96,7 +99,8 @@ public class ClubDetailActivity extends FragmentActivity {
         }
     }
 
-    public class StatusAndBlogFragment extends Fragment implements AbsListView.OnScrollListener {
+    public class StatusAndBlogFragment extends Fragment implements
+            AbsListView.OnScrollListener {
 
         private ProgressDialog progressDialog;
         private JSONArray jsonArray;
@@ -104,9 +108,9 @@ public class ClubDetailActivity extends FragmentActivity {
         private int frameState;
         private int lastItem;
         private int scrollState;
-        private String url = "https://api.renren.com/restserver.do?call_id=204763&" +
-                "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&" +
-                "format=json&count=10&v=1.0";
+        private String url = "https://api.renren.com/restserver.do?call_id=204763&"
+                + "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&"
+                + "format=json&count=10&v=1.0";
         private ListView listView = null;
         private SimpleAdapter adapter = null;
         ArrayList<HashMap<String, Object>> msg;
@@ -115,7 +119,8 @@ public class ClubDetailActivity extends FragmentActivity {
 
         public StatusAndBlogFragment(String text, int frameState) {
             super();
-            this.url = this.url + "&method=" + text + "&page_id=" + page_id + "&page=1";
+            this.url = this.url + "&method=" + text + "&page_id=" + page_id
+                    + "&page=1";
             this.frameState = frameState;
         }
 
@@ -123,8 +128,10 @@ public class ClubDetailActivity extends FragmentActivity {
          * 覆盖此函数，先通过inflater inflate函数得到view最后返回
          */
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.view_status_blog_fragment, container, false);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.view_status_blog_fragment,
+                    container, false);
             listView = (ListView) v.findViewById(R.id.listview);
             listView.setOnScrollListener(this);
             progressDialog = new ProgressDialog(getActivity());
@@ -140,16 +147,18 @@ public class ClubDetailActivity extends FragmentActivity {
                         @Override
                         public void onSuccess(String response) {
                             msg(response);
-                            adapter = new SimpleAdapter(getActivity(), msg, R.layout.view_club_listview,
-                                    new String[]{"img", "msg", "time"},
-                                    new int[]{R.id.headimg, R.id.msg, R.id.time});
+                            adapter = new SimpleAdapter(getActivity(), msg,
+                                    R.layout.view_club_listview, new String[] {
+                                            "img", "msg", "time" }, new int[] {
+                                            R.id.headimg, R.id.msg, R.id.time });
                             listView.setAdapter(adapter);
                             progressDialog.dismiss();
                         }
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "获取人人数据失败",
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
             return v;
@@ -175,10 +184,13 @@ public class ClubDetailActivity extends FragmentActivity {
         }
 
         @Override
-        public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+        public void onScrollStateChanged(AbsListView absListView,
+                int scrollState) {
             this.scrollState = scrollState;
-            if (lastItem >= adapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
+            if (lastItem >= adapter.getCount()
+                    && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                url = url.substring(0, url.length() - 1)
+                        + (adapter.getCount() / 10 + 1);
                 new AsyncHttpClient().post(url, null,
                         new AsyncHttpResponseHandler() {
                             @Override
@@ -189,7 +201,8 @@ public class ClubDetailActivity extends FragmentActivity {
 
                             @Override
                             public void onFailure(Throwable throwable, String s) {
-                                Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "获取人人数据失败",
+                                        Toast.LENGTH_LONG).show();
                             }
                         });
             }
@@ -218,17 +231,19 @@ public class ClubDetailActivity extends FragmentActivity {
         }
     }
 
-    public class PhotosFragment extends Fragment{
-        private String url = "https://api.renren.com/restserver.do?call_id=204763&" +
-                "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&" +
-                "format=json&count=18&v=1.0";
+    public class PhotosFragment extends Fragment {
+        private String url = "https://api.renren.com/restserver.do?call_id=204763&"
+                + "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&"
+                + "format=json&count=18&v=1.0";
         private GridView gridView;
         private MyAdapter adapter;
         private ProgressDialog progressDialog;
 
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.view_photos_fragment, container, false);
-            url=url+"&page_id="+page_id+"&method=photos.getAlbums";
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.view_photos_fragment, container,
+                    false);
+            url = url + "&page_id=" + page_id + "&method=photos.getAlbums";
             gridView = (GridView) v.findViewById(R.id.gridView);
             gridView.setOnItemClickListener(onItemClickListener);
             progressDialog = new ProgressDialog(getActivity());
@@ -240,14 +255,15 @@ public class ClubDetailActivity extends FragmentActivity {
                     new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(String response) {
-                            adapter=new MyAdapter(getActivity(), response);
+                            adapter = new MyAdapter(getActivity(), response);
                             gridView.setAdapter(adapter);
                             progressDialog.dismiss();
                         }
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "获取人人数据失败",
+                                    Toast.LENGTH_LONG).show();
                         }
                     });
             return v;
@@ -264,21 +280,24 @@ public class ClubDetailActivity extends FragmentActivity {
             private String get_url_photo;
             private String aid;
 
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                aid=adapter.getItem(position);
-                get_url_photo=url.substring(0,url.length()-6)+"&aid="+aid;
-                Intent photo_intent=new Intent();
-                photo_intent.putExtra("get_url_photo",get_url_photo);
-                photo_intent.setClass(ClubDetailActivity.this,ClubDetail_Photo_Activity.class);
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                aid = adapter.getItem(position);
+                get_url_photo = url.substring(0, url.length() - 6) + "&aid="
+                        + aid;
+                Intent photo_intent = new Intent();
+                photo_intent.putExtra("get_url_photo", get_url_photo);
+                photo_intent.setClass(ClubDetailActivity.this,
+                        ClubDetail_Photo_Activity.class);
                 startActivity(photo_intent);
             }
         };
+
         public class MyAdapter extends BaseAdapter {
 
             private LayoutInflater inflater;
             private JSONArray jsonArray;
             private JSONObject jsonObject;
-
 
             public MyAdapter(Context context, String response) {
                 this.inflater = LayoutInflater.from(context);
@@ -320,39 +339,42 @@ public class ClubDetailActivity extends FragmentActivity {
                 if (convertView == null) {
 
                     holder = new ViewHolder();
-                    convertView = inflater.inflate(R.layout.view_photos_image_fragment, null);
-                    holder.image = (ImageView) convertView.findViewById(R.id.AlbumsImage);
-                    holder.name = (TextView) convertView.findViewById(R.id.AlbumsName);
-                    holder.size = (TextView) convertView.findViewById(R.id.AlbumsSize);
+                    convertView = inflater.inflate(
+                            R.layout.view_photos_image_fragment, null);
+                    holder.image = (ImageView) convertView
+                            .findViewById(R.id.AlbumsImage);
+                    holder.name = (TextView) convertView
+                            .findViewById(R.id.AlbumsName);
+                    holder.size = (TextView) convertView
+                            .findViewById(R.id.AlbumsSize);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();
                 }
                 try {
                     jsonObject = jsonArray.getJSONObject(position);
-                    ImageLoader.getInstance().displayImage(jsonObject.getString("url"), holder.image);
+                    ImageLoader.getInstance().displayImage(
+                            jsonObject.getString("url"), holder.image);
                     holder.name.setText(jsonObject.getString("name"));
-                    holder.size.setText(jsonObject.getString("size")+"张相片");
+                    holder.size.setText(jsonObject.getString("size") + "张相片");
                 } catch (Exception e) {
                 }
                 return convertView;
             }
 
-
         }
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        case android.R.id.home:
+            onBackPressed();
+            break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        default:
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }

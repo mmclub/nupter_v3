@@ -12,7 +12,9 @@ import org.nupter.nupter.MyApplication;
  * @author <a href="mailto:lxyweb@gmail.com、
  * ">Lin xiangyu</a>
  */
+
 public class NetUtils {
+
 
     public static boolean isNewworkConnected() {
 
