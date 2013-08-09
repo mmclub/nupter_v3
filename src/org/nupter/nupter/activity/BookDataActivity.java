@@ -41,4 +41,35 @@ public class BookDataActivity {
 
         return listMaps;
     }
+
+    public static List<Map<String, String>> getLostList() {
+        List<Map<String, String>> listMaps = new ArrayList<Map<String, String>>();
+
+        Map<String, String> map1 = new HashMap<String, String>();
+        map1.put("lostName", "饭卡");
+        map1.put("owner", "Tom");
+        map1.put("phone", "18362971234");
+
+        Map<String, String> map2 = new HashMap<String, String>();
+        map2.put("lostName", "手机");
+        map2.put("owner", "Lisa");
+        map2.put("phone", "18362973456");
+
+        Map<String, String> map3 = new HashMap<String, String>();
+        map3.put("lostName", "身份证");
+        map3.put("owner", "Tony");
+        map3.put("phone", "18362972345");
+
+        Map<String, String> map4 = new HashMap<String, String>();
+        map4.put("lostName", "钱包");
+        map4.put("owner", "Monica");
+        map4.put("phone", "18362974562");
+
+        listMaps.add(map1);
+        listMaps.add(map2);
+        listMaps.add(map3);
+        listMaps.add(map4);
+
+        return listMaps;
+    }
 }

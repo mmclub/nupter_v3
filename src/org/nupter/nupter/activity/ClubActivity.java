@@ -14,7 +14,7 @@ import android.widget.SimpleAdapter;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
 
-import static org.nupter.nupter.utils.NetworkUtils.isNewworkConnected;
+
 
 /**
  * 社团模块一级菜单
@@ -82,7 +82,7 @@ public class ClubActivity extends Activity implements Runnable {
     };
     public void run() {
         while (true) {
-            check = isNewworkConnected();
+            check = true;
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

@@ -3,6 +3,7 @@ package org.nupter.nupter.activity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ public class BookActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchbook);
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
         searchBookEditText = (EditText)this.findViewById(R.id.searchBookEditText);
         searchBookButton = (Button)this.findViewById(R.id.searchBookBtton);
         showCollectionButton = (Button)this.findViewById(R.id.showCollectionButton);
@@ -47,4 +49,18 @@ public class BookActivity extends Activity {
         });
 
     }
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
 }

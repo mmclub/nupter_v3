@@ -1,6 +1,7 @@
 package org.nupter.nupter.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 
 import java.util.List;
@@ -28,12 +29,12 @@ public class BookListActivity extends ListActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.r_book_list);
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
         bookListMap = BookDataActivity.getMaps();
         adapter = new SimpleAdapter(BookListActivity.this, bookListMap,
-                R.layout.item_activity_book, new String[] { "bookName",
-                "bookAuthor", "bookNum" },
-                new int[] { R.id.bookName, R.id.bookAuthor,
+                R.layout.item_activity_book, new String[]{"bookName",
+                "bookAuthor", "bookNum"},
+                new int[]{R.id.bookName, R.id.bookAuthor,
                         R.id.bookNum});
         setListAdapter(adapter);
     }
@@ -51,5 +52,17 @@ public class BookListActivity extends ListActivity {
         intent.putExtra(EXTRA_BOOK_AUTHOR, bookAuthor);
         intent.putExtra(EXTRA_BOOK_NUM, bookNum);
         startActivity(intent);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }

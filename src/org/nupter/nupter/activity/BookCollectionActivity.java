@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -21,20 +22,23 @@ import java.util.List;
  * @author WangTao
  */
 public class BookCollectionActivity extends ListActivity {
+
     List<BookRecord> bookRecords;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
         bookRecords = BookRecord.listAll(BookRecord.class);
         setListAdapter(new BookCollectionAdapter(this));
         Boolean DataExit = bookRecords.isEmpty();
         if(DataExit){
             Toast toast = Toast.makeText(BookCollectionActivity.this, "还没有收藏", Toast.LENGTH_LONG);
             toast.show();
-        }
-        else {
+        } else {
             setListAdapter(new BookCollectionAdapter(this));
         }
     }
+
+
     public final class BookViewHolder {
         public TextView bookName;
         public TextView bookAuthor;
@@ -70,17 +74,17 @@ public class BookCollectionActivity extends ListActivity {
             BookViewHolder holder = null;
             if (convertView == null) {
 
-                holder=new BookViewHolder();
+                holder = new BookViewHolder();
 
                 convertView = bookInflater.inflate(R.layout.item_activity_book, null);
-                holder.bookName = (TextView)convertView.findViewById(R.id.bookName);
-                holder.bookAuthor = (TextView)convertView.findViewById(R.id.bookAuthor);
-                holder.bookNum = (TextView)convertView.findViewById(R.id.bookNum);
+                holder.bookName = (TextView) convertView.findViewById(R.id.bookName);
+                holder.bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
+                holder.bookNum = (TextView) convertView.findViewById(R.id.bookNum);
                 convertView.setTag(holder);
 
-            }else {
+            } else {
 
-                holder = (BookViewHolder)convertView.getTag();
+                holder = (BookViewHolder) convertView.getTag();
             }
 
             holder.bookName.setText(bookRecords.get(position).name);
@@ -89,6 +93,7 @@ public class BookCollectionActivity extends ListActivity {
             return convertView;
         }
     }
+
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
         super.onListItemClick(l, v, position, id);
@@ -102,5 +107,17 @@ public class BookCollectionActivity extends ListActivity {
         intent.putExtra(BookListActivity.EXTRA_BOOK_NUM, bookNum);
         intent.putExtra(BookListActivity.EXTRA_BOOK_INFO, bookInfo);
         startActivity(intent);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }
