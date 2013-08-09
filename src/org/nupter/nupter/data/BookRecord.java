@@ -4,22 +4,22 @@ import android.content.Context;
 import com.orm.SugarRecord;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-6
- * Time: 下午2:32
- * To change this template use File | Settings | File Templates.
+ *
+ * 图书Model
+ *
+ * @author WangTao
+ *
  */
-public class BookCollection extends SugarRecord<BookCollection> {
+public class BookRecord extends SugarRecord<BookRecord> {
     public String name;
     public String author;
     public String bookNum;
     public String bookInfo;
 
-    public BookCollection(Context ctx){
+    public BookRecord(Context ctx){
         super(ctx);
     }
-    public BookCollection(Context ctx, String name, String author, String bookNum , String bookInfo){
+    public BookRecord(Context ctx, String name, String author, String bookNum, String bookInfo){
         super(ctx);
         this.name = name;
         this.author = author;

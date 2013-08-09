@@ -23,6 +23,8 @@ import org.nupter.nupter.activity.MessageListActivity;
  */
 public class MyApplication extends SugarApp {
 
+    public static final boolean IS_DEBUG = true;
+
     private static Context context;
     private static MyApplication instance;
     public boolean m_bKeyRight = true;

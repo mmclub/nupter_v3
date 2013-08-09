@@ -11,7 +11,15 @@ import org.nupter.nupter.R;
 
 
 
-public class LibraryActivity extends Activity {
+
+/**
+ * 图书馆模块
+ *
+ * @author  WangTao
+ */
+
+
+public class BookActivity extends Activity {
 
     private Button searchBookButton;
     private EditText searchBookEditText;
@@ -27,7 +35,7 @@ public class LibraryActivity extends Activity {
         searchBookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String searchBookName = searchBookEditText.getText().toString();
-                Intent intent = new Intent(LibraryActivity.this, BookListActivity.class);
+                Intent intent = new Intent(BookActivity.this, BookListActivity.class);
                 intent.putExtra("searchBookName", searchBookName);
                 startActivity(intent);
             }
@@ -35,7 +43,7 @@ public class LibraryActivity extends Activity {
         showCollectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LibraryActivity.this, BookCollectionActivity.class);
+                Intent intent = new Intent(BookActivity.this, BookCollectionActivity.class);
                 startActivity(intent);
             }
         });

@@ -142,5 +142,11 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
     <string name="subtitle_activity_lost_and_found">寻物平台演示</string>
     <string name="title_activity_message_list">消息列表</string>
     <string name="subtitle_activity_message_list">历史推送消息</string>
+    <string name="title_activity_xianlin_area">仙林地区地图</string>
+    <string name="subtitle_activity_xianlin_area">仙林地区地图</string>
+    <string name="title_activity_nupt_draw">仙林校区手绘地图</string>
+    <string name="subtitle_activity_nupt_draw">仙林校区手绘地图</string>
+    <string name="title_activity_nupt_map">仙林校区地图</string>
+    <string name="subtitle_activity_nupt_map">仙林校区地图</string>
 
 </resources>

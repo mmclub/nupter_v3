@@ -11,28 +11,25 @@
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".MyApplication">
 
-        <activity android:name=".activity.BaiduMapActivity"></activity>
+        <activity android:name=".activity.MapBaiduActivity"></activity>
         <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.WelcomeActivity"/>
-        <activity android:name=".activity.LibraryActivity"/>
+        <activity android:name=".activity.BookActivity"/>
         <activity android:name=".activity.ClubActivity"/>
+        <activity android:name=".activity.ClubDetailActivity"/>
         <activity android:name=".activity.NewsActivity"/>
         <activity android:name=".activity.NewspaperActivity"/>
         <activity android:name=".activity.LifeAssistantActivity"/>
         <activity android:name=".activity.ClassTableActivity"/>
         <activity android:name=".activity.SettingActivity"/>
-        <activity android:name=".activity.MapActivity"/>
         <activity android:name=".activity.SchoolCardActivity"/>
         <activity android:name=".activity.BookListActivity"/>
         <activity android:name=".activity.BookViewActivity"/>
         <activity android:name=".activity.BookCollectionActivity"/>
         <activity android:name=".activity.MapListActivity"/>
-        <activity android:name=".activity.TouchImageViewActivity"/>
-        <activity android:name=".activity.TouchImageActivity"/>
+        <activity android:name=".activity.MapImageActivity"/>
         <activity android:name=".activity.NewspaperActivity"/>
-        <activity android:name=".activity.ParseActivity"/>
-        <activity android:name=".activity.SugarDBActivity"/>
-        <activity android:name=".activity.ImageLoaderActivity"/>
+
 
 
         <activity android:name=".activity.ActivityListActivity">

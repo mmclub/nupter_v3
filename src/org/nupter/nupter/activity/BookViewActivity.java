@@ -1,12 +1,5 @@
 package org.nupter.nupter.activity;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-6
- * Time: 上午11:13
- * To change this template use File | Settings | File Templates.
- */
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.nupter.nupter.R;
-import org.nupter.nupter.data.BookCollection;
+import org.nupter.nupter.data.BookRecord;
+
+
+
+/**
+ * @author WangTao
+ */
 
 public class BookViewActivity extends Activity {
     private String info;
@@ -50,13 +49,15 @@ public class BookViewActivity extends Activity {
 
         collectButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Boolean dataExit = BookCollection.find(BookCollection.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-                if (dataExit) {
-                    BookCollection bookCollection = new BookCollection(BookViewActivity.this, name, author, num, info);
-                    bookCollection.save();
-                    Boolean dataAdded = BookCollection.find(BookCollection.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-                    if (!dataAdded) {
-                        Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_LONG);
+
+                Boolean dataExit =  BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                if(dataExit){
+                    BookRecord bookRecord = new BookRecord(BookViewActivity.this, name, author, num, info);
+                    bookRecord.save();
+                    Boolean dataAdded = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                    if(!dataAdded){
+                        Toast toast1 =  Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_LONG);
+
                         toast1.show();
                     }
                 } else {

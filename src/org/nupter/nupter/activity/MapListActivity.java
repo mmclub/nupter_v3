@@ -2,22 +2,13 @@ package org.nupter.nupter.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.*;
-import com.baidu.platform.comapi.basestruct.GeoPoint;
-import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
-
-import java.io.IOException;
 
 /**
  * 校园地图的列表
@@ -39,18 +30,33 @@ public class MapListActivity extends Activity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
                 Intent intent = new Intent(MapListActivity.this, demos[index].demoClass);
+                if (demos[index].demoClass != MapBaiduActivity.class){
+                    intent.putExtra(MapImageActivity.EXTRA_IMAGE_ID, images[index]);
+                    intent.putExtra(MapImageActivity.EXTRA_IMAGE_TITLE, demos[index].title);
+                }
                 MapListActivity.this.startActivity(intent);
             }
         });
+
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
 
     private static final ActivityInfo[] demos = {
-            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
-            new ActivityInfo(R.string.title_activity_image, R.string.subtitle_activity_image, TouchImageViewActivity.class),
-            new ActivityInfo(R.string.title_activity_image2, R.string.subtitle_activity_image2, TouchImageActivity.class)
+            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapBaiduActivity.class),
+            new ActivityInfo(R.string.title_activity_xianlin_area, R.string.subtitle_activity_xianlin_area, MapImageActivity.class),
+            new ActivityInfo(R.string.title_activity_nupt_draw, R.string.subtitle_activity_nupt_draw, MapImageActivity.class),
+            new ActivityInfo(R.string.title_activity_nupt_map, R.string.subtitle_activity_nupt_map, MapImageActivity.class)
 
+    };
+
+    private static final int[] images = {
+            R.drawable.xianlin_area,
+            R.drawable.xianlin_area,
+            R.drawable.nupt_draw,
+            R.drawable.nupt_map
     };
 
 
@@ -101,5 +107,18 @@ public class MapListActivity extends Activity {
             this.desc = desc;
             this.demoClass = demoClass;
         }
+    }
+
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return super.onMenuItemSelected(featureId, item);
     }
 }
