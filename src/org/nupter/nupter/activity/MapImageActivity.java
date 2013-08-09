@@ -24,7 +24,7 @@ import org.nupter.nupter.utils.Log;
  *  intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_ID, R.drawable.image1);
  *  intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_TITLE, R.strings.image1);
  */
-public class ImageBrowserActivity extends Activity implements View.OnTouchListener {
+public class MapImageActivity extends Activity implements View.OnTouchListener {
 
 
     public static final String EXTRA_IMAGE_ID = "image_id";

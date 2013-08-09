@@ -17,6 +17,12 @@ import org.nupter.nupter.utils.Log;
 import java.util.List;
 
 
+/**
+ * 推送消息列表
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ */
+
 public class MessageListActivity extends ListActivity {
 
 

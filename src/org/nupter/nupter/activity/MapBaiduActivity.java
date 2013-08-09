@@ -24,7 +24,7 @@ import java.io.IOException;
  * 由百度地图Android SDK Demo修改而来
  */
 
-public class BaiduMapActivity extends Activity {
+public class MapBaiduActivity extends Activity {
 
     final static String TAG = "MainActivity";
     private MapView mMapView = null;
@@ -92,7 +92,7 @@ public class BaiduMapActivity extends Activity {
                 String title = "";
                 if (mapPoiInfo != null){
                     title = mapPoiInfo.strText;
-                    Toast.makeText(BaiduMapActivity.this, title, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapBaiduActivity.this, title, Toast.LENGTH_SHORT).show();
                     mMapController.animateTo(mapPoiInfo.geoPt);
                 }
             }
@@ -214,7 +214,7 @@ public class BaiduMapActivity extends Activity {
         protected boolean onTap(int index) {
             //在此处理item点击事件
             Log.d("item onTap: " + index);
-            Toast.makeText(BaiduMapActivity.this, this.getItem(index).getTitle(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MapBaiduActivity.this, this.getItem(index).getTitle(), Toast.LENGTH_SHORT).show();
 
             //pop demo
             //创建pop对象，注册点击事件监听接口

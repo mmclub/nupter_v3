@@ -16,9 +16,10 @@ import org.nupter.nupter.utils.Log;
 
 import static org.nupter.nupter.utils.NetworkUtils.isNewworkConnected;
 
-/*
+/**
+ * 社团模块一级菜单
  *
- * 社团模块 一级菜单
+ * @author SuDongsheng
  */
 public class ClubActivity extends Activity implements Runnable {
 

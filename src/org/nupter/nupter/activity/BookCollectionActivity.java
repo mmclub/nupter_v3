@@ -9,26 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.nupter.nupter.R;
-import org.nupter.nupter.data.BookCollection;
-import org.nupter.nupter.utils.Log;
+import org.nupter.nupter.data.BookRecord;
 
 import java.util.List;
-import java.util.Map;
+
 
 /**
- * Created with IntelliJ IDEA.
- * User: Foci
- * Date: 13-8-6
- * Time: 下午2:48
- * To change this template use File | Settings | File Templates.
+ * @author WangTao
  */
 public class BookCollectionActivity extends ListActivity {
-    List<BookCollection> bookCollections;
+    List<BookRecord> bookRecords;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bookCollections = BookCollection.listAll(BookCollection.class);
+        bookRecords = BookRecord.listAll(BookRecord.class);
         setListAdapter(new BookCollectionAdapter(this));
-        Boolean DataExit = bookCollections.isEmpty();
+        Boolean DataExit = bookRecords.isEmpty();
         if(DataExit){
             Toast toast = Toast.makeText(BookCollectionActivity.this, "还没有收藏", Toast.LENGTH_LONG);
             toast.show();
@@ -53,12 +48,12 @@ public class BookCollectionActivity extends ListActivity {
         @Override
         public int getCount() {
 
-            return bookCollections.size();  //To change body of implemented methods use File | Settings | File Templates.
+            return bookRecords.size();  //To change body of implemented methods use File | Settings | File Templates.
         }
 
         @Override
         public Object getItem(int arg0) {
-            return bookCollections.get(arg0);  //To change body of implemented methods use File | Settings | File Templates.
+            return bookRecords.get(arg0);  //To change body of implemented methods use File | Settings | File Templates.
         }
 
         @Override
@@ -85,19 +80,19 @@ public class BookCollectionActivity extends ListActivity {
                 holder = (BookViewHolder)convertView.getTag();
             }
 
-            holder.bookName.setText(bookCollections.get(position).name);
-            holder.bookAuthor.setText(bookCollections.get(position).author);
-            holder.bookNum.setText(bookCollections.get(position).bookNum);
+            holder.bookName.setText(bookRecords.get(position).name);
+            holder.bookAuthor.setText(bookRecords.get(position).author);
+            holder.bookNum.setText(bookRecords.get(position).bookNum);
             return convertView;
         }
     }
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
         super.onListItemClick(l, v, position, id);
-        String bookName = bookCollections.get(position).name;
-        String bookAuthor = bookCollections.get(position).author;
-        String bookNum = bookCollections.get(position).bookNum;
-        String bookInfo = bookCollections.get(position).bookInfo;
+        String bookName = bookRecords.get(position).name;
+        String bookAuthor = bookRecords.get(position).author;
+        String bookNum = bookRecords.get(position).bookNum;
+        String bookInfo = bookRecords.get(position).bookInfo;
         Intent intent = new Intent(BookCollectionActivity.this, BookViewActivity.class);
         intent.putExtra(BookListActivity.EXTRA_BOOK_NAME, bookName);
         intent.putExtra(BookListActivity.EXTRA_BOOK_AUTHOR, bookAuthor);

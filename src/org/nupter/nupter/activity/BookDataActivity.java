@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * @author WangTao
+ */
+
 public class BookDataActivity {
     public static List<Map<String, String>> getMaps() {
         List<Map<String, String>> listMaps = new ArrayList<Map<String, String>>();

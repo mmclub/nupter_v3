@@ -30,9 +30,9 @@ public class MapListActivity extends Activity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
                 Intent intent = new Intent(MapListActivity.this, demos[index].demoClass);
-                if (demos[index].demoClass != BaiduMapActivity.class){
-                    intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_ID, images[index]);
-                    intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_TITLE, demos[index].title);
+                if (demos[index].demoClass != MapBaiduActivity.class){
+                    intent.putExtra(MapImageActivity.EXTRA_IMAGE_ID, images[index]);
+                    intent.putExtra(MapImageActivity.EXTRA_IMAGE_TITLE, demos[index].title);
                 }
                 MapListActivity.this.startActivity(intent);
             }
@@ -45,10 +45,10 @@ public class MapListActivity extends Activity {
 
 
     private static final ActivityInfo[] demos = {
-            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, BaiduMapActivity.class),
-            new ActivityInfo(R.string.title_activity_xianlin_area, R.string.subtitle_activity_xianlin_area, ImageBrowserActivity.class),
-            new ActivityInfo(R.string.title_activity_nupt_draw, R.string.subtitle_activity_nupt_draw, ImageBrowserActivity.class),
-            new ActivityInfo(R.string.title_activity_nupt_map, R.string.subtitle_activity_nupt_map, ImageBrowserActivity.class)
+            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapBaiduActivity.class),
+            new ActivityInfo(R.string.title_activity_xianlin_area, R.string.subtitle_activity_xianlin_area, MapImageActivity.class),
+            new ActivityInfo(R.string.title_activity_nupt_draw, R.string.subtitle_activity_nupt_draw, MapImageActivity.class),
+            new ActivityInfo(R.string.title_activity_nupt_map, R.string.subtitle_activity_nupt_map, MapImageActivity.class)
 
     };
 

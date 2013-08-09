@@ -11,6 +11,11 @@ import org.nupter.nupter.utils.Log;
 
 /**
  *
+ * 载入一个网页的Activity
+ *
+ * 目前作用是为手机报具体内容提供服务
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
 public class WebviewActivity extends Activity {
 
