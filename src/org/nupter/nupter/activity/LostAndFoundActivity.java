@@ -1,6 +1,7 @@
 package org.nupter.nupter.activity;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +28,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
+@SuppressLint({ "NewApi", "ValidFragment" })
 public class LostAndFoundActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
