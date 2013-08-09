@@ -136,7 +136,7 @@ public class LostAndFoundActivity extends FragmentActivity {
             View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
             listView = (ListView) v.findViewById(R.id.showListView);
             SimpleAdapter adapter = new SimpleAdapter(LostAndFoundActivity.this, list,
-                    R.layout.view_pager_fragment, new String[]{"lostName",
+                    R.layout.item_publish_info, new String[]{"lostName",
                     "owner", "phone"},
                     new int[]{R.id.lostNameTextView, R.id.ownerTextView,
                             R.id.publishPhoneTextView});

@@ -23,6 +23,7 @@ public class BookCollectionActivity extends ListActivity {
     List<BookRecord> bookRecords;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
         bookRecords = BookRecord.listAll(BookRecord.class);
         setListAdapter(new BookCollectionAdapter(this));
         Boolean DataExit = bookRecords.isEmpty();
