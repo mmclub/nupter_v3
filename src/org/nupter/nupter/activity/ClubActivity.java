@@ -11,9 +11,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
-
+import org.nupter.nupter.utils.NetUtils;
 
 
 /**
@@ -77,12 +78,12 @@ public class ClubActivity extends Activity implements Runnable {
                 chooseIntent.putExtra("page_id",page_id);
                 startActivity(chooseIntent);
             } else
-                Log.d("目前没有网络连接");
+                Toast.makeText(ClubActivity.this, "网络接入出错，请检查网络", Toast.LENGTH_LONG).show();
         }
     };
     public void run() {
         while (true) {
-            check = true;
+            check = NetUtils.isNewworkConnected();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

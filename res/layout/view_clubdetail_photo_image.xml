@@ -4,13 +4,8 @@
               android:layout_height="fill_parent" android:scrollbars="vertical">
     <ImageView
             android:layout_height="100dip"
-            android:id="@+id/ItemImage"
+            android:id="@+id/ImageView"
             android:layout_width="80dip"
+            android:padding="3dp"
             android:layout_gravity="center_horizontal"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/ItemText"/>
 </LinearLayout>
