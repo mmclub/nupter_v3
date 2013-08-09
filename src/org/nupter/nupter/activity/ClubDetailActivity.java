@@ -1,6 +1,7 @@
 package org.nupter.nupter.activity;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import java.util.List;
  *
  * @author sudongsheng
  */
+@SuppressLint({ "ValidFragment", "NewApi" })
 public class ClubDetailActivity extends FragmentActivity {
     private final static int status = 1;
     private final static int blog = 2;
@@ -53,6 +55,8 @@ public class ClubDetailActivity extends FragmentActivity {
         fragmentList.add(new ViewPagerFragment("photos.getAlbums", 3));
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        
     }
 
 
