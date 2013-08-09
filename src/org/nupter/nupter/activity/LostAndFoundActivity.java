@@ -104,7 +104,7 @@ public class LostAndFoundActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
-            tv = (TextView)v.findViewById(R.id.textView);
+            tv = (TextView)v.findViewById(R.id.textview);
             tv.setText(text);
             return v;
         }
