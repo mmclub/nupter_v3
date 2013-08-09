@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10pt"
+            android:text="发布信息"
+            android:textSize="20sp"/>
+    <EditText
+            android:id="@+id/publishInfoEditText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
+            android:layout_gravity="center_horizontal"
+            android:hint="描述（捡到五分钱）" />
+    <EditText
+            android:id="@+id/publisherEditText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
+            android:layout_gravity="center_horizontal"
+            android:hint="写上你的大名"/>
+    <EditText
+            android:id="@+id/publishPhoneEditText"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
+            android:layout_gravity="center_horizontal"
+            android:hint="你的手机号"/>
+    <Button
+            android:id="@+id/publishButton"
+            android:layout_width="50pt"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15sp"
+            android:text="发布"/>
+
+</LinearLayout>

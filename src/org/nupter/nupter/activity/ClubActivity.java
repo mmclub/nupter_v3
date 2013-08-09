@@ -12,12 +12,16 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter; 
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
-import static org.nupter.nupter.utils.NetWorkUtils.isNewworkConnected;;
+import org.nupter.nupter.utils.Log;;
 
-/*
+
+
+
+
+/**
+ * 社团模块一级菜单
  *
- * 社团模块 一级菜单
+ * @author SuDongsheng
  */
 public class ClubActivity extends Activity implements Runnable {
 
@@ -75,12 +79,12 @@ public class ClubActivity extends Activity implements Runnable {
                 chooseIntent.putExtra("page_id",page_id);
                 startActivity(chooseIntent);
             } else
-                Log.i("目前没有网络连接");
+                Log.d("目前没有网络连接");
         }
     };
     public void run() {
         while (true) {
-            check = isNewworkConnected();
+            check = true;
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

@@ -6,9 +6,20 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import org.nupter.nupter.MyApplication;
 
 
+
+
+/**
+ * App信息辅助类
+ *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
+ */
+
 public class AppUtils {
 
     public static String getVersionName(Context context) {
+        /**
+         * 获取版本名称
+         */
         try {
 
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
@@ -20,6 +31,9 @@ public class AppUtils {
     }
 
     public static int getVersionCode(Context context) {
+        /**
+         * 获取版本号
+         */
         try {
 
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
