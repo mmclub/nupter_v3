@@ -32,7 +32,7 @@
             android:id="@+id/weatherIcon" 
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/defaultforecastred"
             android:layout_toLeftOf="@id/weatherTextView"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"/>

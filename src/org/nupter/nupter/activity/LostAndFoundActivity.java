@@ -1,7 +1,8 @@
 package org.nupter.nupter.activity;
 
 
-import android.content.Context;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -22,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.NetworkUtils;
+import org.nupter.nupter.utils.NetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,8 @@ import java.util.List;
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
+@SuppressLint({ "NewApi", "ValidFragment" })
+
 public class LostAndFoundActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -123,7 +126,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                     params.put("info", info);
                     params.put("publisher", publisher);
                     params.put("phone", phone);
-                    if (NetworkUtils.isNewworkConnected()) {
+                    if (NetUtils.isNewworkConnected()) {
                         client.post("url", params, new AsyncHttpResponseHandler() {
 
                         });

@@ -17,6 +17,7 @@
         <activity android:name=".activity.BookActivity"/>
         <activity android:name=".activity.ClubActivity"/>
         <activity android:name=".activity.ClubDetailActivity"/>
+        <activity android:name=".activity.ClubDetail_Photo_Activity"/>
         <activity android:name=".activity.NewsActivity"/>
         <activity android:name=".activity.NewspaperActivity"/>
         <activity android:name=".activity.LifeAssistantActivity"/>
@@ -28,7 +29,7 @@
         <activity android:name=".activity.BookCollectionActivity"/>
         <activity android:name=".activity.MapListActivity"/>
         <activity android:name=".activity.MapImageActivity"/>
-        <activity android:name=".activity.NewspaperActivity"/>
+        <activity android:name=".activity.NewsDetailActivity"/>
 
 
 

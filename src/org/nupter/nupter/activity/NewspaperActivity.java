@@ -1,5 +1,6 @@
 package org.nupter.nupter.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -25,6 +26,7 @@ import org.nupter.nupter.utils.Log;
  */
 
 
+@SuppressLint("NewApi")
 public class NewspaperActivity extends ListActivity {
 
     public static final String EXTRA_NEWSPAPER_JSON = "newspaper_json";
@@ -116,8 +118,6 @@ public class NewspaperActivity extends ListActivity {
     public void onUpdateSuccess(){
         Toast.makeText(this,PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext()).getString("json","null") , Toast.LENGTH_SHORT).show();
         setListAdapter(new MyAdapter(this));
-
-
     }
 
     @Override
