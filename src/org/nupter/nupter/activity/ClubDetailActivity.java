@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 绀惧洟妯″潡 浜岀骇鑿滃崟
+ * 社团模块 二级菜单
  *
  * @author sudongsheng
  */
@@ -53,9 +53,9 @@ public class ClubDetailActivity extends FragmentActivity {
         intent = getIntent();
         page_id = intent.getLongExtra("page_id", 0);
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
-        titleList.add("鐘舵€�");
-        titleList.add("鏃ュ織");
-        titleList.add("鐩稿唽");
+        titleList.add("状态");
+        titleList.add("日志");
+        titleList.add("相册");
         fragmentList.add(new StatusAndBlogFragment("status.gets", status));
         fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
         fragmentList.add(new PhotosFragment());
@@ -75,25 +75,18 @@ public class ClubDetailActivity extends FragmentActivity {
             this.titleList = titleList;
         }
 
-        /**
-         * 寰楀埌姣忎釜椤甸潰
-         */
         @Override
         public Fragment getItem(int arg0) {
             return (fragmentList == null || fragmentList.size() == 0) ? null : fragmentList.get(arg0);
         }
 
-        /**
-         * 姣忎釜椤甸潰鐨則itle
-         */
+
         @Override
         public CharSequence getPageTitle(int position) {
             return (titleList.size() > position) ? titleList.get(position) : "";
         }
 
-        /**
-         * 椤甸潰鐨勬€讳釜鏁�
-         */
+
         @Override
         public int getCount() {
             return fragmentList == null ? 0 : fragmentList.size();
@@ -121,9 +114,6 @@ public class ClubDetailActivity extends FragmentActivity {
             this.frameState = frameState;
         }
 
-        /**
-         * 瑕嗙洊姝ゅ嚱鏁帮紝鍏堥€氳繃inflater inflate鍑芥暟寰楀埌view鏈€鍚庤繑鍥�
-         */
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_status_blog_fragment, container, false);
@@ -144,7 +134,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                                 @Override
                                 public void onFailure(Throwable throwable, String s) {
-                                    Toast.makeText(getActivity(), "鑾峰彇浜轰汉鏁版嵁澶辫触", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                                 }
                             });
                 }
@@ -159,8 +149,8 @@ public class ClubDetailActivity extends FragmentActivity {
             listView.setOnPullEventListener(soundListener);
 
             progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("鍔姏鍔犺浇ing");
-            progressDialog.setMessage("浜轰汉缃慉PI璋冪毊浜嗐€傘€傘€�");
+            progressDialog.setTitle("努力加载ing");
+            progressDialog.setMessage("人人网API调皮了。。。");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
             msg = new ArrayList<HashMap<String, Object>>();
@@ -179,7 +169,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "鑾峰彇浜轰汉鏁版嵁澶辫触", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                         }
                     });
             return v;
@@ -245,8 +235,8 @@ public class ClubDetailActivity extends FragmentActivity {
             mPullRefreshGridView.setOnPullEventListener(soundListener);
 
             progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("鍔姏鍔犺浇ing");
-            progressDialog.setMessage("浜轰汉缃慉PI璋冪毊浜嗐€傘€傘€�");
+            progressDialog.setTitle("努力加载ing");
+            progressDialog.setMessage("人人网API调皮了。。。");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
             new AsyncHttpClient().post(url, null,
@@ -260,7 +250,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "鑾峰彇浜轰汉鏁版嵁澶辫触", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                         }
                     });
             // Set a listener to be invoked when the list should be refreshed.
@@ -281,7 +271,7 @@ public class ClubDetailActivity extends FragmentActivity {
                                 @Override
                                 public void onSuccess(String response) {
                                     if (response.equals("[]")) {
-                                        Toast.makeText(getActivity(), "鏈ㄦ湁鏇村浜嗐€傘€傘€備翰", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), "木有更多了。。。亲", Toast.LENGTH_LONG).show();
                                     } else {
                                         adapter.Update(response);
                                         adapter.notifyDataSetChanged();
@@ -291,7 +281,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                                 @Override
                                 public void onFailure(Throwable throwable, String s) {
-                                    Toast.makeText(getActivity(), "鑾峰彇浜轰汉鏁版嵁澶辫触", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                                     mPullRefreshGridView.onRefreshComplete();
                                 }
                             });
@@ -392,7 +382,7 @@ public class ClubDetailActivity extends FragmentActivity {
                     jsonObject = jsonArray.getJSONObject(position);
                     ImageLoader.getInstance().displayImage(jsonObject.getString("url"), holder.image);
                     holder.name.setText(jsonObject.getString("name"));
-                    holder.size.setText(jsonObject.getString("size") + "寮犵浉鐗�");
+                    holder.size.setText(jsonObject.getString("size") + "张相片");
                 } catch (Exception e) {
                 }
                 return convertView;
