@@ -30,9 +30,11 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 /**
- * 校园新闻板块主界面
+ * 校园新闻板块和教务公告板块的主界面
+ *
  * 
- * @author panlei
+ * @author panlei     e-mail:121531863@qq.com
+ *
  */
 @SuppressLint({ "ValidFragment", "NewApi" })
 public class NewsActivity extends FragmentActivity {
@@ -46,8 +48,8 @@ public class NewsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lifeassistant);
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
-        fragmentList.add(new ViewPagerFragment(EDU_NOTICE));
-        fragmentList.add(new ViewPagerFragment(SCH_NEWS));
+        fragmentList.add(new NoticeAndNewsFragment(EDU_NOTICE));
+        fragmentList.add(new NoticeAndNewsFragment(SCH_NEWS));
         titleList.add("教务公告");
         titleList.add("校园新闻");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),
@@ -95,7 +97,7 @@ public class NewsActivity extends FragmentActivity {
         }
     }
 
-    public class ViewPagerFragment extends Fragment {
+    public class NoticeAndNewsFragment extends Fragment {
 
         private JSONObject jsonObject;
         private int frameState;
@@ -108,7 +110,7 @@ public class NewsActivity extends FragmentActivity {
         private HashMap<String, Object> noticeMap;
         private JSONArray jsonArray;
 
-        public ViewPagerFragment(int frameState) {
+        public NoticeAndNewsFragment(int frameState) {
             super();
             this.frameState = frameState;
 
@@ -192,7 +194,7 @@ public class NewsActivity extends FragmentActivity {
 
                 @Override
                 public void onFailure(Throwable throwable, String s) {
-
+                    Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_LONG).show();
                 }
 
             });
