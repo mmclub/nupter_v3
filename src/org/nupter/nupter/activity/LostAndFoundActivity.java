@@ -33,6 +33,7 @@ import java.util.List;
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
+
 @SuppressLint({ "NewApi", "ValidFragment" })
 
 public class LostAndFoundActivity extends FragmentActivity {
@@ -60,7 +61,6 @@ public class LostAndFoundActivity extends FragmentActivity {
 
 
     }
-
 
 
     //三个Fragment滑动的Adapter
@@ -155,6 +155,13 @@ public class LostAndFoundActivity extends FragmentActivity {
             lostURL = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51fb961ac24e00d00f00197a/23242559860f76cb4a0fca233e4304a4/document_(2).json";
             lostList = new ArrayList<String>();
             AsyncHttpClient client = new AsyncHttpClient();
+            if (NetUtils.isNewworkConnected()) {
+                Toast toast = Toast.makeText(LostAndFoundActivity.this, "马上就好了", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                Toast toast = Toast.makeText(LostAndFoundActivity.this, "网络没有连接啊", Toast.LENGTH_SHORT);
+                toast.show();
+            }
             client.get(lostURL, null, new AsyncHttpResponseHandler() {
                 public void onSuccess(String response) {
                     try {
@@ -172,7 +179,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                 }
 
                 public void onFailure(Throwable throwable, String s) {
-                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "列表1获取失败", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "寻物获取失败", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             });
@@ -219,7 +226,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                 }
 
                 public void onFailure(Throwable throwable, String s) {
-                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "列表2获取失败", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "招领获取失败", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             });
@@ -277,7 +284,7 @@ public class LostAndFoundActivity extends FragmentActivity {
 //                return convertView;  //To change body of implemented methods use File | Settings | File Templates.
 //            }
 //        }
-   }
+    }
 
 
     @Override
@@ -288,6 +295,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                 break;
 
             default:
+
                 return super.onOptionsItemSelected(item);
         }
         return true;
