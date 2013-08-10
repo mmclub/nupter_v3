@@ -12,7 +12,9 @@ import org.nupter.nupter.MyApplication;
  * @author <a href="mailto:lxyweb@gmail.com、
  * ">Lin xiangyu</a>
  */
+
 public class NetUtils {
+
 
     public static boolean isNewworkConnected() {
 
@@ -25,19 +27,8 @@ public class NetUtils {
          *
          *      }
          */
-        ConnectivityManager conMgr = (ConnectivityManager) ((MyApplication.getAppContext()).getSystemService(Context.CONNECTIVITY_SERVICE));
+        return ((ConnectivityManager) MyApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;
 
-        if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
-                || conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
-
-
-            return true;
-        } else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
-                || conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
-            return false;
-
-        }
-        return false;
     }
 
 }
