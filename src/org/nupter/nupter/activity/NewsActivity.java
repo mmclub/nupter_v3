@@ -44,7 +44,7 @@ public class NewsActivity extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lifeassistant);
+        setContentView(R.layout.activity_lost_and_found);
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
         fragmentList.add(new ViewPagerFragment(EDU_NOTICE));
         fragmentList.add(new ViewPagerFragment(SCH_NEWS));
@@ -120,9 +120,9 @@ public class NewsActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.activity_news,
+            View v = inflater.inflate(R.layout.view_status_blog_fragment,
                     container, false);
-            listView = (ListView) v.findViewById(R.id.newsListview);
+            listView = (ListView) v.findViewById(R.id.pull_refresh_list);
             intent = new Intent();
             noticeList = new ArrayList<HashMap<String, Object>>();
 
@@ -149,7 +149,7 @@ public class NewsActivity extends FragmentActivity {
                                     jsonObject.getString("title"));
                             noticeMap.put("Time", 
                                     jsonObject.getString("time"));
-                            noticeList.add(noticeMap);}
+                            noticeList.add(noticeMap);
 
                             noticeAdapter = new SimpleAdapter(getActivity(),
                                     noticeList, R.layout.view_notice_news,
@@ -181,7 +181,7 @@ public class NewsActivity extends FragmentActivity {
 
                             });
 
-                        
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
