@@ -18,11 +18,11 @@ import org.nupter.nupter.utils.Log;
  * 图片浏览Activyt
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
- *
- * 启动此Actrivity的intent应传入图片的资源id和图片标题id，如
- *
- *  intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_ID, R.drawable.image1);
- *  intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_TITLE, R.strings.image1);
+ *         <p/>
+ *         启动此Actrivity的intent应传入图片的资源id和图片标题id，如
+ *         <p/>
+ *         intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_ID, R.drawable.image1);
+ *         intent.putExtra(ImageBrowserActivity.EXTRA_IMAGE_TITLE, R.strings.image1);
  */
 public class MapImageActivity extends Activity implements View.OnTouchListener {
 
@@ -49,10 +49,9 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
     float dist = 1f;
 
 
-
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
@@ -61,6 +60,7 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
         }
         return super.onMenuItemSelected(featureId, item);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,16 +69,18 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
 
         imgView = (ImageView) findViewById(R.id.imag);// 获取控件
 
-        Log.d(getIntent().getStringExtra(EXTRA_IMAGE_TITLE));
 
-        setTitle(getString(getIntent().getIntExtra(EXTRA_IMAGE_TITLE, R.string.title_activity_xianlin_area)));
+        String title = getString(getIntent().getIntExtra(EXTRA_IMAGE_TITLE, R.string.title_activity_xianlin_area));
+
+
+        setTitle(title);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Toast.makeText(this, "双指拖动可缩放图片~", Toast.LENGTH_SHORT).show();
 
 
-        bitmap = BitmapFactory.decodeResource(getResources(),getIntent().getIntExtra(EXTRA_IMAGE_ID, R.drawable.xianlin_area));// 获取图片资源
+        bitmap = BitmapFactory.decodeResource(getResources(), getIntent().getIntExtra(EXTRA_IMAGE_ID, R.drawable.xianlin_area));// 获取图片资源
         imgView.setImageBitmap(bitmap);// 填充控件
         imgView.setOnTouchListener(this);// 设置触屏监听
         dm = new DisplayMetrics();

@@ -23,17 +23,16 @@ public class WebviewActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
+        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
+
+
         setContentView(R.layout.activity_webview);
 
         WebView webView = (WebView) findViewById(R.id.webView);
 
 
-        /**
-         * 下面的代码用于在载入网页地时候显示加载进度条
-         */
-
-        this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
-        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 //Make the bar disappear after URL is loaded, and changes string to Loading...

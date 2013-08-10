@@ -18,12 +18,12 @@
             android:layout_height="fill_parent"
             android:layout_toRightOf="@id/headimg">
         <TextView
-                android:id="@+id/msgcontent"
+                android:id="@+id/msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="all"/>
         <TextView
-                android:id="@+id/msgtime"
+                android:id="@+id/time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="10dp"

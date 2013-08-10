@@ -7,12 +7,17 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
+
+import android.widget.SimpleAdapter; 
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
+import android.widget.Toast;
+import org.nupter.nupter.utils.NetUtils;
+
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 
 
@@ -25,7 +30,7 @@ public class ClubActivity extends Activity implements Runnable {
 
     private Intent chooseIntent;
     private boolean check;
-    private Thread checknet;
+    private Thread checkNet;
     private ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
     private SimpleAdapter simple = null;
 
@@ -33,8 +38,9 @@ public class ClubActivity extends Activity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club);
 
-        checknet = new Thread(ClubActivity.this);
-        checknet.start();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        checkNet = new Thread(ClubActivity.this);
+        checkNet.start();
 
         // 生成动态数组，并且传入数据
         setAssociations();
@@ -46,43 +52,10 @@ public class ClubActivity extends Activity implements Runnable {
                 R.id.ItemImage, R.id.ItemText});
         mGridView.setAdapter(simple);
         mGridView.setOnItemClickListener(onItemClickListener);
-    }/*---------------------------------------------------------------------*/
-
-    private GridView.OnItemClickListener onItemClickListener = new GridView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            long page_id = -1;
-            switch (position) {
-                case 0:
-                    page_id = 600907477;
-                    break;
-                case 1:
-                    page_id = 601003549;
-                    break;
-                case 2:
-                    page_id = 600889745;
-                    break;
-                case 3:
-                    page_id = 601017224;
-                    break;
-                case 4:
-                    page_id = 600490284;
-                    break;
-                default:
-                    break;
-            }
-
-            if (check) {
-                chooseIntent = new Intent();
-                chooseIntent.setClass(ClubActivity.this, ClubDetailActivity.class);
-                chooseIntent.putExtra("page_id",page_id);
-                startActivity(chooseIntent);
-            } else
-                Log.d("目前没有网络连接");
-        }
-    };
+    }
     public void run() {
         while (true) {
-            check = true;
+            check = NetUtils.isNewworkConnected();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -112,5 +85,47 @@ public class ClubActivity extends Activity implements Runnable {
         map4.put("ItemText", "校学生会");
         lstImageItem.add(map4);
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
 
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+    private GridView.OnItemClickListener onItemClickListener = new GridView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            long page_id = -1;
+            switch (position) {
+                case 0:
+                    page_id = 600907477;
+                    break;
+                case 1:
+                    page_id = 601003549;
+                    break;
+                case 2:
+                    page_id = 600889745;
+                    break;
+                case 3:
+                    page_id = 601017224;
+                    break;
+                case 4:
+                    page_id = 600490284;
+                    break;
+                default:
+                    break;
+            }
+
+            if (check) {
+                chooseIntent = new Intent();
+                chooseIntent.setClass(ClubActivity.this, ClubDetailActivity.class);
+                chooseIntent.putExtra("page_id",page_id);
+                startActivity(chooseIntent);
+            } else
+                Toast.makeText(ClubActivity.this, "网络接入出错，请检查网络", Toast.LENGTH_LONG).show();
+        }
+    };
 }
