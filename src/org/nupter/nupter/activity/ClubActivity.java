@@ -17,6 +17,8 @@ import org.nupter.nupter.R;
 import android.widget.Toast;
 import org.nupter.nupter.utils.NetUtils;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 
 
 /**
