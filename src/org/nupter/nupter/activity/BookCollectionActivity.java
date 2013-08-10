@@ -31,7 +31,7 @@ public class BookCollectionActivity extends ListActivity {
         setListAdapter(new BookCollectionAdapter(this));
         Boolean DataExit = bookRecords.isEmpty();
         if(DataExit){
-            Toast toast = Toast.makeText(BookCollectionActivity.this, "还没有收藏", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(BookCollectionActivity.this, "还没有收藏", Toast.LENGTH_SHORT);
             toast.show();
         } else {
             setListAdapter(new BookCollectionAdapter(this));

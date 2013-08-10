@@ -1,6 +1,7 @@
 package org.nupter.nupter.activity;
 
 
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,19 +10,23 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.*;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.NetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 寻物平台
@@ -29,11 +34,13 @@ import java.util.Map;
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
 @SuppressLint({ "NewApi", "ValidFragment" })
+
 public class LostAndFoundActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
-
+    private JSONArray jsonArray;
+    private String lostURL, foundURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +48,8 @@ public class LostAndFoundActivity extends FragmentActivity {
         setContentView(R.layout.activity_lost_and_found);
 
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
-        fragmentList.add(new ViewPagerFragment(BookDataActivity.getLostList()));
-        fragmentList.add(new ViewPagerFragment(BookDataActivity.getLostList()));
+        fragmentList.add(new LostInfoFragment());
+        fragmentList.add(new FoundInfoFragment());
         fragmentList.add(new PublishFragment());
         titleList.add("寻物");
         titleList.add("招领");
@@ -55,6 +62,8 @@ public class LostAndFoundActivity extends FragmentActivity {
     }
 
 
+
+    //三个Fragment滑动的Adapter
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
@@ -92,7 +101,7 @@ public class LostAndFoundActivity extends FragmentActivity {
     }
 
 
-    //相当于写一个展示列表的ListActivity
+    //发布信息的Fragment
     public class PublishFragment extends Fragment {
         EditText infoEditText, publisherEditText, phoneEditText;
         String info, publisher, phone;
@@ -112,6 +121,20 @@ public class LostAndFoundActivity extends FragmentActivity {
                     info = infoEditText.getText().toString();
                     publisher = publisherEditText.getText().toString();
                     phone = phoneEditText.getText().toString();
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    RequestParams params = new RequestParams();
+                    params.put("info", info);
+                    params.put("publisher", publisher);
+                    params.put("phone", phone);
+                    if (NetUtils.isNewworkConnected()) {
+                        client.post("url", params, new AsyncHttpResponseHandler() {
+
+                        });
+                    } else {
+                        Toast toast = Toast.makeText(LostAndFoundActivity.this, "网络还没连接哦", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
                 }
             });
 
@@ -120,32 +143,142 @@ public class LostAndFoundActivity extends FragmentActivity {
         }
     }
 
-    public class ViewPagerFragment extends Fragment {
+    //展示寻物的Fragment
+    public class LostInfoFragment extends Fragment {
 
-        private List<Map<String, String>> list;
+        private List<String> lostList;
         private ListView listView;
 
-        public ViewPagerFragment(List<Map<String, String>> list) {
-            super();
-            this.list = list;
-        }
-
-        /**
-         * 覆盖此函数，先通过inflater inflate函数得到view最后返回
-         */
-        @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
-            listView = (ListView) v.findViewById(R.id.showListView);
-            SimpleAdapter adapter = new SimpleAdapter(LostAndFoundActivity.this, list,
-                    R.layout.item_publish_info, new String[]{"lostName",
-                    "owner", "phone"},
-                    new int[]{R.id.lostNameTextView, R.id.ownerTextView,
-                            R.id.publishPhoneTextView});
-            listView.setAdapter(adapter);
+            listView = (ListView) v.findViewById(R.id.textView);
+            lostURL = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51fb961ac24e00d00f00197a/23242559860f76cb4a0fca233e4304a4/document_(2).json";
+            lostList = new ArrayList<String>();
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(lostURL, null, new AsyncHttpResponseHandler() {
+                public void onSuccess(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        jsonArray = jsonObject.getJSONArray("array");
+                        for (int i = 0; i < jsonArray.length(); i++)
+                            lostList.add(jsonArray.getString(i));
+                        Log.d("Test_json", lostList.toString());
+                        listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.view_lost, lostList));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                public void onFailure(Throwable throwable, String s) {
+                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "列表1获取失败", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+
+//            SimpleAdapter adapter = new SimpleAdapter(LostAndFoundActivity.this, list,
+//                    R.layout.item_publish_info, new String[]{"lostName",
+//                    "owner", "phone"},
+//                    new int[]{R.id.lostNameTextView, R.id.ownerTextView,
+//                            R.id.publishPhoneTextView});
             return v;
         }
+
     }
+
+    //展示招领的Fragment
+    public class FoundInfoFragment extends Fragment {
+
+        private List<String> foundList;
+        private ListView listView;
+
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
+            listView = (ListView) v.findViewById(R.id.textView);
+            foundList = new ArrayList<String>();
+            foundURL = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51fb961ac24e00d00f00197a/7c4c4b97569dc1f804acb76acf792abd/DOCUMENT(3).json";
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(foundURL, null, new AsyncHttpResponseHandler() {
+                public void onSuccess(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        jsonArray = jsonObject.getJSONArray("array");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            foundList.add(jsonArray.getString(i));
+                        }
+                        Log.d("Test_json", foundList.toString());
+                        //listView.setAdapter(new lostListAdapter(LostAndFoundActivity.this));
+                        listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.view_found, foundList));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                public void onFailure(Throwable throwable, String s) {
+                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "列表2获取失败", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
+
+//            SimpleAdapter adapter = new SimpleAdapter(LostAndFoundActivity.this, list,
+//                    R.layout.item_publish_info, new String[]{"lostName",
+//                    "owner", "phone"},
+//                    new int[]{R.id.lostNameTextView, R.id.ownerTextView,
+//                            R.id.publishPhoneTextView});
+            return v;
+        }
+//        public final class LostViewHolder {
+//            public TextView title;
+//        }
+//        private class lostListAdapter extends BaseAdapter {
+//            private LayoutInflater lostInflater;
+//
+//            public lostListAdapter(Context context) {
+//                this.lostInflater = LayoutInflater.from(context);
+//            }
+//
+//            @Override
+//            public int getCount() {
+//                return lostList.size();  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//
+//            @Override
+//            public Object getItem(int i) {
+//                return lostList.get(i);  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//
+//            @Override
+//            public long getItemId(int i) {
+//                return 0;  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup viewGroup) {
+//                LostViewHolder holder = null;
+//                if (convertView == null) {
+//
+//                    holder = new LostViewHolder();
+//
+//                    convertView = lostInflater.inflate(R.layout.view_lost, null);
+//                    holder.title = (TextView) convertView.findViewById(R.id.TextView);
+//                    convertView.setTag(holder);
+//
+//                } else {
+//
+//                    holder = (LostViewHolder) convertView.getTag();
+//                }
+//                holder.title.setText(lostList.get(position));
+//
+//                return convertView;  //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//        }
+   }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
