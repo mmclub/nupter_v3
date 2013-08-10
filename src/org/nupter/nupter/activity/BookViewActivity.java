@@ -58,12 +58,12 @@ public class BookViewActivity extends Activity {
                     bookRecord.save();
                     Boolean dataAdded = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
                     if(!dataAdded){
-                        Toast toast1 =  Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_LONG);
+                        Toast toast1 =  Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_SHORT);
 
                         toast1.show();
                     }
                 } else {
-                    Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏过了", Toast.LENGTH_LONG);
+                    Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏过了", Toast.LENGTH_SHORT);
                     toast1.show();
                 }
             }
