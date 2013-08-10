@@ -16,6 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -96,18 +100,16 @@ public class ClubDetailActivity extends FragmentActivity {
         }
     }
 
-    public class StatusAndBlogFragment extends Fragment implements AbsListView.OnScrollListener {
+    public class StatusAndBlogFragment extends Fragment {
 
         private ProgressDialog progressDialog;
         private JSONArray jsonArray;
         private JSONObject jsonObject;
         private int frameState;
-        private int lastItem;
-        private int scrollState;
         private String url = "https://api.renren.com/restserver.do?call_id=204763&" +
                 "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&" +
                 "format=json&count=10&v=1.0";
-        private ListView listView = null;
+        private PullToRefreshListView listView = null;
         private SimpleAdapter adapter = null;
         ArrayList<HashMap<String, Object>> msg;
         private HashMap<String, Object> map;
@@ -125,16 +127,44 @@ public class ClubDetailActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_status_blog_fragment, container, false);
-            listView = (ListView) v.findViewById(R.id.listview);
-            listView.setOnScrollListener(this);
+            listView = (PullToRefreshListView) v.findViewById(R.id.pull_refresh_list);
+            // Add an end-of-list listener
+            listView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+
+                @Override
+                public void onLastItemVisible() {
+                    url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
+                    new AsyncHttpClient().post(url, null,
+                            new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    msg(response);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onFailure(Throwable throwable, String s) {
+                                    Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
+            });
+            /**
+             * Add Sound Event Listener
+             */
+            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
+            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+            listView.setOnPullEventListener(soundListener);
+
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("努力加载ing");
             progressDialog.setMessage("人人网API调皮了。。。");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
             msg = new ArrayList<HashMap<String, Object>>();
-
-            setimg();
+            setImg();
             new AsyncHttpClient().post(url, null,
                     new AsyncHttpResponseHandler() {
                         @Override
@@ -155,7 +185,7 @@ public class ClubDetailActivity extends FragmentActivity {
             return v;
         }
 
-        private void setimg() {
+        private void setImg() {
             if (page_id == 600490284)
                 img = R.drawable.shetuan_xxsh;
             else if (page_id == 600889745)
@@ -166,33 +196,6 @@ public class ClubDetailActivity extends FragmentActivity {
                 img = R.drawable.shetuan_xkx;
             else if (page_id == 600907477)
                 img = R.drawable.shetuan_qcny;
-        }
-
-        @Override
-        public void onScroll(AbsListView absListView, int i, int i2, int i3) {
-            lastItem = i + i2;
-
-        }
-
-        @Override
-        public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-            this.scrollState = scrollState;
-            if (lastItem >= adapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
-                new AsyncHttpClient().post(url, null,
-                        new AsyncHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(String response) {
-                                msg(response);
-                                adapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onFailure(Throwable throwable, String s) {
-                                Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
-                            }
-                        });
-            }
         }
 
         public void msg(String response) {
@@ -218,19 +221,29 @@ public class ClubDetailActivity extends FragmentActivity {
         }
     }
 
-    public class PhotosFragment extends Fragment{
+    public class PhotosFragment extends Fragment {
         private String url = "https://api.renren.com/restserver.do?call_id=204763&" +
                 "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&" +
-                "format=json&count=18&v=1.0";
-        private GridView gridView;
+                "format=json&count=12&v=1.0";
         private MyAdapter adapter;
         private ProgressDialog progressDialog;
+        private PullToRefreshGridView mPullRefreshGridView;
+        private int page, before_page = 1;
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_photos_fragment, container, false);
-            url=url+"&page_id="+page_id+"&method=photos.getAlbums";
-            gridView = (GridView) v.findViewById(R.id.gridView);
-            gridView.setOnItemClickListener(onItemClickListener);
+            url = url + "&page_id=" + page_id + "&method=photos.getAlbums";
+            mPullRefreshGridView = (PullToRefreshGridView) v.findViewById(R.id.pull_refresh_grid);
+            mPullRefreshGridView.setOnItemClickListener(onItemClickListener);
+            /**
+             * Add Sound Event Listener
+             */
+            SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(getActivity());
+            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+            mPullRefreshGridView.setOnPullEventListener(soundListener);
+
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("努力加载ing");
             progressDialog.setMessage("人人网API调皮了。。。");
@@ -240,8 +253,8 @@ public class ClubDetailActivity extends FragmentActivity {
                     new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(String response) {
-                            adapter=new MyAdapter(getActivity(), response);
-                            gridView.setAdapter(adapter);
+                            adapter = new MyAdapter(getActivity(), response);
+                            mPullRefreshGridView.setAdapter(adapter);
                             progressDialog.dismiss();
                         }
 
@@ -250,6 +263,42 @@ public class ClubDetailActivity extends FragmentActivity {
                             Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                         }
                     });
+            // Set a listener to be invoked when the list should be refreshed.
+            mPullRefreshGridView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+                @Override
+                public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+                    mPullRefreshGridView.onRefreshComplete();
+                }
+                @Override
+                public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                    page = adapter.getCount() / 12 + 1;
+                    if (page != (before_page + 1)) {
+                        page++;
+                    }
+                    String url_update = url + "&page=" + page;
+                    new AsyncHttpClient().post(url_update, null,
+                            new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    if (response.equals("[]")) {
+                                        Toast.makeText(getActivity(), "木有更多了。。。亲", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        adapter.Update(response);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                    mPullRefreshGridView.onRefreshComplete();
+                                }
+
+                                @Override
+                                public void onFailure(Throwable throwable, String s) {
+                                    Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                    mPullRefreshGridView.onRefreshComplete();
+                                }
+                            });
+                    before_page = page;
+                }
+
+            });
             return v;
         }
 
@@ -265,18 +314,19 @@ public class ClubDetailActivity extends FragmentActivity {
             private String aid;
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                aid=adapter.getItem(position);
-                get_url_photo=url.substring(0,url.length()-6)+"&aid="+aid;
-                Intent photo_intent=new Intent();
-                photo_intent.putExtra("get_url_photo",get_url_photo);
-                photo_intent.setClass(ClubDetailActivity.this,ClubDetail_Photo_Activity.class);
+                aid = adapter.getItem(position);
+                get_url_photo = url.substring(0, url.length() - 6) + "&aid=" + aid;
+                Intent photo_intent = new Intent();
+                photo_intent.putExtra("get_url_photo", get_url_photo);
+                photo_intent.setClass(ClubDetailActivity.this, ClubDetail_Photo_Activity.class);
                 startActivity(photo_intent);
             }
         };
+
         public class MyAdapter extends BaseAdapter {
 
             private LayoutInflater inflater;
-            private JSONArray jsonArray;
+            private JSONArray jsonArray, jsonArray2;
             private JSONObject jsonObject;
 
 
@@ -284,6 +334,16 @@ public class ClubDetailActivity extends FragmentActivity {
                 this.inflater = LayoutInflater.from(context);
                 try {
                     jsonArray = new JSONArray(response);
+                } catch (Exception e) {
+                }
+            }
+
+            public void Update(String result) {
+                try {
+                    jsonArray2 = new JSONArray(result);
+                    for (int i = 0; i < jsonArray2.length(); i++) {
+                        jsonArray.put(jsonArray2.getJSONObject(i));
+                    }
                 } catch (Exception e) {
                 }
             }
@@ -332,7 +392,7 @@ public class ClubDetailActivity extends FragmentActivity {
                     jsonObject = jsonArray.getJSONObject(position);
                     ImageLoader.getInstance().displayImage(jsonObject.getString("url"), holder.image);
                     holder.name.setText(jsonObject.getString("name"));
-                    holder.size.setText(jsonObject.getString("size")+"张相片");
+                    holder.size.setText(jsonObject.getString("size") + "张相片");
                 } catch (Exception e) {
                 }
                 return convertView;
@@ -342,7 +402,6 @@ public class ClubDetailActivity extends FragmentActivity {
         }
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
