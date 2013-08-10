@@ -28,7 +28,7 @@ public class ClubActivity extends Activity implements Runnable {
 
     private Intent chooseIntent;
     private boolean check;
-    private Thread checknet;
+    private Thread checkNet;
     private ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
     private SimpleAdapter simple = null;
 
@@ -36,8 +36,9 @@ public class ClubActivity extends Activity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club);
 
-        checknet = new Thread(ClubActivity.this);
-        checknet.start();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        checkNet = new Thread(ClubActivity.this);
+        checkNet.start();
 
         // 生成动态数组，并且传入数据
         setAssociations();

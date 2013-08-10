@@ -122,7 +122,7 @@ public class NewsActivity extends FragmentActivity {
                 Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_status_blog_fragment,
                     container, false);
-            listView = (ListView) v.findViewById(R.id.listview);
+            listView = (ListView) v.findViewById(R.id.pull_refresh_list);
             intent = new Intent();
             noticeList = new ArrayList<HashMap<String, Object>>();
 

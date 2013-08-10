@@ -41,6 +41,8 @@ public class ClubDetail_Photo_Activity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clubdetail_photo);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         intent = getIntent();
         get_url_photo = intent.getStringExtra("get_url_photo");
         mGridView = (PullToRefreshGridView) findViewById(R.id.pull_refresh_grid_photo);
