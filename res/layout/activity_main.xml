@@ -3,97 +3,123 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="#ffffff">
+              android:background="@drawable/main_background">
               
     <RelativeLayout 
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="#2c3e50"
+        android:layout_height="70dp"
         >
-        
+        <ImageView
+                android:id="@+id/weatherIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/defaultforecastred"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"/>
+        <TextView
+                android:id="@+id/weatherTextView"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/weatherIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天气状况"
+                android:textColor="#f6f7f7"
+                android:textSize="16sp"/>
+        <TextView
+                android:id="@+id/tempTextView"
+                android:layout_below="@id/weatherTextView"
+                android:layout_toRightOf="@id/weatherIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="气温"
+                android:textColor="#f6f7f7"
+                android:textSize="16sp"/>
         
 
+
         <TextView
+            android:id="@+id/tipsTextView"
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
+            android:text="今日提示"
+            android:textColor="#f6f7f7"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/weekdayTextView"
+            android:layout_below="@id/tipsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/app_name"
-            android:textSize="20sp" />
-        
+            android:layout_alignRight="@id/tipsTextView"
+            android:text="日期-时间"
+            android:textColor="#f6f7f7"
+            android:textSize="16sp"/>
         <TextView
-            android:id="@+id/weatherTextView"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginRight="20dp"
-            android:text="气温"/>
-      
-        <ImageView
-            android:id="@+id/weatherIcon" 
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/defaultforecastred"
-            android:layout_toLeftOf="@id/weatherTextView"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"/>
-         <TextView
-            android:id="@+id/cityTextView"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/weatherIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginRight="5dp"
-            android:text="城市"/>
+                android:id="@+id/dateTextView"
+                android:layout_toLeftOf="@id/weekdayTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/weekdayTextView"
+                android:text="date"
+                android:textColor="#f6f7f7"
+                android:textSize="16sp"/>
 
-"
+
+
+
     </RelativeLayout>
     
     <ScrollView 
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        >
       <LinearLayout 
           android:layout_width="fill_parent"
           android:layout_height="fill_parent"
           android:orientation="horizontal"
-          >
+          android:layout_marginLeft="25dp">
 
           <LinearLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="vertical" 
-              android:layout_weight="50">
+              android:orientation="vertical" >
 
               <ImageButton
                   android:id="@+id/libraryIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp"
-                  android:layout_marginTop="30dp"
-                  
-                   />
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+
+                  android:background="@drawable/library_imagebutton"
+                  />
 
               <ImageButton
                   android:id="@+id/lifeAssistantIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp"
-                  
-                  android:layout_marginTop="15dp"/>
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/lifeassistant_imagebutton"/>
 
               <ImageButton
                   android:id="@+id/associationIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp" 
-                  
-                  android:layout_marginTop="15dp"
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/association_imagebutton"
                   />
               <ImageButton
                   android:id="@+id/lostAndFoundIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp" 
-                  
-                  android:layout_marginTop="15dp"
-                  android:onClick="click"
-                  />
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/lostandfound_imagebutton"/>
               
           </LinearLayout>
           
@@ -101,35 +127,49 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:layout_weight="50"
-              android:layout_marginLeft="20dp">
+              android:layout_marginLeft="5dp">
 
               <ImageButton
                   android:id="@+id/schedulIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp"
-                  android:layout_marginTop="30dp"
-                   />
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:background="@drawable/schedule_imagebutton"/>
 
               <ImageButton
                   android:id="@+id/nuptNewsIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp"
-                  
-                  android:layout_marginTop="15dp"/>
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/nuptnews_imagebutton"/>
 
               <ImageButton
                   android:id="@+id/newspaperIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp" 
-                  
-                  android:layout_marginTop="15dp"/>
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/newspaper_imagebutton"/>
               <ImageButton
                   android:id="@+id/schoolMapIB"
-                  android:layout_width="120dp"
-                  android:layout_height="80dp" 
-                 
-                  android:layout_marginTop="15dp"/>
+                  android:layout_width="100dp"
+                  android:layout_height="90dp"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/schoolmap_imagebutton"/>
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:layout_marginLeft="25dp">
+
+              <ImageButton
+                  android:id="@+id/setIB"
+                  android:layout_width="50dp"
+                  android:layout_height="50dp"
+                  android:background="@drawable/set_imagebutton"
+                  />
+
+
           </LinearLayout>
           
       </LinearLayout>

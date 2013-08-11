@@ -10,6 +10,15 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ *
+ * 校园新闻与教务公告的二级菜单
+ * 主要用于显示新闻内容
+ *
+ * @author panlei       e-mail:121531863@qq.com
+ *
+ */
+
 @SuppressLint("NewApi")
 public class NewsDetailActivity extends Activity{
     
