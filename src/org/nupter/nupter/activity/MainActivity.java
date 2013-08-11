@@ -39,8 +39,12 @@ public class MainActivity extends Activity {
     private ImageButton newspaperIB;
     private ImageButton lostAndFoundIB;
     private ImageButton schoolMapIB;
+    private ImageButton setIB;
     private TextView weatherTV;
-    private TextView cityTV;
+    private TextView tempTV;
+    private TextView tipsTV;
+    private TextView dateTV;
+    private TextView weekdayTV;
     private ImageView weatherIcon;
    
     @Override
@@ -57,8 +61,12 @@ public class MainActivity extends Activity {
         newspaperIB = (ImageButton)findViewById(R.id.newspaperIB);
         lostAndFoundIB = (ImageButton)findViewById(R.id.lostAndFoundIB);
         schoolMapIB = (ImageButton)findViewById(R.id.schoolMapIB);
+        setIB =(ImageButton)findViewById(R.id.setIB);
         weatherTV = (TextView)findViewById(R.id.weatherTextView);
-        cityTV = (TextView)findViewById(R.id.cityTextView);
+        tempTV = (TextView)findViewById(R.id.tempTextView);
+        tipsTV = (TextView)findViewById(R.id.tipsTextView);
+        dateTV = (TextView)findViewById(R.id.dateTextView);
+        weekdayTV = (TextView)findViewById(R.id.weekdayTextView);
         weatherIcon = (ImageView)findViewById(R.id.weatherIcon);
         
         
@@ -70,6 +78,7 @@ public class MainActivity extends Activity {
         newspaperIB.setOnClickListener(IBListener);
         lostAndFoundIB.setOnClickListener(IBListener);
         schoolMapIB.setOnClickListener(IBListener);
+        setIB.setOnClickListener(IBListener);
       
         
         new NanjingWeather().getNanjingWeather();
@@ -123,7 +132,12 @@ public class MainActivity extends Activity {
                 break;
             case R.id.schoolMapIB:
                  
-                intent.setClass(MainActivity.this, MapBaiduActivity.class);
+                intent.setClass(MainActivity.this, MapListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.setIB:
+
+                intent.setClass(MainActivity.this,SettingActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -143,120 +157,36 @@ public class MainActivity extends Activity {
        public String getNanjingWeather(){
            AsyncHttpClient client = new AsyncHttpClient();
            client.get(FUTURE_WEATHER_URL, new AsyncHttpResponseHandler() {
+
+               private  int [] strWeather = new int[]{R.drawable.a_0,R.drawable.a_1,R.drawable.a_2 ,
+                       R.drawable.a_3,R.drawable.a_4,R.drawable.a_5,R.drawable.a_6,R.drawable.a_7,
+                       R.drawable.a_8,R.drawable.a_9,R.drawable.a_10,R.drawable.a_11,R.drawable.a_12,
+                       R.drawable.a_13,R.drawable.a_14,R.drawable.a_15,R.drawable.a_16,R.drawable.a_17,
+                       R.drawable.a_18,R.drawable.a_19,R.drawable.a_20,R.drawable.a_21,R.drawable.a_22,
+                       R.drawable.a_23,R.drawable.a_24,R.drawable.a_25,R.drawable.a_26,R.drawable.a_27,
+                       R.drawable.a_28,R.drawable.a_29,R.drawable.a_30,R.drawable.a_31} ;
                @Override
                public void onSuccess(String response) {
                    Log.d("tag",response);
+
                    try
                    {
                        JSONObject jsonObject = new JSONObject(response).getJSONObject("weatherinfo");
-                       String city = jsonObject.getString("city");
+                       String weather = jsonObject.getString("weather1");
                        int weathericon =jsonObject.getInt("img1");
                        String template = jsonObject.getString("temp1");
+                       String tips = jsonObject.getString("index48_d");
+                       String date = jsonObject.getString("date_y");
+                       String weekday = jsonObject.getString("week");
                        
-                       weatherTV.setText(template);
-                       cityTV.setText(city);
-                       
-                       switch (weathericon) {
-                    case 0:
-                        weatherIcon.setImageResource(R.drawable.a_0);
-                        break;
-                    case 1:
-                        weatherIcon.setImageResource(R.drawable.a_1);
-                        break;
-                    case 2:
-                        weatherIcon.setImageResource(R.drawable.a_2);
-                        break;
-                    case 3:
-                        weatherIcon.setImageResource(R.drawable.a_3);
-                        break;
-                    case 4:
-                        weatherIcon.setImageResource(R.drawable.a_4);
-                        break;
-                    case 5:
-                        weatherIcon.setImageResource(R.drawable.a_5);
-                        break;
-                    case 6:
-                        weatherIcon.setImageResource(R.drawable.a_6);
-                        break;
-                    case 7:
-                        weatherIcon.setImageResource(R.drawable.a_7);
-                        break;
-                    case 8:
-                        weatherIcon.setImageResource(R.drawable.a_8);
-                        break;
-                    case 9:
-                        weatherIcon.setImageResource(R.drawable.a_9);
-                        break;
-                    case 10:
-                        weatherIcon.setImageResource(R.drawable.a_10);
-                        break;
-                    case 11:
-                        weatherIcon.setImageResource(R.drawable.a_11);
-                        break;
-                    case 12:
-                        weatherIcon.setImageResource(R.drawable.a_12);
-                        break;
-                    case 13:
-                        weatherIcon.setImageResource(R.drawable.a_13);
-                        break;
-                    case 14:
-                        weatherIcon.setImageResource(R.drawable.a_14);
-                        break;
-                    case 15:
-                        weatherIcon.setImageResource(R.drawable.a_15);
-                        break;
-                    case 16:
-                        weatherIcon.setImageResource(R.drawable.a_16);
-                        break;
-                    case 17:
-                        weatherIcon.setImageResource(R.drawable.a_17);
-                        break;
-                    case 18:
-                        weatherIcon.setImageResource(R.drawable.a_18);
-                        break;
-                    case 19:
-                        weatherIcon.setImageResource(R.drawable.a_19);
-                        break;
-                    case 20:
-                        weatherIcon.setImageResource(R.drawable.a_20);
-                        break;
-                    case 21:
-                        weatherIcon.setImageResource(R.drawable.a_21);
-                        break;
-                    case 22:
-                        weatherIcon.setImageResource(R.drawable.a_22);
-                        break;
-                    case 23:
-                        weatherIcon.setImageResource(R.drawable.a_23);
-                        break;
-                    case 24:
-                        weatherIcon.setImageResource(R.drawable.a_24);
-                        break;
-                    case 25:
-                        weatherIcon.setImageResource(R.drawable.a_25);
-                        break;
-                    case 26:
-                        weatherIcon.setImageResource(R.drawable.a_26);
-                        break;
-                    case 27:
-                        weatherIcon.setImageResource(R.drawable.a_27);
-                        break;
-                    case 28:
-                        weatherIcon.setImageResource(R.drawable.a_28);
-                        break;
-                    case 29:
-                        weatherIcon.setImageResource(R.drawable.a_29);
-                        break;
-                    case 30:
-                        weatherIcon.setImageResource(R.drawable.a_30);
-                        break;
-                    case 31:
-                        weatherIcon.setImageResource(R.drawable.a_31);
-                        break;
+                       weatherTV.setText(weather);
+                       tempTV.setText(template);
+                       weatherIcon.setImageResource(strWeather[weathericon]);
+                       tipsTV.setText(tips);
+                       dateTV.setText(date);
+                       weekdayTV.setText(weekday);
 
-                    default:
-                        break;
-                    }
+
                    }
                    catch (JSONException e)
                    {

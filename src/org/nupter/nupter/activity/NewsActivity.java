@@ -46,7 +46,7 @@ public class NewsActivity extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_and_found);
+        setContentView(R.layout.activity_news_viewpager);
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
         fragmentList.add(new NoticeAndNewsFragment(EDU_NOTICE));
         fragmentList.add(new NoticeAndNewsFragment(SCH_NEWS));
@@ -122,9 +122,9 @@ public class NewsActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.view_status_blog_fragment,
+            View v = inflater.inflate(R.layout.activity_news,
                     container, false);
-            listView = (ListView) v.findViewById(R.id.pull_refresh_list);
+            listView = (ListView) v.findViewById(R.id.newsListview);
             intent = new Intent();
             noticeList = new ArrayList<HashMap<String, Object>>();
 
