@@ -134,12 +134,15 @@ public class NewsActivity extends FragmentActivity {
             } else {
                 myUrl = URL_NEWS;
             }
+            Toast.makeText(getActivity(),"玩命加载中...",Toast.LENGTH_LONG).show();
 
             client.get(myUrl, null, new AsyncHttpResponseHandler() {
 
                 public void onSuccess(String response) {
 
                     try {
+
+
                         jsonArray = new JSONObject(response)
                                 .getJSONArray("array");
                         for (int i = 0; i < jsonArray.length(); i++) {

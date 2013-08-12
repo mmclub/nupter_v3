@@ -25,7 +25,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 /**
  * 主界面Activity
  *
- * @author Panlei
+ * @author Panlei   e-mail: 121531863@qq.com
  *
  */
 
@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
     private ImageButton lostAndFoundIB;
     private ImageButton schoolMapIB;
     private ImageButton setIB;
+    private ImageButton refreshIB;
     private TextView weatherTV;
     private TextView tempTV;
     private TextView tipsTV;
@@ -62,6 +63,7 @@ public class MainActivity extends Activity {
         lostAndFoundIB = (ImageButton)findViewById(R.id.lostAndFoundIB);
         schoolMapIB = (ImageButton)findViewById(R.id.schoolMapIB);
         setIB =(ImageButton)findViewById(R.id.setIB);
+        refreshIB =(ImageButton)findViewById(R.id.refreshIB);
         weatherTV = (TextView)findViewById(R.id.weatherTextView);
         tempTV = (TextView)findViewById(R.id.tempTextView);
         tipsTV = (TextView)findViewById(R.id.tipsTextView);
@@ -79,6 +81,12 @@ public class MainActivity extends Activity {
         lostAndFoundIB.setOnClickListener(IBListener);
         schoolMapIB.setOnClickListener(IBListener);
         setIB.setOnClickListener(IBListener);
+        refreshIB.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             new   NanjingWeather().getNanjingWeather();
+            }
+        });
       
         
         new NanjingWeather().getNanjingWeather();

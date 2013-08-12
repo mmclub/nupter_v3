@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:text="天气状况"
                 android:textColor="#f6f7f7"
-                android:textSize="16sp"/>
+                android:textSize="12sp"/>
         <TextView
                 android:id="@+id/tempTextView"
                 android:layout_below="@id/weatherTextView"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="气温"
                 android:textColor="#f6f7f7"
-                android:textSize="16sp"/>
+                android:textSize="12sp"/>
         
 
 
@@ -51,7 +51,7 @@
             android:singleLine="true"
             android:text="今日提示"
             android:textColor="#f6f7f7"
-            android:textSize="16sp"/>
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/weekdayTextView"
@@ -59,18 +59,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/tipsTextView"
-            android:text="日期-时间"
+            android:text="加载中..."
             android:textColor="#f6f7f7"
-            android:textSize="16sp"/>
+            android:textSize="12sp"/>
         <TextView
                 android:id="@+id/dateTextView"
                 android:layout_toLeftOf="@id/weekdayTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/weekdayTextView"
-                android:text="date"
+                android:text="玩命"
                 android:textColor="#f6f7f7"
-                android:textSize="16sp"/>
+                android:textSize="12sp"/>
 
 
 
@@ -168,6 +168,12 @@
                   android:layout_height="50dp"
                   android:background="@drawable/set_imagebutton"
                   />
+              <ImageButton
+                  android:id="@+id/refreshIB"
+                  android:layout_width="40dp"
+                  android:layout_height="40dp"
+                  android:layout_marginTop="150dp"
+                  android:background="@drawable/refresh_imagebutton"/>
 
 
           </LinearLayout>
@@ -181,3 +187,4 @@
 
 </LinearLayout>
 
+      <!--@author  panlei  e-mail:121531863@qq.com-->

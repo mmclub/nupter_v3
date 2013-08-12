@@ -9,18 +9,23 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:scrollbars="none"
-                    android:background="#2980b9"
-                    android:layout_margin="5dp" >
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/lifecontent_background" >
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:orientation="vertical"
+                        android:layout_margin="5dp">
+
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             android:layout_marginTop="0dp"
                             
                             android:gravity="center_vertical"
@@ -31,14 +36,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                            
                             android:text="@string/route107" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="165路"
@@ -48,14 +53,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                           
                             android:text="@string/route165" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="177路"
@@ -65,14 +70,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/route177" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
                             
                             android:gravity="center_vertical"
                             android:text="东上路"
@@ -82,14 +86,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/routeDS" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="97路"
@@ -99,14 +103,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/route97" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="310路"
@@ -116,14 +120,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
                             
                             android:text="@string/route310" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="108路"
@@ -133,14 +136,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/route108" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="146路"
@@ -150,14 +153,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/route146" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="D1路"
@@ -167,7 +170,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/routeD1" />
                     </LinearLayout>
