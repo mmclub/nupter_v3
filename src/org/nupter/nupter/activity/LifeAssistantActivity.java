@@ -18,6 +18,7 @@ import android.widget.ImageView;
  *  生活小秘书板块主界面
  *
  *  @author panlei e-mail:121531863@qq.com
+ *
 */
 
 

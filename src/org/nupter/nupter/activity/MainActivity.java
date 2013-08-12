@@ -108,11 +108,11 @@ public class MainActivity extends Activity {
                 intent.setClass(MainActivity.this, BookActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.schedulIB:
+            case R.id.schedulIB:
                  
-                intent2.setClass(MainActivity.this, ScheduleActivity.class);
-                startActivity(intent2);
-                break;*/
+                intent.setClass(MainActivity.this, ClassTableActivity.class);
+                startActivity(intent);
+                break;
             case R.id.lifeAssistantIB:
                  
                 intent.setClass(MainActivity.this, LifeAssistantActivity.class);

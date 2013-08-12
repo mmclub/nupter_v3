@@ -23,7 +23,6 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:clickable="true"
-                android:padding="5dip"
                 android:src="@drawable/guide_dot_gray" />
 
         <ImageView
@@ -32,7 +31,6 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
-                android:padding="5dip"
                 android:src="@drawable/point_imagebutton" />
 
         <ImageView
@@ -41,7 +39,6 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
-                android:padding="5dip"
                 android:src="@drawable/point_imagebutton" />
 
         <ImageView
@@ -50,7 +47,6 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
-                android:padding="5dip"
                 android:src="@drawable/point_imagebutton" />
 
 
