@@ -50,8 +50,22 @@ public class LifeAssistantActivity extends Activity {
         initView();
 
         initData();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
   }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
     private void initView() {
         //实例化各个界面的布局对象
         LayoutInflater mLi = LayoutInflater.from(this);
@@ -185,6 +199,7 @@ public class LifeAssistantActivity extends Activity {
         public void destroyItem(ViewGroup  view, int position, Object arg2) {
             ((ViewPager) view).removeView(views.get(position));
         }
+
 
     }
 
