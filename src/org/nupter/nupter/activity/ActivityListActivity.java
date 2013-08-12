@@ -68,8 +68,8 @@ public class ActivityListActivity extends Activity {
             TextView desc = (TextView) convertView.findViewById(R.id.desc);
             if (demos[index].demoClass == MainActivity.class
                     ) {
-                title.setTextColor(Color.YELLOW);
-                desc.setTextColor(Color.YELLOW);
+                title.setTextColor(Color.BLUE);
+                desc.setTextColor(Color.BLUE);
             }
             title.setText(demos[index].title);
             desc.setText(demos[index].desc);
