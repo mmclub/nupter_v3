@@ -13,7 +13,6 @@ import org.nupter.nupter.R;
 import org.nupter.nupter.data.BookRecord;
 
 
-
 /**
  * 图书的具体视图
  *
@@ -47,19 +46,22 @@ public class BookViewActivity extends Activity {
         bookAuthorTextView.setText("作者：" + author);
         bookNumTextView.setText("书号：" + num);
         bookInfoTextView.setText(info);
-
+        Boolean dataExit = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+        if (!dataExit){
+            collectButton.setBackgroundResource(R.drawable.icon_collected);
+        }
 
         collectButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                Boolean dataExit =  BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-                if(dataExit){
+                Boolean dataExit = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                if (dataExit) {
                     BookRecord bookRecord = new BookRecord(BookViewActivity.this, name, author, num, info);
                     bookRecord.save();
                     Boolean dataAdded = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-                    if(!dataAdded){
-                        Toast toast1 =  Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_SHORT);
-
+                    if (!dataAdded) {
+                        collectButton.setBackgroundResource(R.drawable.icon_collected);
+                        Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_SHORT);
                         toast1.show();
                     }
                 } else {
