@@ -62,7 +62,7 @@ public class LifeAssistantActivity extends Activity {
        titleList.add("作息时间");
        
             
-       viewPager.setAdapter(new myAdapter());
+       viewPager.setAdapter(new MyPaperAdapter());
        this.getActionBar().setDisplayHomeAsUpEnabled(true);
        
       
@@ -70,7 +70,7 @@ public class LifeAssistantActivity extends Activity {
       }
     
     
-    class myAdapter extends PagerAdapter{
+    class MyPaperAdapter extends PagerAdapter{
 
         @Override
         public int getCount() {
