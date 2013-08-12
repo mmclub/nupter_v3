@@ -20,7 +20,7 @@ public class WelcomeActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //去掉标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
@@ -32,7 +32,7 @@ public class WelcomeActivity extends Activity {
                 startActivity(intent);
                 WelcomeActivity.this.finish();
             }
-        }, 1000);
+        }, 2000);
     }
 
 

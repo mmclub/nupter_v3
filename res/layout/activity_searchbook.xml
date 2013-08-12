@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="我的收藏"
-                android:textColor="@color/actionBar_blue"
+                android:textColor="@color/blue_bar"
                 android:textSize="20sp"></TextView>
         <ListView
                 android:id="@android:id/list"

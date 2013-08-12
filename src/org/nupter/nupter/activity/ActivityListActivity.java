@@ -43,6 +43,7 @@ public class ActivityListActivity extends Activity {
 
     private static final ActivityInfo[] demos = {
             new ActivityInfo(R.string.title_activity_main, R.string.subtitle_activity_main, MainActivity.class),
+            new ActivityInfo(R.string.title_activity_classtable, R.string.subtitle_activity_classtable, ClassTableActivity.class),
             new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapListActivity.class),
             new ActivityInfo(R.string.title_activity_welcome, R.string.subtitle_activity_welcome, WelcomeActivity.class),
             new ActivityInfo(R.string.title_activity_lifeassistant, R.string.subtitle_activity_lifeassistant, LifeAssistantActivity.class),
@@ -68,8 +69,8 @@ public class ActivityListActivity extends Activity {
             TextView desc = (TextView) convertView.findViewById(R.id.desc);
             if (demos[index].demoClass == MainActivity.class
                     ) {
-                title.setTextColor(Color.YELLOW);
-                desc.setTextColor(Color.YELLOW);
+                title.setTextColor(Color.BLUE);
+                desc.setTextColor(Color.BLUE);
             }
             title.setText(demos[index].title);
             desc.setText(demos[index].desc);

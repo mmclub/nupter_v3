@@ -4,12 +4,12 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header android:fragment="org.nupter.nupter.activity.SettingActivity$Prefs1Fragment"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/icon_launcher"
             android:title="Prefs 1"
             android:summary="An example of some preferences." />
 
     <header android:fragment="org.nupter.nupter.activity.SettingActivity$Prefs2Fragment"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/icon_launcher"
             android:title="Prefs 2"
             android:summary="Some other preferences you can see.">
         <!-- Arbitrary key/value pairs can be included with a header as
@@ -17,7 +17,7 @@
         <extra android:name="someKey" android:value="someHeaderValue" />
     </header>
 
-    <header android:icon="@drawable/ic_launcher"
+    <header android:icon="@drawable/icon_launcher"
             android:title="Intent"
             android:summary="Launches an Intent.">
         <intent android:action="android.intent.action.VIEW"

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-       <color name="background_grey">#ffffff</color>
-       <color name="actionBar_blue">#3399cc</color>
-       <color name="deep_blue">#0066cc</color>
-       <color name="black">#000000</color>
+
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#0000ff</color>
+    <color name="white">#ffffff</color>
+    <color name="blue_bar">#3399cc</color>
+    <color name="black">#000000</color>
 </resources>
