@@ -8,7 +8,11 @@
     
     
     <ScrollView     
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/lifecontent_background"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:scrollbars="none" >
@@ -16,14 +20,14 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:orientation="vertical"
+                        android:layout_margin="5dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             android:layout_marginTop="0dp"
-                           
                             android:gravity="center_vertical"
                             android:text="图书馆补充"
                             
@@ -32,14 +36,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/tushuguanbuchong" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="起居指南"
@@ -49,14 +53,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/qijuzhinan" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="25dp"
+
                             
                             android:gravity="center_vertical"
                             android:text="通信指南"
@@ -66,7 +70,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="25dp"
+
                             
                             android:text="@string/tongxinzhinan" />
                     </LinearLayout>

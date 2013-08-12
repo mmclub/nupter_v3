@@ -9,7 +9,7 @@
               android:targetSdkVersion="17"/>
 
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".MyApplication" android:theme="@style/MyTheme">
+    <application android:label="@string/app_name" android:icon="@drawable/icon_launcher" android:name=".MyApplication" android:theme="@style/MyTheme">
 
         <activity android:name=".activity.MapBaiduActivity" android:label="@string/title_activity_xianlin_area"></activity>
         <activity android:name=".activity.MainActivity"></activity>
