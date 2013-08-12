@@ -5,28 +5,60 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
-    <LinearLayout
+    <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="10dp"
+            android:paddingTop="21dp"
+            android:background="@drawable/searchbook_bg"
             android:orientation="horizontal">
-        <EditText
-                android:id="@+id/searchBookEditText"
-                android:layout_weight="1"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/input_search_book"/>
         <Button
                 android:id="@+id/searchBookBtton"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/library_search_btn"/>
+        <EditText
+                android:id="@+id/searchBookEditText"
+                android:layout_width="fill_parent"
+                android:layout_height="34dp"
+                android:paddingLeft="3dp"
+                android:background="@drawable/searchbook_eidt_bg"
+                android:layout_toLeftOf="@id/searchBookBtton"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textCursorDrawable="@null"
+                android:cursorVisible="true"
+                android:hint="@string/input_search_book"/>
+    </RelativeLayout>
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/collection_bg"
+            android:paddingTop="30dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="40dp"
+            android:orientation="vertical">
+        <TextView
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_search_book"/>
+                android:layout_marginBottom="5dp"
+                android:text="我的收藏"
+                android:textColor="@color/actionBar_blue"
+                android:textSize="20sp"></TextView>
+        <ListView
+                android:id="@android:id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                ></ListView>
+
     </LinearLayout>
-        <Button
-                android:id="@+id/showCollectionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
-                android:text="@string/show_collection"/>
-  </LinearLayout>
+</LinearLayout>

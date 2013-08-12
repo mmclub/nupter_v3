@@ -15,29 +15,53 @@ public class BookDataActivity {
         List<Map<String, String>> listMaps = new ArrayList<Map<String, String>>();
 
         Map<String, String> map1 = new HashMap<String, String>();
-        map1.put("bookName", "Android");
+        map1.put("bookName", "《Android》");
         map1.put("bookAuthor", "Hello");
         map1.put("bookNum", "AK47");
 
         Map<String, String> map2 = new HashMap<String, String>();
-        map2.put("bookName", "IOS");
+        map2.put("bookName", "《IOS》");
         map2.put("bookAuthor", "World");
         map2.put("bookNum", "AK48");
 
         Map<String, String> map3 = new HashMap<String, String>();
-        map3.put("bookName", "Java");
+        map3.put("bookName", "《Java》");
         map3.put("bookAuthor", "Are");
         map3.put("bookNum", "AK49");
 
         Map<String, String> map4 = new HashMap<String, String>();
-        map4.put("bookName", "PHP");
+        map4.put("bookName", "《PHP》");
         map4.put("bookAuthor", "You");
         map4.put("bookNum", "AK50");
+
+        Map<String, String> map5 = new HashMap<String, String>();
+        map5.put("bookName", "《Android 2.0》");
+        map5.put("bookAuthor", "Hello");
+        map5.put("bookNum", "AK47");
+
+        Map<String, String> map6 = new HashMap<String, String>();
+        map6.put("bookName", "《IOS 2.0》");
+        map6.put("bookAuthor", "World");
+        map6.put("bookNum", "AK48");
+
+        Map<String, String> map7 = new HashMap<String, String>();
+        map7.put("bookName", "《Java 2.0》");
+        map7.put("bookAuthor", "Are");
+        map7.put("bookNum", "AK49");
+
+        Map<String, String> map8 = new HashMap<String, String>();
+        map8.put("bookName", "《PHP 2.0》");
+        map8.put("bookAuthor", "You");
+        map8.put("bookNum", "AK50");
 
         listMaps.add(map1);
         listMaps.add(map2);
         listMaps.add(map3);
         listMaps.add(map4);
+        listMaps.add(map5);
+        listMaps.add(map6);
+        listMaps.add(map7);
+        listMaps.add(map8);
 
         return listMaps;
     }
