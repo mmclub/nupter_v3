@@ -2,17 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    >
-    
+    android:orientation="vertical"
+   >
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp">
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:src="@drawable/busroute_title" />
     <ScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="300dp"
+                    android:layout_height="380dp"
                     android:scrollbars="none"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="25dp"
-                    android:layout_marginRight="10dp"
+
                     android:background="@drawable/lifecontent_background" >
 
                     <LinearLayout
@@ -27,24 +33,24 @@
                             android:layout_height="match_parent"
 
                             android:layout_marginTop="0dp"
-                            
+                            android:drawableLeft="@drawable/littlepoint"
                             android:gravity="center_vertical"
                             android:text="107路"
-                            
+                            android:textColor="#FFFFFF"
                             android:textSize="8pt" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                           
+                            android:textColor="#FFFFFF"
                             android:text="@string/route107" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            
+                            android:textColor="#FFFFFF"
+                            android:drawableLeft="@drawable/littlepoint"
                             android:gravity="center_vertical"
                             android:text="165路"
                             
@@ -54,47 +60,47 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                          
+                            android:textColor="#FFFFFF"
                             android:text="@string/route165" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            
+                            android:textColor="#FFFFFF"
                             android:gravity="center_vertical"
                             android:text="177路"
-                            
+                            android:drawableLeft="@drawable/littlepoint"
                             android:textSize="8pt" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            
+                            android:textColor="#FFFFFF"
                             android:text="@string/route177" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            
+                            android:textColor="#FFFFFF"
                             android:gravity="center_vertical"
                             android:text="东上路"
-                            
+                            android:drawableLeft="@drawable/littlepoint"
                             android:textSize="8pt" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            
+                            android:textColor="#FFFFFF"
                             android:text="@string/routeDS" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            
+                            android:textColor="#FFFFFF"
+                            android:drawableLeft="@drawable/littlepoint"
                             android:gravity="center_vertical"
                             android:text="97路"
                             
@@ -103,15 +109,15 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textColor="#FFFFFF"
                             
                             android:text="@string/route97" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            
+                            android:textColor="#FFFFFF"
+                            android:drawableLeft="@drawable/littlepoint"
                             android:gravity="center_vertical"
                             android:text="310路"
                             
@@ -120,14 +126,14 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            
+                            android:textColor="#FFFFFF"
                             android:text="@string/route310" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            
+                            android:drawableLeft="@drawable/littlepoint"
+                            android:textColor="#FFFFFF"
                             android:gravity="center_vertical"
                             android:text="108路"
                             
@@ -136,7 +142,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textColor="#FFFFFF"
                             
                             android:text="@string/route108" />
                         
@@ -144,24 +150,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            
+                            android:textColor="#FFFFFF"
                             android:gravity="center_vertical"
                             android:text="146路"
-                            
+                            android:drawableLeft="@drawable/littlepoint"
                             android:textSize="8pt" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            
+                            android:textColor="#FFFFFF"
                             android:text="@string/route146" />
                         
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-
-                            
+                            android:drawableLeft="@drawable/littlepoint"
+                            android:textColor="#FFFFFF"
                             android:gravity="center_vertical"
                             android:text="D1路"
                             
@@ -171,10 +177,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            
+                            android:textColor="#FFFFFF"
                             android:text="@string/routeD1" />
                     </LinearLayout>
                 </ScrollView>
-    
 
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:src="@drawable/bottomline" />
 </LinearLayout>
+    </LinearLayout>

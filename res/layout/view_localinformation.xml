@@ -3,15 +3,22 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-     >
-    <ScrollView
+    >
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:src="@drawable/localinformation_title" />
+    <ScrollView
+
             android:background="@drawable/lifecontent_background"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="300dp"
+            android:layout_height="380dp"
             android:scrollbars="none" >
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -24,11 +31,14 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="邮局"
-                    android:textSize="8pt" />
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
                    <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/youju"/>
+                    android:text="@string/youju"
+                    android:textColor="#FFFFFF"/>
                     
                    <TextView
                         android:layout_width="match_parent"
@@ -36,97 +46,121 @@
                         android:gravity="center_vertical"
                         android:text="派出所"
                         android:textSize="8pt"
-                        android:layout_gravity="right|top"/>
+                        android:layout_gravity="right|top"
+                        android:textColor="#FFFFFF"
+                        android:drawableLeft="@drawable/littlepoint"/>
                   <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/paichusuo"/>
+                    android:text="@string/paichusuo"
+                    android:textColor="#FFFFFF"/>
                  <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="超市"
-                    android:textSize="8pt"/>
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/chaoshi"/>
+                    android:text="@string/chaoshi"
+                    android:textColor="#FFFFFF"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/youju" />
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="金融服务"
-                    android:textSize="8pt"/>
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="25dp"
-                    
-                    android:text="@string/jinrongfuwu"/>
+                    android:textColor="#FFFFFF"
+                    android:text="@string/jinrongfuwu"
+                        />
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="医院"
-                    android:textSize="8pt"/>
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/yiyuan"/>
+                    android:text="@string/yiyuan"
+                    android:textColor="#FFFFFF"/>
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="美容美发"
-                    android:textSize="8pt"/>
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/meirongmeifa"/>
+                    android:text="@string/meirongmeifa"
+                    android:textColor="#FFFFFF"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="药店"
-                    android:textSize="8pt" />
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/yaodian" />
+                    android:text="@string/yaodian"
+                    android:textColor="#FFFFFF"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="配钥匙"
-                    android:textSize="8pt" />
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/peiyaoshi" />
+                    android:text="@string/peiyaoshi"
+                    android:textColor="#FFFFFF"
+                    />
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="修车点"
-                    android:textSize="8pt"/>
+                    android:textSize="8pt"
+                    android:textColor="#FFFFFF"
+                    android:drawableLeft="@drawable/littlepoint"/>
                 <TextView 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/xiuchedian"/>
+                    android:text="@string/xiuchedian"
+                    android:textColor="#FFFFFF"/>
                 
                 </LinearLayout>
                 </ScrollView>
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:src="@drawable/bottomline" />
             
-            
-    
+           </LinearLayout>
 
 </LinearLayout>

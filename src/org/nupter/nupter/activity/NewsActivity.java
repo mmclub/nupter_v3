@@ -134,7 +134,7 @@ public class NewsActivity extends FragmentActivity {
             } else {
                 myUrl = URL_NEWS;
             }
-            Toast.makeText(getActivity(),"玩命加载中...",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"玩命加载中...",Toast.LENGTH_SHORT).show();
 
             client.get(myUrl, null, new AsyncHttpResponseHandler() {
 
@@ -197,7 +197,7 @@ public class NewsActivity extends FragmentActivity {
 
                 @Override
                 public void onFailure(Throwable throwable, String s) {
-                    Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
                 }
 
             });
@@ -207,12 +207,7 @@ public class NewsActivity extends FragmentActivity {
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item = menu.add(1, 1, 1, "Refresh");
-        item.setIcon(android.R.drawable.ic_menu_rotate);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return super.onCreateOptionsMenu(menu);
-    }
+
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -221,7 +216,7 @@ public class NewsActivity extends FragmentActivity {
             onBackPressed();
             break;
         default:
-            Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+
 
             break;
         }
