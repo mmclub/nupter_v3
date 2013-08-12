@@ -9,22 +9,22 @@
             android:layout_height="wrap_content"
             android:paddingTop="50dp"
             android:text="用户名"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
 
     <EditText
-            android:id="@+id/name"
+            android:id="@+id/username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:singleLine="true"
-            android:textSize="15dp" />
+            android:textSize="15dp"/>
 
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="密码"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
 
     <EditText
             android:id="@+id/password"
@@ -34,16 +34,21 @@
             android:paddingRight="20dp"
             android:password="true"
             android:singleLine="true"
-            android:textSize="15dp" />
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="验证码"
-            android:textSize="16dp" />
-    <com.ant.liao.GifView
-            android:id="@+id/ImageView"
+            android:textSize="15dp"/>
+    <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="验证码"
+                android:textSize="16dp"/>
+        <com.ant.liao.GifView
+                android:id="@+id/gifView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
     <EditText
             android:id="@+id/identify"
             android:layout_width="fill_parent"
@@ -51,11 +56,11 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:singleLine="true"
-            android:textSize="15dp" />
+            android:textSize="15dp"/>
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
         <Button
                 android:id="@+id/login"
@@ -65,10 +70,10 @@
                 android:text="登陆"/>
 
         <Button
-                android:id="@+id/notnetlogin"
+                android:id="@+id/localLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="45dp"
                 android:text="离线查看"/>
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -26,7 +26,7 @@ public class NetUtils {
          *      } else {
          *
          *      }
-         */
+        */
         return ((ConnectivityManager) MyApplication.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;
 
     }
