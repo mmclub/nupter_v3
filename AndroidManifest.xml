@@ -21,9 +21,10 @@
         <activity android:name=".activity.NewsActivity"/>
         <activity android:name=".activity.NewspaperActivity"/>
         <activity android:name=".activity.LifeAssistantActivity"/>
-        <activity android:name=".activity.ClassTableActivity"/>
+        <activity android:name=".activity.LoginScheduleActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.SchoolCardActivity"/>
+        <activity android:name=".activity.ScheduleActivity"/>
         <activity android:name=".activity.BookListActivity"/>
         <activity android:name=".activity.BookViewActivity"/>
         <activity android:name=".activity.BookCollectionActivity"/>
