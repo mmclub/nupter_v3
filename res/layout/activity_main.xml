@@ -169,6 +169,13 @@
                   android:background="@drawable/set_imagebutton"
                   />
               <ImageButton
+                      android:id="@+id/smsIB"
+                  android:layout_width="30dp"
+                  android:layout_height="25dp"
+                  android:layout_marginLeft="10dp"
+                  android:layout_marginTop="10dp"
+                  android:background="@drawable/sms_imagebutton"/>
+              <ImageButton
                   android:id="@+id/refreshIB"
                   android:layout_width="40dp"
                   android:layout_height="40dp"
