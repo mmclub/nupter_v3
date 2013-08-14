@@ -4,25 +4,55 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     >
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp">
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:src="@drawable/resttime_title" />
     
      <ScrollView    
                     
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="300dp"
+                    android:layout_height="380dp"
                     
                     android:scrollbars="none"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="25dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/lifecontent_background" >
 
+                    android:background="@drawable/lifecontent_background" >
+         <LinearLayout
+             android:layout_height="fill_parent"
+             android:layout_width="fill_parent"
+             android:orientation="vertical">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/life_zuoxi" 
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rest_xianli_title"
+                        />
+          <ImageView
+                 android:layout_width="300dp"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/rest_xianlin_content"
+                 />
+             <ImageView
+                     android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/rest_sanpailou_title"
+                    />
+             <ImageView
+                     android:layout_width="300dp"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/rest_sanpailou_content"
+                     />
+         </LinearLayout>
                 </ScrollView>
-    
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:src="@drawable/bottomline" />
 
 </LinearLayout>
+    </LinearLayout>
