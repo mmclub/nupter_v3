@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 
-public class BookActivity extends ListActivity implements OnItemLongClickListener {
+public class BookActivity extends ListActivity {
 
     private Button searchBookButton;
     private EditText searchBookEditText;
@@ -38,7 +38,6 @@ public class BookActivity extends ListActivity implements OnItemLongClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchbook);
-        getListView().setOnItemLongClickListener(this);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
         searchBookEditText = (EditText)this.findViewById(R.id.searchBookEditText);
         searchBookButton = (Button)this.findViewById(R.id.searchBookBtton);
@@ -61,15 +60,27 @@ public class BookActivity extends ListActivity implements OnItemLongClickListene
             Toast toast = Toast.makeText(BookActivity.this, "还没有收藏", Toast.LENGTH_SHORT);
             toast.show();
         } else {
-            Toast toast = Toast.makeText(BookActivity.this, "长按可删除已收藏的书籍哦", Toast.LENGTH_SHORT);
-            toast.show();
         }
     }
+    protected void onListItemClick(ListView l, View v, int position, long id) {
 
+        super.onListItemClick(l, v, position, id);
+        String bookName = bookRecords.get(position).name;
+        String bookAuthor = bookRecords.get(position).author;
+        String bookNum = bookRecords.get(position).bookNum;
+        String bookInfo = bookRecords.get(position).bookInfo;
+        Intent intent = new Intent(BookActivity.this, BookViewActivity.class);
+        intent.putExtra(BookListActivity.EXTRA_BOOK_NAME, bookName);
+        intent.putExtra(BookListActivity.EXTRA_BOOK_AUTHOR, bookAuthor);
+        intent.putExtra(BookListActivity.EXTRA_BOOK_NUM, bookNum);
+        intent.putExtra(BookListActivity.EXTRA_BOOK_INFO, bookInfo);
+        startActivity(intent);
+    }
     public final class BookViewHolder {
         public TextView bookName;
         public TextView bookAuthor;
         public TextView bookNum;
+        public Button delete;
     }
     public class BookCollectionAdapter extends BaseAdapter {
         private LayoutInflater bookInflater;
@@ -95,7 +106,7 @@ public class BookActivity extends ListActivity implements OnItemLongClickListene
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             BookViewHolder holder = null;
             if (convertView == null) {
@@ -106,6 +117,7 @@ public class BookActivity extends ListActivity implements OnItemLongClickListene
                 holder.bookName = (TextView) convertView.findViewById(R.id.bookName);
                 holder.bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
                 holder.bookNum = (TextView) convertView.findViewById(R.id.bookNum);
+                holder.delete = (Button) convertView.findViewById(R.id.deleteButton);
                 convertView.setTag(holder);
 
             } else {
@@ -116,55 +128,39 @@ public class BookActivity extends ListActivity implements OnItemLongClickListene
             holder.bookName.setText(bookRecords.get(position).name);
             holder.bookAuthor.setText("作者："+bookRecords.get(position).author);
             holder.bookNum.setText("书号:"+bookRecords.get(position).bookNum);
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(BookActivity.this);
+                    alertDialog.setTitle("删除");
+                    alertDialog.setMessage("确定删除吗？");
+                    alertDialog.setPositiveButton("是",new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int p) {
+                            String name = bookRecords.get(position).name;
+                            String author = bookRecords.get(position).author;
+                            List<BookRecord> bookRecord = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author});
+                            bookRecord.get(0).delete();
+                            Boolean dataDeleted = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                            if (dataDeleted){
+                                Toast toast = Toast.makeText(BookActivity.this, "删除好了", Toast.LENGTH_SHORT);
+                                toast.show();
+                                bookRecords = BookRecord.listAll(BookRecord.class);
+                                bookCollectionAdapter.notifyDataSetChanged();
+                            }
+
+                        }
+                    });
+                    alertDialog.setNegativeButton("否", null);
+                    alertDialog.show();
+                }
+            });
             return convertView;
         }
     }
 
-    public boolean onItemLongClick(AdapterView parent, View view, final int position,
-                                   long id) {
-//        String name = bookRecords.get(position).name;
-//        String author = bookRecords.get(position).author;
-//        String bookNum = bookRecords.get(position).bookNum;
-        //List<BookRecord> bookRecord = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author});
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(BookActivity.this);
-        alertDialog.setTitle("删除");
-        alertDialog.setMessage("确定删除吗？");
-        alertDialog.setPositiveButton("是",new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int p) {
-                String name = bookRecords.get(position).name;
-                String author = bookRecords.get(position).author;
-                List<BookRecord> bookRecord = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author});
-                bookRecord.get(0).delete();
-                Boolean dataDeleted = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-                if (dataDeleted){
-                    Toast toast = Toast.makeText(BookActivity.this, "删除好了", Toast.LENGTH_SHORT);
-                    toast.show();
-                    bookRecords = BookRecord.listAll(BookRecord.class);
-                    bookCollectionAdapter.notifyDataSetChanged();
-                }
-
-            }
-        });
-        alertDialog.setNegativeButton("否", null);
-        alertDialog.show();
-        return true;
-    }
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-
-        super.onListItemClick(l, v, position, id);
-        String bookName = bookRecords.get(position).name;
-        String bookAuthor = bookRecords.get(position).author;
-        String bookNum = bookRecords.get(position).bookNum;
-        String bookInfo = bookRecords.get(position).bookInfo;
-        Intent intent = new Intent(BookActivity.this, BookViewActivity.class);
-        intent.putExtra(BookListActivity.EXTRA_BOOK_NAME, bookName);
-        intent.putExtra(BookListActivity.EXTRA_BOOK_AUTHOR, bookAuthor);
-        intent.putExtra(BookListActivity.EXTRA_BOOK_NUM, bookNum);
-        intent.putExtra(BookListActivity.EXTRA_BOOK_INFO, bookInfo);
-        startActivity(intent);
-    }
 
     public boolean onOptionsItemSelected(MenuItem item)
     {

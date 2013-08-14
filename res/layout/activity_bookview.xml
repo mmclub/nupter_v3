@@ -10,14 +10,15 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="17dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:orientation="horizontal">
 
         <TextView
-                android:layout_width="220dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="书籍介绍"
                 android:textColor="@color/blue_bar"
                 android:textSize="20sp"/>

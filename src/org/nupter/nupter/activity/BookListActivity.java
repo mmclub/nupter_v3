@@ -30,7 +30,7 @@ public class BookListActivity extends ListActivity {
     public static final String EXTRA_BOOK_INFO = "bookInfo";
     private String bookName, bookAuthor, bookNum;
     private List<Map<String, String>> bookListMap = null;
-    private SimpleAdapter adapter;
+    private BookSearchListAdapter bookSearchListAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,8 @@ public class BookListActivity extends ListActivity {
 //                "bookAuthor", "bookNum"},
 //                new int[]{R.id.bookName, R.id.bookAuthor,
 //                        R.id.bookNum});
-        setListAdapter(new BookSearchListAdapter(this));
+        bookSearchListAdapter = new BookSearchListAdapter(this);
+        setListAdapter(bookSearchListAdapter);
     }
     public final class BookViewHolder {
         public TextView bookName;
@@ -81,7 +82,7 @@ public class BookListActivity extends ListActivity {
 
                 holder = new BookViewHolder();
 
-                convertView = bookInflater.inflate(R.layout.item_collection_book, null);
+                convertView = bookInflater.inflate(R.layout.item_search_book, null);
                 holder.bookName = (TextView) convertView.findViewById(R.id.bookName);
                 holder.bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
                 holder.bookNum = (TextView) convertView.findViewById(R.id.bookNum);
