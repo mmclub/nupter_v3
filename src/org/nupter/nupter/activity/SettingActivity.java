@@ -1,92 +1,76 @@
 package org.nupter.nupter.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.*;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.AppUtils;
+import org.nupter.nupter.utils.CornerListView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设置板块主界面
- * 未完成
- * 参考  http://developer.android.com/reference/android/preference/PreferenceActivity.html
+ * @author panlei
+ *
  */
-public class SettingActivity extends PreferenceActivity {
+public class SettingActivity extends Activity {
+    private CornerListView cornerListView = null;
 
+    private List<Map<String, String>> listData = null;
+    private SimpleAdapter adapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
 
-        // Add a button to the header list.
-        if (hasHeaders()) {
-            Button button = new Button(this);
-            button.setText("Some action");
-            setListFooter(button);
-        }
+        cornerListView = (CornerListView)findViewById(R.id.settinglistview);
+        setListData();
+
+        adapter = new SimpleAdapter(getApplicationContext(), listData, R.layout.view_tab_setting_list_item,
+                new String[]{"text"}, new int[]{R.id.setting_list_item_text});
+        cornerListView.setAdapter(adapter);
+
+         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    /**
-     * Populate the activity with the top-level headers.
-     */
+    private void setListData(){
+        listData = new ArrayList<Map<String,String>>();
+
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("text", "帐号设置");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "分享");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "关于");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "版本更新");
+        listData.add(map);
+    }
+
     @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
-    }
-
-    /**
-     * This fragment shows the preferences for the first header.
-     */
-    public static class Prefs1Fragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            addPreferencesFromResource(R.xml.fragmented_preferences);
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
         }
+        return super.onMenuItemSelected(featureId, item);
     }
-
-    /**
-     * This fragment contains a second-level set of preference that you
-     * can get to by tapping an item in the first preferences fragment.
-     */
-    public static class Prefs1FragmentInner extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Can retrieve arguments from preference XML.
-            Log.i("args", "Arguments: " + getArguments());
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.fragmented_preferences_inner);
-        }
-    }
-
-    /**
-     * This fragment shows the preferences for the second header.
-     */
-    public static class Prefs2Fragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Can retrieve arguments from headers XML.
-            Log.i("args", "Arguments: " + getArguments());
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.preference_dependencies);
-        }
-    }
-
-
-
 
 
 }
