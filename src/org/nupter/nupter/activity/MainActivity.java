@@ -110,7 +110,7 @@ public class MainActivity extends Activity {
                 break;
             case R.id.schedulIB:
                  
-                intent.setClass(MainActivity.this, ClassTableActivity.class);
+                intent.setClass(MainActivity.this, LoginScheduleActivity.class);
                 startActivity(intent);
                 break;
             case R.id.lifeAssistantIB:

@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * 课表板块主界面
+ * author sudongsheng
  */
 
 public class LoginScheduleActivity extends Activity {
@@ -49,29 +52,49 @@ public class LoginScheduleActivity extends Activity {
     private EditText password;
     private EditText check;
     private Button login;
-    private Button localLogin;
     private String checkNumber;
     private String userNumber;
     private String passNumber;
     private StringBuffer html;
+    private Intent intent;
     private ArrayList<ArrayList<String>> list;
     private JsoupTest jsoupTest;
     private ProgressDialog progressDialog;
     private String login_url = "http://202.119.225.35/default2.aspx";
-    private String getTable_url = "http://202.119.225.35/xskbcx.aspx?xh=B11040916";
+    private String getTable_url = "http://202.119.225.35/xskbcx.aspx?xh=";
     private String checkCode_url = "http://202.119.225.35/CheckCode.aspx";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_login);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        intent = getIntent();
+        int Jump = intent.getIntExtra("Jump", 0);
+
         jsoupTest = new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         check = (EditText) findViewById(R.id.identify);
-        login = (Button) findViewById(R.id.login);
-        localLogin = (Button) findViewById(R.id.localLogin);
+        login = (Button) findViewById(R.id.login_schedule);
         gifView = (GifView) findViewById(R.id.gifView);
         new GetCheckCode().start();
+        gifView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new GetCheckCode().start();
+            }
+        });
+        login.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.login_btn_pressed);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setBackgroundResource(R.drawable.login_btn);
+                }
+                return false;
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,27 +117,20 @@ public class LoginScheduleActivity extends Activity {
                 }
             }
         });
-        localLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                String schedule = preferences.getString("schedule", "null");
-                if (schedule.equals("null")) {
-                    Toast.makeText(LoginScheduleActivity.this, "离线课程表不存在，去登陆吧~~", Toast.LENGTH_LONG).show();
-                } else {
-                    list = jsoupTest.parse(schedule);
-                }
-                Intent intent = new Intent(LoginScheduleActivity.this, ScheduleActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("First", list.get(0));
-                bundle.putStringArrayList("Third", list.get(1));
-                bundle.putStringArrayList("Sixth", list.get(2));
-                bundle.putStringArrayList("Eighth", list.get(3));
-                bundle.putStringArrayList("Eleventh", list.get(4));
-                intent.putExtras(bundle);
-                LoginScheduleActivity.this.startActivity(intent);
-            }
-        });
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        String schedule = preferences.getString("schedule", "null");
+        if ((!schedule.equals("null"))&&Jump==0) {
+            list = jsoupTest.parse(schedule);
+            Intent intent = new Intent(LoginScheduleActivity.this, ScheduleActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("First", list.get(0));
+            bundle.putStringArrayList("Third", list.get(1));
+            bundle.putStringArrayList("Sixth", list.get(2));
+            bundle.putStringArrayList("Eighth", list.get(3));
+            bundle.putStringArrayList("Eleventh", list.get(4));
+            intent.putExtras(bundle);
+            LoginScheduleActivity.this.startActivity(intent);
+        }
     }
 
     class GetCheckCode extends Thread {
@@ -148,8 +164,9 @@ public class LoginScheduleActivity extends Activity {
                 getIdentifyConnection.connect();
                 checkCodeInputStream = getIdentifyConnection.getInputStream();
                 gifView.setGifImage(checkCodeInputStream);
+                gifView.setShowDimension(90, 50);
                 gifView.setGifImageType(GifView.GifImageType.COVER);
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 flaghandler.sendEmptyMessage(ERR_NET);
             }
@@ -187,7 +204,6 @@ public class LoginScheduleActivity extends Activity {
                     s = new String(bin, 0, chByte1, "gbk");
                     chByte1 = inPost.read(bin, 0, 1024);
                 }
-                Log.i("TAG", s);
                 Pattern pattern = Pattern.compile("验证码不正确！！");
                 Matcher matcher = pattern.matcher(s);
                 if (matcher.find()) {
@@ -208,6 +224,7 @@ public class LoginScheduleActivity extends Activity {
                 }
                 inPost.close();
                 loginConnection.disconnect();
+                getTable_url=getTable_url+userNumber;
                 getTableUrl = new URL(getTable_url);
                 getTableConnection = (HttpURLConnection) getTableUrl.openConnection();
                 getTableConnection.setRequestMethod("GET");
@@ -247,7 +264,7 @@ public class LoginScheduleActivity extends Activity {
                 Intent intent = new Intent(LoginScheduleActivity.this, ScheduleActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("First", list.get(0));
-                bundle.putStringArrayList("third", list.get(1));
+                bundle.putStringArrayList("Third", list.get(1));
                 bundle.putStringArrayList("Sixth", list.get(2));
                 bundle.putStringArrayList("Eighth", list.get(3));
                 bundle.putStringArrayList("Eleventh", list.get(4));
@@ -273,4 +290,16 @@ public class LoginScheduleActivity extends Activity {
             }
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 }

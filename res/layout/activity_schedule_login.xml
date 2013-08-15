@@ -3,78 +3,74 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="@drawable/denglujiemian_01"
-        >
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:text="用户名"
-            android:textSize="16dp"/>
-
-    <EditText
-            android:id="@+id/username"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:singleLine="true"
-            android:textSize="15dp"/>
-
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="密码"
-            android:textSize="16dp"/>
-
-    <EditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:password="true"
-            android:singleLine="true"
-            android:textSize="15dp"/>
+              android:paddingLeft="30dp"
+              android:paddingRight="30dp"
+              android:background="@drawable/denglujiemian">
     <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="验证码"
-                android:textSize="16dp"/>
-        <com.ant.liao.GifView
-                android:id="@+id/gifView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.6">
     </LinearLayout>
-    <EditText
-            android:id="@+id/identify"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:singleLine="true"
-            android:textSize="15dp"/>
     <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/login_schedule">
+        <EditText
+                android:id="@+id/username"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/login_uname"
+                android:paddingLeft="40dp"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:layout_height="45dp"/>
+        <EditText
+                android:id="@+id/password"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:password="true"
+                android:background="@drawable/login_pwd"
+                android:paddingLeft="40dp"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:layout_height="45dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <EditText
+                    android:id="@+id/identify"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/login_check"
+                    android:paddingLeft="35dp"
+                    android:layout_width="fill_parent"
+                    android:singleLine="true"
+                    android:layout_height="45dp"/>
+            <com.ant.liao.GifView
+                    android:id="@+id/gifView"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+        </LinearLayout>
 
         <Button
-                android:id="@+id/login"
+                android:id="@+id/login_schedule"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/login_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:text="登陆"/>
-
-        <Button
-                android:id="@+id/localLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:text="离线查看"/>
+                android:layout_height="45dp"/>
     </LinearLayout>
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.4">
+    </LinearLayout>
+
 </LinearLayout>
