@@ -16,7 +16,12 @@
         <activity android:name=".activity.MapBaiduActivity"
                   android:label="@string/title_activity_xianlin_area"></activity>
         <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.WelcomeActivity"/>
+        <activity android:name=".activity.WelcomeActivity"  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.BookActivity"/>
         <activity android:name=".activity.ClubActivity"/>
         <activity android:name=".activity.ClubDetailActivity"/>
@@ -34,12 +39,8 @@
         <activity android:name=".activity.NewsDetailActivity"/>
 
 
-        <activity android:name=".activity.ActivityListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.ActivityListActivity"/>
+
         <activity android:name=".activity.LostAndFoundActivity"
                   android:screenOrientation="portrait"
                 />

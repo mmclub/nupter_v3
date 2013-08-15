@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.loopj.android.http.RequestParams;
 import org.json.*;
 import org.nupter.nupter.R;
@@ -48,6 +50,8 @@ public class MainActivity extends Activity {
     private TextView dateTV;
     private TextView weekdayTV;
     private ImageView weatherIcon;
+    private long mExitTime;
+
    
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +103,7 @@ public class MainActivity extends Activity {
 
     }
     
-   private OnClickListener IBListener = new OnClickListener(){
+   public OnClickListener IBListener = new OnClickListener(){
 
         @Override
         public void onClick(View v) {
@@ -159,10 +163,27 @@ public class MainActivity extends Activity {
             default:
                 break;
             }
-            
-        }
+
    };
-   
+   } ;
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 1500) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
    class NanjingWeather{
        
        public static final String NOW_WEATHER_URL_1 = "http://www.weather.com.cn/data/sk/101190101.html";
