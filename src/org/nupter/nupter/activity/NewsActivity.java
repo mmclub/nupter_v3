@@ -3,6 +3,9 @@ package org.nupter.nupter.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.PagerTitleStrip;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,13 +51,16 @@ public class NewsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_viewpager);
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
+        PagerTabStrip pts = (PagerTabStrip)findViewById(R.id.pagerTab);
+
         fragmentList.add(new NoticeAndNewsFragment(EDU_NOTICE));
         fragmentList.add(new NoticeAndNewsFragment(SCH_NEWS));
         titleList.add("教务公告");
         titleList.add("校园新闻");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),
                 fragmentList, titleList));
-
+        pts.setTabIndicatorColorResource(R.color.blue);
+        pts.setTextSpacing(50);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -85,7 +91,7 @@ public class NewsActivity extends FragmentActivity {
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            return (titleList.size() > position) ? titleList.get(position) : "";
+            return  titleList.get(position) ;
         }
 
         /**

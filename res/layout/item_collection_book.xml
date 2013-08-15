@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:background="@drawable/item_book_collect_bg"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="10dp"
-              android:layout_marginBottom="3dp">
-    <TextView
-            android:id="@+id/bookName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#000000"/>
+              android:paddingLeft="10dp">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="horizontal"
-                  android:layout_width="fill_parent"
+                  android:orientation="vertical"
+                  android:layout_width="205dp"
                   android:layout_height="wrap_content">
         <TextView
-                android:id="@+id/bookAuthor"
-                android:layout_width="140dp"
+                android:id="@+id/bookName"
+                android:layout_width="205dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="7dp"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textColor="#000000"/>
 
-        <TextView
-                android:id="@+id/bookNum"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="#000000"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="horizontal"
+                      android:layout_width="205dp"
+                      android:layout_height="wrap_content">
+            <TextView
+                    android:id="@+id/bookAuthor"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="7dp"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+
+            <TextView
+                    android:id="@+id/bookNum"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000000"/>
+        </LinearLayout>
     </LinearLayout>
-
+    <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:focusable="false"
+            android:background="@drawable/book_delete_btn"
+            />
 </LinearLayout>

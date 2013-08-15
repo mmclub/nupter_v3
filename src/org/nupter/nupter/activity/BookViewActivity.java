@@ -12,6 +12,8 @@ import android.widget.Toast;
 import org.nupter.nupter.R;
 import org.nupter.nupter.data.BookRecord;
 
+import java.util.List;
+
 
 /**
  * 图书的具体视图
@@ -47,7 +49,7 @@ public class BookViewActivity extends Activity {
         bookNumTextView.setText("书号：" + num);
         bookInfoTextView.setText(info);
         Boolean dataExit = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-        if (!dataExit){
+        if (!dataExit) {
             collectButton.setBackgroundResource(R.drawable.icon_collected);
         }
 
@@ -65,8 +67,14 @@ public class BookViewActivity extends Activity {
                         toast1.show();
                     }
                 } else {
-                    Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏过了", Toast.LENGTH_SHORT);
-                    toast1.show();
+                    List<BookRecord> bookRecord = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author});
+                    bookRecord.get(0).delete();
+                    Boolean dataDeleted = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
+                    if (dataDeleted) {
+                        collectButton.setBackgroundResource(R.drawable.icon_no_collect);
+                        Toast toast1 = Toast.makeText(BookViewActivity.this, "取消收藏", Toast.LENGTH_SHORT);
+                        toast1.show();
+                    }
                 }
             }
         });

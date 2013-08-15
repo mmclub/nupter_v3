@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
     private ImageButton lostAndFoundIB;
     private ImageButton schoolMapIB;
     private ImageButton setIB;
+    private ImageButton smsIB;
     private ImageButton refreshIB;
     private TextView weatherTV;
     private TextView tempTV;
@@ -63,6 +64,7 @@ public class MainActivity extends Activity {
         lostAndFoundIB = (ImageButton)findViewById(R.id.lostAndFoundIB);
         schoolMapIB = (ImageButton)findViewById(R.id.schoolMapIB);
         setIB =(ImageButton)findViewById(R.id.setIB);
+        smsIB = (ImageButton)findViewById(R.id.smsIB);
         refreshIB =(ImageButton)findViewById(R.id.refreshIB);
         weatherTV = (TextView)findViewById(R.id.weatherTextView);
         tempTV = (TextView)findViewById(R.id.tempTextView);
@@ -81,6 +83,7 @@ public class MainActivity extends Activity {
         lostAndFoundIB.setOnClickListener(IBListener);
         schoolMapIB.setOnClickListener(IBListener);
         setIB.setOnClickListener(IBListener);
+        smsIB.setOnClickListener(IBListener);
         refreshIB.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +151,11 @@ public class MainActivity extends Activity {
                 intent.setClass(MainActivity.this,SettingActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.smsIB:
+
+                 intent.setClass(MainActivity.this,MessageListActivity.class);
+                 startActivity(intent);
+                 break;
             default:
                 break;
             }
