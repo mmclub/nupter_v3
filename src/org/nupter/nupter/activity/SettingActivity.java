@@ -1,11 +1,13 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.*;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.CornerListView;
 
@@ -21,9 +23,13 @@ import java.util.Map;
  */
 public class SettingActivity extends Activity {
     private CornerListView cornerListView = null;
-
     private List<Map<String, String>> listData = null;
     private SimpleAdapter adapter = null;
+    private ToggleButton  newspushTB;
+    private ToggleButton  refreshsoundTB;
+    private SharedPreferences mySharedPreferences;
+    private boolean newsFlag;
+    private boolean soundFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +37,94 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
 
         cornerListView = (CornerListView)findViewById(R.id.settinglistview);
-        setListData();
+        newspushTB = (ToggleButton)findViewById(R.id.newspushTB);
+        refreshsoundTB =(ToggleButton)findViewById(R.id.refreshsoundTB);
+        newspushTB.setOnCheckedChangeListener(checkedListener);
+        refreshsoundTB.setOnCheckedChangeListener(checkedListener);
 
+        SharedPreferences sharedPreferences= getSharedPreferences("test",
+                Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        boolean getNewsFlog =sharedPreferences.getBoolean("NewsFlag",false);
+        boolean getSoundFlog = sharedPreferences.getBoolean("SoundFlag",false);
+        newspushTB.setChecked(getNewsFlog);
+        refreshsoundTB.setChecked(getSoundFlog);
+
+        setListData();
         adapter = new SimpleAdapter(getApplicationContext(), listData, R.layout.view_tab_setting_list_item,
                 new String[]{"text"}, new int[]{R.id.setting_list_item_text});
         cornerListView.setAdapter(adapter);
+        cornerListView.setOnItemClickListener(LVlistener);
+
 
          getActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+    CompoundButton.OnCheckedChangeListener checkedListener = new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            //To change body of implemented methods use File | Settings | File Templates.
+            mySharedPreferences= getSharedPreferences("test",
+                    Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mySharedPreferences.edit();
+
+            if(buttonView.getId()==R.id.newspushTB){
+                if (isChecked){
+                       newsFlag = true;
+                }else {
+                    newsFlag = false;
+                }
+
+            }  else{
+                if(isChecked){
+                    soundFlag = true;
+                }else {
+                    soundFlag = false;
+                }
+
+            }
+            editor.putBoolean("NewsFlag",newsFlag) ;
+            editor.putBoolean("SoundFlag",soundFlag);
+            editor.commit();
+
+        }
+    } ;
+
+    private AdapterView.OnItemClickListener LVlistener = new AdapterView.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //To change body of implemented methods use File | Settings | File Templates.
+
+            Intent intent = new Intent();
+            switch (position){
+                case 0:
+
+                    break;
+                case  1:
+                    intent=new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+                    intent.putExtra(Intent.EXTRA_TEXT, "嗨！童鞋们，快来使用‘掌上南邮’吧，太给力了。。。 ");
+                    startActivity(Intent.createChooser(intent, getTitle()));
+
+                    break;
+                case  2:
+                    intent.putExtra(WebviewActivity.EXTRA_URL,"http://m.baidu.com/");
+                    intent.putExtra(WebviewActivity.EXTRA_TITLE,"关于");
+                    intent.setClass(SettingActivity.this,WebviewActivity.class);
+                    startActivity(intent);
+                    break;
+                case  3:
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     private void setListData(){
         listData = new ArrayList<Map<String,String>>();

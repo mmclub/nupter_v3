@@ -4,8 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
+import android.widget.AdapterView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,14 +27,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -41,8 +44,6 @@ import android.widget.Toast;
  */
 @SuppressLint({ "ValidFragment", "NewApi" })
 public class NewsActivity extends FragmentActivity {
-    private final static int EDU_NOTICE = 1;
-    private final static int SCH_NEWS = 2;
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
@@ -53,8 +54,8 @@ public class NewsActivity extends FragmentActivity {
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
         PagerTabStrip pts = (PagerTabStrip)findViewById(R.id.pagerTab);
 
-        fragmentList.add(new NoticeAndNewsFragment(EDU_NOTICE));
-        fragmentList.add(new NoticeAndNewsFragment(SCH_NEWS));
+        fragmentList.add(new NoticeFragment());
+        fragmentList.add(new NewsFragment());
         titleList.add("教务公告");
         titleList.add("校园新闻");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),
@@ -103,24 +104,17 @@ public class NewsActivity extends FragmentActivity {
         }
     }
 
-    public class NoticeAndNewsFragment extends Fragment {
-
-        private JSONObject jsonObject;
-        private int frameState;
+    public class NoticeFragment extends Fragment {
+        private ProgressDialog progressDialog;
         private Intent intent;
-        private String URL_NEWS = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51f4bc8ddcd2956544001f62/416f3cd54f4c89af3abe42b64516344b/document_(1).json";
+        private String URL_NOTICE = "https://dl.dropboxusercontent.com/s/b7s5wmn1exu55us/%E6%95%99%E5%8A%A1%E5%85%AC%E5%91%8A.txt" ;
         private SimpleAdapter noticeAdapter;
-        private ListView listView = null;
-        private String myUrl = null;
-        ArrayList<HashMap<String, Object>> noticeList = null;
+        private PullToRefreshListView noticelistView = null;
+        private ArrayList<HashMap<String, Object>> noticeList = null;
         private HashMap<String, Object> noticeMap;
         private JSONArray jsonArray;
+        private JSONObject jsonObject;
 
-        public NoticeAndNewsFragment(int frameState) {
-            super();
-            this.frameState = frameState;
-
-        }
 
         /**
          * 覆盖此函数，先通过inflater inflate函数得到view最后返回
@@ -130,102 +124,229 @@ public class NewsActivity extends FragmentActivity {
                 Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.activity_news,
                     container, false);
-            listView = (ListView) v.findViewById(R.id.newsListview);
-            intent = new Intent();
-            noticeList = new ArrayList<HashMap<String, Object>>();
+           noticeList = new ArrayList<HashMap<String, Object>>();
+           noticelistView = (PullToRefreshListView) v.findViewById(R.id.news_pull_refresh_list);
+            /**
+             * Add Sound Event Listener
+             */
+            SharedPreferences sharedPreferences= getSharedPreferences("test",
+                    Activity.MODE_PRIVATE);
+                    boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",false);
+             if (getSoundFlag == true){
+            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
+            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+            noticelistView.setOnPullEventListener(soundListener);}
+            else {}
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("玩命加载ing");
+            progressDialog.setMessage("别着急啊。。。");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
 
-            AsyncHttpClient client = new AsyncHttpClient();
-            if (frameState == EDU_NOTICE) {
-                myUrl = URL_NEWS;
-            } else {
-                myUrl = URL_NEWS;
+                   AsyncHttpClient client = new AsyncHttpClient();
+                   client.get(URL_NOTICE, null, new AsyncHttpResponseHandler() {
+                    @Override
+                     public void onSuccess(String response) {
+                                 NoticeList(response);
+                                noticeAdapter = new SimpleAdapter(getActivity(), noticeList, R.layout.view_notice_news,
+                                        new String[]{"Title", "Time"},
+                                        new int[]{R.id.Title, R.id.Time});
+                                noticelistView.setAdapter(noticeAdapter);
+                                progressDialog.dismiss();
+                                noticelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    String str;
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        //To change body of implemented methods use File | Settings | File Templates.
+
+                                        try {
+                                            jsonObject = (JSONObject)jsonArray.get(position-1);
+                                            str = jsonObject.getString("content");
+                                        } catch (JSONException e) {
+                                            // TODO Auto-generated catch block
+                                            e.printStackTrace();
+                                        }
+                                        intent = new Intent();
+                                        intent.putExtra("content",str);
+                                        intent.setClass(NewsActivity.this, NewsDetailActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                            }
+                     @Override
+                      public void onFailure(Throwable throwable, String s) {
+                               progressDialog.dismiss();
+                               Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            noticelistView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+                @Override
+                public void onRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                    //To change body of implemented methods use File | Settings | File Templates.
+                    noticeList.clear();
+                    new AsyncHttpClient().get(URL_NOTICE, null,new AsyncHttpResponseHandler(){
+                        public void onSuccess(String response){
+
+                            NoticeList(response);
+
+                            noticeAdapter. notifyDataSetChanged();
+                            noticelistView.onRefreshComplete();
+
+                        }
+                        @Override
+                        public void onFailure(Throwable throwable, String s) {
+                            noticelistView.onRefreshComplete();
+                            Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
+                }
+            });
+            return v;
+    }
+        public void  NoticeList(String response){
+            try {
+                jsonArray = new JSONObject(response).getJSONArray("array");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = (JSONObject) jsonArray.get(i);
+                    noticeMap = new HashMap<String, Object>();
+                    noticeMap.put("Title",
+                            jsonObject.getString("title"));
+                    noticeMap.put("Time",
+                            jsonObject.getString("time"));
+                    noticeList.add(noticeMap);
+                }
+            } catch (Exception e) {
+
             }
-            Toast.makeText(getActivity(),"玩命加载中...",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public class NewsFragment extends Fragment {
+        private JSONObject jsonObject;
+        private Intent intent;
+        private String URL_NEWS = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51f4bc8ddcd2956544001f62/416f3cd54f4c89af3abe42b64516344b/document_(1).json";
+        private SimpleAdapter newsAdapter;
+        private PullToRefreshListView newslistView = null;
 
-            client.get(myUrl, null, new AsyncHttpResponseHandler() {
-
-                public void onSuccess(String response) {
-
-                    try {
+        private ArrayList<HashMap<String, Object>> newsList = null;
+        private HashMap<String, Object> newsMap;
+        private JSONArray jsonArray;
 
 
-                        jsonArray = new JSONObject(response)
-                                .getJSONArray("array");
-                        for (int i = 0; i < jsonArray.length(); i++) {
 
-                            jsonObject = (JSONObject) jsonArray.get(i);
-                            noticeMap = new HashMap<String, Object>();
-                            
-                            noticeMap.put("Title",
-                                    jsonObject.getString("title"));
-                            noticeMap.put("Time", 
-                                    jsonObject.getString("time"));
-                            noticeList.add(noticeMap);
+        /**
+         * 覆盖此函数，先通过inflater inflate函数得到view最后返回
+         */
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.activity_news,
+                    container, false);
+            newsList = new ArrayList<HashMap<String, Object>>();
+            newslistView = (PullToRefreshListView) v.findViewById(R.id.news_pull_refresh_list);
+            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
+            SharedPreferences sharedPreferences= getSharedPreferences("test",
+                    Activity.MODE_PRIVATE);
+            boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",false);
+            if (getSoundFlag == true){
 
-                            noticeAdapter = new SimpleAdapter(getActivity(),
-                                    noticeList, R.layout.view_notice_news,
-                                    new String[] { "Title", "Time" },
-                                    new int[] { R.id.Title, R.id.Time });
-                            listView.setAdapter(noticeAdapter);
+            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+            newslistView.setOnPullEventListener(soundListener);}
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get(URL_NEWS, null, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(String response) {
+                                    NewsList(response);
+                                    newsAdapter = new SimpleAdapter(getActivity(), newsList, R.layout.view_notice_news,
+                                            new String[]{"Title", "Time"},
+                                            new int[]{R.id.Title, R.id.Time});
+                                    newslistView.setAdapter(newsAdapter);
 
-                            listView.setOnItemClickListener(new OnItemClickListener() {
-                                private String str;
+                            newslistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                String str;
                                 @Override
-                                public void onItemClick(AdapterView<?> arg0,
-                                        View arg1, int arg2, long arg3) {
-                                    // TODO Auto-generated method stub
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    //To change body of implemented methods use File | Settings | File Templates.
                                     try {
-                                        jsonObject = (JSONObject)jsonArray.get(arg2);
+                                        jsonObject = (JSONObject)jsonArray.get(position-1);
                                         str = jsonObject.getString("content");
-                                        Log.d("TAG", jsonObject.getString("content")); 
-                                        
-                                       
                                     } catch (JSONException e) {
                                         // TODO Auto-generated catch block
                                         e.printStackTrace();
                                     }
+                                    intent = new Intent();
                                     intent.putExtra("content",str);
-                                            
                                     intent.setClass(NewsActivity.this, NewsDetailActivity.class);
                                     startActivity(intent);
-                                } 
-
+                                }
                             });
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable, String s) {
+                            Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
+            newslistView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+                @Override
+                public void onRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                    //To change body of implemented methods use File | Settings | File Templates.
+                    // Do work to refresh the list here.
+                    newsList.clear();
+                    new AsyncHttpClient().get(URL_NEWS, null, new AsyncHttpResponseHandler() {
+                        public void onSuccess(String response) {
+                            NewsList(response);
+                            newsAdapter.notifyDataSetChanged();
+                            newslistView.onRefreshComplete();
 
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        @Override
+                        public void onFailure(Throwable throwable, String s) {
+                            newslistView.onRefreshComplete();
+                            Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                        }
 
-                    }
-
+                    });
                 }
-
-                @Override
-                public void onFailure(Throwable throwable, String s) {
-                    Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
-                }
-
             });
 
             return v;
         }
 
-    }
+        public void  NewsList(String response){
+            try {
+                jsonArray = new JSONObject(response).getJSONArray("array");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = (JSONObject) jsonArray.get(i);
+                    newsMap = new HashMap<String, Object>();
+                    newsMap.put("Title",
+                            jsonObject.getString("title"));
+                    newsMap.put("Time",
+                            jsonObject.getString("time"));
+                    newsList.add(newsMap);
+                }
+            } catch (Exception e) {
 
-
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-            onBackPressed();
-            break;
-        default:
-
-
-            break;
+            }
         }
-        return super.onMenuItemSelected(featureId, item);
     }
-}
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    onBackPressed();
+                    break;
+
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+            return true;
+        }
+    }
