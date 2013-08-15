@@ -68,9 +68,6 @@ public class LoginScheduleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_login);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        intent = getIntent();
-        int Jump = intent.getIntExtra("Jump", 0);
-
         jsoupTest = new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -117,20 +114,6 @@ public class LoginScheduleActivity extends Activity {
                 }
             }
         });
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-        String schedule = preferences.getString("schedule", "null");
-        if ((!schedule.equals("null"))&&Jump==0) {
-            list = jsoupTest.parse(schedule);
-            Intent intent = new Intent(LoginScheduleActivity.this, ScheduleActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putStringArrayList("First", list.get(0));
-            bundle.putStringArrayList("Third", list.get(1));
-            bundle.putStringArrayList("Sixth", list.get(2));
-            bundle.putStringArrayList("Eighth", list.get(3));
-            bundle.putStringArrayList("Eleventh", list.get(4));
-            intent.putExtras(bundle);
-            LoginScheduleActivity.this.startActivity(intent);
-        }
     }
 
     class GetCheckCode extends Thread {

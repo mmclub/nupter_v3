@@ -35,7 +35,7 @@ public class ScheduleActivity extends Activity {
     private ArrayList<String> list3 = new ArrayList<String>();
     private ArrayList<String> list4 = new ArrayList<String>();
     private ArrayList<String> list5 = new ArrayList<String>();
-    private int[] color=new int[]{R.drawable.table_yellow,R.drawable.table_blue,R.drawable.table_green,R.drawable.table_orange,R.drawable.table_pink,R.drawable.table_red};
+    private int[] color = new int[]{R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,14 @@ public class ScheduleActivity extends Activity {
 
     private String getClassName(String s) {
         String a[] = s.split(" ");
+        if (!a[1].startsWith("周")) {
+            a[0] = a[0] + a[1];
+            a[1] = a[2];
+            a[2] = a[3];
+            if (a.length > 4) {
+                a[3] = a[4];
+            }
+        }
         return a[0];
     }
 
@@ -131,7 +139,7 @@ public class ScheduleActivity extends Activity {
                     }
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
-                    convertView.setBackgroundResource(color[position>6?position-7:position-1]);
+                    convertView.setBackgroundResource(color[position > 6 ? position - 7 : position - 1]);
                 }
             }
             return convertView;
@@ -139,6 +147,15 @@ public class ScheduleActivity extends Activity {
 
         private Boolean isTwoClass(String s) {
             String a[] = s.split(" ");
+            Log.i("str", a[1]);
+            if (!a[1].startsWith("周")) {
+                a[0] = a[0] + a[1];
+                a[1] = a[2];
+                a[2] = a[3];
+                if (a.length > 4) {
+                    a[3] = a[4];
+                }
+            }
             if (a[1].substring(0, 8).endsWith("5")) {
                 return false;
             }
@@ -185,7 +202,7 @@ public class ScheduleActivity extends Activity {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, (height - 110) / 6));
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
-                    view.setBackgroundResource(color[i>3?i-4:i+2]);
+                    view.setBackgroundResource(color[i > 3 ? i - 4 : i + 2]);
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, (height - 110) / 6));
                 }
@@ -195,10 +212,10 @@ public class ScheduleActivity extends Activity {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, (height - 110) / 6));
                         className.setText(getClassName(list4.get(i - 5)));
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
-                        view.setBackgroundResource(color[i>5?i-6:i]);
+                        view.setBackgroundResource(color[i > 5 ? i - 6 : i]);
                     } else {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, (height - 110) / 12));
-                        view.setBackgroundResource(color[i>8?i-9:i-3]);
+                        view.setBackgroundResource(color[i > 8 ? i - 9 : i - 3]);
                     }
                 }
             }
@@ -207,6 +224,14 @@ public class ScheduleActivity extends Activity {
 
         private Boolean isOneClass(String s) {
             String a[] = s.split(" ");
+            if (!a[1].startsWith("周")) {
+                a[0] = a[0] + a[1];
+                a[1] = a[2];
+                a[2] = a[3];
+                if (a.length > 4) {
+                    a[3] = a[4];
+                }
+            }
             if (!a[1].substring(0, 6).endsWith("9")) {
                 return true;
             }
@@ -249,7 +274,7 @@ public class ScheduleActivity extends Activity {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, (height - 110) / 4));
                 className.setText(getClassName(list5.get(i)));
                 classLocation.setText(getClassLocation(list5.get(i)));
-                view.setBackgroundResource(color[i>2?i-3:i+3]);
+                view.setBackgroundResource(color[i > 2 ? i - 3 : i + 3]);
             }
             return view;
         }
@@ -259,7 +284,6 @@ public class ScheduleActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(ScheduleActivity.this, LoginScheduleActivity.class);
-                intent.putExtra("Jump", Jump);
                 startActivity(intent);
                 break;
             default:
