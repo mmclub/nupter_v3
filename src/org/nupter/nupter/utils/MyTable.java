@@ -35,13 +35,13 @@ public class MyTable extends View {
         width = canvas.getWidth();
         height = canvas.getHeight();
         for (int i = 1; i <= 12; i++) {
-            paint.setColor(Color.GRAY);
+            paint.setColor(Color.WHITE);
             canvas.drawLine(0, height / 12 * i, width, height / 12 * i, paint);
             canvas.drawLine(width / 6 * i, 0, width / 6 * i, height, paint);
 
         }
         for (int i = 1; i <= 24; i++) {
-            paint.setColor(Color.BLACK);
+            paint.setColor(Color.BLUE);
             paint.setTextSize(20);
             canvas.drawText(time[i - 1], width/6/5, height / 24*i-height/48+height/96, paint);
         }
