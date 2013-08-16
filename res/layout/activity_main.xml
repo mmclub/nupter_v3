@@ -177,7 +177,7 @@
               <ImageButton
                   android:id="@+id/smsIB"
                   android:layout_width="35dp"
-                  android:layout_height="26dp"
+                  android:layout_height="30dp"
                   android:layout_marginTop="15dp"
                   android:background="@drawable/sms_imagebutton"/>
               <ImageButton
