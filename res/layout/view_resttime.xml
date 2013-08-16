@@ -8,18 +8,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-             >
-                 <ImageView
-                     android:layout_width="300dp"
-                     android:layout_height="35dp"
-                     android:src="@drawable/resttime_title"/>
+            android:layout_margin="10dp">
+                 <TextView
+                     android:layout_width="fill_parent"
+                     android:layout_height="0dp"
+                     android:layout_weight="7"
+                     android:background="@drawable/bottomline"
+                     android:text="作     息     时     间 "
+                     android:textColor="#1abc9c"
+                     android:textSize="22sp"
+                     android:gravity="center"/>
     
      <ScrollView    
                     
-                    android:layout_width="300dp"
-                    android:layout_height="380dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="76"
                     android:background="@drawable/lifecontent_background"
                     android:scrollbars="none"
 
@@ -34,7 +38,7 @@
                      android:layout_height="wrap_content"
                      android:text="仙林校区作息时间"
                      android:textColor="@color/white"
-                     android:textSize="8pt"
+                     android:textSize="18sp"
                      android:layout_gravity="center_horizontal"/>
              <LinearLayout
                  android:layout_width="wrap_content"
@@ -59,7 +63,7 @@
                      android:layout_height="wrap_content"
                      android:text="三牌楼校区校区作息时间"
                      android:textColor="@color/white"
-                     android:textSize="8pt"
+                     android:textSize="18sp"
                      android:layout_gravity="center_horizontal"/>
              <LinearLayout
                      android:layout_width="wrap_content"
@@ -84,9 +88,10 @@
                 </ScrollView>
 
     <ImageView
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:src="@drawable/bottomline" />
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:background="@drawable/bottomline" />
 
 </LinearLayout>
     </LinearLayout>
