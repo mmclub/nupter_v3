@@ -45,8 +45,8 @@ public class SettingActivity extends Activity {
         SharedPreferences sharedPreferences= getSharedPreferences("test",
                 Activity.MODE_PRIVATE);
         // 使用getString方法获得value，注意第2个参数是value的默认值
-        boolean getNewsFlog =sharedPreferences.getBoolean("NewsFlag",false);
-        boolean getSoundFlog = sharedPreferences.getBoolean("SoundFlag",false);
+        boolean getNewsFlog =sharedPreferences.getBoolean("NewsFlag",true);
+        boolean getSoundFlog = sharedPreferences.getBoolean("SoundFlag",true);
         newspushTB.setChecked(getNewsFlog);
         refreshsoundTB.setChecked(getSoundFlog);
 

@@ -8,15 +8,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp">
-    <ImageView
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:src="@drawable/busroute_title" />
+            
+            android:layout_margin="10dp">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:background="@drawable/bottomline" 
+            android:text="公     交     出     行"
+            android:textColor="#1abc9c"
+            android:textSize="22sp"
+            android:gravity="center"/>
     <ScrollView
-                    android:layout_width="300dp"
-                    android:layout_height="380dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="76"
                     android:scrollbars="none"
 
                     android:background="@drawable/lifecontent_background" >
@@ -37,12 +43,12 @@
                             android:gravity="center_vertical"
                             android:text="107路"
                             android:textColor="#FFFFFF"
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textSize="14sp"
                             android:textColor="#FFFFFF"
                             android:text="@string/route107" />
 
@@ -54,12 +60,12 @@
                             android:gravity="center_vertical"
                             android:text="165路"
                             
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textSize="14sp"
                             android:textColor="#FFFFFF"
                             android:text="@string/route165" />
 
@@ -71,12 +77,12 @@
                             android:gravity="center_vertical"
                             android:text="177路"
                             android:drawableLeft="@drawable/littlepoint"
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textSize="14sp"
                             android:textColor="#FFFFFF"
                             android:text="@string/route177" />
                         
@@ -87,12 +93,12 @@
                             android:gravity="center_vertical"
                             android:text="东上路"
                             android:drawableLeft="@drawable/littlepoint"
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textSize="14sp"
                             android:textColor="#FFFFFF"
                             android:text="@string/routeDS" />
                         
@@ -104,13 +110,13 @@
                             android:gravity="center_vertical"
                             android:text="97路"
                             
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#FFFFFF"
-                            
+                            android:textSize="14sp"
                             android:text="@string/route97" />
                         
                         <TextView
@@ -121,13 +127,14 @@
                             android:gravity="center_vertical"
                             android:text="310路"
                             
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#FFFFFF"
-                            android:text="@string/route310" />
+                            android:text="@string/route310" 
+                            android:textSize="14sp"/>
                         
                         <TextView
                             android:layout_width="match_parent"
@@ -137,13 +144,13 @@
                             android:gravity="center_vertical"
                             android:text="108路"
                             
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#FFFFFF"
-                            
+                            android:textSize="14sp"
                             android:text="@string/route108" />
                         
                         <TextView
@@ -154,12 +161,12 @@
                             android:gravity="center_vertical"
                             android:text="146路"
                             android:drawableLeft="@drawable/littlepoint"
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textSize="14sp"
                             android:textColor="#FFFFFF"
                             android:text="@string/route146" />
                         
@@ -171,20 +178,21 @@
                             android:gravity="center_vertical"
                             android:text="D1路"
                             
-                            android:textSize="8pt" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:textSize="14sp"
                             android:textColor="#FFFFFF"
                             android:text="@string/routeD1" />
                     </LinearLayout>
                 </ScrollView>
 
     <ImageView
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:src="@drawable/bottomline" />
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:background="@drawable/bottomline" />
 </LinearLayout>
     </LinearLayout>
