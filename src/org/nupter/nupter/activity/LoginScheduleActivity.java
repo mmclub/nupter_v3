@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -276,7 +275,7 @@ public class LoginScheduleActivity extends Activity {
                 getTestConnection.disconnect();
                 if (Flag.equals("Schedule")) {
                     flaghandler.sendEmptyMessage(MSG_TABLE);
-                } else {
+                } else if (Flag.equals("Test")){
                     flaghandler.sendEmptyMessage(MSG_TEST);
                 }
             } catch (IOException e) {

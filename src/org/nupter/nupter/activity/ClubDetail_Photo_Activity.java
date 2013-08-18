@@ -164,6 +164,7 @@ public class ClubDetail_Photo_Activity extends Activity {
         public String getItem(int arg0) {
             // TODO Auto-generated method stub
             try {
+                Log.i("str",jsonArray.getJSONObject(arg0).toString());
                 return jsonArray.getJSONObject(arg0).getString("url_large");
             } catch (Exception e) {
                 return null;

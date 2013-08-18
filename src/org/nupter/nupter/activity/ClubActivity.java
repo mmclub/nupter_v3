@@ -1,24 +1,18 @@
 package org.nupter.nupter.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.view.ViewGroup;
+import android.widget.*;
 
-import android.widget.SimpleAdapter; 
 import org.nupter.nupter.R;
-import android.widget.Toast;
-import org.nupter.nupter.utils.NetUtils;
-
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-
 
 
 /**
@@ -26,64 +20,81 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  *
  * @author SuDongsheng
  */
-public class ClubActivity extends Activity implements Runnable {
-
+public class ClubActivity extends Activity{
+    private int height;
     private Intent chooseIntent;
-    private boolean check;
-    private Thread checkNet;
-    private ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-    private SimpleAdapter simple = null;
+    private MyAdapter adapter;
+    private GridView mGridView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club);
-
+        height = getWindowManager().getDefaultDisplay().getHeight();
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        checkNet = new Thread(ClubActivity.this);
-        checkNet.start();
-
-        // 生成动态数组，并且传入数据
-        setAssociations();
         // 实例化GridView
-        GridView mGridView = (GridView) findViewById(R.id.gridview);
-        // 构建一个适配器
-        simple = new SimpleAdapter(ClubActivity.this, lstImageItem, R.layout.activity_club_image,
-                new String[]{"ItemImage", "ItemText"}, new int[]{
-                R.id.ItemImage, R.id.ItemText});
-        mGridView.setAdapter(simple);
+        mGridView = (GridView) findViewById(R.id.gridview);
+        adapter=new MyAdapter(this);
+        mGridView.setAdapter(adapter);
         mGridView.setOnItemClickListener(onItemClickListener);
     }
-    public void run() {
-        while (true) {
-            check = NetUtils.isNewworkConnected();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+
+    private class MyAdapter extends BaseAdapter{
+        private LayoutInflater inflater;
+        public MyAdapter(Context context) {
+            this.inflater = LayoutInflater.from(context);
         }
-    }
-    public void setAssociations() {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("ItemImage", R.drawable.img);// 添加图像资源的ID
-        map.put("ItemText", "青春南邮");// 按序号做ItemText
-        lstImageItem.add(map);
-        HashMap<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("ItemImage", R.drawable.img1);
-        map1.put("ItemText", "青志联");
-        lstImageItem.add(map1);
-        HashMap<String, Object> map2 = new HashMap<String, Object>();
-        map2.put("ItemImage", R.drawable.img2);
-        map2.put("ItemText", "社团联合会");
-        lstImageItem.add(map2);
-        HashMap<String, Object> map3 = new HashMap<String, Object>();
-        map3.put("ItemImage", R.drawable.img3);
-        map3.put("ItemText", "校科学技术协会");
-        lstImageItem.add(map3);
-        HashMap<String, Object> map4 = new HashMap<String, Object>();
-        map4.put("ItemImage", R.drawable.img4);
-        map4.put("ItemText", "校学生会");
-        lstImageItem.add(map4);
+
+        @Override
+        public int getCount() {
+            return 6;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = inflater.inflate(R.layout.view_club, null);
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mGridView.getLayoutParams();
+            view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 5));
+            ImageView imageView=(ImageView)view.findViewById(R.id.ItemImage);
+            TextView textView=(TextView)view.findViewById(R.id.ItemText);
+            switch (i){
+                case 0:
+                    imageView.setBackgroundResource(R.drawable.img);
+                    textView.setText("南京移动互联网开发者俱乐部");
+                    break;
+                case 1:
+                    imageView.setBackgroundResource(R.drawable.img1);
+                    textView.setText("青春南邮");
+                    break;
+                case 2:
+                    imageView.setBackgroundResource(R.drawable.img2);
+                    textView.setText("青志联");
+                    break;
+                case 3:
+                    imageView.setBackgroundResource(R.drawable.img3);
+                    textView.setText("社团联合会");
+                    break;
+                case 4:
+                    imageView.setBackgroundResource(R.drawable.img4);
+                    textView.setText("校科学技术协会");
+                    break;
+                case 5:
+                    imageView.setBackgroundResource(R.drawable.img5);
+                    textView.setText("校学生会");
+                    break;
+            }
+            return view;
+        }
     }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -96,36 +107,36 @@ public class ClubActivity extends Activity implements Runnable {
         }
         return true;
     }
+
     private GridView.OnItemClickListener onItemClickListener = new GridView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             long page_id = -1;
             switch (position) {
                 case 0:
-                    page_id = 600907477;
+                    page_id = 601415670;
                     break;
                 case 1:
-                    page_id = 601003549;
+                    page_id = 600907477;
                     break;
                 case 2:
-                    page_id = 600889745;
+                    page_id = 601003549;
                     break;
                 case 3:
-                    page_id = 601017224;
+                    page_id = 600889745;
                     break;
                 case 4:
+                    page_id = 601017224;
+                    break;
+                case 5:
                     page_id = 600490284;
                     break;
                 default:
                     break;
             }
-
-            if (check) {
-                chooseIntent = new Intent();
-                chooseIntent.setClass(ClubActivity.this, ClubDetailActivity.class);
-                chooseIntent.putExtra("page_id",page_id);
-                startActivity(chooseIntent);
-            } else
-                Toast.makeText(ClubActivity.this, "网络接入出错，请检查网络", Toast.LENGTH_LONG).show();
+            chooseIntent = new Intent();
+            chooseIntent.setClass(ClubActivity.this, ClubDetailActivity.class);
+            chooseIntent.putExtra("page_id", page_id);
+            startActivity(chooseIntent);
         }
     };
 }

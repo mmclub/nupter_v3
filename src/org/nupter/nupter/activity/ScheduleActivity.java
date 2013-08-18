@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import org.nupter.nupter.R;
@@ -40,27 +42,41 @@ public class ScheduleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
-        intent = getIntent();
-        height=getWindowManager().getDefaultDisplay().getHeight()-110;
-        list1 = intent.getStringArrayListExtra("First");
-        list2 = intent.getStringArrayListExtra("Third");
-        list3 = intent.getStringArrayListExtra("Sixth");
-        list4 = intent.getStringArrayListExtra("Eighth");
-        list5 = intent.getStringArrayListExtra("Eleventh");
-        morningGridView = (GridView) findViewById(R.id.morningGridView);
-        afternoonGridView = (GridView) findViewById(R.id.afternoonGridView);
-        eveningGridView = (GridView) findViewById(R.id.eveningGridView);
-        morningAdapter = new MorningAdapter(this, list1, list2);
-        morningGridView.setAdapter(morningAdapter);
-        morningGridView.setOnItemClickListener(MorningClickListener);
-        afternoonAdapter = new AfternoonAdapter(this, list3, list4);
-        afternoonGridView.setAdapter(afternoonAdapter);
-        afternoonGridView.setOnItemClickListener(AfternoonClickListener);
-        eveningAdapter = new EveningAdapter(this, list5);
-        eveningGridView.setAdapter(eveningAdapter);
-        eveningGridView.setOnItemClickListener(EveningClickListener);
+        height=getWindowManager().getDefaultDisplay().getHeight();
+        LinearLayout linearLayout=(LinearLayout)findViewById(R.id.postLinearLayout);
+        linearLayout.post(
+                new Runnable() {
+            @Override
+            public void run() {
+                int contentViewTop = getWindow().findViewById(Window.ID_ANDROID_CONTENT)
+                        .getTop();
+                height=height-contentViewTop-20;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        intent = getIntent();
+                        list1 = intent.getStringArrayListExtra("First");
+                        list2 = intent.getStringArrayListExtra("Third");
+                        list3 = intent.getStringArrayListExtra("Sixth");
+                        list4 = intent.getStringArrayListExtra("Eighth");
+                        list5 = intent.getStringArrayListExtra("Eleventh");
+                        morningGridView = (GridView) findViewById(R.id.morningGridView);
+                        afternoonGridView = (GridView) findViewById(R.id.afternoonGridView);
+                        eveningGridView = (GridView) findViewById(R.id.eveningGridView);
+                        morningAdapter = new MorningAdapter(ScheduleActivity.this, list1, list2);
+                        morningGridView.setAdapter(morningAdapter);
+                        morningGridView.setOnItemClickListener(MorningClickListener);
+                        afternoonAdapter = new AfternoonAdapter(ScheduleActivity.this, list3, list4);
+                        afternoonGridView.setAdapter(afternoonAdapter);
+                        afternoonGridView.setOnItemClickListener(AfternoonClickListener);
+                        eveningAdapter = new EveningAdapter(ScheduleActivity.this, list5);
+                        eveningGridView.setAdapter(eveningAdapter);
+                        eveningGridView.setOnItemClickListener(EveningClickListener);
+                    }
+                });
+            }
+        });
     }
-
     private String[] format(String s) {
         String a[] = s.split(" ");
         if ((!a[1].startsWith("周")) && a[1].length() < 5) {
@@ -373,5 +389,13 @@ public class ScheduleActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // TODO Auto-generated method stub
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            return true;// 禁止Gridview进行滑动
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
