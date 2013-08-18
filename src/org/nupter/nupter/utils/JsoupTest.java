@@ -1,51 +1,36 @@
 package org.nupter.nupter.utils;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import android.util.Log;
-import org.nupter.nupter.MyApplication;
-
-import java.util.ArrayList;
-
-import static org.nupter.nupter.utils.Log.*;
 
 /**
  * Created with IntelliJ IDEA.
- * User: sudongsheng
- * Date: 13-8-12
- * Time: 下午2:28
+ * User: helloworld
+ * Date: 13-8-16
+ * Time: 下午7:52
  * To change this template use File | Settings | File Templates.
  */
 public class JsoupTest {
-    public ArrayList<ArrayList<String>> parse(String html) {
+    private StringBuffer testString;
+    public String parse(String html) {
         Document doc = null;
         try {
             doc = Jsoup.parse(html);
         } catch (Exception e) {
         }
-        Elements trs = doc.getElementById("Table1").getElementsByTag("tr");
-        Elements tds[] = new Elements[5];
-        int pos[] = {2, 4, 7, 9, 11};
-        ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-        ArrayList<String> list1 = new ArrayList<String>();
-        ArrayList<String> list2 = new ArrayList<String>();
-        ArrayList<String> list3 = new ArrayList<String>();
-        ArrayList<String> list4 = new ArrayList<String>();
-        ArrayList<String> list5 = new ArrayList<String>();
-        list.add(list1);
-        list.add(list2);
-        list.add(list3);
-        list.add(list4);
-        list.add(list5);
-        for(int i=0;i<5;i++){
-            tds[i] = trs.get(pos[i]).getElementsByTag("td");
-            for(int j=0;j<5;j++){
-                list.get(i).add(tds[i].get(j+(i+1)%2+1).text());
+        Elements trs = doc.getElementById("Datagrid1").getElementsByTag("tr");
+        testString=new StringBuffer();
+        for(int i=0;i<trs.size();i++){
+            Elements tds=trs.get(i).getElementsByTag("td");
+            for(int j=0;j<tds.size();j++){
+                testString.append(tds.get(j).text()).append("#");
             }
+            testString.append("*");
         }
-        return list;
+
+        Elements tds=doc.getElementById("TabTj").getElementsByTag("tr").get(14).getElementsByTag("td");
+        testString.append(tds.get(0).text()).append("#").append(tds.get(1).text()).append("#").append(tds.get(2).text());
+        return testString.toString();
     }
 }

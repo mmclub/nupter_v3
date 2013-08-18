@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".activity.BookActivity"/>
         <activity android:name=".activity.ClubActivity"/>
-        <activity android:name=".activity.ClubDetailActivity"/>
+        <activity android:name=".activity.ClubDetailActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.ClubDetail_Photo_Activity"/>
         <activity android:name=".activity.NewsActivity"/>
         <activity android:name=".activity.NewspaperActivity"/>
@@ -32,12 +33,14 @@
         <activity android:name=".activity.LoginScheduleActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.SchoolCardActivity"/>
-        <activity android:name=".activity.ScheduleActivity"/>
+        <activity android:name=".activity.ScheduleActivity"
+                android:label="@string/title_activity_schedule"/>
         <activity android:name=".activity.BookListActivity"/>
         <activity android:name=".activity.BookViewActivity"/>
         <activity android:name=".activity.MapListActivity"/>
         <activity android:name=".activity.MapImageActivity"/>
         <activity android:name=".activity.NewsDetailActivity"/>
+        <activity android:name=".activity.TestActivity" />
 
 
         <activity android:name=".activity.ActivityListActivity"/>
