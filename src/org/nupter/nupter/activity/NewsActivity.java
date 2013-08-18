@@ -151,8 +151,8 @@ public class NewsActivity extends FragmentActivity {
                      public void onSuccess(String response) {
                                  NoticeList(response);
                                 noticeAdapter = new SimpleAdapter(getActivity(), noticeList, R.layout.view_notice_news,
-                                        new String[]{"Title", "Time"},
-                                        new int[]{R.id.Title, R.id.Time});
+                                        new String[]{"Title"},
+                                        new int[]{R.id.Title});
                                 noticelistView.setAdapter(noticeAdapter);
                                 progressDialog.dismiss();
                                 noticelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -163,6 +163,7 @@ public class NewsActivity extends FragmentActivity {
 
                                         try {
                                             jsonObject = (JSONObject)jsonArray.get(position-1);
+
                                             str = jsonObject.getString("content");
                                         } catch (JSONException e) {
                                             // TODO Auto-generated catch block
@@ -210,14 +211,12 @@ public class NewsActivity extends FragmentActivity {
     }
         public void  NoticeList(String response){
             try {
-                jsonArray = new JSONObject(response).getJSONArray("fields");
+                jsonArray = new JSONObject(response).getJSONArray("array");
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    jsonObject = (JSONObject) jsonArray.get(i);
+                    jsonObject = jsonArray.getJSONObject(i);
                     noticeMap = new HashMap<String, Object>();
                     noticeMap.put("Title",
                             jsonObject.getString("title"));
-                    noticeMap.put("Time",
-                            jsonObject.getString("time"));
                     noticeList.add(noticeMap);
                 }
             } catch (Exception e) {
@@ -264,8 +263,8 @@ public class NewsActivity extends FragmentActivity {
                         public void onSuccess(String response) {
                                     NewsList(response);
                                     newsAdapter = new SimpleAdapter(getActivity(), newsList, R.layout.view_notice_news,
-                                            new String[]{"Title", "Time"},
-                                            new int[]{R.id.Title, R.id.Time});
+                                            new String[]{"Title"},
+                                            new int[]{R.id.Title});
                                     newslistView.setAdapter(newsAdapter);
 
                             newslistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -323,14 +322,12 @@ public class NewsActivity extends FragmentActivity {
 
         public void  NewsList(String response){
             try {
-                jsonArray = new JSONObject(response).getJSONArray("fields");
+                jsonArray = new JSONObject(response).getJSONArray("array");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject = (JSONObject) jsonArray.get(i);
                     newsMap = new HashMap<String, Object>();
                     newsMap.put("Title",
                             jsonObject.getString("title"));
-                    newsMap.put("Time",
-                            jsonObject.getString("time"));
                     newsList.add(newsMap);
                 }
             } catch (Exception e) {

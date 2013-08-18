@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     private ImageButton schoolMapIB;
     private ImageButton setIB;
     private ImageButton smsIB;
-    private ImageButton mapIB;
+    private ImageButton testIB;
     private TextView weatherTV;
     private TextView tempTV;
     private TextView tipsTV;
@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
         associationIB = (ImageButton) findViewById(R.id.associationIB);
         newspaperIB = (ImageButton) findViewById(R.id.newspaperIB);
         lostAndFoundIB = (ImageButton) findViewById(R.id.lostAndFoundIB);
+        testIB = (ImageButton)findViewById(R.id.testIB);
         schoolMapIB = (ImageButton) findViewById(R.id.schoolMapIB);
         setIB = (ImageButton) findViewById(R.id.setIB);
         smsIB = (ImageButton) findViewById(R.id.smsIB);
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
         newspaperIB.setOnClickListener(IBListener);
         lostAndFoundIB.setOnClickListener(IBListener);
         schoolMapIB.setOnClickListener(IBListener);
+        testIB.setOnClickListener(IBListener);
         setIB.setOnClickListener(IBListener);
         smsIB.setOnClickListener(IBListener);
 
@@ -166,6 +168,22 @@ public class MainActivity extends Activity {
                     intent.setClass(MainActivity.this, LostAndFoundActivity.class);
                     startActivity(intent);
                     break;
+                case R.id.testIB:
+
+                    SharedPreferences testPreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+                    String testString = testPreferences.getString("test", "null");
+                    if ((!testString.equals("null"))) {
+                        intent.setClass(MainActivity.this, TestActivity.class);
+                        intent.putExtra("testString", testString);
+                        startActivity(intent);
+                    } else {
+                        intent.setClass(MainActivity.this,LoginScheduleActivity.class);
+                        intent.putExtra("JumpTo","Test");
+                        startActivity(intent);
+                    }
+
+                    break;
+
                 case R.id.schoolMapIB:
 
                     intent.setClass(MainActivity.this, MapListActivity.class);
