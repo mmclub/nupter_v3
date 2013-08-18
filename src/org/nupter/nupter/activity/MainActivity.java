@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
     private ImageButton schoolMapIB;
     private ImageButton setIB;
     private ImageButton smsIB;
-    private ImageButton refreshIB;
+    private ImageButton mapIB;
     private TextView weatherTV;
     private TextView tempTV;
     private TextView tipsTV;
@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
         schoolMapIB = (ImageButton) findViewById(R.id.schoolMapIB);
         setIB = (ImageButton) findViewById(R.id.setIB);
         smsIB = (ImageButton) findViewById(R.id.smsIB);
-        refreshIB = (ImageButton) findViewById(R.id.refreshIB);
+
         weatherTV = (TextView) findViewById(R.id.weatherTextView);
         tempTV = (TextView) findViewById(R.id.tempTextView);
         tipsTV = (TextView) findViewById(R.id.tipsTextView);
@@ -90,12 +90,7 @@ public class MainActivity extends Activity {
         schoolMapIB.setOnClickListener(IBListener);
         setIB.setOnClickListener(IBListener);
         smsIB.setOnClickListener(IBListener);
-        refreshIB.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new NanjingWeather().getNanjingWeather();
-            }
-        });
+
 
 
         new NanjingWeather().getNanjingWeather();
@@ -187,7 +182,7 @@ public class MainActivity extends Activity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             long secondTime = System.currentTimeMillis();
-            if (secondTime - firstTime > 2000) {//如果两次按键时间间隔大于800毫秒，则不退出
+            if (secondTime - firstTime > 2000) {//如果两次按键时间间隔大于2000毫秒，则不退出
                 Toast.makeText(MainActivity.this, "再按一次退出程序...",
                         Toast.LENGTH_SHORT).show();
                 firstTime = secondTime;//更新firstTime

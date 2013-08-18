@@ -181,11 +181,11 @@
                   android:layout_marginTop="15dp"
                   android:background="@drawable/sms_imagebutton"/>
               <ImageButton
-                  android:id="@+id/refreshIB"
-                  android:layout_width="50dp"
+                  android:id="@+id/schoolMapIB"
+                  android:layout_width="40dp"
                   android:layout_height="50dp"
-                  android:layout_marginTop="150dp"
-                  android:background="@drawable/refresh_imagebutton"/>
+                  android:layout_marginTop="100dp"
+                  android:background="@drawable/schoolmap_imagebutton"/>
 
 
           </LinearLayout>

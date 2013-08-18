@@ -107,7 +107,7 @@ public class NewsActivity extends FragmentActivity {
     public class NoticeFragment extends Fragment {
         private ProgressDialog progressDialog;
         private Intent intent;
-        private String URL_NOTICE = "https://dl.dropboxusercontent.com/s/b7s5wmn1exu55us/%E6%95%99%E5%8A%A1%E5%85%AC%E5%91%8A.txt" ;
+        private String URL_NOTICE = "http://nuptapi.nupter.org/jwc/" ;
         private SimpleAdapter noticeAdapter;
         private PullToRefreshListView noticelistView = null;
         private ArrayList<HashMap<String, Object>> noticeList = null;
@@ -210,7 +210,7 @@ public class NewsActivity extends FragmentActivity {
     }
         public void  NoticeList(String response){
             try {
-                jsonArray = new JSONObject(response).getJSONArray("array");
+                jsonArray = new JSONObject(response).getJSONArray("fields");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject = (JSONObject) jsonArray.get(i);
                     noticeMap = new HashMap<String, Object>();
@@ -228,7 +228,7 @@ public class NewsActivity extends FragmentActivity {
     public class NewsFragment extends Fragment {
         private JSONObject jsonObject;
         private Intent intent;
-        private String URL_NEWS = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51f4bc8ddcd2956544001f62/416f3cd54f4c89af3abe42b64516344b/document_(1).json";
+        private String URL_NEWS = "http://nuptapi.nupter.org/news/";
         private SimpleAdapter newsAdapter;
         private PullToRefreshListView newslistView = null;
 
@@ -323,7 +323,7 @@ public class NewsActivity extends FragmentActivity {
 
         public void  NewsList(String response){
             try {
-                jsonArray = new JSONObject(response).getJSONArray("array");
+                jsonArray = new JSONObject(response).getJSONArray("fields");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject = (JSONObject) jsonArray.get(i);
                     newsMap = new HashMap<String, Object>();

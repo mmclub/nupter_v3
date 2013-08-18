@@ -112,7 +112,7 @@ public class SettingActivity extends Activity {
 
                     break;
                 case  2:
-                    intent.putExtra(WebviewActivity.EXTRA_URL,"http://m.baidu.com/");
+                    intent.putExtra(WebviewActivity.EXTRA_URL,"");
                     intent.putExtra(WebviewActivity.EXTRA_TITLE,"关于");
                     intent.setClass(SettingActivity.this,WebviewActivity.class);
                     startActivity(intent);
