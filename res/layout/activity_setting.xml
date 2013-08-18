@@ -6,12 +6,19 @@
               android:layout_height="match_parent">
   <LinearLayout
       android:orientation="vertical"
+      android:layout_height="0dp"
+      android:layout_weight="3"
+      android:layout_width="fill_parent"
+      android:gravity="center">
+
+  <LinearLayout
       android:layout_height="wrap_content"
       android:layout_width="fill_parent"
-      android:layout_marginTop="50dp"
-      android:layout_marginLeft="25dp"
-      android:layout_marginRight="25dp"
-      android:background="@drawable/list_bg">
+      android:layout_marginRight="20dp"
+      android:layout_marginLeft="20dp"
+      android:layout_marginBottom="10dp"
+      android:background="@drawable/list_bg"
+      android:orientation="vertical">
    <LinearLayout
        android:layout_height="wrap_content"
        android:layout_width="fill_parent"
@@ -66,16 +73,17 @@
                   android:textOff=""/>
 
       </LinearLayout>
+  </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:layout_width="fill_parent"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            >
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center">
         <org.nupter.nupter.utils.CornerListView
             android:id="@+id/settinglistview"
             android:layout_height="wrap_content"

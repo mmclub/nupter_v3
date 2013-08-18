@@ -6,12 +6,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import android.widget.Toast;
+import com.loopj.android.http.RequestParams;
 
 import org.json.*;
 import org.nupter.nupter.MyApplication;
@@ -50,6 +54,7 @@ public class MainActivity extends Activity {
     private TextView dateTV;
     private TextView weekdayTV;
     private ImageView weatherIcon;
+    private long firstTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -187,6 +192,22 @@ public class MainActivity extends Activity {
 
         }
     };
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {//如果两次按键时间间隔大于800毫秒，则不退出
+                Toast.makeText(MainActivity.this, "再按一次退出程序...",
+                        Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;//更新firstTime
+                return true;
+            } else {
+                System.exit(0);//否则退出程序
+            }
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 
     class NanjingWeather {
 
