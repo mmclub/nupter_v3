@@ -4,7 +4,9 @@ package org.nupter.nupter.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +27,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 
 import java.util.ArrayList;
@@ -142,12 +145,15 @@ public class ClubDetailActivity extends FragmentActivity {
             /**
              * Add Sound Event Listener
              */
-
-            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
-            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
-            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-            listView.setOnPullEventListener(soundListener);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+            String rawString = preferences.getString("SoundFlag", "null");
+            if (rawString.equals("")) {
+                SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
+                soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+                soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+                soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+                listView.setOnPullEventListener(soundListener);
+            }
 
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("努力加载ing");
@@ -229,12 +235,15 @@ public class ClubDetailActivity extends FragmentActivity {
             /**
              * Add Sound Event Listener
              */
-            SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(getActivity());
-            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
-            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-            mPullRefreshGridView.setOnPullEventListener(soundListener);
-
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+            String rawString = preferences.getString("SoundFlag", "null");
+            if (rawString.equals("")) {
+                SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(getActivity());
+                soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+                soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+                soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+                mPullRefreshGridView.setOnPullEventListener(soundListener);
+            }
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("努力加载ing");
             progressDialog.setMessage("人人网API调皮了。。。");
@@ -260,6 +269,7 @@ public class ClubDetailActivity extends FragmentActivity {
                 public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
                     mPullRefreshGridView.onRefreshComplete();
                 }
+
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
                     page = adapter.getCount() / 12 + 1;

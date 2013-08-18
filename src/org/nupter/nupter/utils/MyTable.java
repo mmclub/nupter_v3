@@ -34,16 +34,31 @@ public class MyTable extends View {
         Paint paint = new Paint();
         width = canvas.getWidth();
         height = canvas.getHeight();
+        paint.setColor(Color.CYAN);
+        canvas.drawRect(0,0,width/18,height,paint);
         for (int i = 1; i <= 12; i++) {
             paint.setColor(Color.WHITE);
             canvas.drawLine(0, height / 12 * i, width, height / 12 * i, paint);
             canvas.drawLine(width / 6 * i, 0, width / 6 * i, height, paint);
 
         }
+        canvas.drawLine(width/18,0,width/18,height,paint);
         for (int i = 1; i <= 24; i++) {
-            paint.setColor(Color.BLUE);
+            paint.setColor(Color.MAGENTA);
             paint.setTextSize(20);
-            canvas.drawText(time[i - 1], width/6/5, height / 24*i-height/48+height/96, paint);
+            if(i<=5){
+                canvas.drawText(time[i - 1], width/15, height / 24*i-height/48+height/96, paint);
+            } else {
+            canvas.drawText(time[i - 1], width/6/3, height / 24*i-height/48+height/96, paint);
+            }
+        }
+        for(int i=1;i<=12;i++){
+            paint.setColor(Color.BLACK);
+            if(i<=9){
+            canvas.drawText(i+"",width/64,height/12*i-height/36,paint);
+            }else {
+                canvas.drawText(i+"",width/240,height/12*i-height/36,paint);
+            }
         }
     }
 }
