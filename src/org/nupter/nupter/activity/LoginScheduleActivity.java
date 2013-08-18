@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.ant.liao.GifView;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.JsoupTable;
 import org.nupter.nupter.utils.JsoupTest;
 
 import java.io.DataOutputStream;
@@ -41,13 +42,15 @@ public class LoginScheduleActivity extends Activity {
     private final static int ERR_CHECK = -2;
     private final static int ERR_PASS = -3;
     private final static int ERR_USER = -4;
-    private final static int MSG_START = 1;
+    private final static int MSG_TABLE = 1;
+    private final static int MSG_TEST = 2;
 
     private GifView gifView;
     private String cookie = "";
     private String postData = "";
-    private HttpURLConnection getCookieConnection, getIdentifyConnection, loginConnection, getTableConnection;
-    private InputStream checkCodeInputStream, tableInputStream;
+    private String postTestData = "";
+    private HttpURLConnection getCookieConnection, getIdentifyConnection, loginConnection, getTableConnection, getTestConnection;
+    private InputStream checkCodeInputStream, tableInputStream, testInputStream;
     private EditText username;
     private EditText password;
     private EditText check;
@@ -55,20 +58,27 @@ public class LoginScheduleActivity extends Activity {
     private String checkNumber;
     private String userNumber;
     private String passNumber;
-    private StringBuffer html;
+    private StringBuffer tableHtml, testHtml;
     private Intent intent;
-    private ArrayList<ArrayList<String>> list;
+    private String Flag;
+    private ArrayList<ArrayList<String>> tableList;
+    private String testString;
+    private JsoupTable jsoupTable;
     private JsoupTest jsoupTest;
     private ProgressDialog progressDialog;
     private String login_url = "http://202.119.225.35/default2.aspx";
     private String getTable_url = "http://202.119.225.35/xskbcx.aspx?xh=";
+    private String getTest_url = "http://202.119.225.35/xscj_gc.aspx?xh=";
     private String checkCode_url = "http://202.119.225.35/CheckCode.aspx";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_login);
+        intent = getIntent();
+        Flag = intent.getStringExtra("JumpTo");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        jsoupTest = new JsoupTest();
+        jsoupTable = new JsoupTable();
+        jsoupTest=new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         check = (EditText) findViewById(R.id.identify);
@@ -110,6 +120,7 @@ public class LoginScheduleActivity extends Activity {
                     progressDialog.dismiss();
                 } else {
                     postData = "__VIEWSTATE=dDwtMTg3MTM5OTI5MTs7PmemTdyOgz7iR3IwB6rzBV6MRdNi&TextBox1=" + userNumber + "&TextBox2=" + passNumber + "&TextBox3=" + checkNumber + "&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=";
+                    postTestData = "__VIEWSTATE=dDwtMTU5ODUyNjk2MTt0PHA8bDx4aDs%2BO2w8QjExMDQwOTE2Oz4%2BO2w8aTwxPjs%2BO2w8dDw7bDxpPDE%2BO2k8Mz47aTw1PjtpPDc%2BO2k8OT47aTwxMT47aTwxMz47aTwxNj47aTwyNj47aTwyNz47aTwyOD47aTwzNT47aTwzNz47aTwzOT47aTw0MT47aTw0NT47PjtsPHQ8cDxwPGw8VGV4dDs%2BO2w85a2m5Y%2B377yaQjExMDQwOTE2Oz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDzlp5PlkI3vvJroi4%2FkuJznlJ87Pj47Pjs7Pjt0PHA8cDxsPFRleHQ7PjtsPOWtpumZou%2B8mui9r%2BS7tuWtpumZojs%2BPjs%2BOzs%2BO3Q8cDxwPGw8VGV4dDs%2BO2w85LiT5Lia77yaOz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDzova%2Fku7blt6XnqIvvvIhOSUlU77yJOz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDzooYzmlL%2Fnj63vvJpCMTEwNDA5Oz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDwyMDExMTUwMjs%2BPjs%2BOzs%2BO3Q8dDw7dDxpPDE0PjtAPFxlOzIwMDEtMjAwMjsyMDAyLTIwMDM7MjAwMy0yMDA0OzIwMDQtMjAwNTsyMDA1LTIwMDY7MjAwNi0yMDA3OzIwMDctMjAwODsyMDA4LTIwMDk7MjAwOS0yMDEwOzIwMTAtMjAxMTsyMDExLTIwMTI7MjAxMi0yMDEzOzIwMTMtMjAxNDs%2BO0A8XGU7MjAwMS0yMDAyOzIwMDItMjAwMzsyMDAzLTIwMDQ7MjAwNC0yMDA1OzIwMDUtMjAwNjsyMDA2LTIwMDc7MjAwNy0yMDA4OzIwMDgtMjAwOTsyMDA5LTIwMTA7MjAxMC0yMDExOzIwMTEtMjAxMjsyMDEyLTIwMTM7MjAxMy0yMDE0Oz4%2BOz47Oz47dDxwPDtwPGw8b25jbGljazs%2BO2w8d2luZG93LnByaW50KClcOzs%2BPj47Oz47dDxwPDtwPGw8b25jbGljazs%2BO2w8d2luZG93LmNsb3NlKClcOzs%2BPj47Oz47dDxwPHA8bDxWaXNpYmxlOz47bDxvPHQ%2BOz4%2BOz47Oz47dDxAMDw7Ozs7Ozs7Ozs7Pjs7Pjt0PEAwPDs7Ozs7Ozs7Ozs%2BOzs%2BO3Q8QDA8Ozs7Ozs7Ozs7Oz47Oz47dDw7bDxpPDA%2BO2k8MT47aTwyPjtpPDQ%2BOz47bDx0PDtsPGk8MD47aTwxPjs%2BO2w8dDw7bDxpPDA%2BO2k8MT47PjtsPHQ8QDA8Ozs7Ozs7Ozs7Oz47Oz47dDxAMDw7Ozs7Ozs7Ozs7Pjs7Pjs%2BPjt0PDtsPGk8MD47aTwxPjs%2BO2w8dDxAMDw7Ozs7Ozs7Ozs7Pjs7Pjt0PEAwPDs7Ozs7Ozs7Ozs%2BOzs%2BOz4%2BOz4%2BO3Q8O2w8aTwwPjs%2BO2w8dDw7bDxpPDA%2BOz47bDx0PEAwPDs7Ozs7Ozs7Ozs%2BOzs%2BOz4%2BOz4%2BO3Q8O2w8aTwwPjtpPDE%2BOz47bDx0PDtsPGk8MD47PjtsPHQ8QDA8cDxwPGw8VmlzaWJsZTs%2BO2w8bzxmPjs%2BPjs%2BOzs7Ozs7Ozs7Oz47Oz47Pj47dDw7bDxpPDA%2BOz47bDx0PEAwPHA8cDxsPFZpc2libGU7PjtsPG88Zj47Pj47Pjs7Ozs7Ozs7Ozs%2BOzs%2BOz4%2BOz4%2BO3Q8O2w8aTwwPjs%2BO2w8dDw7bDxpPDA%2BOz47bDx0PHA8cDxsPFRleHQ7PjtsPFpKVTs%2BPjs%2BOzs%2BOz4%2BOz4%2BOz4%2BO3Q8QDA8Ozs7Ozs7Ozs7Oz47Oz47Pj47Pj47Pp9OID21POtPt9O28KvUp1SXJHl%2F&ddlXN=&ddlXQ=&Button1=%B0%B4%D1%A7%C6%DA%B2%E9%D1%AF";
                     new Login().start();
                 }
             }
@@ -159,6 +170,7 @@ public class LoginScheduleActivity extends Activity {
     class Login extends Thread {
         URL loginUrl;
         URL getTableUrl;
+        URL getTestUrl;
 
         public void run() {
             try {
@@ -207,7 +219,9 @@ public class LoginScheduleActivity extends Activity {
                 }
                 inPost.close();
                 loginConnection.disconnect();
-                getTable_url=getTable_url+userNumber;
+
+
+                getTable_url = getTable_url + userNumber;
                 getTableUrl = new URL(getTable_url);
                 getTableConnection = (HttpURLConnection) getTableUrl.openConnection();
                 getTableConnection.setRequestMethod("GET");
@@ -216,22 +230,55 @@ public class LoginScheduleActivity extends Activity {
                 getTableConnection.setRequestProperty("Referer", "http://202.119.225.35/xs_main.aspx?xh=" + userNumber);
                 getTableConnection.connect();
                 tableInputStream = getTableConnection.getInputStream();
-                html = new StringBuffer();
+                tableHtml = new StringBuffer();
                 int bufferSize;
                 byte[] buffer = new byte[1024];
                 bufferSize = tableInputStream.read(buffer, 0, 1024);
                 while (bufferSize != -1) {
                     String res = new String(buffer, 0, bufferSize, "gbk");
-                    html.append(res);
+                    tableHtml.append(res);
                     bufferSize = tableInputStream.read(buffer, 0, 1024);
                 }
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("schedule", html.toString());
+                editor.putString("schedule", tableHtml.toString());
                 editor.commit();
                 tableInputStream.close();
                 getTableConnection.disconnect();
-                flaghandler.sendEmptyMessage(MSG_START);
+
+                //得到成绩的html
+                getTest_url = getTest_url + userNumber + "&xm=%CB%D5%B6%AB%C9%FA&gnmkdm=N121605";
+                getTestUrl = new URL(getTest_url);
+                getTestConnection = (HttpURLConnection) getTestUrl.openConnection();
+                getTestConnection.setRequestMethod("POST");
+                getTestConnection.setDoOutput(true);
+                getTestConnection.setDoInput(true);
+                getTestConnection.setRequestProperty("Cookie", cookie);
+                getTestConnection.setRequestProperty("Accept-Charset", "gbk");
+                getTestConnection.setRequestProperty("Referer", "http://202.119.225.35/xs_main.aspx?xh=" + userNumber + "&xm=%EF%BF%BD%D5%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD&gnmkdm=N121605");
+                getTestConnection.connect();
+                DataOutputStream Out = new DataOutputStream(
+                        getTestConnection.getOutputStream());
+                Out.writeBytes(postTestData);
+                Out.flush();
+                Out.close();
+                testInputStream = getTestConnection.getInputStream();
+                testHtml = new StringBuffer();
+                int bufferSize2;
+                byte[] buffer2 = new byte[1024];
+                bufferSize2 = testInputStream.read(buffer2, 0, 1024);
+                while (bufferSize2 != -1) {
+                    String res = new String(buffer2, 0, bufferSize2, "gbk");
+                    testHtml.append(res);
+                    bufferSize2 = testInputStream.read(buffer2, 0, 1024);
+                }
+                testInputStream.close();
+                getTestConnection.disconnect();
+                if (Flag.equals("Schedule")) {
+                    flaghandler.sendEmptyMessage(MSG_TABLE);
+                } else {
+                    flaghandler.sendEmptyMessage(MSG_TEST);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 flaghandler.sendEmptyMessage(ERR_NET2);
@@ -241,20 +288,30 @@ public class LoginScheduleActivity extends Activity {
 
     Handler flaghandler = new Handler() {
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_START) {
+            if (msg.what == MSG_TABLE) {
                 progressDialog.dismiss();
-                list = jsoupTest.parse(html.toString());
+                tableList = jsoupTable.parse(tableHtml.toString());
                 Intent intent = new Intent(LoginScheduleActivity.this, ScheduleActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("First", list.get(0));
-                bundle.putStringArrayList("Third", list.get(1));
-                bundle.putStringArrayList("Sixth", list.get(2));
-                bundle.putStringArrayList("Eighth", list.get(3));
-                bundle.putStringArrayList("Eleventh", list.get(4));
+                bundle.putStringArrayList("First", tableList.get(0));
+                bundle.putStringArrayList("Third", tableList.get(1));
+                bundle.putStringArrayList("Sixth", tableList.get(2));
+                bundle.putStringArrayList("Eighth", tableList.get(3));
+                bundle.putStringArrayList("Eleventh", tableList.get(4));
                 intent.putExtras(bundle);
                 LoginScheduleActivity.this.startActivity(intent);
+            } else if (msg.what == MSG_TEST) {
+                progressDialog.dismiss();
+                testString=jsoupTest.parse(testHtml.toString());
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("test", testString);
+                editor.commit();
+                Intent intent = new Intent(LoginScheduleActivity.this, TestActivity.class);
+                intent.putExtra("testString",testString);
+                LoginScheduleActivity.this.startActivity(intent);
             } else if (msg.what == ERR_NET) {
-                Toast.makeText(LoginScheduleActivity.this, "网络出错了", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginScheduleActivity.this, "网络出错了,请检查网络连接", Toast.LENGTH_LONG).show();
             } else if (msg.what == ERR_NET2) {
                 Toast.makeText(LoginScheduleActivity.this, "网络出错了", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();

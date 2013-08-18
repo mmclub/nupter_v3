@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 import com.loopj.android.http.RequestParams;
+
 import org.json.*;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
@@ -23,7 +24,7 @@ import org.nupter.nupter.R;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import org.nupter.nupter.utils.JsoupTest;
+import org.nupter.nupter.utils.JsoupTable;
 
 import java.util.ArrayList;
 
@@ -120,8 +121,8 @@ public class MainActivity extends Activity {
                     String schedule = preferences.getString("schedule", "null");
                     if ((!schedule.equals("null"))) {
                         ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-                        JsoupTest jsoupTest = new JsoupTest();
-                        list = jsoupTest.parse(schedule);
+                        JsoupTable jsoupTable = new JsoupTable();
+                        list = jsoupTable.parse(schedule);
                         Intent inten = new Intent(MainActivity.this, ScheduleActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putStringArrayList("First", list.get(0));
@@ -133,8 +134,17 @@ public class MainActivity extends Activity {
                         MainActivity.this.startActivity(inten);
                     } else {
                         intent.setClass(MainActivity.this, LoginScheduleActivity.class);
+                        intent.putExtra("JumpTo","Schedule");
                         startActivity(intent);
                     }
+/*                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+                    String testString = preferences.getString("test", "null");
+                    if ((!testString.equals("null"))) {
+                        intent.setClass(MainActivity.this, TestActivity.class);
+                        //intent.putExtra("JumpTo","Test");
+                        intent.putExtra("testString", testString);
+                        startActivity(intent);
+                    }    */
                     break;
                 case R.id.lifeAssistantIB:
 

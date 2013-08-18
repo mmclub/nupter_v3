@@ -11,7 +11,7 @@
     <string name="subtitle_activity_baidumap">仙林校区的地图</string>
     <string name="title_activity_welcome">闪屏画面</string>
     <string name="subtitle_activity_welcome">启动闪屏画面</string>
-
+    <string name="title_activity_schedule">口袋图书馆</string>
     <string name="title_activity_lifeassistant">生活秘书</string>
     <string name="subtitle_activity_lifeassistant">启动生活秘书</string>
     <string name="schoolguide_Tab">指南</string>
