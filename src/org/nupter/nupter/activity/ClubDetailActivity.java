@@ -51,11 +51,11 @@ public class ClubDetailActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_and_found);
-
+        setContentView(R.layout.activity_clubdetail);
         intent = getIntent();
         page_id = intent.getLongExtra("page_id", 0);
-        ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
+        this.setTitle(Title(page_id));
+        ViewPager vp = (ViewPager) findViewById(R.id.mViewPager);
         titleList.add("状态");
         titleList.add("日志");
         titleList.add("相册");
@@ -64,6 +64,22 @@ public class ClubDetailActivity extends FragmentActivity {
         fragmentList.add(new PhotosFragment());
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public String Title(Long page_id) {
+        switch (page_id.intValue()) {
+            case 600907477:
+                return "青春南邮";
+            case 601003549:
+                return "青志联";
+            case 600889745:
+                return "社团联合会";
+            case 601017224:
+                return "校科学技术协会";
+            case 600490284:
+                return "校学生会";
+        }
+        return getTitle().toString();
     }
 
 
@@ -183,7 +199,9 @@ public class ClubDetailActivity extends FragmentActivity {
         }
 
         private void setImg() {
-            if (page_id == 600490284)
+            if (page_id == 601415670)
+                img = R.drawable.shetuan_nyydhlwkfzjlb;
+            else if (page_id == 600490284)
                 img = R.drawable.shetuan_xxsh;
             else if (page_id == 600889745)
                 img = R.drawable.shetuan_sl;
