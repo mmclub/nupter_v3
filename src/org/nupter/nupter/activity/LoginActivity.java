@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
  * author sudongsheng
  */
 
-public class LoginScheduleActivity extends Activity {
+public class LoginActivity extends Activity {
     private final static int ERR_NET = 0;
     private final static int ERR_NET2 = -1;
     private final static int ERR_CHECK = -2;
@@ -104,7 +104,7 @@ public class LoginScheduleActivity extends Activity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog = new ProgressDialog(LoginScheduleActivity.this);
+                progressDialog = new ProgressDialog(LoginActivity.this);
                 progressDialog.setMessage("正在登陆中。。。");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
@@ -112,10 +112,10 @@ public class LoginScheduleActivity extends Activity {
                 passNumber = password.getText().toString();
                 checkNumber = check.getText().toString();
                 if (userNumber.equals("")) {
-                    Toast.makeText(LoginScheduleActivity.this, "用户名不能为空", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "用户名不能为空", Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 } else if (passNumber.equals("")) {
-                    Toast.makeText(LoginScheduleActivity.this, "密码不能为空", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "密码不能为空", Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 } else {
                     postData = "__VIEWSTATE=dDwtMTg3MTM5OTI5MTs7PmemTdyOgz7iR3IwB6rzBV6MRdNi&TextBox1=" + userNumber + "&TextBox2=" + passNumber + "&TextBox3=" + checkNumber + "&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=";
@@ -290,7 +290,7 @@ public class LoginScheduleActivity extends Activity {
             if (msg.what == MSG_TABLE) {
                 progressDialog.dismiss();
                 tableList = jsoupTable.parse(tableHtml.toString());
-                Intent intent = new Intent(LoginScheduleActivity.this, ScheduleActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ScheduleActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("First", tableList.get(0));
                 bundle.putStringArrayList("Third", tableList.get(1));
@@ -298,7 +298,7 @@ public class LoginScheduleActivity extends Activity {
                 bundle.putStringArrayList("Eighth", tableList.get(3));
                 bundle.putStringArrayList("Eleventh", tableList.get(4));
                 intent.putExtras(bundle);
-                LoginScheduleActivity.this.startActivity(intent);
+                LoginActivity.this.startActivity(intent);
             } else if (msg.what == MSG_TEST) {
                 progressDialog.dismiss();
                 testString=jsoupTest.parse(testHtml.toString());
@@ -306,26 +306,26 @@ public class LoginScheduleActivity extends Activity {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();
-                Intent intent = new Intent(LoginScheduleActivity.this, TestActivity.class);
+                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
                 intent.putExtra("testString",testString);
-                LoginScheduleActivity.this.startActivity(intent);
+                LoginActivity.this.startActivity(intent);
             } else if (msg.what == ERR_NET) {
-                Toast.makeText(LoginScheduleActivity.this, "网络出错了,请检查网络连接", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "网络出错了,请检查网络连接", Toast.LENGTH_LONG).show();
             } else if (msg.what == ERR_NET2) {
-                Toast.makeText(LoginScheduleActivity.this, "网络出错了", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "网络出错了", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             } else if (msg.what == ERR_CHECK) {
                 progressDialog.dismiss();
-                Toast.makeText(LoginScheduleActivity.this, "验证码不正确！！", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "验证码不正确！！", Toast.LENGTH_LONG).show();
                 new GetCheckCode().start();
             } else if (msg.what == ERR_PASS) {
                 progressDialog.dismiss();
                 new GetCheckCode().start();
-                Toast.makeText(LoginScheduleActivity.this, "密码错误！！", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "密码错误！！", Toast.LENGTH_LONG).show();
             } else if (msg.what == ERR_USER) {
                 progressDialog.dismiss();
                 new GetCheckCode().start();
-                Toast.makeText(LoginScheduleActivity.this, "用户名不存在或未按照要求参加教学活动！！", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "用户名不存在或未按照要求参加教学活动！！", Toast.LENGTH_LONG).show();
             }
         }
     };
