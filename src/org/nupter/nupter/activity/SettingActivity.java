@@ -106,12 +106,13 @@ public class SettingActivity extends Activity {
                     intent=new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
-                    intent.putExtra(Intent.EXTRA_TEXT, "嗨！童鞋们，快来使用‘掌上南邮’吧，太给力了。。。 ");
+                    intent.putExtra(Intent.EXTRA_TEXT, "嗨！童鞋们，快来使用‘掌上南邮’吧，太给力了！" +
+                            "我和小伙伴们都惊呆了。。。 ");
                     startActivity(Intent.createChooser(intent, getTitle()));
 
                     break;
                 case  2:
-                    intent.putExtra(WebviewActivity.EXTRA_URL,"http://m.baidu.com/");
+                    intent.putExtra(WebviewActivity.EXTRA_URL,"");
                     intent.putExtra(WebviewActivity.EXTRA_TITLE,"关于");
                     intent.setClass(SettingActivity.this,WebviewActivity.class);
                     startActivity(intent);
