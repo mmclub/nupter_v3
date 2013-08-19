@@ -153,12 +153,12 @@
                   android:layout_margin="2dp" 
                   android:background="@drawable/newspaper_imagebutton"/>
               <ImageButton
-                  android:id="@+id/schoolMapIB"
+                  android:id="@+id/testIB"
                    android:layout_width="fill_parent"
                   android:layout_height="0dp"
                   android:layout_weight="1"
                   android:layout_margin="2dp" 
-                  android:background="@drawable/schoolmap_imagebutton"/>
+                  android:background="@drawable/test_imagebutton"/>
           </LinearLayout>
 
           <LinearLayout
@@ -177,15 +177,15 @@
               <ImageButton
                   android:id="@+id/smsIB"
                   android:layout_width="35dp"
-                  android:layout_height="26dp"
+                  android:layout_height="30dp"
                   android:layout_marginTop="15dp"
                   android:background="@drawable/sms_imagebutton"/>
               <ImageButton
-                  android:id="@+id/refreshIB"
-                  android:layout_width="50dp"
-                  android:layout_height="50dp"
-                  android:layout_marginTop="150dp"
-                  android:background="@drawable/refresh_imagebutton"/>
+                  android:id="@+id/schoolMapIB"
+                  android:layout_width="30dp"
+                  android:layout_height="40dp"
+                  android:layout_marginTop="100dp"
+                  android:background="@drawable/schoolmap_imagebutton"/>
 
 
           </LinearLayout>

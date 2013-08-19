@@ -107,7 +107,7 @@ public class NewsActivity extends FragmentActivity {
     public class NoticeFragment extends Fragment {
         private ProgressDialog progressDialog;
         private Intent intent;
-        private String URL_NOTICE = "https://dl.dropboxusercontent.com/s/b7s5wmn1exu55us/%E6%95%99%E5%8A%A1%E5%85%AC%E5%91%8A.txt" ;
+        private String URL_NOTICE = "http://nuptapi.nupter.org/jwc/" ;
         private SimpleAdapter noticeAdapter;
         private PullToRefreshListView noticelistView = null;
         private ArrayList<HashMap<String, Object>> noticeList = null;
@@ -151,8 +151,8 @@ public class NewsActivity extends FragmentActivity {
                      public void onSuccess(String response) {
                                  NoticeList(response);
                                 noticeAdapter = new SimpleAdapter(getActivity(), noticeList, R.layout.view_notice_news,
-                                        new String[]{"Title", "Time"},
-                                        new int[]{R.id.Title, R.id.Time});
+                                        new String[]{"Title"},
+                                        new int[]{R.id.Title});
                                 noticelistView.setAdapter(noticeAdapter);
                                 progressDialog.dismiss();
                                 noticelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -163,6 +163,7 @@ public class NewsActivity extends FragmentActivity {
 
                                         try {
                                             jsonObject = (JSONObject)jsonArray.get(position-1);
+
                                             str = jsonObject.getString("content");
                                         } catch (JSONException e) {
                                             // TODO Auto-generated catch block
@@ -212,12 +213,10 @@ public class NewsActivity extends FragmentActivity {
             try {
                 jsonArray = new JSONObject(response).getJSONArray("array");
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    jsonObject = (JSONObject) jsonArray.get(i);
+                    jsonObject = jsonArray.getJSONObject(i);
                     noticeMap = new HashMap<String, Object>();
                     noticeMap.put("Title",
                             jsonObject.getString("title"));
-                    noticeMap.put("Time",
-                            jsonObject.getString("time"));
                     noticeList.add(noticeMap);
                 }
             } catch (Exception e) {
@@ -228,7 +227,7 @@ public class NewsActivity extends FragmentActivity {
     public class NewsFragment extends Fragment {
         private JSONObject jsonObject;
         private Intent intent;
-        private String URL_NEWS = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51f4bc8ddcd2956544001f62/416f3cd54f4c89af3abe42b64516344b/document_(1).json";
+        private String URL_NEWS = "http://nuptapi.nupter.org/news/";
         private SimpleAdapter newsAdapter;
         private PullToRefreshListView newslistView = null;
 
@@ -264,8 +263,8 @@ public class NewsActivity extends FragmentActivity {
                         public void onSuccess(String response) {
                                     NewsList(response);
                                     newsAdapter = new SimpleAdapter(getActivity(), newsList, R.layout.view_notice_news,
-                                            new String[]{"Title", "Time"},
-                                            new int[]{R.id.Title, R.id.Time});
+                                            new String[]{"Title"},
+                                            new int[]{R.id.Title});
                                     newslistView.setAdapter(newsAdapter);
 
                             newslistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -329,8 +328,6 @@ public class NewsActivity extends FragmentActivity {
                     newsMap = new HashMap<String, Object>();
                     newsMap.put("Title",
                             jsonObject.getString("title"));
-                    newsMap.put("Time",
-                            jsonObject.getString("time"));
                     newsList.add(newsMap);
                 }
             } catch (Exception e) {
