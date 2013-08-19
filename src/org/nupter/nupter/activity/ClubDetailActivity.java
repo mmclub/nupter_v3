@@ -43,7 +43,12 @@ public class ClubDetailActivity extends FragmentActivity {
     private final static int status = 1;
     private final static int blog = 2;
     public Intent intent;
-    public Long page_id;
+    public int page_id;
+    private int position;
+    private String[] clubName = {"南京移动互联网开发者俱乐部", "青春南邮", "校学生会", "社团联合会", "校科学技术协会",
+            "青志联", "南京邮电大学校研究生会", "南邮之声", "南邮青年", "南邮大艺团办公室", "南邮红会", "学通社"};
+    private int[] clubId={601415670,600907477,601017224,600889745,601003549,600490284,601052072,601534154,600989734,601482336,601593100,601317519};
+    private int[] clubImage={R.drawable.shetuan_nyydhlwkfzjlb,R.drawable.shetuan_qcny,R.drawable.shetuan_xxsh,R.drawable.shetuan_sl,R.drawable.shetuan_xkx,R.drawable.shetuan_qzl,R.drawable.shetuan_njyddxxyjsh,R.drawable.shetuan_nyzs,R.drawable.shetuan_nyqn,R.drawable.shetuan_nydyt,R.drawable.shetuan_nyhh,R.drawable.shetuan_xts};
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
 
@@ -53,8 +58,9 @@ public class ClubDetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clubdetail);
         intent = getIntent();
-        page_id = intent.getLongExtra("page_id", 0);
-        this.setTitle(Title(page_id));
+        position=intent.getIntExtra("position",0);
+        page_id = clubId[position];
+        this.setTitle(clubName[position]);
         ViewPager vp = (ViewPager) findViewById(R.id.mViewPager);
         titleList.add("状态");
         titleList.add("日志");
@@ -65,24 +71,6 @@ public class ClubDetailActivity extends FragmentActivity {
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-    public String Title(Long page_id) {
-        switch (page_id.intValue()) {
-            case 600907477:
-                return "青春南邮";
-            case 601003549:
-                return "青志联";
-            case 600889745:
-                return "社团联合会";
-            case 601017224:
-                return "校科学技术协会";
-            case 600490284:
-                return "校学生会";
-        }
-        return getTitle().toString();
-    }
-
-
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
@@ -177,7 +165,7 @@ public class ClubDetailActivity extends FragmentActivity {
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
             msg = new ArrayList<HashMap<String, Object>>();
-            setImg();
+            img=clubImage[position];
             new AsyncHttpClient().post(url, null,
                     new AsyncHttpResponseHandler() {
                         @Override
@@ -196,21 +184,6 @@ public class ClubDetailActivity extends FragmentActivity {
                         }
                     });
             return v;
-        }
-
-        private void setImg() {
-            if (page_id == 601415670)
-                img = R.drawable.shetuan_nyydhlwkfzjlb;
-            else if (page_id == 600490284)
-                img = R.drawable.shetuan_xxsh;
-            else if (page_id == 600889745)
-                img = R.drawable.shetuan_sl;
-            else if (page_id == 601003549)
-                img = R.drawable.shetuan_qzl;
-            else if (page_id == 601017224)
-                img = R.drawable.shetuan_xkx;
-            else if (page_id == 600907477)
-                img = R.drawable.shetuan_qcny;
         }
 
         public void msg(String response) {

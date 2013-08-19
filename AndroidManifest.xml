@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".activity.BookActivity"/>
         <activity android:name=".activity.ClubActivity"
-                  android:label="@string/title_activity_club"/>
+                  android:label="@string/title_activity_club"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.ClubDetailActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.ClubDetail_Photo_Activity"/>
