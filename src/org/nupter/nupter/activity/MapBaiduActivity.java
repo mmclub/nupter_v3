@@ -2,11 +2,10 @@ package org.nupter.nupter.activity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Toast;
-import com.baidu.mapapi.BMapManager; 
+import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import org.nupter.nupter.AppConstants;
@@ -14,15 +13,14 @@ import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
 
-import java.io.IOException;
 
 
 /**
  * 百度地图Activity
  *
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
- *
- * 由百度地图Android SDK Demo修改而来
+ *         <p/>
+ *         由百度地图Android SDK Demo修改而来
  */
 
 public class MapBaiduActivity extends Activity {
@@ -31,43 +29,94 @@ public class MapBaiduActivity extends Activity {
     private MapView mMapView = null;
     private MapController mMapController = null;
     MKMapViewListener mMapListener = null;
+    Point[] points = {new Point (118.936514,32.124308
+            ,"主体育场:阅兵仪式，运动会都是在这里",0),
+            new Point (118.937345,32.124358
+                    ,"体育馆:有室内篮球场和羽毛球场，体能测试也在这边",0),
+            new Point (118.937695,32.123303
+                    ,"大学生活动中心:部分社团活动室所在地。各种文艺表演，各院晚会都在这演出",0),
+            new Point (118.932346,32.122926
+                    ,"青教楼:这是一个神奇的地方，据说可以出租。",0),
+            new Point (118.939227,32.125556
+                    ,"桂苑:男生宿舍",0),
+            new Point (118.940341,32.124287
+                    ,"柳苑:男生宿舍",0),
+            new Point (118.94106,32.123293
+                    ,"李苑:女生宿舍",0),
+            new Point (118.938509,32.124746
+                    ,"荷苑:男生宿舍",0),
+            new Point (118.939623,32.123737
+                    ,"南三食堂",0),
+            new Point (118.93983,32.123496
+                    ,"教育超市",0),
+            new Point (118.939856,32.122819
+                    ,"桃苑:男生宿舍",0),
+            new Point (118.938514,32.122682
+                    ,"学生事务中心（含门诊部）:新生在这领书，生病一定要来看看~",0),
+            new Point (118.938141,32.118083
+                    ,"图书馆:学霸集中营，复习好去处，空调、无线妥妥的。",0),
+            new Point (118.94009,32.11924
+                    ,"菊苑:男生宿舍",0),
+            new Point (118.940495,32.118014
+                    ,"竹苑:女生宿舍",0),
+            new Point (118.939839,32.1169
+                    ,"兰苑:男生宿舍",0),
+            new Point (118.939928,32.115784
+                    ,"梅苑:女生宿舍",0),
+            new Point (118.939382,32.118014
+                    ,"南二食堂",0),
+            new Point (118.939946,32.114668
+                    ,"南一食堂",0),
+            new Point (118.937575,32.115494
+                    ,"教学楼:南邮学子们学习，自习的地方，大教室有空调~",0),
+            new Point (118.936066,32.113307
+                    ,"行政楼",0),
+            new Point (118.938106,32.112561
+                               ,"南邮正门（南门）",0)
+    };
 
+    public class Point {
+        public double longtitude;
+        public double latitude;
+        public int imageid;
+        public String text;
+
+        public Point(double longtitude, double latitude, String text, int imageid) {
+            this.longtitude = longtitude;
+            this.latitude = latitude;
+            this.text = text;
+            this.imageid = imageid;
+        }
+    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /**
-         * 使用地图sdk前需先初始化BMapManager.
-         * BMapManager是全局的，可为多个MapView共用，它需要地图模块创建前创建，
-         * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
-         */
-        MyApplication app = (MyApplication)this.getApplication();
+
+
+        // 初始化BMapManager
+        MyApplication app = (MyApplication) this.getApplication();
         if (app.baiduMapManager == null) {
             app.baiduMapManager = new BMapManager(this);
-            /**
-             * 如果BMapManager没有初始化则初始化BMapManager
-             */
-            app.baiduMapManager.init(AppConstants.BaiduMapKey,new MyApplication.MyGeneralListener());
+            app.baiduMapManager.init(AppConstants.BaiduMapKey, new MyApplication.MyGeneralListener());
         }
-        /**
-         * 由于MapView在setContentView()中初始化,所以它需要在BMapManager初始化之后
-         */
+
+        // 初始化布局
         setContentView(R.layout.activity_baidumap);
-        mMapView = (MapView)findViewById(R.id.bmapView);
+        mMapView = (MapView) findViewById(R.id.bmapView);
+        mMapView.setSatellite(true);
+
         mMapController = mMapView.getController();
         mMapController.enableClick(true);
-        mMapController.setZoom(15);
+        mMapController.setZoom(16);
 
-        /**
-         * 将地图移动至指定点
-         * 使用百度经纬度坐标，可以通过http://api.map.baidu.com/lbsapi/getpoint/index.html查询地理坐标
-         *
-         */
-        GeoPoint p ;
-        double cLat = 32.120688 ;
-        double cLon = 118.93697 ;
-        p = new GeoPoint((int)(cLat * 1E6), (int)(cLon * 1E6));
+
+        // 将聚焦点移动到南邮仙林校区
+        GeoPoint p;
+        double cLat = 32.120688;
+        double cLon = 118.93697;
+        p = new GeoPoint((int) (cLat * 1E6), (int) (cLon * 1E6));
         mMapController.setCenter(p);
 
         /**
@@ -76,22 +125,14 @@ public class MapBaiduActivity extends Activity {
         mMapListener = new MKMapViewListener() {
             @Override
             public void onMapMoveFinish() {
-                /**
-                 * 在此处理地图移动完成回调
-                 * 缩放，平移等操作完成后，此回调被触发
-                 */
+
             }
 
             @Override
             public void onClickMapPoi(MapPoi mapPoiInfo) {
-                /**
-                 * 在此处理底图poi点击事件
-                 * 显示底图poi名称并移动至该点
-                 * 设置过： mMapController.enableClick(true); 时，此回调才能被触发
-                 *
-                 */
+
                 String title = "";
-                if (mapPoiInfo != null){
+                if (mapPoiInfo != null) {
                     title = mapPoiInfo.strText;
                     Toast.makeText(MapBaiduActivity.this, title, Toast.LENGTH_SHORT).show();
                     mMapController.animateTo(mapPoiInfo.geoPt);
@@ -100,65 +141,67 @@ public class MapBaiduActivity extends Activity {
 
             @Override
             public void onGetCurrentMap(Bitmap b) {
-                /**
-                 *  当调用过 mMapView.getCurrentMap()后，此回调会被触发
-                 *  可在此保存截图至存储设备
-                 */
+
             }
 
             @Override
             public void onMapAnimationFinish() {
-                /**
-                 *  地图完成带动画的操作（如: animationTo()）后，此回调被触发
-                 */
             }
         };
 
-        /**
-         *  在想要添加Overlay的地方使用以下代码，
-         *  比如Activity的onCreate()中
-         */
-        //准备要添加的Overlay
-
-        double mLat1 = 32.117966;
-        double mLon1 = 118.93837;
-
-
-
-
-        // 用给定的经纬度构造GeoPoint，单位是微度 (度 * 1E6)
-        GeoPoint p1 = new GeoPoint((int) (mLat1 * 1E6), (int) (mLon1 * 1E6));
-
-        //准备overlay图像数据，根据实情情况修复
-        Drawable mark= getResources().getDrawable(R.drawable.icon_marka);
-        //用OverlayItem准备Overlay数据
-        OverlayItem item1 = new OverlayItem(p1,"图书馆","南邮的图书馆");
-        //使用setMarker()方法设置overlay图片,如果不设置则使用构建ItemizedOverlay时的默认设置
-
-        item1.setTitle("图书馆");
-        item1.setSnippet("南邮的图书馆");
-
-        //创建IteminizedOverlay
-        OverlayTest itemOverlay = new OverlayTest(mark, mMapView);
-        //将IteminizedOverlay添加到MapView中
 
         mMapView.getOverlays().clear();
+        Drawable mark = getResources().getDrawable(R.drawable.point_mark_bule);
+
+        OverlayPoint itemOverlay = new OverlayPoint(mark, mMapView, points);
         mMapView.getOverlays().add(itemOverlay);
 
-        //现在所有准备工作已准备好，使用以下方法管理overlay.
-        //添加overlay, 当批量添加Overlay时使用addItem(List<OverlayItem>)效率更高
-        itemOverlay.addItem(item1);
+
+        for (Point point : points) {
+            GeoPoint p1 = new GeoPoint((int) (point.latitude * 1E6), (int) (point.longtitude * 1E6));
+            OverlayItem item1 = new OverlayItem(p1, point.text, "x");
+
+            item1.setTitle(point.text);
+            item1.setSnippet("南邮的图书馆");
+
+            itemOverlay.addItem(item1);
+
+        }
+
 
         mMapView.refresh();
-        //删除overlay .
-        //itemOverlay.removeItem(itemOverlay.getItem(0));
-        //mMapView.refresh();
-        //清除overlay
-        // itemOverlay.removeAll();
-        // mMapView.refresh();
+
 
         mMapView.regMapViewListener(MyApplication.getInstance().baiduMapManager, mMapListener);
     }
+
+
+    class OverlayPoint extends ItemizedOverlay<OverlayItem> {
+        //用MapView构造ItemizedOverlay
+        PopupOverlay pop;
+        Point[] points;
+
+        public OverlayPoint(Drawable mark, MapView mapView, Point[] point) {
+            super(mark, mapView);
+            this.points = point;
+        }
+
+        protected boolean onTap(int index) {
+           // Log.d("item onTap: " + index);
+            Toast.makeText(MapBaiduActivity.this, this.getItem(index).getTitle(), 500).show();
+
+// 显示图片
+//            if (points[index].imageid != 0) {
+//                ImageView img = new ImageView(MapBaiduActivity.this);
+//                img.setImageResource(points[index].imageid);
+//                new AlertDialog.Builder(MapBaiduActivity.this)
+//                        .setView(img)
+//                        .show();
+//            }
+            return true;
+        }
+    }
+
 
     @Override
     protected void onPause() {
@@ -198,59 +241,6 @@ public class MapBaiduActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mMapView.onRestoreInstanceState(savedInstanceState);
-    }
-
-
-
-    /*
-     * 要处理overlay点击事件时需要继承ItemizedOverlay
-     * 不处理点击事件时可直接生成ItemizedOverlay.
-     */
-    class OverlayTest extends ItemizedOverlay<OverlayItem> {
-        //用MapView构造ItemizedOverlay
-        PopupOverlay pop;
-        public OverlayTest(Drawable mark,MapView mapView){
-            super(mark,mapView);
-        }
-        protected boolean onTap(int index) {
-            //在此处理item点击事件
-            Log.d("item onTap: " + index);
-            Toast.makeText(MapBaiduActivity.this, this.getItem(index).getTitle(), Toast.LENGTH_SHORT).show();
-
-            //pop demo
-            //创建pop对象，注册点击事件监听接口
-           pop = new PopupOverlay(mMapView,new PopupClickListener() {
-                @Override
-                public void onClickedPopup(int index) {
-                    //在此处理pop点击事件，index为点击区域索引,点击区域最多可有三个
-                }
-            });
-
-            Bitmap[] bmps = new Bitmap[3];
-            try {
-                bmps[0] = BitmapFactory.decodeStream(getAssets().open("ic_launcher.png"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //弹窗弹出位置
-            GeoPoint ptTAM = new GeoPoint((int)(this.getItem(index).getPoint().getLatitudeE6() ), (int) (this.getItem(index).getPoint().getLongitudeE6()));
-            //弹出pop,隐藏pop
-            pop.showPopup(bmps, ptTAM, 32);
-            //隐藏弹窗
-            //
-
-
-            return true;
-        }
-        public boolean onTap(GeoPoint pt, MapView mapView){
-            //在此处理MapView的点击事件，当返回 true时
-            super.onTap(pt,mapView);
-            if (pop != null)
-                pop.hidePop();
-
-            return false;
-        }
-
     }
 
 
