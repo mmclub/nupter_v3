@@ -26,7 +26,6 @@ import org.nupter.nupter.utils.Log;
  */
 
 
-@SuppressLint("NewApi")
 public class NewspaperActivity extends ListActivity {
 
     public static final String EXTRA_NEWSPAPER_JSON = "newspaper_json";
@@ -39,7 +38,7 @@ public class NewspaperActivity extends ListActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-       String rawString =    preferences.getString("json", "null");
+        String rawString =    preferences.getString("json", "null");
        if (! rawString.equals("null")){
            try{
                json = new JSONObject(rawString);
@@ -71,7 +70,7 @@ public class NewspaperActivity extends ListActivity {
                 onBackPressed();
                 break;
             default:
-                Toast.makeText(this, "update", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "努力更新中～", Toast.LENGTH_SHORT).show();
                 update();
                 break;
         }
@@ -82,7 +81,7 @@ public class NewspaperActivity extends ListActivity {
 
     public void update(){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("https://dl.dropboxusercontent.com/u/94363727/How%20to%20use%20the%20Public%20folder.txt", new AsyncHttpResponseHandler() {
+        client.get("http://nuptapi.nupter.org/newspaper/", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {
 
@@ -97,14 +96,13 @@ public class NewspaperActivity extends ListActivity {
 
 
                 }catch (Exception e){
-                      onUpdateFailure("no json");
                 }
 
             }
 
             @Override
             public void onFailure(Throwable throwable, String s) {
-                 onUpdateFailure("no network");
+                 onUpdateFailure("网络抽风～请稍后再试");
             }
         });
 
@@ -116,7 +114,6 @@ public class NewspaperActivity extends ListActivity {
     }
 
     public void onUpdateSuccess(){
-        Toast.makeText(this,PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext()).getString("json","null") , Toast.LENGTH_SHORT).show();
         setListAdapter(new MyAdapter(this));
     }
 
