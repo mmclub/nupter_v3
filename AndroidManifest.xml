@@ -58,6 +58,7 @@
                 android:label="@string/title_activity_test"/>
 
 
+
         <activity android:name=".activity.ActivityListActivity"/>
 
         <activity android:name=".activity.LostAndFoundActivity"

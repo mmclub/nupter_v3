@@ -1,7 +1,6 @@
 package org.nupter.nupter.activity;
 
 
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import android.support.v4.view.ViewPager;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,13 +19,17 @@ import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import org.apache.http.protocol.ResponseDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.NetUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +38,7 @@ import java.util.List;
  * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
 
-@SuppressLint({ "NewApi", "ValidFragment" })
+@SuppressLint({"NewApi", "ValidFragment"})
 
 public class LostAndFoundActivity extends FragmentActivity {
 
@@ -47,19 +51,19 @@ public class LostAndFoundActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    protected void onStart() {
+        super.onStart();
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
         fragmentList.add(new LostInfoFragment());
-        fragmentList.add(new FoundInfoFragment());
         fragmentList.add(new PublishFragment());
-        titleList.add("寻物");
-        titleList.add("招领");
+        titleList.add("瞄一眼");
         titleList.add("发布");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
 
@@ -104,7 +108,10 @@ public class LostAndFoundActivity extends FragmentActivity {
     //发布信息的Fragment
     public class PublishFragment extends Fragment {
         EditText infoEditText, publisherEditText, phoneEditText;
-        String info, publisher, phone;
+        String contnet, publisher, phone, url, timeStamp;
+        Calendar calendar = Calendar.getInstance();
+        Date a = new Date();
+
         Button publishButton;
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -112,22 +119,41 @@ public class LostAndFoundActivity extends FragmentActivity {
 
             infoEditText = (EditText) v.findViewById(R.id.publishInfoEditText);
             publisherEditText = (EditText) v.findViewById(R.id.publisherEditText);
-            phoneEditText = (EditText) v.findViewById(R.id.publishPhoneTextView);
+            phoneEditText = (EditText) v.findViewById(R.id.publishPhoneEditText);
             publishButton = (Button) v.findViewById(R.id.publishButton);
 
             publishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    info = infoEditText.getText().toString();
+                    contnet = infoEditText.getText().toString();
                     publisher = publisherEditText.getText().toString();
                     phone = phoneEditText.getText().toString();
+                    timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+                    Log.d("Calendar_test", timeStamp);
+                    url = "http://nuptapi.nupter.org/lost/new";
                     AsyncHttpClient client = new AsyncHttpClient();
                     RequestParams params = new RequestParams();
-                    params.put("info", info);
-                    params.put("publisher", publisher);
-                    params.put("phone", phone);
+                    params.put("time", timeStamp);
+                    params.put("title", "");
+                    params.put("content", contnet);
+                    params.put("url", "");
+                    params.put("key", "llpzqxh");
                     if (NetUtils.isNewworkConnected()) {
-                        client.post("url", params, new AsyncHttpResponseHandler() {
+                        client.get("http://nuptapi.nupter.org/lost/new", params, new AsyncHttpResponseHandler() {
+                            public void onSuccess(String response) {
+                                Log.d("RE_lost", response);
+                                if (response.contains("ok")) {
+
+                                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "OK了", Toast.LENGTH_SHORT);
+                                    toast.show();
+
+                                } else {
+                                    Toast toast = Toast.makeText(LostAndFoundActivity.this, response, 1000);
+                                    toast.show();
+                                }
+
+                            }
+
 
                         });
                     } else {
@@ -148,42 +174,40 @@ public class LostAndFoundActivity extends FragmentActivity {
 
         private List<String> lostList;
         private ListView listView;
-
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
-            listView = (ListView) v.findViewById(R.id.textView);
-            lostURL = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51fb961ac24e00d00f00197a/23242559860f76cb4a0fca233e4304a4/document_(2).json";
+            View v = inflater.inflate(R.layout.view_lost, container, false);
+            listView = (ListView) v.findViewById(R.id.lostListView);
+            lostURL = "http://nuptapi.nupter.org/lost/";
             lostList = new ArrayList<String>();
             AsyncHttpClient client = new AsyncHttpClient();
             if (NetUtils.isNewworkConnected()) {
-                Toast toast = Toast.makeText(LostAndFoundActivity.this, "马上就好了", Toast.LENGTH_SHORT);
-                toast.show();
+                client.get(lostURL, null, new AsyncHttpResponseHandler() {
+                    public void onSuccess(String response) {
+                        try {
+                            Toast toast = Toast.makeText(LostAndFoundActivity.this, "努力加载ing", Toast.LENGTH_SHORT);
+                            toast.show();
+                            JSONObject jsonObject = new JSONObject(response);
+                            jsonArray = jsonObject.getJSONArray("array");
+                            for (int i = 0; i < jsonArray.length(); i++)
+                                lostList.add(jsonArray.getJSONObject(i).getString("content"));
+                            Log.d("Test_json", lostList.toString());
+                            listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    public void onFailure(Throwable throwable, String s) {
+                        Toast toast = Toast.makeText(LostAndFoundActivity.this, "服务器歇菜了", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
             } else {
                 Toast toast = Toast.makeText(LostAndFoundActivity.this, "网络没有连接啊", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            client.get(lostURL, null, new AsyncHttpResponseHandler() {
-                public void onSuccess(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        jsonArray = jsonObject.getJSONArray("array");
-                        for (int i = 0; i < jsonArray.length(); i++)
-                            lostList.add(jsonArray.getString(i));
-                        Log.d("Test_json", lostList.toString());
-                        listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.view_lost, lostList));
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                public void onFailure(Throwable throwable, String s) {
-                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "寻物获取失败", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
-
 
 //            SimpleAdapter adapter = new SimpleAdapter(LostAndFoundActivity.this, list,
 //                    R.layout.item_publish_info, new String[]{"lostName",
@@ -205,7 +229,7 @@ public class LostAndFoundActivity extends FragmentActivity {
             View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
             listView = (ListView) v.findViewById(R.id.textView);
             foundList = new ArrayList<String>();
-            foundURL = "https://trello-attachments.s3.amazonaws.com/517694e75a3d555d0d000609/51fb961ac24e00d00f00197a/7c4c4b97569dc1f804acb76acf792abd/DOCUMENT(3).json";
+            foundURL = "http://nuptapi.nupter.org/lost/";
             AsyncHttpClient client = new AsyncHttpClient();
             client.get(foundURL, null, new AsyncHttpResponseHandler() {
                 public void onSuccess(String response) {
@@ -226,8 +250,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                 }
 
                 public void onFailure(Throwable throwable, String s) {
-                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "招领获取失败", Toast.LENGTH_SHORT);
-                    toast.show();
+
                 }
             });
 
