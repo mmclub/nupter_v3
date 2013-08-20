@@ -4,7 +4,9 @@ package org.nupter.nupter.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +27,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 
 import java.util.ArrayList;
@@ -48,11 +51,11 @@ public class ClubDetailActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lost_and_found);
-
+        setContentView(R.layout.activity_clubdetail);
         intent = getIntent();
         page_id = intent.getLongExtra("page_id", 0);
-        ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
+        this.setTitle(Title(page_id));
+        ViewPager vp = (ViewPager) findViewById(R.id.mViewPager);
         titleList.add("状态");
         titleList.add("日志");
         titleList.add("相册");
@@ -61,6 +64,22 @@ public class ClubDetailActivity extends FragmentActivity {
         fragmentList.add(new PhotosFragment());
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public String Title(Long page_id) {
+        switch (page_id.intValue()) {
+            case 600907477:
+                return "青春南邮";
+            case 601003549:
+                return "青志联";
+            case 600889745:
+                return "社团联合会";
+            case 601017224:
+                return "校科学技术协会";
+            case 600490284:
+                return "校学生会";
+        }
+        return getTitle().toString();
     }
 
 
@@ -142,11 +161,15 @@ public class ClubDetailActivity extends FragmentActivity {
             /**
              * Add Sound Event Listener
              */
-            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
-            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
-            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-            listView.setOnPullEventListener(soundListener);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+            String rawString = preferences.getString("SoundFlag", "null");
+            if (rawString.equals("")) {
+                SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
+                soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+                soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+                soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+                listView.setOnPullEventListener(soundListener);
+            }
 
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("努力加载ing");
@@ -176,7 +199,9 @@ public class ClubDetailActivity extends FragmentActivity {
         }
 
         private void setImg() {
-            if (page_id == 600490284)
+            if (page_id == 601415670)
+                img = R.drawable.shetuan_nyydhlwkfzjlb;
+            else if (page_id == 600490284)
                 img = R.drawable.shetuan_xxsh;
             else if (page_id == 600889745)
                 img = R.drawable.shetuan_sl;
@@ -228,12 +253,15 @@ public class ClubDetailActivity extends FragmentActivity {
             /**
              * Add Sound Event Listener
              */
-            SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(getActivity());
-            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
-            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-            mPullRefreshGridView.setOnPullEventListener(soundListener);
-
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+            String rawString = preferences.getString("SoundFlag", "null");
+            if (rawString.equals("")) {
+                SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(getActivity());
+                soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+                soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+                soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+                mPullRefreshGridView.setOnPullEventListener(soundListener);
+            }
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("努力加载ing");
             progressDialog.setMessage("人人网API调皮了。。。");
@@ -259,6 +287,7 @@ public class ClubDetailActivity extends FragmentActivity {
                 public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
                     mPullRefreshGridView.onRefreshComplete();
                 }
+
                 @Override
                 public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
                     page = adapter.getCount() / 12 + 1;

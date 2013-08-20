@@ -1,92 +1,163 @@
 package org.nupter.nupter.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.*;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
+import android.widget.*;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.AppUtils;
+import org.nupter.nupter.utils.CornerListView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 设置板块主界面
- * 未完成
- * 参考  http://developer.android.com/reference/android/preference/PreferenceActivity.html
+ * @author panlei
+ *
  */
-public class SettingActivity extends PreferenceActivity {
-
+public class SettingActivity extends Activity {
+    private CornerListView cornerListView = null;
+    private List<Map<String, String>> listData = null;
+    private SimpleAdapter adapter = null;
+    private ToggleButton  newspushTB;
+    private ToggleButton  refreshsoundTB;
+    private SharedPreferences mySharedPreferences;
+    private boolean newsFlag;
+    private boolean soundFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
 
-        // Add a button to the header list.
-        if (hasHeaders()) {
-            Button button = new Button(this);
-            button.setText("Some action");
-            setListFooter(button);
-        }
+        cornerListView = (CornerListView)findViewById(R.id.settinglistview);
+        newspushTB = (ToggleButton)findViewById(R.id.newspushTB);
+        refreshsoundTB =(ToggleButton)findViewById(R.id.refreshsoundTB);
+        newspushTB.setOnCheckedChangeListener(checkedListener);
+        refreshsoundTB.setOnCheckedChangeListener(checkedListener);
+
+        SharedPreferences sharedPreferences= getSharedPreferences("test",
+                Activity.MODE_PRIVATE);
+        // 使用getString方法获得value，注意第2个参数是value的默认值
+        boolean getNewsFlog =sharedPreferences.getBoolean("NewsFlag",true);
+        boolean getSoundFlog = sharedPreferences.getBoolean("SoundFlag",true);
+        newspushTB.setChecked(getNewsFlog);
+        refreshsoundTB.setChecked(getSoundFlog);
+
+        setListData();
+        adapter = new SimpleAdapter(getApplicationContext(), listData, R.layout.view_tab_setting_list_item,
+                new String[]{"text"}, new int[]{R.id.setting_list_item_text});
+        cornerListView.setAdapter(adapter);
+        cornerListView.setOnItemClickListener(LVlistener);
+
+
+         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    /**
-     * Populate the activity with the top-level headers.
-     */
+    CompoundButton.OnCheckedChangeListener checkedListener = new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            //To change body of implemented methods use File | Settings | File Templates.
+            mySharedPreferences= getSharedPreferences("test",
+                    Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mySharedPreferences.edit();
+
+            if(buttonView.getId()==R.id.newspushTB){
+                if (isChecked){
+                       newsFlag = true;
+                }else {
+                    newsFlag = false;
+                }
+
+            }  else{
+                if(isChecked){
+                    soundFlag = true;
+                }else {
+                    soundFlag = false;
+                }
+
+            }
+            editor.putBoolean("NewsFlag",newsFlag) ;
+            editor.putBoolean("SoundFlag",soundFlag);
+            editor.commit();
+
+        }
+    } ;
+
+    private AdapterView.OnItemClickListener LVlistener = new AdapterView.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //To change body of implemented methods use File | Settings | File Templates.
+
+            Intent intent = new Intent();
+            switch (position){
+                case 0:
+
+                    break;
+                case  1:
+                    intent=new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+                    intent.putExtra(Intent.EXTRA_TEXT, "嗨！童鞋们，快来使用‘掌上南邮’吧，太给力了！" +
+                            "我和小伙伴们都惊呆了。。。 ");
+                    startActivity(Intent.createChooser(intent, getTitle()));
+
+                    break;
+                case  2:
+                    intent.putExtra(WebviewActivity.EXTRA_URL,"");
+                    intent.putExtra(WebviewActivity.EXTRA_TITLE,"关于");
+                    intent.setClass(SettingActivity.this,WebviewActivity.class);
+                    startActivity(intent);
+                    break;
+                case  3:
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+
+    private void setListData(){
+        listData = new ArrayList<Map<String,String>>();
+
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("text", "帐号设置");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "分享");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "关于");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "版本更新");
+        listData.add(map);
+    }
+
     @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
-    }
-
-    /**
-     * This fragment shows the preferences for the first header.
-     */
-    public static class Prefs1Fragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            addPreferencesFromResource(R.xml.fragmented_preferences);
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
         }
+        return super.onMenuItemSelected(featureId, item);
     }
-
-    /**
-     * This fragment contains a second-level set of preference that you
-     * can get to by tapping an item in the first preferences fragment.
-     */
-    public static class Prefs1FragmentInner extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Can retrieve arguments from preference XML.
-            Log.i("args", "Arguments: " + getArguments());
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.fragmented_preferences_inner);
-        }
-    }
-
-    /**
-     * This fragment shows the preferences for the second header.
-     */
-    public static class Prefs2Fragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Can retrieve arguments from headers XML.
-            Log.i("args", "Arguments: " + getArguments());
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.preference_dependencies);
-        }
-    }
-
-
-
 
 
 }

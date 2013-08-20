@@ -146,6 +146,7 @@ public class LostAndFoundActivity extends FragmentActivity {
 
                                     Toast toast = Toast.makeText(LostAndFoundActivity.this, "OK了", Toast.LENGTH_SHORT);
                                     toast.show();
+
                                 } else {
                                     Toast toast = Toast.makeText(LostAndFoundActivity.this, response, 1000);
                                     toast.show();
@@ -173,7 +174,6 @@ public class LostAndFoundActivity extends FragmentActivity {
 
         private List<String> lostList;
         private ListView listView;
-
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_lost, container, false);
             listView = (ListView) v.findViewById(R.id.lostListView);

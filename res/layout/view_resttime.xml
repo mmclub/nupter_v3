@@ -2,57 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     >
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp">
-    <ImageView
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:src="@drawable/resttime_title" />
+            android:layout_margin="10dp">
+                 <TextView
+                     android:layout_width="fill_parent"
+                     android:layout_height="0dp"
+                     android:layout_weight="7"
+                     android:background="@drawable/bottomline"
+                     android:text="作     息     时     间 "
+                     android:textColor="#1abc9c"
+                     android:textSize="22sp"
+                     android:gravity="center"/>
     
      <ScrollView    
                     
-                    android:layout_width="300dp"
-                    android:layout_height="380dp"
-                    
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="76"
+                    android:background="@drawable/lifecontent_background"
                     android:scrollbars="none"
 
-                    android:background="@drawable/lifecontent_background" >
+                  >
+
          <LinearLayout
              android:layout_height="fill_parent"
              android:layout_width="fill_parent"
              android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rest_xianli_title"
-                        />
-          <ImageView
-                 android:layout_width="300dp"
+             <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="仙林校区作息时间"
+                     android:textColor="@color/white"
+                     android:textSize="18sp"
+                     android:layout_gravity="center_horizontal"/>
+             <LinearLayout
+                 android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:background="@drawable/rest_xianlin_content"
-                 />
-             <ImageView
-                     android:layout_width="300dp"
+                 android:orientation="horizontal"
+                     android:layout_gravity="center_horizontal">
+                 <TextView
                      android:layout_height="wrap_content"
-                     android:background="@drawable/rest_sanpailou_title"
-                    />
-             <ImageView
-                     android:layout_width="300dp"
+                     android:layout_width="wrap_content"
+                     android:text="@string/resttitle_xianlin"
+                     android:textSize="16sp"
+                     android:textColor="@color/white"/>
+                 <TextView
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         android:text="@string/resttime_xianlin"
+                         android:textSize="16sp"
+                         android:textColor="@color/white"/>
+                 </LinearLayout>
+             <TextView
+                     android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:background="@drawable/rest_sanpailou_content"
-                     />
+                     android:text="三牌楼校区校区作息时间"
+                     android:textColor="@color/white"
+                     android:textSize="18sp"
+                     android:layout_gravity="center_horizontal"/>
+             <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:orientation="horizontal"
+                     android:layout_gravity="center_horizontal">
+                 <TextView
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         android:text="@string/resttitle_sanpailou"
+                         android:textSize="16sp"
+                         android:textColor="@color/white"/>
+                 <TextView
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         android:text="@string/resttime_sanpailou"
+                         android:textSize="16sp"
+                         android:textColor="@color/white"/>
+             </LinearLayout>
+
          </LinearLayout>
                 </ScrollView>
+
     <ImageView
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:src="@drawable/bottomline" />
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:background="@drawable/bottomline" />
 
 </LinearLayout>
     </LinearLayout>

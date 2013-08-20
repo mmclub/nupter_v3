@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 
 
@@ -50,11 +53,15 @@ public class ClubDetail_Photo_Activity extends Activity {
         /**
          * Add Sound Event Listener
          */
-        SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(this);
-        soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH,R.raw.pull_event);
-        soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-        soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-        mGridView.setOnPullEventListener(soundListener);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        String rawString = preferences.getString("SoundFlag", "null");
+        if (rawString.equals("")) {
+            SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(this);
+            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+            mGridView.setOnPullEventListener(soundListener);
+        }
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("努力加载ing");
         progressDialog.setMessage("人人网API调皮了。。。");
@@ -157,6 +164,7 @@ public class ClubDetail_Photo_Activity extends Activity {
         public String getItem(int arg0) {
             // TODO Auto-generated method stub
             try {
+                Log.i("str",jsonArray.getJSONObject(arg0).toString());
                 return jsonArray.getJSONObject(arg0).getString("url_large");
             } catch (Exception e) {
                 return null;
