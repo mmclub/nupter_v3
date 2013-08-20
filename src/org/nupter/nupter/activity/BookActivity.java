@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 图书馆模块
  *
- * @author  WangTao
+ * @author WangTao
  */
 
 
@@ -33,14 +33,15 @@ public class BookActivity extends ListActivity {
     private Button searchBookButton;
     private EditText searchBookEditText;
     List<BookRecord> bookRecords;
-    BaseAdapter  bookCollectionAdapter ;
+    BaseAdapter bookCollectionAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchbook);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
-        searchBookEditText = (EditText)this.findViewById(R.id.searchBookEditText);
-        searchBookButton = (Button)this.findViewById(R.id.searchBookBtton);
+        searchBookEditText = (EditText) this.findViewById(R.id.searchBookEditText);
+        searchBookButton = (Button) this.findViewById(R.id.searchBookBtton);
         searchBookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String searchBookName = searchBookEditText.getText().toString();
@@ -50,18 +51,20 @@ public class BookActivity extends ListActivity {
             }
         });
     }
-    public void onStart(){
+
+    public void onStart() {
         super.onStart();
         bookRecords = BookRecord.listAll(BookRecord.class);
         bookCollectionAdapter = new BookCollectionAdapter(this);
         setListAdapter(bookCollectionAdapter);
         Boolean DataExit = bookRecords.isEmpty();
-        if(DataExit){
+        if (DataExit) {
             Toast toast = Toast.makeText(BookActivity.this, "还没有收藏", Toast.LENGTH_SHORT);
             toast.show();
         } else {
         }
     }
+
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
         super.onListItemClick(l, v, position, id);
@@ -76,12 +79,14 @@ public class BookActivity extends ListActivity {
         intent.putExtra(BookListActivity.EXTRA_BOOK_INFO, bookInfo);
         startActivity(intent);
     }
+
     public final class BookViewHolder {
         public TextView bookName;
         public TextView bookAuthor;
         public TextView bookNum;
         public Button delete;
     }
+
     public class BookCollectionAdapter extends BaseAdapter {
         private LayoutInflater bookInflater;
 
@@ -126,15 +131,15 @@ public class BookActivity extends ListActivity {
             }
 
             holder.bookName.setText(bookRecords.get(position).name);
-            holder.bookAuthor.setText("作者："+bookRecords.get(position).author);
-            holder.bookNum.setText("书号:"+bookRecords.get(position).bookNum);
+            holder.bookAuthor.setText("作者：" + bookRecords.get(position).author);
+            holder.bookNum.setText("书号:" + bookRecords.get(position).bookNum);
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(BookActivity.this);
                     alertDialog.setTitle("删除");
                     alertDialog.setMessage("确定删除吗？");
-                    alertDialog.setPositiveButton("是",new DialogInterface.OnClickListener() {
+                    alertDialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int p) {
@@ -143,9 +148,7 @@ public class BookActivity extends ListActivity {
                             List<BookRecord> bookRecord = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author});
                             bookRecord.get(0).delete();
                             Boolean dataDeleted = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
-                            if (dataDeleted){
-                                Toast toast = Toast.makeText(BookActivity.this, "删除好了", Toast.LENGTH_SHORT);
-                                toast.show();
+                            if (dataDeleted) {
                                 bookRecords = BookRecord.listAll(BookRecord.class);
                                 bookCollectionAdapter.notifyDataSetChanged();
                             }
@@ -161,11 +164,8 @@ public class BookActivity extends ListActivity {
     }
 
 
-
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
