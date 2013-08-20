@@ -36,7 +36,7 @@
                   android:label="@string/label_newspaper"/>
         <activity android:name=".activity.LifeAssistantActivity"
                   android:label="@string/label_life"/>
-        <activity android:name=".activity.LoginScheduleActivity"
+        <activity android:name=".activity.LoginActivity"
                   android:label="@string/label_login"/>
         <activity android:name=".activity.SettingActivity"
                   android:label="@string/label_setting"/>

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.widget.Toast;
-import com.loopj.android.http.RequestParams;
 
 import org.json.*;
 import org.nupter.nupter.MyApplication;
@@ -130,7 +129,7 @@ public class MainActivity extends Activity {
                         inten.putExtras(bundle);
                         MainActivity.this.startActivity(inten);
                     } else {
-                        intent.setClass(MainActivity.this, LoginScheduleActivity.class);
+                        intent.setClass(MainActivity.this, LoginActivity.class);
                         intent.putExtra("JumpTo","Schedule");
                         startActivity(intent);
                     }
@@ -177,7 +176,7 @@ public class MainActivity extends Activity {
                         intent.putExtra("testString", testString);
                         startActivity(intent);
                     } else {
-                        intent.setClass(MainActivity.this,LoginScheduleActivity.class);
+                        intent.setClass(MainActivity.this,LoginActivity.class);
                         intent.putExtra("JumpTo","Test");
                         startActivity(intent);
                     }
