@@ -12,7 +12,7 @@
         android:layout_marginTop="3dp"
         android:text="demo title" />
 
-     <TextView 
+     <TextView
         android:id="@+id/desc"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

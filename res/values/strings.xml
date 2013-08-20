@@ -7,11 +7,12 @@
     <string name="subtitle_activity_main">应用的入口主界面</string>
     <string name="title_activity_classtable">课表</string>
     <string name="subtitle_activity_classtable">模拟浏览器的登陆过程</string>
-    <string name="title_activity_baidumap">校园地图</string>
-    <string name="subtitle_activity_baidumap">仙林校区的地图</string>
+
     <string name="title_activity_welcome">闪屏画面</string>
     <string name="subtitle_activity_welcome">启动闪屏画面</string>
-    <string name="title_activity_schedule">口袋图书馆</string>
+    <string name="title_activity_club">七彩社团</string>
+    <string name="title_activity_test">成绩查询</string>
+    <string name="title_activity_schedule">口袋课程表</string>
     <string name="title_activity_lifeassistant">生活秘书</string>
     <string name="subtitle_activity_lifeassistant">启动生活秘书</string>
     <string name="schoolguide_Tab">指南</string>
@@ -156,10 +157,16 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
     <string name="subtitle_activity_lost_and_found">寻物平台演示</string>
     <string name="title_activity_message_list">消息列表</string>
     <string name="subtitle_activity_message_list">历史推送消息</string>
-    <string name="title_activity_xianlin_area">仙林地区地图</string>
-    <string name="subtitle_activity_xianlin_area">仙林地区地图</string>
+
+    <string name="title_activity_baidumap">仙林校区卫星地图</string>
+    <string name="subtitle_activity_baidumap">仙林校区的地图</string>
+
+    <string name="title_activity_xianlin_area">仙林周边地图</string>
+    <string name="subtitle_activity_xianlin_area">仙林周边地图</string>
+
     <string name="title_activity_nupt_draw">仙林校区手绘地图</string>
     <string name="subtitle_activity_nupt_draw">仙林校区手绘地图</string>
+
     <string name="title_activity_nupt_map">仙林校区地图</string>
     <string name="subtitle_activity_nupt_map">仙林校区地图</string>
 

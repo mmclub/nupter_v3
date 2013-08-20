@@ -67,16 +67,13 @@ public class MapListActivity extends Activity {
 
         @Override
         public View getView(int index, View convertView, ViewGroup parent) {
-            convertView = View.inflate(MapListActivity.this, R.layout.item_activty_info, null);
+            convertView = View.inflate(MapListActivity.this, R.layout.item_map_list, null);
             TextView title = (TextView) convertView.findViewById(R.id.title);
-            TextView desc = (TextView) convertView.findViewById(R.id.desc);
             if (demos[index].demoClass == MainActivity.class
                     ) {
                 title.setTextColor(Color.YELLOW);
-                desc.setTextColor(Color.YELLOW);
             }
             title.setText(demos[index].title);
-            desc.setText(demos[index].desc);
             return convertView;
         }
 

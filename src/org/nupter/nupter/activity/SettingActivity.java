@@ -111,14 +111,23 @@ public class SettingActivity extends Activity {
                     startActivity(Intent.createChooser(intent, getTitle()));
 
                     break;
+
                 case  2:
-                    intent.putExtra(WebviewActivity.EXTRA_URL,"");
-                    intent.putExtra(WebviewActivity.EXTRA_TITLE,"关于");
-                    intent.setClass(SettingActivity.this,WebviewActivity.class);
+                    intent.setClass(SettingActivity.this, WebviewActivity.class);
+                    intent.putExtra(WebviewActivity.EXTRA_TITLE, "关于掌上南邮");
+                    intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/about_us.html");
                     startActivity(intent);
                     break;
-                case  3:
 
+                case 3:
+                    intent.setClass(SettingActivity.this, WebviewActivity.class);
+                    intent.putExtra(WebviewActivity.EXTRA_TITLE, "加入我们");
+                    intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/join_us.html");
+                    startActivity(intent);
+                    break;
+
+
+                case  4:
                     break;
                 default:
                     break;
@@ -139,7 +148,11 @@ public class SettingActivity extends Activity {
         listData.add(map);
 
         map = new HashMap<String, String>();
-        map.put("text", "关于");
+        map.put("text", "关于掌上南邮");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "加入开发团队");
         listData.add(map);
 
         map = new HashMap<String, String>();
