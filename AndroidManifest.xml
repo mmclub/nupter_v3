@@ -90,7 +90,7 @@
     </service>
 
 
-    <meta-data android:value="51a3140c56240b5259041df0" android:name="UMENG_APPKEY"></meta-data>
+    <meta-data android:value="5216001256240b200b02d6a7" android:name="UMENG_APPKEY"></meta-data>
     <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
