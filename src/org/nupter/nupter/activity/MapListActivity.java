@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 /**
@@ -117,5 +118,14 @@ public class MapListActivity extends Activity {
                 break;
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
