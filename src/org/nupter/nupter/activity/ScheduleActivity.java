@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import org.nupter.nupter.R;
@@ -382,7 +380,7 @@ public class ScheduleActivity extends Activity {
                 onBackPressed();
                 break;
             case R.id.action_login:
-                Intent intent = new Intent(ScheduleActivity.this, LoginScheduleActivity.class);
+                Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
             default:

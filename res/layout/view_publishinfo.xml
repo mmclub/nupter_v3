@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
             android:layout_gravity="center_horizontal"
-            android:hint="描述（捡到五分钱）" />
+            android:hint="描述（捡到五分钱）"/>
     <EditText
             android:id="@+id/publisherEditText"
             android:layout_width="250dp"

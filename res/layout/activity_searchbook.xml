@@ -5,50 +5,43 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
-    <RelativeLayout
+      <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:paddingLeft="18dp"
-            android:paddingRight="10dp"
-            android:paddingTop="21dp"
-            android:background="@drawable/searchbook_bg"
-            android:orientation="horizontal">
-        <Button
-                android:id="@+id/searchBookBtton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="3dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/library_search_btn"/>
+            android:layout_height="55dp"
+            android:paddingTop="16dp"
+            android:orientation="horizontal"
+            android:background="@drawable/searchbook_bg">
+
         <EditText
                 android:id="@+id/searchBookEditText"
                 android:layout_width="fill_parent"
-                android:layout_height="34dp"
+                android:layout_height="35dp"
                 android:paddingLeft="3dp"
+                android:layout_weight="1"
                 android:background="@drawable/searchbook_eidt_bg"
-                android:layout_toLeftOf="@id/searchBookBtton"
                 android:singleLine="true"
                 android:textColor="#999999"
                 android:textCursorDrawable="@null"
                 android:cursorVisible="true"
-                android:hint="@string/input_search_book"/>
-    </RelativeLayout>
+                android:hint="@string/input_search_book"
+                android:textSize="20dp" />
+          <Button
+                  android:id="@+id/searchBookBtton"
+                  android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:layout_weight="7"
+                  android:background="@drawable/library_search_btn"/>
+    </LinearLayout>
     <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/collection_bg"
-            android:paddingTop="30dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingBottom="40dp"
+            android:background="@drawable/library_card_bg"
             android:orientation="vertical">
         <TextView
-                android:layout_width="220dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="我的收藏"

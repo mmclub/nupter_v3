@@ -35,6 +35,7 @@ public class TestActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         intent = getIntent();
         testString = intent.getStringExtra("testString");
         list = testString.split("\\*");
@@ -111,7 +112,7 @@ public class TestActivity extends Activity {
                 onBackPressed();
                 break;
             case R.id.action_login:
-                Intent intent = new Intent(TestActivity.this, LoginScheduleActivity.class);
+                Intent intent = new Intent(TestActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
             default:
