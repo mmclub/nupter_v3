@@ -88,7 +88,7 @@
               android:layout_weight="3"
               >
 
-              <ImageButton
+              <ImageButton 
                   android:id="@+id/libraryIB"
                   android:layout_width="fill_parent"
                   android:layout_height="0dp"
