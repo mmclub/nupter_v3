@@ -136,14 +136,6 @@ public class MainActivity extends Activity {
                         intent.putExtra("JumpTo","Schedule");
                         startActivity(intent);
                     }
-/*                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                    String testString = preferences.getString("test", "null");
-                    if ((!testString.equals("null"))) {
-                        intent.setClass(MainActivity.this, TestActivity.class);
-                        //intent.putExtra("JumpTo","Test");
-                        intent.putExtra("testString", testString);
-                        startActivity(intent);
-                    }    */
                     break;
                 case R.id.lifeAssistantIB:
 

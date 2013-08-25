@@ -28,7 +28,7 @@
                   android:label="@string/title_activity_club"/>
         <activity android:name=".activity.ClubDetailActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ClubDetail_Photo_Activity"
+        <activity android:name=".activity.ClubDetailPhotoActivity"
                   android:label="@string/label_club_photo"/>
         <activity android:name=".activity.NewsActivity"
                   android:label="@string/label_news"/>
@@ -42,6 +42,7 @@
                   android:label="@string/label_setting"/>
         <activity android:name=".activity.SchoolCardActivity"
                 />
+>>>>>>> 0d21294d092898925a47705d6749102673bdcb01
         <activity android:name=".activity.ScheduleActivity"
                 android:label="@string/title_activity_schedule"/>
         <activity android:name=".activity.BookListActivity"
@@ -69,6 +70,18 @@
                 android:label="@string/label_message"/>
         <activity android:name=".activity.NewspaperDetailActivity"/>
         <activity android:name=".activity.WebviewActivity"/>
+        <receiver android:name=".utils.ScheduleWidgetCreate">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/set_widget" />
+        </receiver>
+        <activity android:name=".utils.ScheduleWidgetContent">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
 
         <!--Parse推送配置-->

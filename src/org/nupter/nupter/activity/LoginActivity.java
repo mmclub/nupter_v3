@@ -125,11 +125,12 @@ public class LoginActivity extends Activity {
             }
         });
     }
-
+    //访问正方主页得到cookie之后，带着cookie访问验证码显示在GifView控件上
     class GetCheckCode extends Thread {
         public void run() {
             URL loginUrl;
             try {
+                //得到cookie
                 loginUrl = new URL(login_url);
                 getCookieConnection = (HttpURLConnection) loginUrl.openConnection();
                 getCookieConnection.setDoOutput(true);
@@ -150,6 +151,7 @@ public class LoginActivity extends Activity {
                     }
                 }
                 getCookieConnection.disconnect();
+                //得到验证码的InputStream流并显示在gifView上
                 URL getUrl = new URL(checkCode_url);
                 getIdentifyConnection = (HttpURLConnection) getUrl.openConnection();
                 getIdentifyConnection.setRequestProperty("Cookie", cookie);
@@ -165,7 +167,7 @@ public class LoginActivity extends Activity {
             }
         }
     }
-
+    //带着cookie，通过post用户名、密码、验证码登陆正方得到网页的InputStream流
     class Login extends Thread {
         URL loginUrl;
         URL getTableUrl;
@@ -198,6 +200,7 @@ public class LoginActivity extends Activity {
                     s = new String(bin, 0, chByte1, "gbk");
                     chByte1 = inPost.read(bin, 0, 1024);
                 }
+                //得到网页的数据后，解析是否登陆进去（这里只取最后一个从0到1024字节的数据，因为登陆信息都放在网页最后）
                 Pattern pattern = Pattern.compile("验证码不正确！！");
                 Matcher matcher = pattern.matcher(s);
                 if (matcher.find()) {
@@ -219,7 +222,7 @@ public class LoginActivity extends Activity {
                 inPost.close();
                 loginConnection.disconnect();
 
-
+                //设置cookie和其他参数，访问课表网页得到String类型的HTML
                 getTable_url = getTable_url + userNumber;
                 getTableUrl = new URL(getTable_url);
                 getTableConnection = (HttpURLConnection) getTableUrl.openConnection();
@@ -238,6 +241,7 @@ public class LoginActivity extends Activity {
                     tableHtml.append(res);
                     bufferSize = tableInputStream.read(buffer, 0, 1024);
                 }
+                //把数据存在本地，sharePreferences保存的是没有解析的原网页
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("schedule", tableHtml.toString());
@@ -245,7 +249,7 @@ public class LoginActivity extends Activity {
                 tableInputStream.close();
                 getTableConnection.disconnect();
 
-                //得到成绩的html
+                //与课表一样，得到成绩网页String类型的html
                 getTest_url = getTest_url + userNumber + "&xm=%CB%D5%B6%AB%C9%FA&gnmkdm=N121605";
                 getTestUrl = new URL(getTest_url);
                 getTestConnection = (HttpURLConnection) getTestUrl.openConnection();
@@ -289,6 +293,7 @@ public class LoginActivity extends Activity {
         public void handleMessage(Message msg) {
             if (msg.what == MSG_TABLE) {
                 progressDialog.dismiss();
+                //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
                 tableList = jsoupTable.parse(tableHtml.toString());
                 Intent intent = new Intent(LoginActivity.this, ScheduleActivity.class);
                 Bundle bundle = new Bundle();
@@ -301,6 +306,7 @@ public class LoginActivity extends Activity {
                 LoginActivity.this.startActivity(intent);
             } else if (msg.what == MSG_TEST) {
                 progressDialog.dismiss();
+                //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
                 testString=jsoupTest.parse(testHtml.toString());
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                 SharedPreferences.Editor editor = preferences.edit();
@@ -334,7 +340,8 @@ public class LoginActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

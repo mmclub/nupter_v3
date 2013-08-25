@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView
-            android:id="@+id/test_name"
+            android:id="@+id/testName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
@@ -17,21 +17,21 @@
             android:orientation="horizontal"
             android:layout_weight="1">
     <TextView
-            android:id="@+id/test_credit"
+            android:id="@+id/testCredit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="22sp"
             android:layout_weight="1"/>
     <TextView
-            android:id="@+id/test_point"
+            android:id="@+id/testPoint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="22sp"
             android:layout_weight="1"/>
     <TextView
-            android:id="@+id/test_score"
+            android:id="@+id/testScore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

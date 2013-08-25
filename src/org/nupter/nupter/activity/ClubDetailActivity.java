@@ -1,6 +1,7 @@
 package org.nupter.nupter.activity;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.NetUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,10 +49,11 @@ public class ClubDetailActivity extends FragmentActivity {
     private int position;
     private String[] clubName = {"南京移动互联网开发者俱乐部", "青春南邮", "校学生会", "社团联合会", "校科学技术协会",
             "青志联", "南京邮电大学校研究生会", "南邮之声", "南邮青年", "南邮大艺团办公室", "南邮红会", "学通社"};
-    private int[] clubId={601415670,600907477,601017224,600889745,601003549,600490284,601052072,601534154,600989734,601482336,601593100,601317519};
-    private int[] clubImage={R.drawable.shetuan_nyydhlwkfzjlb,R.drawable.shetuan_qcny,R.drawable.shetuan_xxsh,R.drawable.shetuan_sl,R.drawable.shetuan_xkx,R.drawable.shetuan_qzl,R.drawable.shetuan_njyddxxyjsh,R.drawable.shetuan_nyzs,R.drawable.shetuan_nyqn,R.drawable.shetuan_nydyt,R.drawable.shetuan_nyhh,R.drawable.shetuan_xts};
+    private int[] clubId = {601415670, 600907477, 601017224, 600889745, 601003549, 600490284, 601052072, 601534154, 600989734, 601482336, 601593100, 601317519};
+    private int[] clubImage = {R.drawable.shetuan_nyydhlwkfzjlb, R.drawable.shetuan_qcny, R.drawable.shetuan_xxsh, R.drawable.shetuan_sl, R.drawable.shetuan_xkx, R.drawable.shetuan_qzl, R.drawable.shetuan_njyddxxyjsh, R.drawable.shetuan_nyzs, R.drawable.shetuan_nyqn, R.drawable.shetuan_nydyt, R.drawable.shetuan_nyhh, R.drawable.shetuan_xts};
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
+    private boolean rawString;
 
 
     @Override
@@ -58,7 +61,7 @@ public class ClubDetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clubdetail);
         intent = getIntent();
-        position=intent.getIntExtra("position",0);
+        position = intent.getIntExtra("position", 0);
         page_id = clubId[position];
         this.setTitle(clubName[position]);
         ViewPager vp = (ViewPager) findViewById(R.id.mViewPager);
@@ -70,7 +73,11 @@ public class ClubDetailActivity extends FragmentActivity {
         fragmentList.add(new PhotosFragment());
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        SharedPreferences preferences= getSharedPreferences("test",
+                Activity.MODE_PRIVATE);
+        rawString = preferences.getBoolean("SoundFlag",true);
+}
+
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
@@ -131,41 +138,41 @@ public class ClubDetailActivity extends FragmentActivity {
                 @Override
                 public void onLastItemVisible() {
                     url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
+                    progressDialog.show();
                     new AsyncHttpClient().post(url, null,
                             new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(String response) {
                                     msg(response);
                                     adapter.notifyDataSetChanged();
+                                    progressDialog.dismiss();
                                 }
 
                                 @Override
                                 public void onFailure(Throwable throwable, String s) {
                                     Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
                                 }
                             });
                 }
             });
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("努力加载ing");
+            progressDialog.setMessage("人人网API调皮了。。。");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
             /**
              * Add Sound Event Listener
              */
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-            String rawString = preferences.getString("SoundFlag", "null");
-            if (rawString.equals("")) {
+            if (rawString) {
                 SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
                 soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
                 soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
                 soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
                 listView.setOnPullEventListener(soundListener);
             }
-
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("努力加载ing");
-            progressDialog.setMessage("人人网API调皮了。。。");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
             msg = new ArrayList<HashMap<String, Object>>();
-            img=clubImage[position];
+            img = clubImage[position];
             new AsyncHttpClient().post(url, null,
                     new AsyncHttpResponseHandler() {
                         @Override
@@ -181,6 +188,7 @@ public class ClubDetailActivity extends FragmentActivity {
                         @Override
                         public void onFailure(Throwable throwable, String s) {
                             Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                     });
             return v;
@@ -226,9 +234,7 @@ public class ClubDetailActivity extends FragmentActivity {
             /**
              * Add Sound Event Listener
              */
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-            String rawString = preferences.getString("SoundFlag", "null");
-            if (rawString.equals("")) {
+            if (rawString) {
                 SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(getActivity());
                 soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
                 soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
@@ -240,6 +246,9 @@ public class ClubDetailActivity extends FragmentActivity {
             progressDialog.setMessage("人人网API调皮了。。。");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
+            if (!NetUtils.isNewworkConnected()) {
+                mPullRefreshGridView.setPullToRefreshEnabled(false);
+            }
             new AsyncHttpClient().post(url, null,
                     new AsyncHttpResponseHandler() {
                         @Override
@@ -251,7 +260,8 @@ public class ClubDetailActivity extends FragmentActivity {
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                     });
             // Set a listener to be invoked when the list should be refreshed.
@@ -283,7 +293,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                                 @Override
                                 public void onFailure(Throwable throwable, String s) {
-                                    Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
                                     mPullRefreshGridView.onRefreshComplete();
                                 }
                             });
@@ -310,7 +320,7 @@ public class ClubDetailActivity extends FragmentActivity {
                 get_url_photo = url.substring(0, url.length() - 6) + "&aid=" + aid;
                 Intent photo_intent = new Intent();
                 photo_intent.putExtra("get_url_photo", get_url_photo);
-                photo_intent.setClass(ClubDetailActivity.this, ClubDetail_Photo_Activity.class);
+                photo_intent.setClass(ClubDetailActivity.this, ClubDetailPhotoActivity.class);
                 startActivity(photo_intent);
             }
         };
@@ -342,7 +352,6 @@ public class ClubDetailActivity extends FragmentActivity {
 
             @Override
             public int getCount() {
-                // TODO Auto-generated method stub
                 try {
                     return jsonArray.length();
                 } catch (Exception e) {
@@ -352,7 +361,6 @@ public class ClubDetailActivity extends FragmentActivity {
 
             @Override
             public String getItem(int arg0) {
-                // TODO Auto-generated method stub
                 try {
                     return jsonArray.getJSONObject(arg0).getString("aid");
                 } catch (Exception e) {
@@ -399,7 +407,8 @@ public class ClubDetailActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent1 = new Intent(ClubDetailActivity.this, ClubActivity.class);
+                startActivity(intent1);
                 break;
 
             default:
