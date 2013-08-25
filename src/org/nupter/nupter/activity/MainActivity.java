@@ -205,7 +205,7 @@ public class MainActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             long secondTime = System.currentTimeMillis();
             if (secondTime - firstTime > 2000) {//如果两次按键时间间隔大于2000毫秒，则不退出
-                Toast.makeText(MainActivity.this, "再按一次退出程序...",
+                Toast.makeText(MainActivity.this, "再按一次退出掌上南邮",
                         Toast.LENGTH_SHORT).show();
                 firstTime = secondTime;//更新firstTime
                 return true;
