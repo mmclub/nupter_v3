@@ -381,6 +381,7 @@ public class ScheduleActivity extends Activity {
                 break;
             case R.id.action_login:
                 Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
+                intent.putExtra("JumpTo","Schedule");
                 startActivity(intent);
                 break;
             default:

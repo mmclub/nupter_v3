@@ -5,10 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.*;
+import android.util.Log;
 import android.view.View;
 import org.nupter.nupter.MyApplication;
-import org.nupter.nupter.R;
-import org.nupter.nupter.activity.ScheduleActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,13 +29,10 @@ public class MyTable extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-
         Paint paint = new Paint();
         width = canvas.getWidth();
         offset=dip2px(MyApplication.getAppContext(),20);
         height = canvas.getHeight()-offset;
-
         paint.setColor(Color.CYAN);
         canvas.drawRect(0,0,width/18,height+offset,paint);
         canvas.drawRect(0,0,width,offset,paint);
