@@ -7,8 +7,7 @@
     <string name="subtitle_activity_main">应用的入口主界面</string>
     <string name="title_activity_classtable">课表</string>
     <string name="subtitle_activity_classtable">模拟浏览器的登陆过程</string>
-    <string name="title_activity_baidumap">校园地图</string>
-    <string name="subtitle_activity_baidumap">仙林校区的地图</string>
+
     <string name="title_activity_welcome">闪屏画面</string>
     <string name="subtitle_activity_welcome">启动闪屏画面</string>
     <string name="title_activity_club">七彩社团</string>
@@ -158,11 +157,29 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
     <string name="subtitle_activity_lost_and_found">寻物平台演示</string>
     <string name="title_activity_message_list">消息列表</string>
     <string name="subtitle_activity_message_list">历史推送消息</string>
-    <string name="title_activity_xianlin_area">仙林地区地图</string>
-    <string name="subtitle_activity_xianlin_area">仙林地区地图</string>
+
+    <string name="title_activity_baidumap">仙林校区卫星地图</string>
+    <string name="subtitle_activity_baidumap">仙林校区的地图</string>
+
+    <string name="title_activity_xianlin_area">仙林周边地图</string>
+    <string name="subtitle_activity_xianlin_area">仙林周边地图</string>
+
     <string name="title_activity_nupt_draw">仙林校区手绘地图</string>
     <string name="subtitle_activity_nupt_draw">仙林校区手绘地图</string>
+
     <string name="title_activity_nupt_map">仙林校区地图</string>
     <string name="subtitle_activity_nupt_map">仙林校区地图</string>
+    <string name="label_lost">寻物平台</string>
+    <string name="label_book">图书信息</string>
+    <string name="label_club_photo">社团相册</string>
+    <string name="label_news">校园新闻</string>
+    <string name="label_newspaper">团委手机报</string>
+    <string name="label_life">生活小秘书</string>
+    <string name="label_login">登陆</string>
+    <string name="label_setting">设置</string>
+    <string name="label_book_list">书籍列表</string>
+    <string name="label_book_view">图书详情</string>
+    <string name="label_maplist">校园地图</string>
+    <string name="label_message">历史推送消息</string>
 
 </resources>

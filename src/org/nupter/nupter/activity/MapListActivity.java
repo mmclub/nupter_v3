@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 /**
@@ -67,16 +68,13 @@ public class MapListActivity extends Activity {
 
         @Override
         public View getView(int index, View convertView, ViewGroup parent) {
-            convertView = View.inflate(MapListActivity.this, R.layout.item_activty_info, null);
+            convertView = View.inflate(MapListActivity.this, R.layout.item_map_list, null);
             TextView title = (TextView) convertView.findViewById(R.id.title);
-            TextView desc = (TextView) convertView.findViewById(R.id.desc);
             if (demos[index].demoClass == MainActivity.class
                     ) {
                 title.setTextColor(Color.YELLOW);
-                desc.setTextColor(Color.YELLOW);
             }
             title.setText(demos[index].title);
-            desc.setText(demos[index].desc);
             return convertView;
         }
 
@@ -120,5 +118,14 @@ public class MapListActivity extends Activity {
                 break;
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

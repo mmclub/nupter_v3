@@ -22,36 +22,52 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BookActivity"/>
+        <activity android:name=".activity.BookActivity"
+                android:label="@string/label_book"/>
         <activity android:name=".activity.ClubActivity"
-                  android:label="@string/title_activity_club"
-                  android:screenOrientation="portrait"/>
+                  android:label="@string/title_activity_club"/>
         <activity android:name=".activity.ClubDetailActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ClubDetailPhotoActivity"/>
-        <activity android:name=".activity.NewsActivity"/>
-        <activity android:name=".activity.NewspaperActivity"/>
-        <activity android:name=".activity.LifeAssistantActivity"/>
-        <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.SettingActivity"/>
-        <activity android:name=".activity.SchoolCardActivity"/>
+        <activity android:name=".activity.ClubDetailPhotoActivity"
+                  android:label="@string/label_club_photo"/>
+        <activity android:name=".activity.NewsActivity"
+                  android:label="@string/label_news"/>
+        <activity android:name=".activity.NewspaperActivity"
+                  android:label="@string/label_newspaper"/>
+        <activity android:name=".activity.LifeAssistantActivity"
+                  android:label="@string/label_life"/>
+        <activity android:name=".activity.LoginActivity"
+                  android:label="@string/label_login"/>
+        <activity android:name=".activity.SettingActivity"
+                  android:label="@string/label_setting"/>
+        <activity android:name=".activity.SchoolCardActivity"
+                />
+>>>>>>> 0d21294d092898925a47705d6749102673bdcb01
         <activity android:name=".activity.ScheduleActivity"
                 android:label="@string/title_activity_schedule"/>
-        <activity android:name=".activity.BookListActivity"/>
-        <activity android:name=".activity.BookViewActivity"/>
-        <activity android:name=".activity.MapListActivity"/>
+        <activity android:name=".activity.BookListActivity"
+                  android:label="@string/label_book_list"/>
+        <activity android:name=".activity.BookViewActivity"
+                  android:label="@string/label_book_view"/>
+        <activity android:name=".activity.MapListActivity"
+                  android:label="@string/label_maplist"/>
         <activity android:name=".activity.MapImageActivity"/>
         <activity android:name=".activity.NewsDetailActivity"/>
+
+
         <activity android:name=".activity.TestActivity"
                 android:label="@string/title_activity_test"/>
+
 
 
         <activity android:name=".activity.ActivityListActivity"/>
 
         <activity android:name=".activity.LostAndFoundActivity"
+                  android:label="@string/label_lost"
                   android:screenOrientation="portrait"
                 />
-        <activity android:name=".activity.MessageListActivity"/>
+        <activity android:name=".activity.MessageListActivity"
+                android:label="@string/label_message"/>
         <activity android:name=".activity.NewspaperDetailActivity"/>
         <activity android:name=".activity.WebviewActivity"/>
         <receiver android:name=".utils.ScheduleWidgetCreate">
@@ -80,6 +96,15 @@
 
     </application>
 
+    <service
+            android:name="com.umeng.common.net.DownloadingService"
+            android:exported="true"
+            android:process=":DownloadingService" >
+    </service>
+
+
+    <meta-data android:value="5216001256240b200b02d6a7" android:name="UMENG_APPKEY"></meta-data>
+    <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>

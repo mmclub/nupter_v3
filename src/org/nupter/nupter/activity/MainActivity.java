@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 
+import com.umeng.update.UmengUpdateAgent;
 import org.json.*;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
@@ -58,6 +59,8 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UmengUpdateAgent.update(this);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(R.layout.activity_main);
 

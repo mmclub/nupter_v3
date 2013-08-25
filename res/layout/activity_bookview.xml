@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
               android:background="@drawable/book_view_bg"
               android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="17dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:orientation="horizontal">
 
         <TextView
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:text="书籍介绍"
                 android:textColor="@color/blue_bar"
                 android:textSize="20sp"/>
@@ -26,15 +22,14 @@
 
         <Button
                 android:id="@+id/collectButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/icon_no_collect"/>
-    </LinearLayout>
+    </RelativeLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:paddingLeft="50dp"
-                  android:paddingRight="20dp"
                   android:orientation="vertical">
         <TextView
                 android:id="@+id/bookNameTextView"

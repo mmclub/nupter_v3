@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Window;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
@@ -32,6 +33,9 @@ public class WebviewActivity extends Activity {
 
         WebView webView = (WebView) findViewById(R.id.webView);
 
+
+        WebSettings wbset=webView.getSettings();
+        wbset.setJavaScriptEnabled(true);
 
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
