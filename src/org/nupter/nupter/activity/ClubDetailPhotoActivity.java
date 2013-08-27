@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.ant.liao.GifView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
@@ -33,13 +34,14 @@ import org.nupter.nupter.R;
  *         <p/>
  *         参见 https://github.com/nostra13/Android-Universal-Image-Loader
  */
-public class ClubDetail_Photo_Activity extends Activity {
+public class ClubDetailPhotoActivity extends Activity {
     private Intent intent;
     private String get_url_photo;
     private PullToRefreshGridView mGridView;
     private MyAdapter myAdapter;
     private ProgressDialog progressDialog;
     private int page, before_page = 1;
+    private boolean rawString;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +55,10 @@ public class ClubDetail_Photo_Activity extends Activity {
         /**
          * Add Sound Event Listener
          */
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-        String rawString = preferences.getString("SoundFlag", "null");
-        if (rawString.equals("")) {
+        SharedPreferences preferences = getSharedPreferences("test",
+                Activity.MODE_PRIVATE);
+        rawString = preferences.getBoolean("SoundFlag", true);
+        if (rawString) {
             SoundPullEventListener<GridView> soundListener = new SoundPullEventListener<GridView>(this);
             soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
             soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
@@ -71,14 +74,15 @@ public class ClubDetail_Photo_Activity extends Activity {
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
-                        myAdapter = new MyAdapter(ClubDetail_Photo_Activity.this, response);
+                        myAdapter = new MyAdapter(ClubDetailPhotoActivity.this, response);
                         mGridView.setAdapter(myAdapter);
                         progressDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Throwable throwable, String s) {
-                        Toast.makeText(ClubDetail_Photo_Activity.this, "获取人人数据失败", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ClubDetailPhotoActivity.this, "获取人人数据失败", Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
                     }
                 });
         // Set a listener to be invoked when the list should be refreshed.
@@ -100,7 +104,7 @@ public class ClubDetail_Photo_Activity extends Activity {
                             @Override
                             public void onSuccess(String response) {
                                 if (response.equals("[]")) {
-                                    Toast.makeText(ClubDetail_Photo_Activity.this, "木有更多了。。。亲", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ClubDetailPhotoActivity.this, "木有更多了。。。亲", Toast.LENGTH_LONG).show();
                                 } else {
                                     myAdapter.Update(response);
                                     myAdapter.notifyDataSetChanged();
@@ -110,7 +114,7 @@ public class ClubDetail_Photo_Activity extends Activity {
 
                             @Override
                             public void onFailure(Throwable throwable, String s) {
-                                Toast.makeText(ClubDetail_Photo_Activity.this, "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ClubDetailPhotoActivity.this, "获取人人数据失败", Toast.LENGTH_LONG).show();
                                 mGridView.onRefreshComplete();
                             }
                         });
@@ -152,7 +156,6 @@ public class ClubDetail_Photo_Activity extends Activity {
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
             try {
                 return jsonArray.length();
             } catch (Exception e) {
@@ -162,9 +165,8 @@ public class ClubDetail_Photo_Activity extends Activity {
 
         @Override
         public String getItem(int arg0) {
-            // TODO Auto-generated method stub
             try {
-                Log.i("str",jsonArray.getJSONObject(arg0).toString());
+                Log.i("str", jsonArray.getJSONObject(arg0).toString());
                 return jsonArray.getJSONObject(arg0).getString("url_large");
             } catch (Exception e) {
                 return null;
@@ -203,12 +205,11 @@ public class ClubDetail_Photo_Activity extends Activity {
 
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             large_url = myAdapter.getItem(position);
-            ImageView img = new ImageView(ClubDetail_Photo_Activity.this);
+            ImageView img = new ImageView(ClubDetailPhotoActivity.this);
+            img.setImageResource(R.drawable.loading);
             ImageLoader.getInstance().displayImage(large_url, img);
-
-            new AlertDialog.Builder(ClubDetail_Photo_Activity.this)
-                    .setView(img)
-                    .show();
+            new AlertDialog.Builder(ClubDetailPhotoActivity.this)
+                    .setView(img).create().show();
         }
     };
 
@@ -216,7 +217,8 @@ public class ClubDetail_Photo_Activity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent1 = new Intent(ClubDetailPhotoActivity.this, ClubDetailActivity.class);
+                startActivity(intent1);
                 break;
 
             default:

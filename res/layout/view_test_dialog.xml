@@ -37,21 +37,21 @@
             android:textColor="@color/black"
             android:layout_weight="1"/>
     <TextView
-            android:id="@+id/testCredit"
+            android:id="@+id/test_credit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="22sp"
             android:textColor="@color/black"
             android:layout_weight="1"/>
     <TextView
-            android:id="@+id/testPoint"
+            android:id="@+id/test_point"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="22sp"
             android:textColor="@color/black"
             android:layout_weight="1"/>
     <TextView
-            android:id="@+id/testScore"
+            android:id="@+id/test_score"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/black"
