@@ -174,23 +174,24 @@ public class LostAndFoundActivity extends FragmentActivity {
 
         private List<String> lostList;
         private ListView listView;
+
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_lost, container, false);
             listView = (ListView) v.findViewById(R.id.lostListView);
-            lostURL = "http://nuptapi.nupter.org/lost/";
+            lostURL = "https://api.renren.com/restserver.do?call_id=204763&api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&format=json&count=10&v=1.0&method=status.gets&page_id=601408737&page=1";
             lostList = new ArrayList<String>();
             AsyncHttpClient client = new AsyncHttpClient();
             if (NetUtils.isNewworkConnected()) {
-                client.get(lostURL, null, new AsyncHttpResponseHandler() {
+                client.post(lostURL, null, new AsyncHttpResponseHandler() {
                     public void onSuccess(String response) {
                         try {
                             Toast toast = Toast.makeText(LostAndFoundActivity.this, "努力加载ing", Toast.LENGTH_SHORT);
                             toast.show();
-                            JSONObject jsonObject = new JSONObject(response);
-                            jsonArray = jsonObject.getJSONArray("array");
+                            Log.d("lostAPI", response);
+                            jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++)
-                                lostList.add(jsonArray.getJSONObject(i).getString("content"));
-                            Log.d("Test_json", lostList.toString());
+                                lostList.add(jsonArray.getJSONObject(i).getString("message"));
+                            Log.d("lostList",lostList.toString());
                             listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList));
 
                         } catch (JSONException e) {
