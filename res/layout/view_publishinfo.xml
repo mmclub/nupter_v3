@@ -33,11 +33,13 @@
             android:hint="你的手机号"/>
     <Button
             android:id="@+id/publishButton"
-            android:layout_width="50pt"
+            android:background="@drawable/publish_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
             android:layout_gravity="center_horizontal"
-            android:textSize="15sp"
-            android:text="发布"/>
+            android:textSize="20sp"
+            android:text="发布"
+            android:textColor="#fff"/>
 
 </LinearLayout>
