@@ -2,6 +2,9 @@ package org.nupter.nupter.activity;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -66,6 +69,29 @@ public class LostAndFoundActivity extends FragmentActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //过滤人人客户端
+    public Intent findRenrenClient() {
+        final String renrenApps = "com.renren.mobile.android";
+        Intent tweetIntent = new Intent();
+        tweetIntent.setType("text/plain");
+        final PackageManager packageManager = getPackageManager();
+        List<ResolveInfo> list = packageManager.queryIntentActivities(
+                tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : list) {
+            String p = resolveInfo.activityInfo.packageName;
+            if (p != null && p.startsWith(renrenApps)) {
+                tweetIntent.setPackage(p);
+                return tweetIntent;
+            } else {
+                Toast toast = Toast.makeText(LostAndFoundActivity.this, "您的手机上没有人人，不能发布", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+
+        return null;
+
+    }
+
 
     //三个Fragment滑动的Adapter
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -106,7 +132,7 @@ public class LostAndFoundActivity extends FragmentActivity {
 
 
     //发布信息的Fragment
-    public class PublishFragment extends Fragment {
+    class PublishFragment extends Fragment {
         EditText infoEditText, publisherEditText, phoneEditText;
         String contnet, publisher, phone, url, timeStamp;
         Calendar calendar = Calendar.getInstance();
@@ -122,45 +148,37 @@ public class LostAndFoundActivity extends FragmentActivity {
             phoneEditText = (EditText) v.findViewById(R.id.publishPhoneEditText);
             publishButton = (Button) v.findViewById(R.id.publishButton);
 
-            publishButton.setOnClickListener(new View.OnClickListener() {
+            publishButton.setOnClickListener(new View.OnClickListener()
+
+            {
                 @Override
                 public void onClick(View view) {
                     contnet = infoEditText.getText().toString();
                     publisher = publisherEditText.getText().toString();
                     phone = phoneEditText.getText().toString();
-                    timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-                    Log.d("Calendar_test", timeStamp);
-                    url = "http://nuptapi.nupter.org/lost/new";
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    RequestParams params = new RequestParams();
-                    params.put("time", timeStamp);
-                    params.put("title", "");
-                    params.put("content", contnet);
-                    params.put("url", "");
-                    params.put("key", "llpzqxh");
+//                    timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+//                    Log.d("Calendar_test", timeStamp);
+//                    url = "http://nuptapi.nupter.org/lost/new";
+                    String info = "姓名:" + publisher + "，联系电话" + phone + "，内容" + contnet + "@校会大服之归去来兮";
+
                     if (NetUtils.isNewworkConnected()) {
-                        client.get("http://nuptapi.nupter.org/lost/new", params, new AsyncHttpResponseHandler() {
-                            public void onSuccess(String response) {
-                                Log.d("RE_lost", response);
-                                if (response.contains("ok")) {
+                        try {
+//                            Intent intent = new Intent().setPackage("com.renren.mobile.android");
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+                            intent.putExtra(Intent.EXTRA_TEXT, info);
+                            startActivity(Intent.createChooser(intent, getTitle()));
+                        } catch (Exception e) {
+                            Toast toast = Toast.makeText(LostAndFoundActivity.this, "您的手机上没有人人，不能发布", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        ;
 
-                                    Toast toast = Toast.makeText(LostAndFoundActivity.this, "OK了", Toast.LENGTH_SHORT);
-                                    toast.show();
-
-                                } else {
-                                    Toast toast = Toast.makeText(LostAndFoundActivity.this, response, 1000);
-                                    toast.show();
-                                }
-
-                            }
-
-
-                        });
                     } else {
                         Toast toast = Toast.makeText(LostAndFoundActivity.this, "网络还没连接哦", Toast.LENGTH_SHORT);
                         toast.show();
                     }
-
                 }
             });
 
@@ -191,7 +209,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                             jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++)
                                 lostList.add(jsonArray.getJSONObject(i).getString("message"));
-                            Log.d("lostList",lostList.toString());
+                            Log.d("lostList", lostList.toString());
                             listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList));
 
                         } catch (JSONException e) {

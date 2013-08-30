@@ -39,26 +39,27 @@
                 android:id="@+id/bookNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:textColor="@color/black"/>
         <TextView
                 android:id="@+id/bookAuthorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"/>
         <TextView
                 android:id="@+id/bookNumTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"/>
         <TextView
                 android:id="@+id/bookInfoTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="17sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"/>
     </LinearLayout>
 </LinearLayout>
