@@ -64,12 +64,12 @@ public class BookActivity extends ListActivity {
         bookRecords = BookRecord.listAll(BookRecord.class);
         bookCollectionAdapter = new BookCollectionAdapter(this);
         setListAdapter(bookCollectionAdapter);
-        Boolean DataExit = bookRecords.isEmpty();
-        if (DataExit) {
-            Toast toast = Toast.makeText(BookActivity.this, "还没有收藏", Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-        }
+//        Boolean DataExit = bookRecords.isEmpty();
+//        if (DataExit) {
+//            Toast toast = Toast.makeText(BookActivity.this, "还没有收藏", Toast.LENGTH_SHORT);
+//            toast.show();
+//        } else {
+//        }
     }
 
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -79,11 +79,13 @@ public class BookActivity extends ListActivity {
         String bookAuthor = bookRecords.get(position).author;
         String bookNum = bookRecords.get(position).bookNum;
         String bookInfo = bookRecords.get(position).bookInfo;
+        String bookHref = bookRecords.get(position).href;
         Intent intent = new Intent(BookActivity.this, BookViewActivity.class);
         intent.putExtra(BookListActivity.EXTRA_BOOK_NAME, bookName);
         intent.putExtra(BookListActivity.EXTRA_BOOK_AUTHOR, bookAuthor);
         intent.putExtra(BookListActivity.EXTRA_BOOK_NUM, bookNum);
         intent.putExtra(BookListActivity.EXTRA_BOOK_INFO, bookInfo);
+        intent.putExtra(BookListActivity.EXTRA_BOOK_HREF, bookHref);
         startActivity(intent);
     }
 

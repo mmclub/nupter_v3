@@ -1,5 +1,6 @@
 package org.nupter.nupter.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +36,10 @@ public class BookListActivity extends ListActivity {
     public static final String EXTRA_BOOK_NUM = "bookNum";
     public static final String EXTRA_BOOK_INFO = "bookInfo";
     public static final String EXTRA_BOOK_HREF = "bookHref";
-    private String searchBook, bookName, bookAuthor, bookNum,bookHref, postUrl;
+    public static final String EXTRA_BOOK_Library = "bookLibrary";
+    public static final String EXTRA_BOOK_Status = "bookStatus";
+    private ProgressDialog progressDialog;
+    private String searchBook, bookName, bookAuthor, bookNum, bookHref, postUrl, bookUrl;
     private Map<String, String> map;
     private List<Map<String, String>> bookListMap;
     private BookSearchListAdapter bookSearchListAdapter;
@@ -59,6 +63,11 @@ public class BookListActivity extends ListActivity {
 
     public void onStart() {
         super.onStart();
+        progressDialog = new ProgressDialog(BookListActivity.this);
+        progressDialog.setTitle("努力加载中。。。");
+        progressDialog.setMessage("南邮图书馆网站压力很大。。。");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         new AsyncHttpClient().post(postUrl, null,
                 new AsyncHttpResponseHandler() {
                     @Override
@@ -94,9 +103,7 @@ public class BookListActivity extends ListActivity {
                                 Elements span = p.get(i_p).select("span");
                                 String spanString = span.get(i_p).text();
                                 authorAndPress = p.get(i_p).text().substring(spanString.length());
-                                String authorAndPressArray[] = authorAndPress.split(" ");
-//                                author = authorAndPressArray[1];
-//                                press = authorAndPressArray[2];
+
 
                             }
                             map = new HashMap<String, String>();
@@ -109,92 +116,122 @@ public class BookListActivity extends ListActivity {
                         Log.d("jsoup_t", bookListMap.toString());
                         Boolean resultEmpty = bookListMap.isEmpty();
                         if (resultEmpty) {
-                            Toast toast = Toast.makeText(BookListActivity.this, "没有找到匹配的呀！", Toast.LENGTH_SHORT);
+                            progressDialog.dismiss();
+                            Toast toast = Toast.makeText(BookListActivity.this, "试试准确的书名？", Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             bookSearchListAdapter = new BookSearchListAdapter(BookListActivity.this);
                             setListAdapter(bookSearchListAdapter);
+                            progressDialog.dismiss();
                         }
                     }
 
-                    }
-
-                    );
-
-
                 }
 
-        public final class BookViewHolder {
-            public TextView bookName;
-            public TextView bookAuthor;
-            public TextView bookNum;
-        }
+        );
 
-        public class BookSearchListAdapter extends BaseAdapter {
-            private LayoutInflater bookInflater;
 
-            public BookSearchListAdapter(Context context) {
-                this.bookInflater = LayoutInflater.from(context);
-            }
+    }
 
-            @Override
-            public int getCount() {
+    public final class BookViewHolder {
+        public TextView bookName;
+        public TextView bookAuthor;
+        public TextView bookNum;
+    }
 
-                return bookListMap.size();  //To change body of implemented methods use File | Settings | File Templates.
-            }
+    public class BookSearchListAdapter extends BaseAdapter {
+        private LayoutInflater bookInflater;
 
-            @Override
-            public Object getItem(int arg0) {
-                return bookListMap.get(arg0);  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return 0;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                BookViewHolder holder = null;
-                if (convertView == null) {
-
-                    holder = new BookViewHolder();
-
-                    convertView = bookInflater.inflate(R.layout.item_search_book, null);
-                    holder.bookName = (TextView) convertView.findViewById(R.id.bookName);
-                    holder.bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
-                    holder.bookNum = (TextView) convertView.findViewById(R.id.bookNum);
-                    convertView.setTag(holder);
-
-                } else {
-
-                    holder = (BookViewHolder) convertView.getTag();
-                }
-
-                holder.bookName.setText(bookListMap.get(position).get("bookName"));
-                holder.bookAuthor.setText(bookListMap.get(position).get("bookAuthor"));
-                holder.bookNum.setText("书号:" + bookListMap.get(position).get("bookNum"));
-                return convertView;
-            }
+        public BookSearchListAdapter(Context context) {
+            this.bookInflater = LayoutInflater.from(context);
         }
 
         @Override
-        protected void onListItemClick (ListView l, View v,int position, long id){
+        public int getCount() {
 
-            super.onListItemClick(l, v, position, id);
-            bookName = bookListMap.get(position).get("bookName");
-            bookAuthor = bookListMap.get(position).get("bookAuthor");
-            bookNum = bookListMap.get(position).get("bookNum");
-            bookHref = bookListMap.get(position).get("bookHref");
-            //Log.d("BOOK","FDsa");
-            Intent intent = new Intent(BookListActivity.this, BookViewActivity.class);
-            intent.putExtra(EXTRA_BOOK_NAME, bookName);
-            intent.putExtra(EXTRA_BOOK_AUTHOR, bookAuthor);
-            intent.putExtra(EXTRA_BOOK_NUM, bookNum);
-            intent.putExtra(EXTRA_BOOK_HREF,bookHref);
-            startActivity(intent);
+            return bookListMap.size();  //To change body of implemented methods use File | Settings | File Templates.
         }
+
+        @Override
+        public Object getItem(int arg0) {
+            return bookListMap.get(arg0);  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            BookViewHolder holder = null;
+            if (convertView == null) {
+
+                holder = new BookViewHolder();
+
+                convertView = bookInflater.inflate(R.layout.item_search_book, null);
+                holder.bookName = (TextView) convertView.findViewById(R.id.bookName);
+                holder.bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
+                holder.bookNum = (TextView) convertView.findViewById(R.id.bookNum);
+                convertView.setTag(holder);
+
+            } else {
+
+                holder = (BookViewHolder) convertView.getTag();
+            }
+
+            holder.bookName.setText(bookListMap.get(position).get("bookName"));
+            holder.bookAuthor.setText(bookListMap.get(position).get("bookAuthor"));
+            holder.bookNum.setText("书号:" + bookListMap.get(position).get("bookNum"));
+            return convertView;
+        }
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        super.onListItemClick(l, v, position, id);
+        bookName = bookListMap.get(position).get("bookName");
+        bookAuthor = bookListMap.get(position).get("bookAuthor");
+        bookNum = bookListMap.get(position).get("bookNum");
+        bookHref = bookListMap.get(position).get("bookHref");
+        bookUrl = "http://202.119.228.6:8080/opac/" + bookHref;
+        Log.d("bookView", bookUrl);
+
+        new AsyncHttpClient().post(bookUrl, null,
+                new AsyncHttpResponseHandler() {
+                    public void onSuccess(String response) {
+                        Intent intent = new Intent(BookListActivity.this, BookViewActivity.class);
+                        intent.putExtra(EXTRA_BOOK_NAME, bookName);
+                        intent.putExtra(EXTRA_BOOK_AUTHOR, bookAuthor);
+                        intent.putExtra(EXTRA_BOOK_NUM, bookNum);
+                        intent.putExtra(EXTRA_BOOK_HREF, bookUrl);
+                        String bookInfo = "test";
+                        if (bookInfo == "test"){
+                            Log.d("bookInfo", bookInfo);
+                        }
+                        Document doc = Jsoup.parse(response);
+                        Elements list = doc.getElementsByClass("booklist");
+                        int listLenght = list.size();
+                        for (int i = 0; i < listLenght; i++) {
+                            String allString = list.get(i).text();
+
+                            String infoString = list.get(i).getElementsByTag("dt").text();
+                            Log.d("bookView", "test"+infoString);
+                            if(infoString.matches("(.*)提要文摘附注(.*)")){
+                                bookInfo = list.get(i).getElementsByTag("dd").text();
+                                Log.d("bookInfo",bookInfo);
+                            }
+                        }
+                        intent.putExtra(EXTRA_BOOK_INFO, bookInfo);
+                        startActivity(intent);
+                    }
+                });
+
+
+
+    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
