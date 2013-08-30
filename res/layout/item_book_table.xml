@@ -4,7 +4,7 @@
               android:orientation="horizontal"
               android:layout_width="fill_parent"
               android:background="@drawable/library_td_bg"
-              android:layout_height="wrap_content">
+              android:layout_height="40dp">
     <TextView
             android:id="@+id/libraryTextView"
             android:layout_width="fill_parent"
