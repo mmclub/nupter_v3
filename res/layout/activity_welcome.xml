@@ -2,11 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-    <ImageView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:src="@drawable/start_background"/>
+    android:orientation="vertical"
+    android:background="@drawable/start_background">
+
     
 
 </LinearLayout>

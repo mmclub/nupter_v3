@@ -16,7 +16,8 @@
         <activity android:name=".activity.MapBaiduActivity"
                   android:label="@string/title_activity_xianlin_area"></activity>
         <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.WelcomeActivity"
+                           android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
