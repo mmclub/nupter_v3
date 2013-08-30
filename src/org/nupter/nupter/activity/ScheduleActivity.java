@@ -1,13 +1,20 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.JsoupTable;
 
 import java.util.ArrayList;
 
@@ -21,60 +28,71 @@ import java.util.ArrayList;
 
 public class ScheduleActivity extends Activity {
     private int height;
-    private Intent intent;
+    private int skin;
     private MorningAdapter morningAdapter;
     private AfternoonAdapter afternoonAdapter;
     private EveningAdapter eveningAdapter;
     private GridView morningGridView;
     private GridView afternoonGridView;
     private GridView eveningGridView;
-    private ArrayList<String> list1 = new ArrayList<String>();
-    private ArrayList<String> list2 = new ArrayList<String>();
-    private ArrayList<String> list3 = new ArrayList<String>();
-    private ArrayList<String> list4 = new ArrayList<String>();
-    private ArrayList<String> list5 = new ArrayList<String>();
-    private int[] color = new int[]{R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red};
+    private SharedPreferences preferences;
+    private LinearLayout linearLayout;
+    private String schedule;
+    private ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
+    private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
+            {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
+            {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
+            {R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3},
+            {R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red}};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
-        height=getWindowManager().getDefaultDisplay().getHeight();
-        LinearLayout linearLayout=(LinearLayout)findViewById(R.id.postLinearLayout);
+        height = getWindowManager().getDefaultDisplay().getHeight();
+        preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        schedule = preferences.getString("schedule", null);
+        skin = preferences.getInt("skin", 0);
+        //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
+        tablelist = new JsoupTable().parse(schedule);
+        linearLayout = (LinearLayout) findViewById(R.id.postLinearLayout);
+        if (skin == 0)
+            linearLayout.setBackgroundResource(R.drawable.colorbackground);
+        if (skin == 1)
+            linearLayout.setBackgroundResource(R.drawable.pink_background);
+        if (skin == 2)
+            linearLayout.setBackgroundResource(R.drawable.green_background);
+        if (skin == 3)
+            linearLayout.setBackgroundResource(R.drawable.blue_background);
         linearLayout.post(
                 new Runnable() {
-            @Override
-            public void run() {
-                int contentViewTop = getWindow().findViewById(Window.ID_ANDROID_CONTENT)
-                        .getTop();
-                height=height-contentViewTop-20;
-                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        intent = getIntent();
-                        list1 = intent.getStringArrayListExtra("First");
-                        list2 = intent.getStringArrayListExtra("Third");
-                        list3 = intent.getStringArrayListExtra("Sixth");
-                        list4 = intent.getStringArrayListExtra("Eighth");
-                        list5 = intent.getStringArrayListExtra("Eleventh");
-                        morningGridView = (GridView) findViewById(R.id.morningGridView);
-                        afternoonGridView = (GridView) findViewById(R.id.afternoonGridView);
-                        eveningGridView = (GridView) findViewById(R.id.eveningGridView);
-                        morningAdapter = new MorningAdapter(ScheduleActivity.this, list1, list2);
-                        morningGridView.setAdapter(morningAdapter);
-                        morningGridView.setOnItemClickListener(MorningClickListener);
-                        afternoonAdapter = new AfternoonAdapter(ScheduleActivity.this, list3, list4);
-                        afternoonGridView.setAdapter(afternoonAdapter);
-                        afternoonGridView.setOnItemClickListener(AfternoonClickListener);
-                        eveningAdapter = new EveningAdapter(ScheduleActivity.this, list5);
-                        eveningGridView.setAdapter(eveningAdapter);
-                        eveningGridView.setOnItemClickListener(EveningClickListener);
+                        int contentViewTop = getWindow().findViewById(Window.ID_ANDROID_CONTENT)
+                                .getTop();
+                        height = height - contentViewTop - 20;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                morningGridView = (GridView) findViewById(R.id.morningGridView);
+                                afternoonGridView = (GridView) findViewById(R.id.afternoonGridView);
+                                eveningGridView = (GridView) findViewById(R.id.eveningGridView);
+                                morningAdapter = new MorningAdapter(ScheduleActivity.this, tablelist.get(0), tablelist.get(1));
+                                morningGridView.setAdapter(morningAdapter);
+                                morningGridView.setOnItemClickListener(MorningClickListener);
+                                afternoonAdapter = new AfternoonAdapter(ScheduleActivity.this, tablelist.get(2), tablelist.get(3));
+                                afternoonGridView.setAdapter(afternoonAdapter);
+                                afternoonGridView.setOnItemClickListener(AfternoonClickListener);
+                                eveningAdapter = new EveningAdapter(ScheduleActivity.this, tablelist.get(4));
+                                eveningGridView.setAdapter(eveningAdapter);
+                                eveningGridView.setOnItemClickListener(EveningClickListener);
+                            }
+                        });
                     }
                 });
-            }
-        });
     }
+
     private String[] format(String s) {
         String a[] = s.split(" ");
         if ((!a[1].startsWith("周")) && a[1].length() < 5) {
@@ -111,6 +129,22 @@ public class ScheduleActivity extends Activity {
     private String getClassTeacher(String s) {
         String a[] = format(s);
         return a[2];
+    }
+
+    private Boolean isOneClass(String s) {
+        String a[] = format(s);
+        if (!a[1].substring(0, 6).endsWith("9")) {
+            return true;
+        }
+        return false;
+    }
+
+    private Boolean isTwoClass(String s) {
+        String a[] = format(s);
+        if (a[1].substring(0, 8).endsWith("5")) {
+            return false;
+        }
+        return true;
     }
 
     public class MorningAdapter extends BaseAdapter {
@@ -154,7 +188,7 @@ public class ScheduleActivity extends Activity {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                     className.setText(getClassName(list1.get(position)));
                     classLocation.setText(getClassLocation(list1.get(position)));
-                    convertView.setBackgroundResource(color[position]);
+                    convertView.setBackgroundResource(color[skin][position]);
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
@@ -167,20 +201,11 @@ public class ScheduleActivity extends Activity {
                     }
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
-                    convertView.setBackgroundResource(color[position > 6 ? position - 7 : position - 1]);
+                    convertView.setBackgroundResource(color[skin][position > 6 ? position - 7 : position - 1]);
                 }
             }
             return convertView;
         }
-
-        private Boolean isTwoClass(String s) {
-            String a[] = format(s);
-            if (a[1].substring(0, 8).endsWith("5")) {
-                return false;
-            }
-            return true;
-        }
-
     }
 
     public class AfternoonAdapter extends BaseAdapter {
@@ -218,10 +243,16 @@ public class ScheduleActivity extends Activity {
             classLocation.setTextSize(10);
             if (i < 5) {
                 if (!list3.get(i).equals(" ")) {
-                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
+                    if (!list4.get(i).equals(" ")) {
+                        if (isOneClass(list4.get(i))) {
+                            view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
+                        } else {
+                            view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
+                        }
+                    }
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
-                    view.setBackgroundResource(color[i > 3 ? i - 4 : i + 2]);
+                    view.setBackgroundResource(color[skin][i > 3 ? i - 4 : i + 2]);
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
@@ -231,22 +262,11 @@ public class ScheduleActivity extends Activity {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                         className.setText(getClassName(list4.get(i - 5)));
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
-                        view.setBackgroundResource(color[i > 5 ? i - 6 : i]);
-                    } else {
-                        view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 12));
-                        view.setBackgroundResource(color[i > 8 ? i - 9 : i - 3]);
+                        view.setBackgroundResource(color[skin][i - 4]);
                     }
                 }
             }
             return view;
-        }
-
-        private Boolean isOneClass(String s) {
-            String a[] = format(s);
-            if (!a[1].substring(0, 6).endsWith("9")) {
-                return true;
-            }
-            return false;
         }
     }
 
@@ -261,7 +281,7 @@ public class ScheduleActivity extends Activity {
 
         @Override
         public Object getItem(int i) {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return null;
         }
 
         @Override
@@ -271,7 +291,7 @@ public class ScheduleActivity extends Activity {
 
         @Override
         public long getItemId(int i) {
-            return 0;  //To change body of implemented methods use File | Settings | File Templates.
+            return 0;
         }
 
         @Override
@@ -285,7 +305,7 @@ public class ScheduleActivity extends Activity {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
                 className.setText(getClassName(list5.get(i)));
                 classLocation.setText(getClassLocation(list5.get(i)));
-                view.setBackgroundResource(color[i > 2 ? i - 3 : i + 3]);
+                view.setBackgroundResource(color[skin][i > 2 ? i - 3 : i + 3]);
             }
             return view;
         }
@@ -293,7 +313,7 @@ public class ScheduleActivity extends Activity {
 
     private GridView.OnItemClickListener MorningClickListener = new GridView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if ((position < 5 && (!list1.get(position).equals(" "))) || (position >= 5 && (!list2.get(position - 5).equals(" ")))) {
+            if ((position < 5 && (!tablelist.get(0).get(position).equals(" "))) || (position >= 5 && (!tablelist.get(1).get(position - 5).equals(" ")))) {
                 Dialog dialog = new Dialog(ScheduleActivity.this, R.style.classDialog) {
                     @Override
                     public boolean onTouchEvent(MotionEvent event) {
@@ -309,16 +329,16 @@ public class ScheduleActivity extends Activity {
                 TextView class_time = (TextView) dialog.getWindow().findViewById(R.id.class_time);
                 TextView class_teacher = (TextView) dialog.getWindow().findViewById(R.id.class_teacher);
                 TextView class_location = (TextView) dialog.getWindow().findViewById(R.id.class_location);
-                class_name.setText(position <= 4 ? getClassName(list1.get(position)) : getClassName(list2.get(position - 5)));
-                class_time.setText(position <= 4 ? getClassTime(list1.get(position)) : getClassTime(list2.get(position - 5)));
-                class_teacher.setText(position <= 4 ? getClassTeacher(list1.get(position)) : getClassTeacher(list2.get(position - 5)));
-                class_location.setText(position <= 4 ? getClassLocation(list1.get(position)) : getClassLocation(list2.get(position - 5)));
+                class_name.setText(position <= 4 ? getClassName(tablelist.get(0).get(position)) : getClassName(tablelist.get(1).get(position - 5)));
+                class_time.setText(position <= 4 ? getClassTime(tablelist.get(0).get(position)) : getClassTime(tablelist.get(1).get(position - 5)));
+                class_teacher.setText(position <= 4 ? getClassTeacher(tablelist.get(0).get(position)) : getClassTeacher(tablelist.get(1).get(position - 5)));
+                class_location.setText(position <= 4 ? getClassLocation(tablelist.get(0).get(position)) : getClassLocation(tablelist.get(1).get(position - 5)));
             }
         }
     };
     private GridView.OnItemClickListener AfternoonClickListener = new GridView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if ((position < 5 && (!list3.get(position).equals(" "))) || (position >= 5 && (!list4.get(position - 5).equals(" ")))) {
+            if ((position < 5 && (!tablelist.get(2).get(position).equals(" "))) || (position >= 5 && (!tablelist.get(3).get(position - 5).equals(" ")))) {
                 Dialog dialog = new Dialog(ScheduleActivity.this, R.style.classDialog) {
                     @Override
                     public boolean onTouchEvent(MotionEvent event) {
@@ -334,16 +354,16 @@ public class ScheduleActivity extends Activity {
                 TextView class_time = (TextView) dialog.getWindow().findViewById(R.id.class_time);
                 TextView class_teacher = (TextView) dialog.getWindow().findViewById(R.id.class_teacher);
                 TextView class_location = (TextView) dialog.getWindow().findViewById(R.id.class_location);
-                class_name.setText(position <= 4 ? getClassName(list3.get(position)) : getClassName(list4.get(position - 5)));
-                class_time.setText(position <= 4 ? getClassTime(list3.get(position)) : getClassTime(list4.get(position - 5)));
-                class_teacher.setText(position <= 4 ? getClassTeacher(list3.get(position)) : getClassTeacher(list4.get(position - 5)));
-                class_location.setText(position <= 4 ? getClassLocation(list3.get(position)) : getClassLocation(list4.get(position - 5)));
+                class_name.setText(position <= 4 ? getClassName(tablelist.get(2).get(position)) : getClassName(tablelist.get(3).get(position - 5)));
+                class_time.setText(position <= 4 ? getClassTime(tablelist.get(2).get(position)) : getClassTime(tablelist.get(3).get(position - 5)));
+                class_teacher.setText(position <= 4 ? getClassTeacher(tablelist.get(2).get(position)) : getClassTeacher(tablelist.get(3).get(position - 5)));
+                class_location.setText(position <= 4 ? getClassLocation(tablelist.get(2).get(position)) : getClassLocation(tablelist.get(3).get(position - 5)));
             }
         }
     };
     private GridView.OnItemClickListener EveningClickListener = new GridView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position < 5 && (!list5.get(position).equals(" "))) {
+            if (position < 5 && (!tablelist.get(4).get(position).equals(" "))) {
                 Dialog dialog = new Dialog(ScheduleActivity.this, R.style.classDialog) {
                     @Override
                     public boolean onTouchEvent(MotionEvent event) {
@@ -359,42 +379,149 @@ public class ScheduleActivity extends Activity {
                 TextView class_time = (TextView) dialog.getWindow().findViewById(R.id.class_time);
                 TextView class_teacher = (TextView) dialog.getWindow().findViewById(R.id.class_teacher);
                 TextView class_location = (TextView) dialog.getWindow().findViewById(R.id.class_location);
-                class_name.setText(getClassName(list5.get(position)));
-                class_time.setText(getClassTime(list5.get(position)));
-                class_teacher.setText(getClassTeacher(list5.get(position)));
-                class_location.setText(getClassLocation(list5.get(position)));
+                class_name.setText(getClassName(tablelist.get(4).get(position)));
+                class_time.setText(getClassTime(tablelist.get(4).get(position)));
+                class_teacher.setText(getClassTeacher(tablelist.get(4).get(position)));
+                class_location.setText(getClassLocation(tablelist.get(4).get(position)));
             }
         }
     };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_schedule, menu);
+        getMenuInflater().inflate(R.menu.menu_schedule, menu);
+        menu.add("menu");
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫"};
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.skin_icon)
+                .setTitle("更换皮肤")
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        switch (which) {
+                            case 0:
+                                editor.putInt("skin", 0);
+                                editor.commit();
+                                sendBroadcast();
+                                ScheduleActivity.this.recreate();
+                                break;
+                            case 1:
+                                editor.putInt("skin", 1);
+                                editor.commit();
+                                sendBroadcast();
+                                ScheduleActivity.this.recreate();
+                                break;
+                            case 2:
+                                editor.putInt("skin", 2);
+                                editor.commit();
+                                sendBroadcast();
+                                ScheduleActivity.this.recreate();
+                                break;
+                            case 3:
+                                editor.putInt("skin", 3);
+                                editor.commit();
+                                sendBroadcast();
+                                ScheduleActivity.this.recreate();
+                                break;
+                            case 4:
+                                editor.putInt("skin", 4);
+                                editor.commit();
+                                sendBroadcast();
+                                ScheduleActivity.this.recreate();
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton("取消",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                            }
+                        }).create().show();
+        return false;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
-                break;
-            case R.id.action_login:
                 Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
-                intent.putExtra("JumpTo","Schedule");
+                intent.putExtra("JumpTo", "Schedule");
                 startActivity(intent);
+                break;
+            case R.id.action_skin:
+                String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫"};
+                new AlertDialog.Builder(this)
+                        .setIcon(R.drawable.skin_icon)
+                        .setTitle("更换皮肤")
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferences.Editor editor = preferences.edit();
+                                switch (which) {
+                                    case 0:
+                                        editor.putInt("skin", 0);
+                                        editor.commit();
+                                        sendBroadcast();
+                                        ScheduleActivity.this.recreate();
+                                        break;
+                                    case 1:
+                                        editor.putInt("skin", 1);
+                                        editor.commit();
+                                        sendBroadcast();
+                                        ScheduleActivity.this.recreate();
+                                        break;
+                                    case 2:
+                                        editor.putInt("skin", 2);
+                                        editor.commit();
+                                        sendBroadcast();
+                                        ScheduleActivity.this.recreate();
+                                        break;
+                                    case 3:
+                                        editor.putInt("skin", 3);
+                                        editor.commit();
+                                        sendBroadcast();
+                                        ScheduleActivity.this.recreate();
+                                        break;
+                                    case 4:
+                                        editor.putInt("skin", 4);
+                                        editor.commit();
+                                        sendBroadcast();
+                                        ScheduleActivity.this.recreate();
+                                        break;
+                                }
+                            }
+                        })
+                        .setNegativeButton("取消",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                                        int which) {
+                                    }
+                                }).create().show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TODO Auto-generated method stub
         if (ev.getAction() == MotionEvent.ACTION_MOVE) {
             return true;// 禁止Gridview进行滑动
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void sendBroadcast() {
+        Intent intent = new Intent("org.nupter.widget.refresh");
+        this.sendBroadcast(intent);
     }
 }

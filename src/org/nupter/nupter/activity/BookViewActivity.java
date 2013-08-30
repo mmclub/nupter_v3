@@ -23,7 +23,7 @@ import java.util.List;
 
 public class BookViewActivity extends Activity {
     private String info;
-    private String name, author, num;
+    private String name, author, num, href;
     private TextView bookNameTextView, bookAuthorTextView, bookNumTextView, bookInfoTextView;
     private Button collectButton;
 
@@ -42,6 +42,7 @@ public class BookViewActivity extends Activity {
         author = intent.getStringExtra(BookListActivity.EXTRA_BOOK_AUTHOR);
         num = intent.getStringExtra(BookListActivity.EXTRA_BOOK_NUM);
         info = intent.getStringExtra(BookListActivity.EXTRA_BOOK_INFO);
+        href = intent.getStringExtra(BookListActivity.EXTRA_BOOK_HREF);
         //当从Jsoup拿来数据时再将info赋值
         info = "这是一本关于ios开发的基本教程，哈哈，你哈哈，我哈哈，大家哈哈哈！(ˇˍˇ）";
         bookNameTextView.setText(name);
@@ -58,7 +59,7 @@ public class BookViewActivity extends Activity {
 
                 Boolean dataExit = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
                 if (dataExit) {
-                    BookRecord bookRecord = new BookRecord(BookViewActivity.this, name, author, num, info);
+                    BookRecord bookRecord = new BookRecord(BookViewActivity.this, name, author, num, info, href);
                     bookRecord.save();
                     Boolean dataAdded = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
                     if (!dataAdded) {

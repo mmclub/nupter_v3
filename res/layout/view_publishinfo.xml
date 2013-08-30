@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
             android:layout_gravity="center_horizontal"
-            android:hint="写上你的大名"/>
+            android:hint="你的名字"/>
     <EditText
             android:id="@+id/publishPhoneEditText"
             android:layout_width="250dp"
@@ -36,10 +36,12 @@
             android:background="@drawable/publish_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:layout_marginTop="5pt"
             android:layout_gravity="center_horizontal"
             android:textSize="20sp"
-            android:text="发布"
+            android:text="发布人人网"
             android:textColor="#fff"/>
 
 </LinearLayout>
