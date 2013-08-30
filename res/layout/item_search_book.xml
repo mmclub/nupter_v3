@@ -10,26 +10,20 @@
                   android:orientation="vertical"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:paddingLeft="10dp">
+                  android:paddingLeft="5dp">
 
         <TextView
                 android:id="@+id/bookName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:textColor="#000000"/>
 
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:orientation="horizontal"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content">
             <TextView
                     android:id="@+id/bookAuthor"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingLeft="7dp"
                     android:textSize="15sp"
                     android:textColor="#000000"/>
 
@@ -37,9 +31,7 @@
                     android:id="@+id/bookNum"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:textSize="15sp"
                     android:textColor="#000000"/>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -16,6 +16,7 @@ import android.widget.*;
 import org.nupter.nupter.R;
 import org.nupter.nupter.data.BookRecord;
 import android.widget.AdapterView.OnItemLongClickListener;
+import org.nupter.nupter.utils.NetUtils;
 
 import java.security.PrivateKey;
 import java.util.List;
@@ -44,10 +45,16 @@ public class BookActivity extends ListActivity {
         searchBookButton = (Button) this.findViewById(R.id.searchBookBtton);
         searchBookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String searchBookName = searchBookEditText.getText().toString();
-                Intent intent = new Intent(BookActivity.this, BookListActivity.class);
-                intent.putExtra("searchBookName", searchBookName);
-                startActivity(intent);
+                if (NetUtils.isNewworkConnected()) {
+                    String searchBookName = searchBookEditText.getText().toString();
+                    Intent intent = new Intent(BookActivity.this, BookListActivity.class);
+                    intent.putExtra("searchBookName", searchBookName);
+                    startActivity(intent);
+                } else {
+                    Toast toast = Toast.makeText(BookActivity.this, "网络没有连接啊！",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
             }
         });
     }
