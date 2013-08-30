@@ -2,7 +2,7 @@
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     android:minWidth="294dp" android:minHeight="294dp"
-                    android:updatePeriodMillis="86400000"
-                    android:initialLayout="@layout/widget_schedule"
-                    android:configure="org.nupter.nupter.utils.ScheduleWidgetContent">
+                    android:minResizeHeight="72dp"  android:minResizeWidth="72dp"
+                    android:resizeMode="vertical|horizontal"
+                    android:initialLayout="@layout/widget_schedule">
 </appwidget-provider>

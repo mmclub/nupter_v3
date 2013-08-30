@@ -27,7 +27,7 @@ public class JsoupTest {
             for(int j=0;j<tds.size();j++){
                 testString.append(tds.get(j).text()).append("&");
             }
-            testString.append("*");
+            testString.append("$");
         }
 
         Elements tds=doc.getElementById("TabTj").getElementsByTag("tr").get(14).getElementsByTag("td");

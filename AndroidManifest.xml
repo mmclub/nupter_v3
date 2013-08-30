@@ -16,14 +16,14 @@
         <activity android:name=".activity.MapBaiduActivity"
                   android:label="@string/title_activity_xianlin_area"></activity>
         <activity android:name=".activity.MainActivity"></activity>
-        <activity android:name=".activity.WelcomeActivity"  >
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".activity.BookActivity"
-                android:label="@string/label_book"/>
+                  android:label="@string/label_book"/>
         <activity android:name=".activity.ClubActivity"
                   android:label="@string/title_activity_club"/>
         <activity android:name=".activity.ClubDetailActivity"
@@ -42,9 +42,8 @@
                   android:label="@string/label_setting"/>
         <activity android:name=".activity.SchoolCardActivity"
                 />
->>>>>>> 0d21294d092898925a47705d6749102673bdcb01
         <activity android:name=".activity.ScheduleActivity"
-                android:label="@string/title_activity_schedule"/>
+                  android:label="@string/title_activity_schedule"/>
         <activity android:name=".activity.BookListActivity"
                   android:label="@string/label_book_list"/>
         <activity android:name=".activity.BookViewActivity"
@@ -56,8 +55,7 @@
 
 
         <activity android:name=".activity.TestActivity"
-                android:label="@string/title_activity_test"/>
-
+                  android:label="@string/title_activity_test"/>
 
 
         <activity android:name=".activity.ActivityListActivity"/>
@@ -67,22 +65,17 @@
                   android:screenOrientation="portrait"
                 />
         <activity android:name=".activity.MessageListActivity"
-                android:label="@string/label_message"/>
+                  android:label="@string/label_message"/>
         <activity android:name=".activity.NewspaperDetailActivity"/>
         <activity android:name=".activity.WebviewActivity"/>
-        <receiver android:name=".utils.ScheduleWidgetCreate">
+        <receiver android:name=".utils.ScheduleWidget">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="org.nupter.widget.refresh"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                       android:resource="@xml/set_widget" />
+                       android:resource="@xml/set_widget"/>
         </receiver>
-        <activity android:name=".utils.ScheduleWidgetContent">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
 
         <!--Parse推送配置-->
         <service android:name="com.parse.PushService"/>
@@ -99,7 +92,7 @@
     <service
             android:name="com.umeng.common.net.DownloadingService"
             android:exported="true"
-            android:process=":DownloadingService" >
+            android:process=":DownloadingService">
     </service>
 
 

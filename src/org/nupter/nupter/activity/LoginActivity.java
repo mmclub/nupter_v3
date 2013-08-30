@@ -293,16 +293,7 @@ public class LoginActivity extends Activity {
         public void handleMessage(Message msg) {
             if (msg.what == MSG_TABLE) {
                 progressDialog.dismiss();
-                //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
-                tableList = jsoupTable.parse(tableHtml.toString());
                 Intent intent = new Intent(LoginActivity.this, ScheduleActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("First", tableList.get(0));
-                bundle.putStringArrayList("Third", tableList.get(1));
-                bundle.putStringArrayList("Sixth", tableList.get(2));
-                bundle.putStringArrayList("Eighth", tableList.get(3));
-                bundle.putStringArrayList("Eleventh", tableList.get(4));
-                intent.putExtras(bundle);
                 LoginActivity.this.startActivity(intent);
             } else if (msg.what == MSG_TEST) {
                 progressDialog.dismiss();
