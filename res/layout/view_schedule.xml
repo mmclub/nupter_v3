@@ -6,6 +6,7 @@
               android:layout_height="match_parent">
     <TextView
             android:id="@+id/className"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -14,6 +15,7 @@
     <TextView
             android:id="@+id/classLocation"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

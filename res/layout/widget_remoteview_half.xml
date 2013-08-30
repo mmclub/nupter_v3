@@ -5,7 +5,8 @@
               android:orientation="vertical">
     <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
         <ImageView
                 android:id="@+id/background"
                 android:scaleType="fitXY"

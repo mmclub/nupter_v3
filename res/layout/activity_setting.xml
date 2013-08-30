@@ -4,76 +4,76 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_height="0dp"
-      android:layout_weight="3"
-      android:layout_width="fill_parent"
-      android:gravity="center">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:layout_width="fill_parent"
+            android:gravity="center">
 
-  <LinearLayout
-      android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:layout_marginRight="20dp"
-      android:layout_marginLeft="20dp"
-      android:layout_marginBottom="10dp"
-      android:background="@drawable/list_bg"
-      android:orientation="vertical">
-   <LinearLayout
-       android:layout_height="wrap_content"
-       android:layout_width="fill_parent"
-           >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="接收消息"
-        android:textSize="16sp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="4"/>
-    <ToggleButton
-        android:layout_width="80dp"
-        android:layout_height="25dp"
-        android:id="@+id/newspushTB"
-        android:background="@drawable/togglebutton"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="10dp"
-        android:textOn=""
-        android:textOff=""/>
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/list_bg"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="接收消息"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"/>
+                <ToggleButton
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/newspushTB"
+                        android:background="@drawable/togglebutton"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:textOn=""
+                        android:textOff=""/>
 
-     </LinearLayout>
-       <ImageView
-             android:layout_height="wrap_content"
-             android:layout_width="fill_parent"
-             android:background="@drawable/zebra_img_line"/>
-      <LinearLayout
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              >
-          <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="刷新声音"
-                  android:textSize="16sp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_marginTop="10dp"
-                  android:layout_marginBottom="10dp"
-                  android:layout_gravity="center_vertical"
-                  android:layout_weight="4"/>
-          <ToggleButton
-                  android:layout_width="80dp"
-                  android:layout_height="25dp"
-                  android:id="@+id/refreshsoundTB"
-                  android:background="@drawable/togglebutton"
-                  android:layout_gravity="center_vertical"
-                  android:layout_marginRight="10dp"
-                  android:textOn=""
-                  android:textOff=""/>
+            </LinearLayout>
+            <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:background="@drawable/zebra_img_line"/>
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="刷新声音"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"/>
+                <ToggleButton
+                        android:layout_width="80dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/refreshsoundTB"
+                        android:background="@drawable/togglebutton"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:textOn=""
+                        android:textOff=""/>
 
-      </LinearLayout>
-  </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
@@ -85,11 +85,11 @@
             android:layout_marginRight="20dp"
             android:gravity="center">
         <org.nupter.nupter.utils.CornerListView
-            android:id="@+id/settinglistview"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:cacheColorHint="#00000000"
-             android:background="@drawable/list_bg"/>
+                android:id="@+id/settinglistview"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:cacheColorHint="#00000000"
+                android:background="@drawable/list_bg"/>
 
     </LinearLayout>
 
