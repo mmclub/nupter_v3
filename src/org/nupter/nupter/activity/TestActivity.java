@@ -5,7 +5,14 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +22,7 @@ import org.nupter.nupter.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,31 +31,64 @@ import java.util.HashMap;
  * Time: 下午9:51
  * To change this template use File | Settings | File Templates.
  */
-public class TestActivity extends Activity {
+public class TestActivity extends FragmentActivity {
     private ListView mListView;
-    private Intent intent;
     private String testString;
-    private SimpleAdapter adapter;
-    private ArrayList<HashMap<String, String>> msg = new ArrayList<HashMap<String, String>>();
-    private HashMap<String, String> map;
     private String list[];
-
+    private ArrayList<ArrayList<ArrayList<String>>> lists = new ArrayList<ArrayList<ArrayList<String>>>();
+    private List<Fragment> fragmentList = new ArrayList<Fragment>();
+    private List<String> titleList = new ArrayList<String>();
+    private TextView average;
+    private TextView total;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        intent = getIntent();
-        testString = intent.getStringExtra("testString");
-        list = testString.split("\\*");
-        mListView = (ListView) findViewById(R.id.mListView);
-        putMsg(list);
-        adapter = new SimpleAdapter(this, msg, R.layout.view_test,
-                new String[]{"testName", "testCredit", "testPoint", "testScore"},
-                new int[]{R.id.testName, R.id.testCredit, R.id.testPoint, R.id.testScore});
-        mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        testString = getIntent().getStringExtra("testString");
+        ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
+        if (!testString.equals("null")) {
+            list = testString.split("\\$");
+            String first_element[] = list[1].split("&");
+            String title = first_element[0];
+            String term = first_element[1];
+            Log.i("TAG", "title:" + title + "\n第一学期");
+            titleList.add(title + "\n" + "第一学期");
+            ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
+            int k = 0;
+            for (int i = 1; i < list.length - 1; i++) {
+                String element[] = list[i].split("&");
+                ArrayList<String> arrayList = new ArrayList<String>();
+                for (int j = 0; j < element.length; j++)
+                    arrayList.add(element[j]);
+                if ((!title.equals(element[0])) || (!term.equals(element[1]))) {
+                    lists.add(arrayLists);
+                    arrayLists = new ArrayList<ArrayList<String>>();
+                    titleList.add(element[0] + "\n" + (k++ % 2 == 0 ? "第二学期" : "第一学期"));
+                }
+                arrayLists.add(arrayList);
+                title = element[0];
+                term = element[1];
+            }
+            lists.add(arrayLists);
+            average=(TextView)findViewById(R.id.average);
+            total=(TextView)findViewById(R.id.total);
+            average.setText(list[list.length-1].split("&")[0]);
+            total.setText(list[list.length-1].split("&")[1]);
+            for (int i = 0; i < lists.size(); i++) {
+                Log.i("str", lists.get(i).toString());
+                fragmentList.add(new scoreFragment(lists.get(i)));
+            }
+            vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
+            PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pageTab);
+            pts.setTextSpacing(10);
+            pts.setTabIndicatorColor(getResources().getColor(android.R.color.holo_blue_bright));
+            pts.setTextColor(Color.BLUE);
+            pts.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+            pts.setDrawFullUnderline(true);
+        }
+/*        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Dialog dialog = new Dialog(TestActivity.this, R.style.classDialog) {
@@ -87,41 +128,86 @@ public class TestActivity extends Activity {
                 test_retake_mark.setText("重修标记：" + element[14]);
 
             }
-        });
+        });*/
+    }
+    class MyPagerAdapter extends FragmentPagerAdapter {
+
+        private List<Fragment> fragmentList;
+        private List<String> titleList;
+
+        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList) {
+            super(fm);
+            this.fragmentList = fragmentList;
+            this.titleList = titleList;
+        }
+
+        @Override
+        public Fragment getItem(int arg0) {
+            return (fragmentList == null || fragmentList.size() == 0) ? null : fragmentList.get(arg0);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return (titleList.size() > position) ? titleList.get(position) : "";
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList == null ? 0 : fragmentList.size();
+        }
     }
 
-    public void putMsg(String[] list) {
-        for (int i = 0; i < list.length - 1; i++) {
-            String element[] = list[i].split("&");
-            map = new HashMap<String, String>();
-            map.put("testName", element[3]);
-            map.put("testCredit", element[6]);
-            map.put("testPoint", element[7]);
-            map.put("testScore", element[8]);
-            msg.add(map);
+    class scoreFragment extends Fragment{
+        private SimpleAdapter adapter;
+        private ArrayList<HashMap<String, String>> msg = new ArrayList<HashMap<String, String>>();
+        private HashMap<String, String> map;
+        ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
+        public scoreFragment(ArrayList<ArrayList<String>> arrayLists) {
+            this.arrayLists=arrayLists;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.view_test_fragment, container, false);
+            mListView = (ListView) v.findViewById(R.id.mListView);
+            for (int i = 0; i < arrayLists.size(); i++) {
+                map = new HashMap<String, String>();
+                map.put("testName", arrayLists.get(i).get(3));
+                map.put("testCredit", arrayLists.get(i).get(6));
+                map.put("testPoint", arrayLists.get(i).get(7));
+                map.put("testScore", arrayLists.get(i).get(8));
+                msg.add(map);
+            }
+            adapter = new SimpleAdapter(TestActivity.this, msg, R.layout.view_test,
+                    new String[]{"testName", "testCredit", "testPoint", "testScore"},
+                    new int[]{R.id.testName, R.id.testCredit, R.id.testPoint, R.id.testScore});
+            mListView.setAdapter(adapter);
+            return v;
+        }
+    }
 /*            if(element[8].startsWith("6")||element[8].startsWith("7")||element[8].startsWith("8")||element[8].startsWith("9")||element[8].equals("100")||element[8].equals("合格")||element[8].equals("及格")||element[8].equals("中等")||element[8].equals("良好")||element[8].equals("优秀")){
                 testScore.setTextColor(Color.GREEN);
                 Log.i("str", "success");
             }else {
                 testScore.setTextColor(Color.RED);
-            }  */
+            }  *//*
+
         }
     }
-    @Override
+*/
+
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_schedule, menu);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
-                break;
-            case R.id.action_login:
                 Intent intent = new Intent(TestActivity.this, LoginActivity.class);
-                intent.putExtra("JumpTo","Test");
+                intent.putExtra("JumpTo", "Test");
                 startActivity(intent);
                 break;
             default:
