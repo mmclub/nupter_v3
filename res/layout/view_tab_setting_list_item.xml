@@ -17,5 +17,5 @@
                android:paddingBottom="10dp"
                android:paddingTop="10dp"
                android:text="版本"
-               android:textColor="#00000000"/>
+               />
 </RelativeLayout>

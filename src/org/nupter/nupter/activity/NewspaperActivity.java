@@ -29,12 +29,11 @@ import org.nupter.nupter.utils.Log;
 public class NewspaperActivity extends ListActivity {
 
     public static final String EXTRA_NEWSPAPER_JSON = "newspaper_json";
-
     JSONObject json;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+         setContentView(R.layout.activity_newspaper);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
@@ -123,7 +122,7 @@ public class NewspaperActivity extends ListActivity {
         try{
             Intent intent = new Intent(this, WebviewActivity.class);
             intent.putExtra(WebviewActivity.EXTRA_TITLE, json.getJSONArray("array").getJSONObject(position).getString("title"));
-            intent.putExtra(WebviewActivity.EXTRA_URL, json.getJSONArray("array").getJSONObject(position).getString("text"));
+            intent.putExtra(WebviewActivity.EXTRA_URL, json.getJSONArray("array").getJSONObject(position).getString("url"));
             startActivity(intent);
         } catch (Exception e){
 
