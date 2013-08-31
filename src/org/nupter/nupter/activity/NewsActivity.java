@@ -131,7 +131,7 @@ public class NewsActivity extends FragmentActivity {
              */
             SharedPreferences sharedPreferences= getSharedPreferences("test",
                     Activity.MODE_PRIVATE);
-                    boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",false);
+                    boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",true);
              if (getSoundFlag == true){
             SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
             soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
@@ -250,7 +250,7 @@ public class NewsActivity extends FragmentActivity {
             SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
             SharedPreferences sharedPreferences= getSharedPreferences("test",
                     Activity.MODE_PRIVATE);
-            boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",false);
+            boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",true);
             if (getSoundFlag == true){
 
             soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
