@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.ant.liao.GifView;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.JsoupTable;
 import org.nupter.nupter.utils.JsoupTest;
 
 import java.io.DataOutputStream;
@@ -60,9 +59,7 @@ public class LoginActivity extends Activity {
     private StringBuffer tableHtml, testHtml;
     private Intent intent;
     private String Flag;
-    private ArrayList<ArrayList<String>> tableList;
     private String testString;
-    private JsoupTable jsoupTable;
     private JsoupTest jsoupTest;
     private ProgressDialog progressDialog;
     private String login_url = "http://202.119.225.35/default2.aspx";
@@ -72,11 +69,10 @@ public class LoginActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_login);
+        setContentView(R.layout.activity_login);
         intent = getIntent();
         Flag = intent.getStringExtra("JumpTo");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        jsoupTable = new JsoupTable();
         jsoupTest=new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);

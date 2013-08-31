@@ -10,6 +10,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" >
         <android.support.v4.view.PagerTabStrip
+                android:id="@+id/pagerTabStrip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top" />
