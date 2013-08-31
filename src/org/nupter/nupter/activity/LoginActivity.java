@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.ant.liao.GifView;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.JsoupTable;
 import org.nupter.nupter.utils.JsoupTest;
 
 import java.io.DataOutputStream;
@@ -60,7 +59,6 @@ public class LoginActivity extends Activity {
     private StringBuffer tableHtml, testHtml;
     private Intent intent;
     private String Flag;
-    private ArrayList<ArrayList<String>> tableList;
     private String testString;
     private JsoupTest jsoupTest;
     private ProgressDialog progressDialog;
@@ -71,7 +69,7 @@ public class LoginActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_login);
+        setContentView(R.layout.activity_login);
         intent = getIntent();
         Flag = intent.getStringExtra("JumpTo");
         getActionBar().setDisplayHomeAsUpEnabled(true);

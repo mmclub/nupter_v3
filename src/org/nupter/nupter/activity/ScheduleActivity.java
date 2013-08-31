@@ -451,9 +451,14 @@ public class ScheduleActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
-                intent.putExtra("JumpTo", "Schedule");
+                Intent intent = new Intent(ScheduleActivity.this, MainActivity.class);
                 startActivity(intent);
+                this.finish();
+                break;
+            case R.id.action_login:
+                Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);
+                intent1.putExtra("JumpTo", "Schedule");
+                startActivity(intent1);
                 this.finish();
                 break;
             case R.id.action_skin:

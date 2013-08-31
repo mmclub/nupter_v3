@@ -40,10 +40,12 @@
                   android:label="@string/label_login"/>
         <activity android:name=".activity.SettingActivity"
                   android:label="@string/label_setting"/>
+<!--        <activity android:name=".activity.LoginSchoolCardActivity"/>
         <activity android:name=".activity.SchoolCardActivity"
-                />
+                />-->
         <activity android:name=".activity.ScheduleActivity"
-                  android:label="@string/title_activity_schedule"/>
+                  android:label="@string/title_activity_schedule"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.BookListActivity"
                   android:label="@string/label_book_list"/>
         <activity android:name=".activity.BookViewActivity"
@@ -55,7 +57,8 @@
 
 
         <activity android:name=".activity.TestActivity"
-                  android:label="@string/title_activity_test"/>
+                  android:label="@string/title_activity_test"
+                  android:screenOrientation="portrait"/>
 
 
         <activity android:name=".activity.ActivityListActivity"/>
