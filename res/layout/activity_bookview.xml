@@ -57,12 +57,12 @@
                     android:textSize="15sp"
                     android:textColor="@color/black"/>
             <TextView
-                android:id="@+id/bookAuthorTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"/>
+                    android:id="@+id/bookAuthorTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
             <TextView
                     android:id="@+id/bookInfoTextview"
                     android:layout_width="wrap_content"
@@ -84,6 +84,7 @@
                     <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
+                            android:textColor="@color/blue_bar"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="馆藏地"/>
@@ -91,6 +92,7 @@
                     <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
+                            android:textColor="@color/blue_bar"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="书刊状态"/>
