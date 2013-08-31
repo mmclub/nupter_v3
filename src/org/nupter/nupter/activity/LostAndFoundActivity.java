@@ -2,6 +2,7 @@ package org.nupter.nupter.activity;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -192,8 +193,13 @@ public class LostAndFoundActivity extends FragmentActivity {
 
         private List<String> lostList;
         private ListView listView;
-
+        private ProgressDialog progressDialog;
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            progressDialog = new ProgressDialog(LostAndFoundActivity.this);
+            progressDialog.setTitle("努力加载中。。。");
+            progressDialog.setMessage("人人API又调皮了。。。");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
             View v = inflater.inflate(R.layout.view_lost, container, false);
             listView = (ListView) v.findViewById(R.id.lostListView);
             lostURL = "https://api.renren.com/restserver.do?call_id=204763&api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&format=json&count=10&v=1.0&method=status.gets&page_id=601408737&page=1";
@@ -203,22 +209,19 @@ public class LostAndFoundActivity extends FragmentActivity {
                 client.post(lostURL, null, new AsyncHttpResponseHandler() {
                     public void onSuccess(String response) {
                         try {
-                            Toast toast = Toast.makeText(LostAndFoundActivity.this, "努力加载ing", Toast.LENGTH_SHORT);
-                            toast.show();
                             Log.d("lostAPI", response);
                             jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++)
                                 lostList.add(jsonArray.getJSONObject(i).getString("message"));
                             Log.d("lostList", lostList.toString());
                             listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList));
-
+                            progressDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
-
                     public void onFailure(Throwable throwable, String s) {
+                        progressDialog.dismiss();
                         Toast toast = Toast.makeText(LostAndFoundActivity.this, "服务器歇菜了", Toast.LENGTH_SHORT);
                         toast.show();
                     }
