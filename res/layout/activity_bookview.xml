@@ -35,7 +35,8 @@
     <ScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:layout_gravity="center">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
@@ -72,7 +73,6 @@
             <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="280dp"
-                    android:background="@drawable/library_table_bg"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -91,14 +91,14 @@
                     <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:text="书刊状态"/>
                 </LinearLayout>
                 <ListView
                         android:id="@android:id/list"
                         android:layout_width="fill_parent"
-                        android:layout_height="250dp"/>
+                        android:layout_height="500dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

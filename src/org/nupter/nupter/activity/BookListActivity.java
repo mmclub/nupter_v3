@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -72,8 +74,9 @@ public class BookListActivity extends ListActivity {
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
-                        String name = "", href = "", num = "", author = "", press = "", authorAndPress = "";
+                        String name = "", href = "", num = "", author = "", press = "", authorAndPress = "",spanString = "";
                         bookListMap = new ArrayList<Map<String, String>>();
+
                         Document doc = Jsoup.parse(response);
                         Elements bookLists = doc.getElementsByClass("list_books");
                         int listSize = bookLists.size();
@@ -85,15 +88,13 @@ public class BookListActivity extends ListActivity {
 
                                 Elements a = h3.get(i_h3).getElementsByTag("a");
                                 href = a.attr("href");
-                                String longName = a.text();
                                 name = a.text();
-                                String[] longNameArray = longName.split("//.");
-                                Log.d("jsoup_all", longNameArray.toString());
-//                                name = longNameArray[1];
-
                                 Elements span = h3.get(i_h3).select("span");
-                                String spanString = span.get(i_h3).text();
+                                spanString = span.get(i_h3).text();
                                 num = h3.text().substring(spanString.length() + name.length());
+                                Pattern pattern = Pattern.compile("^\\d*\\.");
+                                Matcher matcher = pattern.matcher(name);
+                                name = matcher.replaceAll("");
                             }
 
                             Elements p = bookLists.get(i).select("p");
@@ -101,23 +102,27 @@ public class BookListActivity extends ListActivity {
                             int pSize = p.size();
                             for (int i_p = 0; i_p < pSize; i_p++) {
                                 Elements span = p.get(i_p).select("span");
-                                String spanString = span.get(i_p).text();
-                                authorAndPress = p.get(i_p).text().substring(spanString.length());
-
-
+                                String pSpanString = span.get(i_p).text();
+                                authorAndPress = p.get(i_p).text().substring(pSpanString.length());
+                                Pattern pattern = Pattern.compile("\\著.*");
+                                Matcher matcher = pattern.matcher(authorAndPress);
+                                author = matcher.replaceAll("");
+                                Log.d("bt", author);
                             }
-                            map = new HashMap<String, String>();
-                            map.put("bookName", name);
-                            map.put("bookNum", num);
-                            map.put("bookHref", href);
-                            map.put("bookAuthor", authorAndPress);
-                            bookListMap.add(map);
+                            if (!spanString.matches("(.*)期刊(.*)")) {
+                                map = new HashMap<String, String>();
+                                map.put("bookName", name);
+                                map.put("bookNum", num);
+                                map.put("bookHref", href);
+                                map.put("bookAuthor", author);
+                                bookListMap.add(map);
+                            }
                         }
                         Log.d("jsoup_t", bookListMap.toString());
                         Boolean resultEmpty = bookListMap.isEmpty();
                         if (resultEmpty) {
                             progressDialog.dismiss();
-                            Toast toast = Toast.makeText(BookListActivity.this, "试试准确的书名？", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(BookListActivity.this, "试试更准确的书名？", Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             bookSearchListAdapter = new BookSearchListAdapter(BookListActivity.this);
@@ -182,7 +187,7 @@ public class BookListActivity extends ListActivity {
             }
 
             holder.bookName.setText(bookListMap.get(position).get("bookName"));
-            holder.bookAuthor.setText(bookListMap.get(position).get("bookAuthor"));
+            holder.bookAuthor.setText("作者:" + bookListMap.get(position).get("bookAuthor"));
             holder.bookNum.setText("书号:" + bookListMap.get(position).get("bookNum"));
             return convertView;
         }
@@ -207,10 +212,7 @@ public class BookListActivity extends ListActivity {
                         intent.putExtra(EXTRA_BOOK_AUTHOR, bookAuthor);
                         intent.putExtra(EXTRA_BOOK_NUM, bookNum);
                         intent.putExtra(EXTRA_BOOK_HREF, bookUrl);
-                        String bookInfo = "test";
-                        if (bookInfo == "test"){
-                            Log.d("bookInfo", bookInfo);
-                        }
+                        String bookInfo = "";
                         Document doc = Jsoup.parse(response);
                         Elements list = doc.getElementsByClass("booklist");
                         int listLenght = list.size();
@@ -218,17 +220,16 @@ public class BookListActivity extends ListActivity {
                             String allString = list.get(i).text();
 
                             String infoString = list.get(i).getElementsByTag("dt").text();
-                            Log.d("bookView", "test"+infoString);
-                            if(infoString.matches("(.*)提要文摘附注(.*)")){
+                            Log.d("bookView", "test" + infoString);
+                            if (infoString.matches("(.*)提要文摘附注(.*)")) {
                                 bookInfo = list.get(i).getElementsByTag("dd").text();
-                                Log.d("bookInfo",bookInfo);
+                                Log.d("bookInfo", bookInfo);
                             }
                         }
                         intent.putExtra(EXTRA_BOOK_INFO, bookInfo);
                         startActivity(intent);
                     }
                 });
-
 
 
     }

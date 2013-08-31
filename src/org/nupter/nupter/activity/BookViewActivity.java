@@ -57,9 +57,9 @@ public class BookViewActivity extends ListActivity {
         href = intent.getStringExtra(BookListActivity.EXTRA_BOOK_HREF);
         //当从Jsoup拿来数据时再将info赋值
         bookNameTextView.setText(name);
-        bookAuthorTextView.setText(author);
+        bookAuthorTextView.setText("作者：" + author);
         bookNumTextView.setText("书号：" + num);
-        bookInfoTextView.setText(info);
+        bookInfoTextView.setText("【简介】 "+info);
 
         new AsyncHttpClient().post(href, null,
                 new AsyncHttpResponseHandler() {

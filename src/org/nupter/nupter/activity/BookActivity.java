@@ -140,7 +140,7 @@ public class BookActivity extends ListActivity {
             }
 
             holder.bookName.setText(bookRecords.get(position).name);
-            holder.bookAuthor.setText("作者：" + bookRecords.get(position).author);
+            holder.bookAuthor.setText("作者:" + bookRecords.get(position).author);
             holder.bookNum.setText("书号:" + bookRecords.get(position).bookNum);
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
