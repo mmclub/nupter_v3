@@ -53,16 +53,16 @@ public class TestActivity extends FragmentActivity {
             String first_element[] = list[1].split("&");
             String title = first_element[0];
             String term = first_element[1];
-            Log.i("TAG", "title:" + title + "\n第一学期");
-            titleList.add(title + "\n" + "第一学期");
+           // Log.i("TAG", "title:" + title + "第一学期");
+            titleList.add(title +"第一学期");
             ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
             int k = 0;
-            for (int i = 1; i < list.length - 1; i++) {
+            for (int i = 0; i < list.length - 1; i++) {
                 String element[] = list[i].split("&");
                 ArrayList<String> arrayList = new ArrayList<String>();
                 for (int j = 0; j < element.length; j++)
                     arrayList.add(element[j]);
-                if ((!title.equals(element[0])) || (!term.equals(element[1]))) {
+                if ((i!=0)&&(i!=1)&&((!title.equals(element[0])) || (!term.equals(element[1])))) {
                     lists.add(arrayLists);
                     arrayLists = new ArrayList<ArrayList<String>>();
                     titleList.add(element[0] + "\n" + (k++ % 2 == 0 ? "第二学期" : "第一学期"));
@@ -83,52 +83,11 @@ public class TestActivity extends FragmentActivity {
             vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
             PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pageTab);
             pts.setTextSpacing(10);
-            pts.setTabIndicatorColor(getResources().getColor(android.R.color.holo_blue_bright));
+       //     pts.setTabIndicatorColor(getResources().getColor(android.R.color.holo_blue_bright));
             pts.setTextColor(Color.BLUE);
             pts.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
             pts.setDrawFullUnderline(true);
         }
-/*        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Dialog dialog = new Dialog(TestActivity.this, R.style.classDialog) {
-                    @Override
-                    public boolean onTouchEvent(MotionEvent event) {
-                        this.dismiss();
-                        return true;
-                    }
-                };
-                dialog.setContentView(R.layout.view_test_dialog);
-                dialog.setCancelable(true);
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.show();
-                TextView test_time = (TextView) dialog.getWindow().findViewById(R.id.test_time);
-                TextView test_id = (TextView) dialog.getWindow().findViewById(R.id.test_id);
-                TextView test_college = (TextView) dialog.getWindow().findViewById(R.id.test_college);
-                TextView test_name = (TextView) dialog.getWindow().findViewById(R.id.test_name);
-                TextView test_credit = (TextView) dialog.getWindow().findViewById(R.id.test_credit);
-                TextView test_point = (TextView) dialog.getWindow().findViewById(R.id.test_point);
-                TextView test_score = (TextView) dialog.getWindow().findViewById(R.id.test_score);
-                TextView test_mark = (TextView) dialog.getWindow().findViewById(R.id.test_mark);
-                TextView test_makeup_score = (TextView) dialog.getWindow().findViewById(R.id.test_makeup_score);
-                TextView test_retake_score = (TextView) dialog.getWindow().findViewById(R.id.test_retake_score);
-                TextView test_retake_mark = (TextView) dialog.getWindow().findViewById(R.id.test_retake_mark);
-
-                String element[] = list[i].split("&");
-                test_time.setText("学年：" + element[0] + "-" + element[1]);
-                test_id.setText("课程代码：" + element[2]);
-                test_college.setText("学院名称：" + element[12]);
-                test_name.setText("课程名称：" + element[3]);
-                test_credit.setText("学分：" + element[6]);
-                test_point.setText("绩点：" + element[7]);
-                test_score.setText("成绩：" + element[8]);
-                test_mark.setText("辅修标记：" + element[9]);
-                test_makeup_score.setText("补考成绩：" + element[10]);
-                test_retake_score.setText("重修成绩：" + element[11]);
-                test_retake_mark.setText("重修标记：" + element[14]);
-
-            }
-        });*/
     }
     class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -182,6 +141,46 @@ public class TestActivity extends FragmentActivity {
                     new String[]{"testName", "testCredit", "testPoint", "testScore"},
                     new int[]{R.id.testName, R.id.testCredit, R.id.testPoint, R.id.testScore});
             mListView.setAdapter(adapter);
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Dialog dialog = new Dialog(TestActivity.this, R.style.classDialog) {
+                        @Override
+                        public boolean onTouchEvent(MotionEvent event) {
+                            this.dismiss();
+                            return true;
+                        }
+                    };
+                    dialog.setContentView(R.layout.view_test_dialog);
+                    dialog.setCancelable(true);
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.show();
+                    TextView test_time = (TextView) dialog.getWindow().findViewById(R.id.test_time);
+                    TextView test_id = (TextView) dialog.getWindow().findViewById(R.id.test_id);
+                    TextView test_college = (TextView) dialog.getWindow().findViewById(R.id.test_college);
+                    TextView test_name = (TextView) dialog.getWindow().findViewById(R.id.test_name);
+                    TextView test_credit = (TextView) dialog.getWindow().findViewById(R.id.test_credit);
+                    TextView test_point = (TextView) dialog.getWindow().findViewById(R.id.test_point);
+                    TextView test_score = (TextView) dialog.getWindow().findViewById(R.id.test_score);
+                    TextView test_mark = (TextView) dialog.getWindow().findViewById(R.id.test_mark);
+                    TextView test_makeup_score = (TextView) dialog.getWindow().findViewById(R.id.test_makeup_score);
+                    TextView test_retake_score = (TextView) dialog.getWindow().findViewById(R.id.test_retake_score);
+                    TextView test_retake_mark = (TextView) dialog.getWindow().findViewById(R.id.test_retake_mark);
+
+                    test_time.setText("学年：" + arrayLists.get(i).get(0));
+                    test_id.setText("课程代码：" + arrayLists.get(i).get(2));
+                    test_college.setText("学院名称：" + arrayLists.get(i).get(12));
+                    test_name.setText("课程名称：" + arrayLists.get(i).get(3));
+                    test_credit.setText("学分：" + arrayLists.get(i).get(6));
+                    test_point.setText("绩点：" + arrayLists.get(i).get(7));
+                    test_score.setText("成绩：" + arrayLists.get(i).get(8));
+                    test_mark.setText("辅修标记：" + arrayLists.get(i).get(9));
+                    test_makeup_score.setText("补考成绩：" + arrayLists.get(i).get(10));
+                    test_retake_score.setText("重修成绩：" + arrayLists.get(i).get(11));
+                    test_retake_mark.setText("重修标记：" + arrayLists.get(i).get(14));
+
+                }
+            });
             return v;
         }
     }

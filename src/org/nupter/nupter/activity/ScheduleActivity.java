@@ -454,6 +454,7 @@ public class ScheduleActivity extends Activity {
                 Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
                 intent.putExtra("JumpTo", "Schedule");
                 startActivity(intent);
+                this.finish();
                 break;
             case R.id.action_skin:
                 String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫"};

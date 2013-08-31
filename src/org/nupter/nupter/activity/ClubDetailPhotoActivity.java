@@ -219,6 +219,7 @@ public class ClubDetailPhotoActivity extends Activity {
             case android.R.id.home:
                 Intent intent1 = new Intent(ClubDetailPhotoActivity.this, ClubDetailActivity.class);
                 startActivity(intent1);
+                this.finish();
                 break;
 
             default:

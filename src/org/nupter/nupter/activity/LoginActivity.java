@@ -62,7 +62,6 @@ public class LoginActivity extends Activity {
     private String Flag;
     private ArrayList<ArrayList<String>> tableList;
     private String testString;
-    private JsoupTable jsoupTable;
     private JsoupTest jsoupTest;
     private ProgressDialog progressDialog;
     private String login_url = "http://202.119.225.35/default2.aspx";
@@ -76,7 +75,6 @@ public class LoginActivity extends Activity {
         intent = getIntent();
         Flag = intent.getStringExtra("JumpTo");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        jsoupTable = new JsoupTable();
         jsoupTest=new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);

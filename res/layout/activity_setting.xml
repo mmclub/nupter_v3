@@ -42,7 +42,6 @@
                         android:layout_marginRight="10dp"
                         android:textOn=""
                         android:textOff=""/>
-
             </LinearLayout>
             <ImageView
                     android:layout_height="wrap_content"
