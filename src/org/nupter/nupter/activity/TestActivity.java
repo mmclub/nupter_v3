@@ -39,7 +39,8 @@ public class TestActivity extends FragmentActivity {
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private List<String> titleList = new ArrayList<String>();
     private TextView average;
-    private TextView total;
+//    private TextView total_number;
+    private TextView total_point;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,9 +74,11 @@ public class TestActivity extends FragmentActivity {
             }
             lists.add(arrayLists);
             average=(TextView)findViewById(R.id.average);
-            total=(TextView)findViewById(R.id.total);
-            average.setText(list[list.length-1].split("&")[0]);
-            total.setText(list[list.length-1].split("&")[1]);
+            total_point=(TextView)findViewById(R.id.total_point);
+/*            total_number=(TextView)findViewById(R.id.total_number);
+            total_number.setText(list[list.length-1].split("&")[0]);*/
+            average.setText(list[list.length-1].split("&")[1]);
+            total_point.setText(list[list.length-1].split("&")[2]);
             for (int i = 0; i < lists.size(); i++) {
                 Log.i("str", lists.get(i).toString());
                 fragmentList.add(new scoreFragment(lists.get(i)));

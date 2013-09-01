@@ -14,45 +14,54 @@
 
 
         <activity android:name=".activity.MapBaiduActivity"
-                  android:label="@string/title_activity_xianlin_area"></activity>
-        <activity android:name=".activity.MainActivity"></activity>
+                  android:label="@string/title_activity_xianlin_area"/>
+        <activity android:name=".activity.MainActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.WelcomeActivity"
-                           android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".activity.BookActivity"
-                  android:label="@string/label_book"/>
+                  android:label="@string/label_book"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.ClubActivity"
-                  android:label="@string/title_activity_club"/>
+                  android:label="@string/title_activity_club"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.ClubDetailActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.ClubDetailPhotoActivity"
                   android:label="@string/label_club_photo"/>
         <activity android:name=".activity.NewsActivity"
-                  android:label="@string/label_news"/>
+                  android:label="@string/label_news"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.NewspaperActivity"
                   android:label="@string/label_newspaper"/>
         <activity android:name=".activity.LifeAssistantActivity"
                   android:label="@string/label_life"/>
         <activity android:name=".activity.LoginActivity"
-                  android:label="@string/label_login"/>
+                  android:label="@string/label_login"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.LoginNumberSaveActivity"
-                  android:label="@string/label_login_number_save"/>
+                  android:label="@string/label_login_number_save"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.SettingActivity"
                   android:label="@string/label_setting"/>
-<!--        <activity android:name=".activity.LoginSchoolCardActivity"/>
-        <activity android:name=".activity.SchoolCardActivity"
-                />-->
+        <!--        <activity android:name=".activity.LoginSchoolCardActivity"/>
+                <activity android:name=".activity.SchoolCardActivity"
+                        />-->
         <activity android:name=".activity.ScheduleActivity"
                   android:label="@string/title_activity_schedule"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.BookListActivity"
-                  android:label="@string/label_book_list"/>
+                  android:label="@string/label_book_list"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.BookViewActivity"
-                  android:label="@string/label_book_view"/>
+                  android:label="@string/label_book_view"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.MapListActivity"
                   android:label="@string/label_maplist"/>
         <activity android:name=".activity.MapImageActivity"/>
@@ -68,11 +77,11 @@
 
         <activity android:name=".activity.LostAndFoundActivity"
                   android:label="@string/label_lost"
-                  android:screenOrientation="portrait"
-                />
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.MessageListActivity"
                   android:label="@string/label_message"/>
-        <activity android:name=".activity.NewspaperDetailActivity"/>
+        <activity android:name=".activity.NewspaperDetailActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.WebviewActivity"/>
         <receiver android:name=".utils.ScheduleWidget">
             <intent-filter>
