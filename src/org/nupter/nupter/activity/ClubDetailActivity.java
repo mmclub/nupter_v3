@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -72,6 +73,9 @@ public class ClubDetailActivity extends FragmentActivity {
         fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
         fragmentList.add(new PhotosFragment());
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
+        PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pagerTabStrip);
+        pts.setDrawFullUnderline(true);
+        pts.setTextSpacing(50);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         SharedPreferences preferences= getSharedPreferences("test",
                 Activity.MODE_PRIVATE);
@@ -409,6 +413,7 @@ public class ClubDetailActivity extends FragmentActivity {
             case android.R.id.home:
                 Intent intent1 = new Intent(ClubDetailActivity.this, ClubActivity.class);
                 startActivity(intent1);
+                this.finish();
                 break;
 
             default:

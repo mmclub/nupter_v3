@@ -3,11 +3,16 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <ListView
-    android:id="@+id/lostListView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:background="#FFFFFF"/>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/lostListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true"
+            android:fadeScrollbars="true"/>
     </LinearLayout>

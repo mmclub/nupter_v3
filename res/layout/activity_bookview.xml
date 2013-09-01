@@ -5,6 +5,7 @@
               android:layout_height="fill_parent"
               android:paddingLeft="10dp"
               android:paddingRight="10dp"
+              android:paddingBottom="40dp"
               android:background="@drawable/bookview_bg"
               android:orientation="vertical">
 
@@ -31,35 +32,76 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/icon_no_collect"/>
     </RelativeLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
-        <TextView
-                android:id="@+id/bookNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
-        <TextView
-                android:id="@+id/bookAuthorTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/black"/>
-        <TextView
-                android:id="@+id/bookNumTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/black"/>
-        <TextView
-                android:id="@+id/bookInfoTextview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"/>
-    </LinearLayout>
+    <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:id="@+id/bookNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:id="@+id/bookNumTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+            <TextView
+                    android:id="@+id/bookAuthorTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+            <TextView
+                    android:id="@+id/bookInfoTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+            <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal">
+                    <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textColor="@color/blue_bar"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="馆藏地"/>
+
+                    <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textColor="@color/blue_bar"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="书刊状态"/>
+                </LinearLayout>
+                <ListView
+                        android:id="@android:id/list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="500dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

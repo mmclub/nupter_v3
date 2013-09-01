@@ -100,7 +100,8 @@ public class SettingActivity extends Activity {
             Intent intent = new Intent();
             switch (position){
                 case 0:
-
+                    intent.setClass(SettingActivity.this,LoginNumberSaveActivity.class);
+                    startActivity(intent);
                     break;
                 case  1:
                     intent=new Intent(Intent.ACTION_SEND);
@@ -164,7 +165,9 @@ public class SettingActivity extends Activity {
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent1 = new Intent(SettingActivity.this, MainActivity.class);
+                startActivity(intent1);
+                this.finish();
                 break;
             default:
                 break;

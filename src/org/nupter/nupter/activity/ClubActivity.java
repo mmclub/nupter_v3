@@ -80,7 +80,9 @@ public class ClubActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent1=new Intent(ClubActivity.this,MainActivity.class);
+                startActivity(intent1);
+                this.finish();
                 break;
 
             default:
