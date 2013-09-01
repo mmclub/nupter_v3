@@ -192,26 +192,31 @@ public class TestActivity extends FragmentActivity {
                 Log.i("str", "success");
             }else {
                 testScore.setTextColor(Color.RED);
-            }  *//*
+            }
 
         }
     }
 */
 
-/*    @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_schedule, menu);
+        inflater.inflate(R.menu.menu_test, menu);
         return super.onCreateOptionsMenu(menu);
-    }*/
+    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(TestActivity.this, LoginActivity.class);
-                intent.putExtra("JumpTo", "Test");
+                Intent intent = new Intent(TestActivity.this, MainActivity.class);
                 startActivity(intent);
+                this.finish();
                 break;
+            case R.id.to_login:
+                Intent intent1 = new Intent(TestActivity.this, LoginActivity.class);
+                intent1.putExtra("JumpTo", "Test");
+                startActivity(intent1);
+                this.finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
