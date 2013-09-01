@@ -87,6 +87,7 @@ public class LoginActivity extends Activity {
         gifView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gifView.setClickable(false);
                 new GetCheckCode().start();
             }
         });
@@ -161,8 +162,10 @@ public class LoginActivity extends Activity {
                 gifView.setGifImage(checkCodeInputStream);
                 gifView.setShowDimension(90, 50);
                 gifView.setGifImageType(GifView.GifImageType.COVER);
+                gifView.setClickable(true);
             } catch (IOException e) {
                 e.printStackTrace();
+                gifView.setClickable(true);
                 flaghandler.sendEmptyMessage(ERR_NET);
             }
         }

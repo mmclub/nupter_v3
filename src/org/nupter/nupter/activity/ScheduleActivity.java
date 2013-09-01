@@ -190,7 +190,7 @@ public class ScheduleActivity extends Activity {
                     classLocation.setText(getClassLocation(list1.get(position)));
                     convertView.setBackgroundResource(color[skin][position]);
                 } else {
-                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
+                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height/6));
                 }
             } else if (position >= 5 && position < 10) {
                 if (!list2.get(position - 5).equals(" ")) {
@@ -255,8 +255,8 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
                     view.setBackgroundResource(color[skin][i > 3 ? i - 4 : i + 2]);
-                }  else {
-                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
+                }else {
+                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height/6));
                 }
             } else if (i >= 5 && i < 10) {
                 if (!list4.get(i - 5).equals(" ")) {

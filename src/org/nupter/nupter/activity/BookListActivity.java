@@ -3,6 +3,7 @@ package org.nupter.nupter.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -26,13 +27,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.JsoupBookList;
 
 
 /**
  * @author WangTao
  */
 
-public class BookListActivity extends ListActivity {
+public class BookListActivity extends ListActivity implements AbsListView.OnScrollListener {
     public static final String EXTRA_BOOK_NAME = "bookName";
     public static final String EXTRA_BOOK_AUTHOR = "bookAuthor";
     public static final String EXTRA_BOOK_NUM = "bookNum";
@@ -42,18 +44,28 @@ public class BookListActivity extends ListActivity {
     public static final String EXTRA_BOOK_Status = "bookStatus";
     private ProgressDialog progressDialog;
     private String searchBook, bookName, bookAuthor, bookNum, bookHref, postUrl, bookUrl;
+    private ListView list;
+    private LinearLayout footerLayout;
+    private View view;
     private Map<String, String> map;
-    private List<Map<String, String>> bookListMap;
+    private List<Map<String, String>> bookListMap= new ArrayList<Map<String, String>>();;
     private BookSearchListAdapter bookSearchListAdapter;
+    private int lastItem;
+    private int scrollState;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_search_book);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        list = this.getListView();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        view = inflater.inflate(R.layout.view_footer, null);
+        footerLayout = (LinearLayout) view.findViewById(R.id.footerlayout);
+        footerLayout.setVisibility(View.GONE);
         Intent intent = getIntent();
         searchBook = intent.getStringExtra("searchBookName");
         postUrl = "http://202.119.228.6:8080/opac/openlink.php?doctype=ALL&strSearchType=title&displaypg=20&sort=CATA_DATE&orderby=desc&location=ALL&strText="
-                + searchBook + "&submit.x=-858&submit.y=-243&match_flag=forward";
+                + searchBook + "&submit.x=-858&submit.y=-243&match_flag=forward&page=1";
         progressDialog = new ProgressDialog(BookListActivity.this);
         progressDialog.setTitle("努力加载中。。。");
         progressDialog.setMessage("南邮图书馆网站压力很大。。。");
@@ -63,59 +75,15 @@ public class BookListActivity extends ListActivity {
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
-                        String name = "", href = "", num = "", author = "", press = "", authorAndPress = "", spanString = "";
-                        bookListMap = new ArrayList<Map<String, String>>();
-
-                        Document doc = Jsoup.parse(response);
-                        Elements bookLists = doc.getElementsByClass("list_books");
-                        int listSize = bookLists.size();
-                        for (int i = 0; i < listSize; i++) {
-
-                            Elements h3 = bookLists.get(i).select("h3");
-                            int h3Size = h3.size();
-                            for (int i_h3 = 0; i_h3 < h3Size; i_h3++) {
-
-                                Elements a = h3.get(i_h3).getElementsByTag("a");
-                                href = a.attr("href");
-                                name = a.text();
-                                Elements span = h3.get(i_h3).select("span");
-                                spanString = span.get(i_h3).text();
-                                num = h3.text().substring(spanString.length() + name.length());
-                                Pattern pattern = Pattern.compile("^\\d*\\.");
-                                Matcher matcher = pattern.matcher(name);
-                                name = matcher.replaceAll("");
-                            }
-
-                            Elements p = bookLists.get(i).select("p");
-
-                            int pSize = p.size();
-                            for (int i_p = 0; i_p < pSize; i_p++) {
-                                Elements span = p.get(i_p).select("span");
-                                String pSpanString = span.get(i_p).text();
-                                authorAndPress = p.get(i_p).text().substring(pSpanString.length());
-                                Pattern pattern = Pattern.compile("\\著.*");
-                                Matcher matcher = pattern.matcher(authorAndPress);
-                                author = matcher.replaceAll("");
-                                Log.d("bt", author);
-                            }
-                            if (!spanString.matches("(.*)期刊(.*)")) {
-                                map = new HashMap<String, String>();
-                                map.put("bookName", name);
-                                map.put("bookNum", num);
-                                map.put("bookHref", href);
-                                map.put("bookAuthor", author);
-                                bookListMap.add(map);
-                            }
-                        }
-                        Log.d("jsoup_t", bookListMap.toString());
-                        Boolean resultEmpty = bookListMap.isEmpty();
-                        if (resultEmpty) {
+                        if (!putMsg(response)) {
                             progressDialog.dismiss();
                             Toast toast = Toast.makeText(BookListActivity.this, "试试更准确的书名？", Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             bookSearchListAdapter = new BookSearchListAdapter(BookListActivity.this);
-                            setListAdapter(bookSearchListAdapter);
+                            list.addFooterView(view);
+                            list.setAdapter(bookSearchListAdapter);
+                            list.setOnScrollListener(BookListActivity.this);
                             progressDialog.dismiss();
                         }
                     }
@@ -123,8 +91,44 @@ public class BookListActivity extends ListActivity {
                 }
 
         );
-    }
 
+
+    }
+    private Boolean putMsg(String response){
+        JsoupBookList jsoupBookList = new JsoupBookList();
+        bookListMap=jsoupBookList.parse(response,bookListMap);
+        if(bookListMap.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int i) {
+        this.scrollState = i;
+        if (lastItem >= bookSearchListAdapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+            /*footerLayout.setVisibility(View.VISIBLE);*/
+            postUrl=postUrl.substring(0,postUrl.length()-1)+(bookSearchListAdapter.getCount()/20+1);
+            footerLayout.setVisibility(View.VISIBLE);
+            new AsyncHttpClient().post(postUrl, null,
+                    new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(String response) {
+                            if (!putMsg(response)) {
+                                footerLayout.setVisibility(View.INVISIBLE);
+                                Toast toast = Toast.makeText(BookListActivity.this, "试试更准确的书名？", Toast.LENGTH_SHORT);
+                                toast.show();
+                            } else {
+                                bookSearchListAdapter.notifyDataSetChanged();
+                                footerLayout.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+        }
+    }
+    @Override
+    public void onScroll(AbsListView absListView, int i, int i2, int i3) {
+        lastItem = i + i2;
+    }
 
 
     public final class BookViewHolder {
