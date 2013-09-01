@@ -125,11 +125,11 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
                     });
         }
     }
-
     @Override
     public void onScroll(AbsListView absListView, int i, int i2, int i3) {
         lastItem = i + i2;
     }
+
 
     public final class BookViewHolder {
         public TextView bookName;

@@ -23,15 +23,15 @@
                 android:id="@+id/bookNum"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="#000000"/>
+                android:textSize="12sp"
+                android:textColor="#7f7f7f"/>
 
             <TextView
                     android:id="@+id/bookAuthor"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="#000000"/>
+                    android:textSize="12sp"
+                    android:textColor="#7f7f7f"/>
 
 
     </LinearLayout>
