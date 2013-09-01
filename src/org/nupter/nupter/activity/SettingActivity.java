@@ -25,7 +25,6 @@ public class SettingActivity extends Activity {
     private CornerListView cornerListView = null;
     private List<Map<String, String>> listData = null;
     private SimpleAdapter adapter = null;
-    private ToggleButton  newspushTB;
     private ToggleButton  refreshsoundTB;
     private SharedPreferences mySharedPreferences;
     private boolean newsFlag;
@@ -37,9 +36,7 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
 
         cornerListView = (CornerListView)findViewById(R.id.settinglistview);
-        newspushTB = (ToggleButton)findViewById(R.id.newspushTB);
         refreshsoundTB =(ToggleButton)findViewById(R.id.refreshsoundTB);
-        newspushTB.setOnCheckedChangeListener(checkedListener);
         refreshsoundTB.setOnCheckedChangeListener(checkedListener);
 
         SharedPreferences sharedPreferences= getSharedPreferences("test",
@@ -47,7 +44,6 @@ public class SettingActivity extends Activity {
         // 使用getString方法获得value，注意第2个参数是value的默认值
         boolean getNewsFlog =sharedPreferences.getBoolean("NewsFlag",true);
         boolean getSoundFlog = sharedPreferences.getBoolean("SoundFlag",true);
-        newspushTB.setChecked(getNewsFlog);
         refreshsoundTB.setChecked(getSoundFlog);
 
         setListData();
@@ -69,22 +65,13 @@ public class SettingActivity extends Activity {
                     Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = mySharedPreferences.edit();
 
-            if(buttonView.getId()==R.id.newspushTB){
-                if (isChecked){
-                       newsFlag = true;
-                }else {
-                    newsFlag = false;
-                }
 
-            }  else{
                 if(isChecked){
                     soundFlag = true;
                 }else {
                     soundFlag = false;
                 }
-
-            }
-            editor.putBoolean("NewsFlag",newsFlag) ;
+            //editor.putBoolean("NewsFlag",newsFlag) ;
             editor.putBoolean("SoundFlag",soundFlag);
             editor.commit();
 
@@ -126,10 +113,6 @@ public class SettingActivity extends Activity {
                     intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/join_us.html");
                     startActivity(intent);
                     break;
-
-
-                case  4:
-                    break;
                 default:
                     break;
             }
@@ -156,9 +139,7 @@ public class SettingActivity extends Activity {
         map.put("text", "加入开发团队");
         listData.add(map);
 
-        map = new HashMap<String, String>();
-        map.put("text", "版本更新");
-        listData.add(map);
+
     }
 
     @Override
