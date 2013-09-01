@@ -106,7 +106,7 @@ public class BookViewActivity extends ListActivity {
                     Boolean dataAdded = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
                     if (!dataAdded) {
                         collectButton.setBackgroundResource(R.drawable.icon_collected);
-                        Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏好了", Toast.LENGTH_SHORT);
+                        Toast toast1 = Toast.makeText(BookViewActivity.this, "收藏成功", Toast.LENGTH_SHORT);
                         toast1.show();
                     }
                 } else {
@@ -115,7 +115,7 @@ public class BookViewActivity extends ListActivity {
                     Boolean dataDeleted = BookRecord.find(BookRecord.class, "name = ? and author = ?", new String[]{name, author}).isEmpty();
                     if (dataDeleted) {
                         collectButton.setBackgroundResource(R.drawable.icon_no_collect);
-                        Toast toast1 = Toast.makeText(BookViewActivity.this, "取消收藏", Toast.LENGTH_SHORT);
+                        Toast toast1 = Toast.makeText(BookViewActivity.this, "取消成功", Toast.LENGTH_SHORT);
                         toast1.show();
                     }
                 }
