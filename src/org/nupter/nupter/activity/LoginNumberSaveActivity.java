@@ -1,9 +1,11 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,5 +42,19 @@ public class LoginNumberSaveActivity extends Activity {
                 Toast.makeText(LoginNumberSaveActivity.this, "账号设置成功", Toast.LENGTH_LONG).show();
             }
         });
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(LoginNumberSaveActivity.this, SettingActivity.class);
+                startActivity(intent1);
+                this.finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 }
