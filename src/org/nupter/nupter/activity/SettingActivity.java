@@ -100,7 +100,8 @@ public class SettingActivity extends Activity {
             Intent intent = new Intent();
             switch (position){
                 case 0:
-
+                    intent.setClass(SettingActivity.this,LoginNumberSaveActivity.class);
+                    startActivity(intent);
                     break;
                 case  1:
                     intent=new Intent(Intent.ACTION_SEND);

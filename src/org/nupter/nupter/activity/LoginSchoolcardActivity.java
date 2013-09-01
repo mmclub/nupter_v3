@@ -24,7 +24,7 @@ public class LoginSchoolcardActivity extends Activity {
     private String login_url = "http://my.njupt.edu.cn/ccs/main/loginIndex.do";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_schoolcard);
+        setContentView(R.layout.activity_login_number_save);
         new GetCookie().start();
         postData="__utmz=27064737.1377937766.4.4.utmcsr=njupt.edu.cn|utmccn=(referral)|utmcmd=referral|utmcct=/email=B11040916&password=282155";
         new Login().start();
