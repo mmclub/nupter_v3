@@ -43,11 +43,11 @@
                 android:paddingLeft="40dp"/>
 
         <Button
-                android:id="@+id/login_schoolcard"
+                android:id="@+id/save"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="@drawable/login_btn"/>
+                android:background="@drawable/save_btn"/>
     </LinearLayout>
     <LinearLayout
             android:layout_width="fill_parent"

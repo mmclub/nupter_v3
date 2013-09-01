@@ -39,6 +39,8 @@
                   android:label="@string/label_life"/>
         <activity android:name=".activity.LoginActivity"
                   android:label="@string/label_login"/>
+        <activity android:name=".activity.LoginNumberSaveActivity"
+                  android:label="@string/label_login_number_save"/>
         <activity android:name=".activity.SettingActivity"
                   android:label="@string/label_setting"/>
 <!--        <activity android:name=".activity.LoginSchoolCardActivity"/>
