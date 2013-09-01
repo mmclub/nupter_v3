@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -41,7 +42,7 @@ public class MessageListActivity extends ListActivity {
         }
         messageRecordList = MessageRecord.listAll(MessageRecord.class);
         setListAdapter(new MyAdapter(this));
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -105,6 +106,17 @@ public class MessageListActivity extends ListActivity {
             return convertView;
         }
 
+    }
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                break;
+        }
+        return super.onMenuItemSelected(featureId, item);
     }
 }
 

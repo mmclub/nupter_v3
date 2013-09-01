@@ -54,17 +54,6 @@ public class BookListActivity extends ListActivity {
         searchBook = intent.getStringExtra("searchBookName");
         postUrl = "http://202.119.228.6:8080/opac/openlink.php?doctype=ALL&strSearchType=title&displaypg=20&sort=CATA_DATE&orderby=desc&location=ALL&strText="
                 + searchBook + "&submit.x=-858&submit.y=-243&match_flag=forward";
-//        try {
-//            bookListMap = BookDataActivity.getMaps(searchBook);
-//        } catch (IOException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-//        bookSearchListAdapter = new BookSearchListAdapter(BookListActivity.this);
-//                       setListAdapter(bookSearchListAdapter);
-    }
-
-    public void onStart() {
-        super.onStart();
         progressDialog = new ProgressDialog(BookListActivity.this);
         progressDialog.setTitle("努力加载中。。。");
         progressDialog.setMessage("南邮图书馆网站压力很大。。。");
@@ -74,7 +63,7 @@ public class BookListActivity extends ListActivity {
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
-                        String name = "", href = "", num = "", author = "", press = "", authorAndPress = "",spanString = "";
+                        String name = "", href = "", num = "", author = "", press = "", authorAndPress = "", spanString = "";
                         bookListMap = new ArrayList<Map<String, String>>();
 
                         Document doc = Jsoup.parse(response);
@@ -134,9 +123,82 @@ public class BookListActivity extends ListActivity {
                 }
 
         );
-
-
     }
+
+//    public void onStart() {
+//        super.onStart();
+//        progressDialog = new ProgressDialog(BookListActivity.this);
+//        progressDialog.setTitle("努力加载中。。。");
+//        progressDialog.setMessage("南邮图书馆网站压力很大。。。");
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
+//        new AsyncHttpClient().post(postUrl, null,
+//                new AsyncHttpResponseHandler() {
+//                    @Override
+//                    public void onSuccess(String response) {
+//                        String name = "", href = "", num = "", author = "", press = "", authorAndPress = "", spanString = "";
+//                        bookListMap = new ArrayList<Map<String, String>>();
+//
+//                        Document doc = Jsoup.parse(response);
+//                        Elements bookLists = doc.getElementsByClass("list_books");
+//                        int listSize = bookLists.size();
+//                        for (int i = 0; i < listSize; i++) {
+//
+//                            Elements h3 = bookLists.get(i).select("h3");
+//                            int h3Size = h3.size();
+//                            for (int i_h3 = 0; i_h3 < h3Size; i_h3++) {
+//
+//                                Elements a = h3.get(i_h3).getElementsByTag("a");
+//                                href = a.attr("href");
+//                                name = a.text();
+//                                Elements span = h3.get(i_h3).select("span");
+//                                spanString = span.get(i_h3).text();
+//                                num = h3.text().substring(spanString.length() + name.length());
+//                                Pattern pattern = Pattern.compile("^\\d*\\.");
+//                                Matcher matcher = pattern.matcher(name);
+//                                name = matcher.replaceAll("");
+//                            }
+//
+//                            Elements p = bookLists.get(i).select("p");
+//
+//                            int pSize = p.size();
+//                            for (int i_p = 0; i_p < pSize; i_p++) {
+//                                Elements span = p.get(i_p).select("span");
+//                                String pSpanString = span.get(i_p).text();
+//                                authorAndPress = p.get(i_p).text().substring(pSpanString.length());
+//                                Pattern pattern = Pattern.compile("\\著.*");
+//                                Matcher matcher = pattern.matcher(authorAndPress);
+//                                author = matcher.replaceAll("");
+//                                Log.d("bt", author);
+//                            }
+//                            if (!spanString.matches("(.*)期刊(.*)")) {
+//                                map = new HashMap<String, String>();
+//                                map.put("bookName", name);
+//                                map.put("bookNum", num);
+//                                map.put("bookHref", href);
+//                                map.put("bookAuthor", author);
+//                                bookListMap.add(map);
+//                            }
+//                        }
+//                        Log.d("jsoup_t", bookListMap.toString());
+//                        Boolean resultEmpty = bookListMap.isEmpty();
+//                        if (resultEmpty) {
+//                            progressDialog.dismiss();
+//                            Toast toast = Toast.makeText(BookListActivity.this, "试试更准确的书名？", Toast.LENGTH_SHORT);
+//                            toast.show();
+//                        } else {
+//                            bookSearchListAdapter = new BookSearchListAdapter(BookListActivity.this);
+//                            setListAdapter(bookSearchListAdapter);
+//                            progressDialog.dismiss();
+//                        }
+//                    }
+//
+//                }
+//
+//        );
+//
+//
+//    }
 
     public final class BookViewHolder {
         public TextView bookName;

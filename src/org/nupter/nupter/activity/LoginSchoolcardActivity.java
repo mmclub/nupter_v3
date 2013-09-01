@@ -17,7 +17,7 @@ import java.net.URL;
  * Time: 下午4:04
  * To change this template use File | Settings | File Templates.
  */
-public class LoginSchoolCardActivity extends Activity {
+public class LoginSchoolcardActivity extends Activity {
     private String cookie = "";
     private String postData;
     private HttpURLConnection getCookieConnection,loginConnection;
