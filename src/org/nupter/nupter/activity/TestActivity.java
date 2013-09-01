@@ -87,6 +87,8 @@ public class TestActivity extends FragmentActivity {
             pts.setTextColor(Color.BLUE);
             pts.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
             pts.setDrawFullUnderline(true);
+        }else {
+
         }
     }
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -181,6 +183,7 @@ public class TestActivity extends FragmentActivity {
 
                 }
             });
+            msg = new ArrayList<HashMap<String, String>>();
             return v;
         }
     }

@@ -190,7 +190,7 @@ public class ScheduleActivity extends Activity {
                     classLocation.setText(getClassLocation(list1.get(position)));
                     convertView.setBackgroundResource(color[skin][position]);
                 } else {
-                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
+                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
             } else if (position >= 5 && position < 10) {
                 if (!list2.get(position - 5).equals(" ")) {
@@ -202,6 +202,8 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
                     convertView.setBackgroundResource(color[skin][position > 6 ? position - 7 : position - 1]);
+                } else {
+                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
             }
             return convertView;
@@ -246,15 +248,15 @@ public class ScheduleActivity extends Activity {
                     if (!list4.get(i).equals(" ")) {
                         if (isOneClass(list4.get(i))) {
                             view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
-                        } else {
-                            view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                         }
+                    }else {
+                        view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                     }
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
                     view.setBackgroundResource(color[skin][i > 3 ? i - 4 : i + 2]);
-                } else {
-                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
+                }  else {
+                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
             } else if (i >= 5 && i < 10) {
                 if (!list4.get(i - 5).equals(" ")) {
@@ -264,6 +266,8 @@ public class ScheduleActivity extends Activity {
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
                         view.setBackgroundResource(color[skin][i - 4]);
                     }
+                } else {
+                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
             }
             return view;
@@ -306,6 +310,8 @@ public class ScheduleActivity extends Activity {
                 className.setText(getClassName(list5.get(i)));
                 classLocation.setText(getClassLocation(list5.get(i)));
                 view.setBackgroundResource(color[skin][i > 2 ? i - 3 : i + 3]);
+            }  else {
+                view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
             }
             return view;
         }
