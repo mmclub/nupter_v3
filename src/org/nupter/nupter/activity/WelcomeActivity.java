@@ -20,20 +20,24 @@ public class WelcomeActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //去掉标题栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
 
-        new Handler().postDelayed(new Runnable() {
-
-            public void run() {
-                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
-                startActivity(intent);
-                WelcomeActivity.this.finish();
-            }
-        }, 2000);
+        Start();
     }
-
+    public void Start() {
+                   new Thread() {
+                                 public void run() {
+                                        try {
+                                               Thread.sleep(2000);
+                                               } catch (InterruptedException e) {
+                                               e.printStackTrace();
+                                               }
+                                  Intent intent = new Intent();
+                                  intent.setClass(WelcomeActivity.this, MainActivity.class);
+                                  startActivity(intent);
+                                  finish();
+                                  }
+                    }.start();
+   }
 
 }

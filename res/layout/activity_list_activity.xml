@@ -2,24 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:layout_marginTop="40dp">
+   <LinearLayout
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       >
+    <org.nupter.nupter.utils.CornerListView
 
-    <TextView
-            android:id="@+id/text_Info"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            >
-    </TextView>
-
-    <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:background="?android:attr/listDivider"
-            />
-
-    <ListView android:layout_width="fill_parent"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:id="@+id/listView"
-            />
+              android:layout_gravity="center"
+              android:background="@drawable/list_bg"/>
+</LinearLayout>
 </LinearLayout>

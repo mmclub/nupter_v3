@@ -6,15 +6,9 @@
 
     <TextView
         android:id="@+id/Title"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autoLink="none" />
-
-    <TextView
-        android:id="@+id/Time"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#a9a9a9"
-        android:textSize="10sp" />
 
 </LinearLayout>

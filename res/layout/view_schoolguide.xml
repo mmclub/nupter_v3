@@ -40,7 +40,7 @@
                             android:textColor="#FFFFFF"
                             android:layout_marginTop="0dp"
                             android:gravity="center_vertical"
-                            android:text="图书馆补充"
+                            android:text="图书馆介绍"
                             android:drawableLeft="@drawable/littlepoint"
                             android:textSize="18sp" />
 

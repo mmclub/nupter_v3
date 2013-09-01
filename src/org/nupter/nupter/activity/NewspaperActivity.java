@@ -1,22 +1,26 @@
 package org.nupter.nupter.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -26,42 +30,76 @@ import org.nupter.nupter.utils.Log;
  */
 
 
-public class NewspaperActivity extends ListActivity {
+public class NewspaperActivity extends Activity {
 
+    private ProgressDialog NPprogressDialog;
+    private PullToRefreshListView newspaperListview;
+    private SimpleAdapter newspaperAdaper;
+    private ArrayList<HashMap<String, Object>> newspaperList;
+    private HashMap newspaperMap;
     public static final String EXTRA_NEWSPAPER_JSON = "newspaper_json";
-
-    JSONObject json;
+    JSONObject newspaperJsonObject;
+    JSONArray newspaperJsonArry;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_newspaper);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        newspaperList = new ArrayList<HashMap<String, Object>>();
+        newspaperListview = (PullToRefreshListView)findViewById(R.id.newspaperListview);
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         String rawString =    preferences.getString("json", "null");
-       if (! rawString.equals("null")){
-           try{
-               json = new JSONObject(rawString);
-               onUpdateSuccess();
-           }catch (Exception e){
-
+       if (rawString.equals("null")){
+           NPprogressDialog = new ProgressDialog(NewspaperActivity.this);
+           NPprogressDialog.setTitle("玩命加载ing");
+           NPprogressDialog.setMessage("别着急啊。。。");
+           NPprogressDialog.setCanceledOnTouchOutside(false);
+           NPprogressDialog.show();
+           update();
+           NPprogressDialog.dismiss();
+       }
+        else{
+         onUpdateSuccess(rawString);
+           newspaperAdaper = new SimpleAdapter(NewspaperActivity.this, newspaperList, R.layout.view_notice_news,
+                   new String[]{"Title"},
+                   new int[]{R.id.Title});
+           newspaperListview.setAdapter(newspaperAdaper);
+           try {
+             newspaperJsonObject =new JSONObject(rawString);
+           } catch (Exception e){}
            }
 
-       }
 
+        /**
+         * Add Sound Event Listener
+         */
+        SharedPreferences sharedPreferences= getSharedPreferences("test",
+                Activity.MODE_PRIVATE);
+        boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",true);
+        if (getSoundFlag == true){
+            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(NewspaperActivity.this);
+            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+            newspaperListview.setOnPullEventListener(soundListener);}
+        else {}
 
+        newspaperListview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                newspaperList = new ArrayList<HashMap<String, Object>>();
+                update();
+
+            }
+        });
+
+        newspaperListview.setOnItemClickListener(newspaperonListItemClick);
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item = menu.add(1, 1, 1, "Refresh");
-        item.setIcon(android.R.drawable.ic_menu_rotate);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return super.onCreateOptionsMenu(menu);
-    }
-
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -70,8 +108,6 @@ public class NewspaperActivity extends ListActivity {
                 onBackPressed();
                 break;
             default:
-                Toast.makeText(this, "努力更新中～", Toast.LENGTH_SHORT).show();
-                update();
                 break;
         }
         return super.onMenuItemSelected(featureId, item);
@@ -86,13 +122,17 @@ public class NewspaperActivity extends ListActivity {
             public void onSuccess(String response) {
 
                 try{
-                    JSONObject jsonObject = new JSONObject(response);
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("json", response);
                     editor.commit();
-                    json = jsonObject;
-                    onUpdateSuccess();
+                    onUpdateSuccess(response);
+                    newspaperJsonObject = new JSONObject(response);
+                    newspaperAdaper = new SimpleAdapter(NewspaperActivity.this, newspaperList, R.layout.view_newspaper_title,
+                            new String[]{"Title"},
+                            new int[]{R.id.newsPaperTitle});
+                    newspaperListview.setAdapter(newspaperAdaper);
+                    newspaperListview.onRefreshComplete();
 
 
                 }catch (Exception e){
@@ -113,96 +153,39 @@ public class NewspaperActivity extends ListActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void onUpdateSuccess(){
-        setListAdapter(new MyAdapter(this));
-    }
+    public void onUpdateSuccess(String response){
+        try {
+            newspaperJsonArry = new JSONObject(response).getJSONArray("array");
+            for (int i = 0; i < newspaperJsonArry.length(); i++) {
+                newspaperJsonObject = newspaperJsonArry.getJSONObject(i);
+                Log.i("TAG",newspaperJsonObject.toString());
+                newspaperMap = new HashMap<String, Object>();
+                newspaperMap.put("Title",
+                        newspaperJsonObject.getString("title"));
+                newspaperList.add(newspaperMap);
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+
+            }
+        } catch (Exception e) {
+
+        }
+    }
+    private AdapterView.OnItemClickListener newspaperonListItemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //To change body of implemented methods use File | Settings | File Templates.
         try{
-            Intent intent = new Intent(this, WebviewActivity.class);
-            intent.putExtra(WebviewActivity.EXTRA_TITLE, json.getJSONArray("array").getJSONObject(position).getString("title"));
-            intent.putExtra(WebviewActivity.EXTRA_URL, json.getJSONArray("array").getJSONObject(position).getString("text"));
+            Log.i("TAG",position+""+newspaperJsonObject.toString());
+            Intent intent = new Intent(NewspaperActivity.this, WebviewActivity.class);
+            intent.putExtra(WebviewActivity.EXTRA_TITLE, newspaperJsonObject.getJSONArray("array").getJSONObject(position - 1).getString("title"));
+            intent.putExtra(WebviewActivity.EXTRA_URL, newspaperJsonObject.getJSONArray("array").getJSONObject(position - 1).getString("url"));
             startActivity(intent);
-        } catch (Exception e){
-
-        }
-    }
-
-    public final class ViewHolder{
-        public TextView title;
-        public TextView content;
-    }
-
-
-    public class MyAdapter extends BaseAdapter {
-
-        private LayoutInflater mInflater;
-
-
-        public MyAdapter(Context context){
-            this.mInflater = LayoutInflater.from(context);
-        }
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            try{
-                return json.getJSONArray("array").length();
             } catch (Exception e){
-                 return 0;
-            }
-        }
-
-        @Override
-        public JSONObject getItem(int arg0) {
-            // TODO Auto-generated method stub
-            try{
-                return json.getJSONArray("array").getJSONObject(arg0);
-            } catch (Exception e){
-                return new JSONObject();
-            }
-        }
-
-        @Override
-        public long getItemId(int arg0) {
-            return arg0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ViewHolder holder = null;
-            if (convertView == null) {
-
-                holder=new ViewHolder();
-
-                convertView = mInflater.inflate(R.layout.item_message, null);
-                holder.title = (TextView)convertView.findViewById(R.id.message_content);
-                holder.content = (TextView)convertView.findViewById(R.id.message_content);
-                convertView.setTag(holder);
-
-            }else {
-
-                holder = (ViewHolder)convertView.getTag();
-            }
-
-            try{
-                JSONObject jsonObject = json.getJSONArray("array").getJSONObject(position);
-                holder.title.setText(jsonObject.getString("title"));
-                holder.content.setText(jsonObject.getString("title"));
-
-            }catch (Exception e){
 
             }
+         }
 
 
 
-
-            return convertView;
-        }
-
-    }
-
-
+    } ;
 }

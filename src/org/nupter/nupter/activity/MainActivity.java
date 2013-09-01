@@ -119,17 +119,7 @@ public class MainActivity extends Activity {
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                     String schedule = preferences.getString("schedule", "null");
                     if ((!schedule.equals("null"))) {
-                        ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-                        JsoupTable jsoupTable = new JsoupTable();
-                        list = jsoupTable.parse(schedule);
                         Intent inten = new Intent(MainActivity.this, ScheduleActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putStringArrayList("First", list.get(0));
-                        bundle.putStringArrayList("Third", list.get(1));
-                        bundle.putStringArrayList("Sixth", list.get(2));
-                        bundle.putStringArrayList("Eighth", list.get(3));
-                        bundle.putStringArrayList("Eleventh", list.get(4));
-                        inten.putExtras(bundle);
                         MainActivity.this.startActivity(inten);
                     } else {
                         intent.setClass(MainActivity.this, LoginActivity.class);

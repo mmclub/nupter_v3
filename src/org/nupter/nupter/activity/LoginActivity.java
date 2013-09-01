@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.ant.liao.GifView;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.JsoupTable;
 import org.nupter.nupter.utils.JsoupTest;
 
 import java.io.DataOutputStream;
@@ -60,11 +59,10 @@ public class LoginActivity extends Activity {
     private StringBuffer tableHtml, testHtml;
     private Intent intent;
     private String Flag;
-    private ArrayList<ArrayList<String>> tableList;
     private String testString;
-    private JsoupTable jsoupTable;
     private JsoupTest jsoupTest;
     private ProgressDialog progressDialog;
+    private SharedPreferences preferences;
     private String login_url = "http://202.119.225.35/default2.aspx";
     private String getTable_url = "http://202.119.225.35/xskbcx.aspx?xh=";
     private String getTest_url = "http://202.119.225.35/xscj_gc.aspx?xh=";
@@ -72,14 +70,16 @@ public class LoginActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_login);
+        setContentView(R.layout.activity_login);
         intent = getIntent();
         Flag = intent.getStringExtra("JumpTo");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        jsoupTable = new JsoupTable();
         jsoupTest=new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+        preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        username.setText(preferences.getString("user", null));
+        password.setText(preferences.getString("password",null));
         check = (EditText) findViewById(R.id.identify);
         login = (Button) findViewById(R.id.login_schedule);
         gifView = (GifView) findViewById(R.id.gifView);
@@ -299,7 +299,6 @@ public class LoginActivity extends Activity {
                 progressDialog.dismiss();
                 //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
                 testString=jsoupTest.parse(testHtml.toString());
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();
