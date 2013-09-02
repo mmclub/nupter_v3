@@ -146,8 +146,7 @@ public class SettingActivity extends Activity {
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(SettingActivity.this, MainActivity.class);
-                startActivity(intent1);
+                onBackPressed();
                 this.finish();
                 break;
             default:

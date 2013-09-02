@@ -457,8 +457,7 @@ public class ScheduleActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(ScheduleActivity.this, MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
                 this.finish();
                 break;
             case R.id.action_login:
