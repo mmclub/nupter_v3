@@ -11,7 +11,8 @@
             android:layout_height="0dp"
             android:layout_weight="2"
             android:layout_width="fill_parent"
-            android:gravity="center">
+            android:gravity="bottom"
+            android:layout_marginBottom="20dp">
 
         <LinearLayout
                 android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="刷新声音"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
@@ -56,6 +57,7 @@
             android:layout_width="fill_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="60dp"
             android:gravity="center">
         <org.nupter.nupter.utils.CornerListView
             android:id="@+id/settinglistview"

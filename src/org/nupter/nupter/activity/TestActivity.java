@@ -212,7 +212,6 @@ public class TestActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                this.finish();
                 break;
             case R.id.to_login:
                 Intent intent1 = new Intent(TestActivity.this, LoginActivity.class);

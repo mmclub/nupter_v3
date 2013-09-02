@@ -458,7 +458,6 @@ public class ScheduleActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                this.finish();
                 break;
             case R.id.action_login:
                 Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);
