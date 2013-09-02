@@ -106,7 +106,6 @@ public class LifeAssistantActivity extends Activity {
         views.add(view2);
         views.add(view3);
         views.add(view4);
-
     }
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
