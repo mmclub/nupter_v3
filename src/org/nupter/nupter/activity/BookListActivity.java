@@ -48,10 +48,12 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
     private LinearLayout footerLayout;
     private View view;
     private Map<String, String> map;
-    private List<Map<String, String>> bookListMap= new ArrayList<Map<String, String>>();;
+    private List<Map<String, String>> bookListMap = new ArrayList<Map<String, String>>();
+    ;
     private BookSearchListAdapter bookSearchListAdapter;
     private int lastItem;
     private int scrollState;
+    private String response_before = "";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,20 +96,22 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
 
 
     }
-    private Boolean putMsg(String response){
+
+    private Boolean putMsg(String response) {
         JsoupBookList jsoupBookList = new JsoupBookList();
-        bookListMap=jsoupBookList.parse(response,bookListMap);
-        if(bookListMap.isEmpty()){
+        bookListMap = jsoupBookList.parse(response, bookListMap);
+        if (bookListMap.isEmpty()) {
             return false;
         }
         return true;
     }
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
         this.scrollState = i;
         if (lastItem >= bookSearchListAdapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
             /*footerLayout.setVisibility(View.VISIBLE);*/
-            postUrl=postUrl.substring(0,postUrl.length()-1)+(bookSearchListAdapter.getCount()/20+1);
+            postUrl = postUrl.substring(0, postUrl.length() - 1) + (bookSearchListAdapter.getCount() / 20 + 1);
             footerLayout.setVisibility(View.VISIBLE);
             new AsyncHttpClient().post(postUrl, null,
                     new AsyncHttpResponseHandler() {
@@ -115,16 +119,22 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
                         public void onSuccess(String response) {
                             if (!putMsg(response)) {
                                 footerLayout.setVisibility(View.INVISIBLE);
-                                Toast toast = Toast.makeText(BookListActivity.this, "试试更准确的书名？", Toast.LENGTH_SHORT);
-                                toast.show();
+                                Toast.makeText(BookListActivity.this, "试试更准确的书名？", Toast.LENGTH_SHORT).show();
                             } else {
-                                bookSearchListAdapter.notifyDataSetChanged();
-                                footerLayout.setVisibility(View.INVISIBLE);
+                                if (response.equals(response_before)) {
+                                    footerLayout.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(BookListActivity.this, "没有更多了，亲。。", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    bookSearchListAdapter.notifyDataSetChanged();
+                                    footerLayout.setVisibility(View.INVISIBLE);
+                                }
                             }
+                            response_before = response;
                         }
                     });
         }
     }
+
     @Override
     public void onScroll(AbsListView absListView, int i, int i2, int i3) {
         lastItem = i + i2;

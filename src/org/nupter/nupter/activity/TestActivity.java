@@ -211,8 +211,7 @@ public class TestActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(TestActivity.this, MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
                 this.finish();
                 break;
             case R.id.to_login:
