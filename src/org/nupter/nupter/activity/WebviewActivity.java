@@ -45,13 +45,12 @@ public class WebviewActivity extends Activity {
 
                 // Return the app name after finish loading
                 if (progress == 100)
-                    WebviewActivity.this.setTitle(R.string.app_name);
+                    setTitle(getIntent().getStringExtra(EXTRA_TITLE));
             }
         });
 
 
         String url = getIntent().getStringExtra(EXTRA_URL);
-        setTitle(getIntent().getStringExtra(EXTRA_TITLE));
         webView.loadUrl(url);
 
 
