@@ -110,7 +110,6 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
     public void onScrollStateChanged(AbsListView absListView, int i) {
         this.scrollState = i;
         if (lastItem >= bookSearchListAdapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-            /*footerLayout.setVisibility(View.VISIBLE);*/
             postUrl = postUrl.substring(0, postUrl.length() - 1) + (bookSearchListAdapter.getCount() / 20 + 1);
             footerLayout.setVisibility(View.VISIBLE);
             new AsyncHttpClient().post(postUrl, null,
