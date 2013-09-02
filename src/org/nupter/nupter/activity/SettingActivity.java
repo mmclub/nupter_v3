@@ -144,7 +144,6 @@ public class SettingActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                this.finish();
                 break;
             default:
                 break;
