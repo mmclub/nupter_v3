@@ -1,7 +1,6 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import java.util.ArrayList;
@@ -32,7 +30,6 @@ import java.util.HashMap;
 
 public class NewspaperActivity extends Activity {
 
-    private ProgressDialog NPprogressDialog;
     private PullToRefreshListView newspaperListview;
     private SimpleAdapter newspaperAdaper;
     private ArrayList<HashMap<String, Object>> newspaperList;
@@ -53,13 +50,8 @@ public class NewspaperActivity extends Activity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         String rawString =    preferences.getString("json", "null");
        if (rawString.equals("null")){
-           NPprogressDialog = new ProgressDialog(NewspaperActivity.this);
-           NPprogressDialog.setTitle("玩命加载ing");
-           NPprogressDialog.setMessage("别着急啊。。。");
-           NPprogressDialog.setCanceledOnTouchOutside(false);
-           NPprogressDialog.show();
+           Toast.makeText(NewspaperActivity.this,"玩命加载中。。。",Toast.LENGTH_SHORT).show();
            update();
-           NPprogressDialog.dismiss();
        }
         else{
          onUpdateSuccess(rawString);

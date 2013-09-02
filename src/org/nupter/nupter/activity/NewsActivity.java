@@ -7,7 +7,6 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.v4.view.PagerTabStrip;
 import android.widget.AdapterView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
