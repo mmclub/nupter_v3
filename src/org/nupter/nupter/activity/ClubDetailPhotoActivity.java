@@ -217,9 +217,7 @@ public class ClubDetailPhotoActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent1 = new Intent(ClubDetailPhotoActivity.this, ClubDetailActivity.class);
-                startActivity(intent1);
-                this.finish();
+                onBackPressed();
                 break;
 
             default:

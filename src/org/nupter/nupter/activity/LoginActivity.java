@@ -333,8 +333,7 @@ public class LoginActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

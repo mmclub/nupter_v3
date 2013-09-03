@@ -1,7 +1,6 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.*;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.CornerListView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +25,6 @@ public class SettingActivity extends Activity {
     private SimpleAdapter adapter = null;
     private ToggleButton  refreshsoundTB;
     private SharedPreferences mySharedPreferences;
-    private boolean newsFlag;
     private boolean soundFlag;
 
     @Override
@@ -147,7 +144,6 @@ public class SettingActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                this.finish();
                 break;
             default:
                 break;

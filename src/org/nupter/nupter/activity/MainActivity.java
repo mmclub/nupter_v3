@@ -111,7 +111,6 @@ public class MainActivity extends Activity {
             Intent intent = new Intent();
             switch (v.getId()) {
                 case R.id.libraryIB:
-
                     intent.setClass(MainActivity.this, BookActivity.class);
                     startActivity(intent);
                     break;
@@ -200,7 +199,10 @@ public class MainActivity extends Activity {
                 firstTime = secondTime;//更新firstTime
                 return true;
             } else {
-                System.exit(0);//否则退出程序
+                Intent i = new Intent(Intent.ACTION_MAIN);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addCategory(Intent.CATEGORY_HOME);
+                startActivity(i);
             }
         }
         return super.onKeyUp(keyCode, event);
