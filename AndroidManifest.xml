@@ -9,7 +9,9 @@
               android:targetSdkVersion="17"/>
 
 
-    <application android:label="@string/app_name" android:icon="@drawable/icon_launcher" android:name=".MyApplication"
+    <application android:label="@string/app_name"
+                 android:icon="@drawable/icon_launcher"
+                 android:name=".MyApplication"
                  android:theme="@style/MyTheme">
 
 
@@ -65,7 +67,8 @@
         <activity android:name=".activity.MapListActivity"
                   android:label="@string/label_maplist"/>
         <activity android:name=".activity.MapImageActivity"/>
-        <activity android:name=".activity.NewsDetailActivity"/>
+        <activity android:name=".activity.NewsDetailActivity"
+                android:label="@string/label_news"/>
 
 
         <activity android:name=".activity.TestActivity"
