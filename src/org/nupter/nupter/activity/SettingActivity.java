@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.*;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
-import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.AppUtils;
 import org.nupter.nupter.utils.CornerListView;
