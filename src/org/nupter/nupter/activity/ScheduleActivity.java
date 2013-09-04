@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.JsoupTable;
@@ -533,5 +534,17 @@ public class ScheduleActivity extends Activity {
     private void sendBroadcast() {
         Intent intent = new Intent("org.nupter.widget.refresh");
         this.sendBroadcast(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

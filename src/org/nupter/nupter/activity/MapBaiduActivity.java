@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.AppConstants;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
@@ -209,6 +210,8 @@ public class MapBaiduActivity extends Activity {
          *  MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
          */
         mMapView.onPause();
+        MobclickAgent.onPause(this);
+
         super.onPause();
     }
 
@@ -218,6 +221,7 @@ public class MapBaiduActivity extends Activity {
          *  MapView的生命周期与Activity同步，当activity恢复时需调用MapView.onResume()
          */
         mMapView.onResume();
+        MobclickAgent.onResume(this);
         super.onResume();
     }
 
@@ -242,6 +246,9 @@ public class MapBaiduActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
         mMapView.onRestoreInstanceState(savedInstanceState);
     }
+
+
+
 
 
 }

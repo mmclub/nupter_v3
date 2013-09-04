@@ -13,6 +13,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.nupter.nupter.MyApplication;
@@ -167,7 +168,6 @@ public class NewspaperActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //To change body of implemented methods use File | Settings | File Templates.
         try{
-            Log.i("TAG",position+""+newspaperJsonObject.toString());
             Intent intent = new Intent(NewspaperActivity.this, WebviewActivity.class);
             intent.putExtra(WebviewActivity.EXTRA_TITLE, newspaperJsonObject.getJSONArray("array").getJSONObject(position - 1).getString("title"));
             intent.putExtra(WebviewActivity.EXTRA_URL, newspaperJsonObject.getJSONArray("array").getJSONObject(position - 1).getString("url"));
@@ -180,4 +180,16 @@ public class NewspaperActivity extends Activity {
 
 
     } ;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

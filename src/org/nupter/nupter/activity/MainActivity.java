@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import org.json.*;
 import org.nupter.nupter.MyApplication;
@@ -266,4 +267,17 @@ public class MainActivity extends Activity {
 
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

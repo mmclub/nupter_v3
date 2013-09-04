@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
 
@@ -225,5 +226,17 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
         float x = event.getX(0) + event.getX(1);
         float y = event.getY(0) + event.getY(1);
         point.set(x / 2, y / 2);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

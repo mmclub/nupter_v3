@@ -25,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.protocol.ResponseDate;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -372,6 +373,19 @@ public class LostAndFoundActivity extends FragmentActivity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
 
