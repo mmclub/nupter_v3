@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 
@@ -67,4 +68,17 @@ public class LoginNumberSaveActivity extends Activity {
         }
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

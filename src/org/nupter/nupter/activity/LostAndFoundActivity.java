@@ -25,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.umeng.analytics.MobclickAgent;
 import org.apache.http.protocol.ResponseDate;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +67,7 @@ public class LostAndFoundActivity extends FragmentActivity {
         titleList.add("发布");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
     }
+
     //过滤人人客户端
     public Intent findRenrenClient() {
         final String renrenApps = "com.renren.mobile.android";
@@ -141,8 +143,7 @@ public class LostAndFoundActivity extends FragmentActivity {
             View v = inflater.inflate(R.layout.view_publishinfo, container, false);
 
             infoEditText = (EditText) v.findViewById(R.id.publishInfoEditText);
-            publisherEditText = (EditText) v.findViewById(R.id.publisherEditText);
-            phoneEditText = (EditText) v.findViewById(R.id.publishPhoneEditText);
+
             publishButton = (Button) v.findViewById(R.id.publishButton);
 
             publishButton.setOnClickListener(new View.OnClickListener()
@@ -151,33 +152,44 @@ public class LostAndFoundActivity extends FragmentActivity {
                 @Override
                 public void onClick(View view) {
                     contnet = infoEditText.getText().toString();
-                    publisher = publisherEditText.getText().toString();
-                    phone = phoneEditText.getText().toString();
-//                    timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-//                    Log.d("Calendar_test", timeStamp);
-//                    url = "http://nuptapi.nupter.org/lost/new";
-                    String info = "姓名:" + publisher + "，联系电话:" + phone + "，内容:" + contnet + "@校会大服之归去来兮";
-
+                    timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+                    Log.d("Calendar_test", timeStamp);
+                    url = "http://nuptapi.nupter.org/lost/new/";
+                    RequestParams params = new RequestParams();
+                    params.put("content", contnet);
+                    params.put("time", timeStamp);
+                    params.put("title", "");
+                    params.put("key", "llpzqxh");
+                    params.put("url", "");
+                    Log.d("Calendar_test", contnet);
+                    url = url + "?time=20120307&title=&content=南京热死了&url=&key=llpzqxh";
                     if (NetUtils.isNewworkConnected()) {
-                        try {
-//                            Intent intent = new Intent().setPackage("com.renren.mobile.android");
-                            Intent intent = new Intent(Intent.ACTION_SEND);
-                            intent.setType("text/plain");
-                            intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
-                            intent.putExtra(Intent.EXTRA_TEXT, info);
-                            startActivity(Intent.createChooser(intent, getTitle()));
-                        } catch (Exception e) {
-                            Toast toast = Toast.makeText(LostAndFoundActivity.this, "您的手机上没有人人，不能发布", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        ;
+                        new AsyncHttpClient().get(url, params,
+                                new AsyncHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        try {
+                                            Log.d("Calendar_test", response);
+                                            if (response.matches("(.*)ok(.*)")) {
+                                                Toast.makeText(LostAndFoundActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(LostAndFoundActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (Exception e) {
+                                            Toast.makeText(LostAndFoundActivity.this, "发送失败，请检查网络", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
 
-                    } else {
-                        Toast toast = Toast.makeText(LostAndFoundActivity.this, "网络还没连接哦", Toast.LENGTH_SHORT);
-                        toast.show();
+                    } else
+
+                    {
+                        Toast.makeText(LostAndFoundActivity.this, "网络还没连接哦", Toast.LENGTH_SHORT).show();
                     }
                 }
-            });
+            }
+
+            );
 
 
             return v;
@@ -210,11 +222,11 @@ public class LostAndFoundActivity extends FragmentActivity {
                             new AsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(String response) {
-                                    try{
-                                    jsonArray = new JSONArray(response);
-                                    for (int i = 0; i < jsonArray.length(); i++)
-                                        lostList.add(jsonArray.getJSONObject(i).getString("message"));
-                                    }catch (Exception e){
+                                    try {
+                                        jsonArray = new JSONArray(response);
+                                        for (int i = 0; i < jsonArray.length(); i++)
+                                            lostList.add(jsonArray.getJSONObject(i).getString("message"));
+                                    } catch (Exception e) {
 
                                     }
                                     adapter.notifyDataSetChanged();
@@ -241,13 +253,14 @@ public class LostAndFoundActivity extends FragmentActivity {
                             for (int i = 0; i < jsonArray.length(); i++)
                                 lostList.add(jsonArray.getJSONObject(i).getString("message"));
                             Log.d("lostList", lostList.toString());
-                            adapter= new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList);
+                            adapter = new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList);
                             listView.setAdapter(adapter);
                             progressDialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
+
                     public void onFailure(Throwable throwable, String s) {
                         progressDialog.dismiss();
                         Toast toast = Toast.makeText(LostAndFoundActivity.this, "服务器歇菜了", Toast.LENGTH_SHORT);
@@ -269,97 +282,6 @@ public class LostAndFoundActivity extends FragmentActivity {
 
     }
 
-    //展示招领的Fragment
-    public class FoundInfoFragment extends Fragment {
-
-        private List<String> foundList;
-        private ListView listView;
-
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.view_pager_fragment, container, false);
-            listView = (ListView) v.findViewById(R.id.textView);
-            foundList = new ArrayList<String>();
-            foundURL = "http://nuptapi.nupter.org/lost/";
-            AsyncHttpClient client = new AsyncHttpClient();
-            client.get(foundURL, null, new AsyncHttpResponseHandler() {
-                public void onSuccess(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        jsonArray = jsonObject.getJSONArray("array");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            foundList.add(jsonArray.getString(i));
-                        }
-                        Log.d("Test_json", foundList.toString());
-                        //listView.setAdapter(new lostListAdapter(LostAndFoundActivity.this));
-                        listView.setAdapter(new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.view_found, foundList));
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                public void onFailure(Throwable throwable, String s) {
-
-                }
-            });
-
-
-//            SimpleAdapter adapter = new SimpleAdapter(LostAndFoundActivity.this, list,
-//                    R.layout.item_publish_info, new String[]{"lostName",
-//                    "owner", "phone"},
-//                    new int[]{R.id.lostNameTextView, R.id.ownerTextView,
-//                            R.id.publishPhoneTextView});
-            return v;
-        }
-//        public final class LostViewHolder {
-//            public TextView title;
-//        }
-//        private class lostListAdapter extends BaseAdapter {
-//            private LayoutInflater lostInflater;
-//
-//            public lostListAdapter(Context context) {
-//                this.lostInflater = LayoutInflater.from(context);
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                return lostList.size();  //To change body of implemented methods use File | Settings | File Templates.
-//            }
-//
-//            @Override
-//            public Object getItem(int i) {
-//                return lostList.get(i);  //To change body of implemented methods use File | Settings | File Templates.
-//            }
-//
-//            @Override
-//            public long getItemId(int i) {
-//                return 0;  //To change body of implemented methods use File | Settings | File Templates.
-//            }
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup viewGroup) {
-//                LostViewHolder holder = null;
-//                if (convertView == null) {
-//
-//                    holder = new LostViewHolder();
-//
-//                    convertView = lostInflater.inflate(R.layout.view_lost, null);
-//                    holder.title = (TextView) convertView.findViewById(R.id.TextView);
-//                    convertView.setTag(holder);
-//
-//                } else {
-//
-//                    holder = (LostViewHolder) convertView.getTag();
-//                }
-//                holder.title.setText(lostList.get(position));
-//
-//                return convertView;  //To change body of implemented methods use File | Settings | File Templates.
-//            }
-//        }
-    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -372,6 +294,19 @@ public class LostAndFoundActivity extends FragmentActivity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 
 

@@ -3,6 +3,7 @@ package org.nupter.nupter.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 import java.io.DataOutputStream;
@@ -93,4 +94,17 @@ public class LoginSchoolcardActivity extends Activity {
             }
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.AppUtils;
 import org.nupter.nupter.utils.CornerListView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,7 +101,7 @@ public class SettingActivity extends Activity {
 
                     break;
 
-                case  2:
+                case 2:
                     intent.setClass(SettingActivity.this, WebviewActivity.class);
                     intent.putExtra(WebviewActivity.EXTRA_TITLE, "关于掌上南邮");
                     intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/about_us.html");
@@ -109,6 +113,11 @@ public class SettingActivity extends Activity {
                     intent.putExtra(WebviewActivity.EXTRA_TITLE, "加入我们");
                     intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/join_us.html");
                     startActivity(intent);
+                    break;
+                case 4:
+                    FeedbackAgent agent = new FeedbackAgent(SettingActivity.this);
+                    agent.startFeedbackActivity();
+                    agent.sync();
                     break;
                 default:
                     break;
@@ -136,6 +145,17 @@ public class SettingActivity extends Activity {
         map.put("text", "加入开发团队");
         listData.add(map);
 
+        map = new HashMap<String, String>();
+        map.put("text", "反馈");
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "版本号" + AppUtils.getVersionName(this));
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "版本" + String.valueOf(AppUtils.getVersionCode(this)));
+        listData.add(map);
 
     }
 
@@ -151,5 +171,16 @@ public class SettingActivity extends Activity {
         return super.onMenuItemSelected(featureId, item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 
@@ -97,4 +98,17 @@ public class ClubActivity extends Activity {
             startActivity(chooseIntent);
         }
     };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

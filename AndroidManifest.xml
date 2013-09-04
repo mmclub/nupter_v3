@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.nupter.nupter"
-          android:versionCode="1"
-          android:versionName="1.0">
+          android:versionCode="3"
+          android:versionName="1.1">
 
 
     <uses-sdk android:minSdkVersion="8"
@@ -58,6 +58,9 @@
         <activity android:name=".activity.ScheduleActivity"
                   android:label="@string/title_activity_schedule"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ScheduleCustomSetting"
+                  android:label="@string/title_activity_schedule"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.BookListActivity"
                   android:label="@string/label_book_list"
                   android:screenOrientation="portrait"/>
@@ -103,19 +106,25 @@
                 <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
+        <meta-data android:value="5226d90556240bec3b0419ec" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="Develop" android:name="UMENG_CHANNEL"/>
+
+        <activity android:name="com.umeng.fb.ConversationActivity"
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+        <activity android:name="com.umeng.fb.ContactActivity"
+                  android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+        <service
+                android:name="com.umeng.common.net.DownloadingService"
+                android:process=":DownloadingService" >
+        </service>
+
 
 
     </application>
 
-    <service
-            android:name="com.umeng.common.net.DownloadingService"
-            android:exported="true"
-            android:process=":DownloadingService">
-    </service>
 
 
-    <meta-data android:value="5216001256240b200b02d6a7" android:name="UMENG_APPKEY"></meta-data>
-    <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>

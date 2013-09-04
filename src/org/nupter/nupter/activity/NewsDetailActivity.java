@@ -1,5 +1,6 @@
 package org.nupter.nupter.activity;
 
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 import android.annotation.SuppressLint;
@@ -49,5 +50,17 @@ public class NewsDetailActivity extends Activity{
            }
            return super.onMenuItemSelected(featureId, item);
        }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 
 }
