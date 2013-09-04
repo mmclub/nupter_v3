@@ -86,9 +86,10 @@
         <TextView
                 android:paddingLeft="10dp"
                 android:paddingRight="5dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Tip：保存后登录课表和查询成绩可以通过输入验证码直接进入"/>
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#7CA3A2"
+                android:text="Tip：保存后登录课表和查询成绩可以通过输入验证码直接进入"/>
     </LinearLayout>
 </LinearLayout>

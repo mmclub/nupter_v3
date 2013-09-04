@@ -91,14 +91,25 @@
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="15dp"
                         android:singleLine="true"/>
-                <com.ant.liao.GifView
-                        android:id="@+id/gifView"
+                <FrameLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:focusable="true"
-                        android:paddingLeft="5dp"
-                        android:paddingTop="8dp"
-                        android:layout_weight="3"/>
+                        android:layout_weight="3">
+                    <com.ant.liao.GifView
+                            android:id="@+id/gifView"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:focusable="true"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="8dp"/>
+                    <com.ant.liao.GifView
+                            android:id="@+id/gifView2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:clickable="false"
+                            android:paddingLeft="25dp"
+                            android:paddingTop="15dp"/>
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -118,12 +129,20 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:orientation="vertical"
             android:layout_weight="1.2">
         <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textColor="#7CA3A2"
                 android:text="Tip：初始密码为身份证号"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#7CA3A2"
+                android:text="点击验证码即刷新"/>
     </LinearLayout>
 
 </LinearLayout>
