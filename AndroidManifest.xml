@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.nupter.nupter"
-          android:versionCode="2"
+          android:versionCode="4"
           android:versionName="1.1">
 
 
@@ -113,15 +113,15 @@
                 android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
         <activity android:name="com.umeng.fb.ContactActivity"
                   android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+        <service
+                android:name="com.umeng.common.net.DownloadingService"
+                android:process=":DownloadingService" >
+        </service>
+
 
 
     </application>
 
-    <service
-            android:name="com.umeng.common.net.DownloadingService"
-            android:exported="true"
-            android:process=":DownloadingService">
-    </service>
 
 
 
