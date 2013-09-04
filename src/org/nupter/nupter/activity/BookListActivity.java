@@ -50,7 +50,6 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
     private View view;
     private Map<String, String> map;
     private List<Map<String, String>> bookListMap = new ArrayList<Map<String, String>>();
-    ;
     private BookSearchListAdapter bookSearchListAdapter;
     private int lastItem;
     private int scrollState;
