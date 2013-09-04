@@ -33,7 +33,6 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     private ViewPager mViewPager;
     private GridView gridViewBig;
     private GridView gridViewSmall;
-    private MyAdapter adapter;
     private ArrayList<Integer> backgroundBig = new ArrayList<Integer>();
     private ArrayList<Integer> backgroundSmall = new ArrayList<Integer>();
     private SharedPreferences preferences;
@@ -41,7 +40,6 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
     private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3};
     private int[] select_smallBackground = new int[6];
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
