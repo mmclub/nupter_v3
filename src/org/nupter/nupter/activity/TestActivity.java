@@ -39,7 +39,7 @@ public class TestActivity extends FragmentActivity {
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private List<String> titleList = new ArrayList<String>();
     private TextView average;
-//    private TextView total_number;
+    //    private TextView total_number;
     private TextView total_point;
 
     @Override
@@ -54,46 +54,55 @@ public class TestActivity extends FragmentActivity {
             String first_element[] = list[1].split("&");
             String title = first_element[0];
             String term = first_element[1];
-           // Log.i("TAG", "title:" + title + "第一学期");
-            titleList.add(title +"第一学期");
+            // Log.i("TAG", "title:" + title + "第一学期");
+            titleList.add(title + "第一学期");
             ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
-            int k = 0;
+            int m = 0;
             for (int i = 0; i < list.length - 1; i++) {
                 String element[] = list[i].split("&");
                 ArrayList<String> arrayList = new ArrayList<String>();
                 for (int j = 0; j < element.length; j++)
                     arrayList.add(element[j]);
-                if ((i!=0)&&(i!=1)&&((!title.equals(element[0])) || (!term.equals(element[1])))) {
+                if ((i != 0) && (i != 1) && ((!title.equals(element[0])) || (!term.equals(element[1])))) {
                     lists.add(arrayLists);
                     arrayLists = new ArrayList<ArrayList<String>>();
-                    titleList.add(element[0] + "\n" + (k++ % 2 == 0 ? "第二学期" : "第一学期"));
+
+                    //除大一第一学期外，其余每学期加上第一列，即课程名称，学分，绩点，成绩
+                    String element2[] = list[0].split("&");
+                    ArrayList<String> arrayList2 = new ArrayList<String>();
+                    for (int k = 0; k < element2.length; k++)
+                        arrayList2.add(element2[k]);
+                    arrayLists.add(arrayList2);
+
+                    titleList.add(element[0] + "\n" + (m++ % 2 == 0 ? "第二学期" : "第一学期"));
                 }
                 arrayLists.add(arrayList);
                 title = element[0];
                 term = element[1];
             }
             lists.add(arrayLists);
-            average=(TextView)findViewById(R.id.average);
-            total_point=(TextView)findViewById(R.id.total_point);
+            average = (TextView) findViewById(R.id.average);
+            total_point = (TextView) findViewById(R.id.total_point);
 /*            total_number=(TextView)findViewById(R.id.total_number);
             total_number.setText(list[list.length-1].split("&")[0]);*/
-            average.setText(list[list.length-1].split("&")[1]);
-            total_point.setText(list[list.length-1].split("&")[2]);
+            average.setText(list[list.length - 1].split("&")[1]);
+            total_point.setText(list[list.length - 1].split("&")[2]);
             for (int i = 0; i < lists.size(); i++) {
-                Log.i("str", lists.get(i).toString());
+     //           Log.i("str", lists.get(i).toString());
                 fragmentList.add(new scoreFragment(lists.get(i)));
             }
             vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
             PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pageTab);
             pts.setTextSpacing(10);
-       //     pts.setTabIndicatorColor(getResources().getColor(android.R.color.holo_blue_bright));
+            //     pts.setTabIndicatorColor(getResources().getColor(android.R.color.holo_blue_bright));
             pts.setTextColor(Color.BLUE);
-            pts.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+            pts.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             pts.setDrawFullUnderline(true);
-        }else {
+        } else {
 
         }
     }
+
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
@@ -121,13 +130,14 @@ public class TestActivity extends FragmentActivity {
         }
     }
 
-    class scoreFragment extends Fragment{
+    class scoreFragment extends Fragment {
         private SimpleAdapter adapter;
         private ArrayList<HashMap<String, String>> msg = new ArrayList<HashMap<String, String>>();
         private HashMap<String, String> map;
         ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
+
         public scoreFragment(ArrayList<ArrayList<String>> arrayLists) {
-            this.arrayLists=arrayLists;
+            this.arrayLists = arrayLists;
         }
 
         @Override
@@ -156,34 +166,35 @@ public class TestActivity extends FragmentActivity {
                             return true;
                         }
                     };
-                    dialog.setContentView(R.layout.view_test_dialog);
-                    dialog.setCancelable(true);
-                    dialog.setCanceledOnTouchOutside(true);
-                    dialog.show();
-                    TextView test_time = (TextView) dialog.getWindow().findViewById(R.id.test_time);
-                    TextView test_id = (TextView) dialog.getWindow().findViewById(R.id.test_id);
-                    TextView test_college = (TextView) dialog.getWindow().findViewById(R.id.test_college);
-                    TextView test_name = (TextView) dialog.getWindow().findViewById(R.id.test_name);
-                    TextView test_credit = (TextView) dialog.getWindow().findViewById(R.id.test_credit);
-                    TextView test_point = (TextView) dialog.getWindow().findViewById(R.id.test_point);
-                    TextView test_score = (TextView) dialog.getWindow().findViewById(R.id.test_score);
-                    TextView test_mark = (TextView) dialog.getWindow().findViewById(R.id.test_mark);
-                    TextView test_makeup_score = (TextView) dialog.getWindow().findViewById(R.id.test_makeup_score);
-                    TextView test_retake_score = (TextView) dialog.getWindow().findViewById(R.id.test_retake_score);
-                    TextView test_retake_mark = (TextView) dialog.getWindow().findViewById(R.id.test_retake_mark);
+                    if (i > 0) {
+                        dialog.setContentView(R.layout.view_test_dialog);
+                        dialog.setCancelable(true);
+                        dialog.setCanceledOnTouchOutside(true);
+                        dialog.show();
+                        TextView test_time = (TextView) dialog.getWindow().findViewById(R.id.test_time);
+                        TextView test_id = (TextView) dialog.getWindow().findViewById(R.id.test_id);
+                        TextView test_college = (TextView) dialog.getWindow().findViewById(R.id.test_college);
+                        TextView test_name = (TextView) dialog.getWindow().findViewById(R.id.test_name);
+                        TextView test_credit = (TextView) dialog.getWindow().findViewById(R.id.test_credit);
+                        TextView test_point = (TextView) dialog.getWindow().findViewById(R.id.test_point);
+                        TextView test_score = (TextView) dialog.getWindow().findViewById(R.id.test_score);
+                        TextView test_mark = (TextView) dialog.getWindow().findViewById(R.id.test_mark);
+                        TextView test_makeup_score = (TextView) dialog.getWindow().findViewById(R.id.test_makeup_score);
+                        TextView test_retake_score = (TextView) dialog.getWindow().findViewById(R.id.test_retake_score);
+                        TextView test_retake_mark = (TextView) dialog.getWindow().findViewById(R.id.test_retake_mark);
 
-                    test_time.setText("学年：" + arrayLists.get(i).get(0));
-                    test_id.setText("课程代码：" + arrayLists.get(i).get(2));
-                    test_college.setText("学院名称：" + arrayLists.get(i).get(12));
-                    test_name.setText("课程名称：" + arrayLists.get(i).get(3));
-                    test_credit.setText("学分：" + arrayLists.get(i).get(6));
-                    test_point.setText("绩点：" + arrayLists.get(i).get(7));
-                    test_score.setText("成绩：" + arrayLists.get(i).get(8));
-                    test_mark.setText("辅修标记：" + arrayLists.get(i).get(9));
-                    test_makeup_score.setText("补考成绩：" + arrayLists.get(i).get(10));
-                    test_retake_score.setText("重修成绩：" + arrayLists.get(i).get(11));
-                    test_retake_mark.setText("重修标记：" + arrayLists.get(i).get(14));
-
+                        test_time.setText("学年：" + arrayLists.get(i).get(0));
+                        test_id.setText("课程代码：" + arrayLists.get(i).get(2));
+                        test_college.setText("学院名称：" + arrayLists.get(i).get(12));
+                        test_name.setText("课程名称：" + arrayLists.get(i).get(3));
+                        test_credit.setText("学分：" + arrayLists.get(i).get(6));
+                        test_point.setText("绩点：" + arrayLists.get(i).get(7));
+                        test_score.setText("成绩：" + arrayLists.get(i).get(8));
+                        test_mark.setText("辅修标记：" + arrayLists.get(i).get(9));
+                        test_makeup_score.setText("补考成绩：" + arrayLists.get(i).get(10));
+                        test_retake_score.setText("重修成绩：" + arrayLists.get(i).get(11));
+                        test_retake_mark.setText("重修标记：" + arrayLists.get(i).get(14));
+                    }
                 }
             });
             msg = new ArrayList<HashMap<String, String>>();

@@ -56,6 +56,9 @@
         <activity android:name=".activity.ScheduleActivity"
                   android:label="@string/title_activity_schedule"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ScheduleCustomSetting"
+                  android:label="@string/title_activity_schedule"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.BookListActivity"
                   android:label="@string/label_book_list"
                   android:screenOrientation="portrait"/>
