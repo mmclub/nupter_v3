@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.ant.liao.GifView;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.JsoupTest;
@@ -340,4 +341,17 @@ public class LoginActivity extends Activity {
         }
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

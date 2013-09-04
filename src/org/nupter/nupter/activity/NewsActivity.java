@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,11 +38,9 @@ import android.widget.Toast;
 /**
  * 校园新闻板块和教务公告板块的主界面
  *
- * 
  * @author panlei     e-mail:121531863@qq.com
- *
  */
-@SuppressLint({ "ValidFragment", "NewApi" })
+@SuppressLint({"ValidFragment", "NewApi"})
 public class NewsActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
@@ -51,7 +50,7 @@ public class NewsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_viewpager);
         ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
-        PagerTabStrip pts = (PagerTabStrip)findViewById(R.id.pagerTab);
+        PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pagerTab);
 
         fragmentList.add(new NoticeFragment());
         fragmentList.add(new NewsFragment());
@@ -71,7 +70,7 @@ public class NewsActivity extends FragmentActivity {
         private List<String> titleList;
 
         public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList,
-                List<String> titleList) {
+                              List<String> titleList) {
             super(fm);
             this.fragmentList = fragmentList;
             this.titleList = titleList;
@@ -91,7 +90,7 @@ public class NewsActivity extends FragmentActivity {
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            return  titleList.get(position) ;
+            return titleList.get(position);
         }
 
         /**
@@ -106,7 +105,7 @@ public class NewsActivity extends FragmentActivity {
     public class NoticeFragment extends Fragment {
         private ProgressDialog progressDialog;
         private Intent intent;
-        private String URL_NOTICE = "http://nuptapi.nupter.org/jwc/" ;
+        private String URL_NOTICE = "http://nuptapi.nupter.org/jwc/";
         private SimpleAdapter noticeAdapter;
         private PullToRefreshListView noticelistView = null;
         private ArrayList<HashMap<String, Object>> noticeList = null;
@@ -120,66 +119,69 @@ public class NewsActivity extends FragmentActivity {
          */
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.activity_news,
                     container, false);
-           noticeList = new ArrayList<HashMap<String, Object>>();
-           noticelistView = (PullToRefreshListView) v.findViewById(R.id.news_pull_refresh_list);
+            noticeList = new ArrayList<HashMap<String, Object>>();
+            noticelistView = (PullToRefreshListView) v.findViewById(R.id.news_pull_refresh_list);
             /**
              * Add Sound Event Listener
              */
-            SharedPreferences sharedPreferences= getSharedPreferences("test",
+            SharedPreferences sharedPreferences = getSharedPreferences("test",
                     Activity.MODE_PRIVATE);
-                    boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",true);
-             if (getSoundFlag == true){
-            SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
-            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
-            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-            noticelistView.setOnPullEventListener(soundListener);}
-            else {}
+            boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag", true);
+            if (getSoundFlag == true) {
+                SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
+                soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+                soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+                soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+                noticelistView.setOnPullEventListener(soundListener);
+            } else {
+            }
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("玩命加载ing");
             progressDialog.setMessage("别着急啊。。。");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-                   AsyncHttpClient client = new AsyncHttpClient();
-                   client.get(URL_NOTICE, null, new AsyncHttpResponseHandler() {
-                    @Override
-                     public void onSuccess(String response) {
-                                 NoticeList(response);
-                                noticeAdapter = new SimpleAdapter(getActivity(), noticeList, R.layout.view_notice_news,
-                                        new String[]{"Title"},
-                                        new int[]{R.id.Title});
-                                noticelistView.setAdapter(noticeAdapter);
-                                progressDialog.dismiss();
-                                noticelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    String str;
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        //To change body of implemented methods use File | Settings | File Templates.
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(URL_NOTICE, null, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(String response) {
+                    NoticeList(response);
+                    noticeAdapter = new SimpleAdapter(getActivity(), noticeList, R.layout.view_notice_news,
+                            new String[]{"Title"},
+                            new int[]{R.id.Title});
+                    noticelistView.setAdapter(noticeAdapter);
+                    progressDialog.dismiss();
+                    noticelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        String str;
 
-                                        try {
-                                            jsonObject = (JSONObject)jsonArray.get(position-1);
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //To change body of implemented methods use File | Settings | File Templates.
 
-                                            str = jsonObject.getString("content");
-                                        } catch (JSONException e) {
-                                            // TODO Auto-generated catch block
-                                            e.printStackTrace();
-                                        }
-                                        intent = new Intent();
-                                        intent.putExtra("content",str);
-                                        intent.setClass(NewsActivity.this, NewsDetailActivity.class);
-                                        startActivity(intent);
-                                    }
-                                });
+                            try {
+                                jsonObject = (JSONObject) jsonArray.get(position - 1);
 
+                                str = jsonObject.getString("content");
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
                             }
-                     @Override
-                      public void onFailure(Throwable throwable, String s) {
-                               progressDialog.dismiss();
-                               Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                            intent = new Intent();
+                            intent.putExtra("content", str);
+                            intent.setClass(NewsActivity.this, NewsDetailActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onFailure(Throwable throwable, String s) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
                 }
 
             });
@@ -188,15 +190,16 @@ public class NewsActivity extends FragmentActivity {
                 public void onRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
                     //To change body of implemented methods use File | Settings | File Templates.
                     noticeList.clear();
-                    new AsyncHttpClient().get(URL_NOTICE, null,new AsyncHttpResponseHandler(){
-                        public void onSuccess(String response){
+                    new AsyncHttpClient().get(URL_NOTICE, null, new AsyncHttpResponseHandler() {
+                        public void onSuccess(String response) {
 
                             NoticeList(response);
 
-                            noticeAdapter. notifyDataSetChanged();
+                            noticeAdapter.notifyDataSetChanged();
                             noticelistView.onRefreshComplete();
 
                         }
+
                         @Override
                         public void onFailure(Throwable throwable, String s) {
                             noticelistView.onRefreshComplete();
@@ -207,8 +210,9 @@ public class NewsActivity extends FragmentActivity {
                 }
             });
             return v;
-    }
-        public void  NoticeList(String response){
+        }
+
+        public void NoticeList(String response) {
             try {
                 jsonArray = new JSONObject(response).getJSONArray("array");
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -223,6 +227,7 @@ public class NewsActivity extends FragmentActivity {
             }
         }
     }
+
     public class NewsFragment extends Fragment {
         private JSONObject jsonObject;
         private Intent intent;
@@ -233,7 +238,6 @@ public class NewsActivity extends FragmentActivity {
         private ArrayList<HashMap<String, Object>> newsList = null;
         private HashMap<String, Object> newsMap;
         private JSONArray jsonArray;
-
 
 
         /**
@@ -247,51 +251,53 @@ public class NewsActivity extends FragmentActivity {
             newsList = new ArrayList<HashMap<String, Object>>();
             newslistView = (PullToRefreshListView) v.findViewById(R.id.news_pull_refresh_list);
             SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(getActivity());
-            SharedPreferences sharedPreferences= getSharedPreferences("test",
+            SharedPreferences sharedPreferences = getSharedPreferences("test",
                     Activity.MODE_PRIVATE);
-            boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag",true);
-            if (getSoundFlag == true){
+            boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag", true);
+            if (getSoundFlag == true) {
 
-            soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
-            soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
-            soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
-            newslistView.setOnPullEventListener(soundListener);}
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.get(URL_NEWS, null, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(String response) {
-                                    NewsList(response);
-                                    newsAdapter = new SimpleAdapter(getActivity(), newsList, R.layout.view_notice_news,
-                                            new String[]{"Title"},
-                                            new int[]{R.id.Title});
-                                    newslistView.setAdapter(newsAdapter);
+                soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+                soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+                soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+                newslistView.setOnPullEventListener(soundListener);
+            }
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(URL_NEWS, null, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(String response) {
+                    NewsList(response);
+                    newsAdapter = new SimpleAdapter(getActivity(), newsList, R.layout.view_notice_news,
+                            new String[]{"Title"},
+                            new int[]{R.id.Title});
+                    newslistView.setAdapter(newsAdapter);
 
-                            newslistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                String str;
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    //To change body of implemented methods use File | Settings | File Templates.
-                                    try {
-                                        jsonObject = (JSONObject)jsonArray.get(position-1);
-                                        str = jsonObject.getString("content");
-                                    } catch (JSONException e) {
-                                        // TODO Auto-generated catch block
-                                        e.printStackTrace();
-                                    }
-                                    intent = new Intent();
-                                    intent.putExtra("content",str);
-                                    intent.setClass(NewsActivity.this, NewsDetailActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                        }
+                    newslistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        String str;
 
                         @Override
-                        public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //To change body of implemented methods use File | Settings | File Templates.
+                            try {
+                                jsonObject = (JSONObject) jsonArray.get(position - 1);
+                                str = jsonObject.getString("content");
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            intent = new Intent();
+                            intent.putExtra("content", str);
+                            intent.setClass(NewsActivity.this, NewsDetailActivity.class);
+                            startActivity(intent);
                         }
-
                     });
+                }
+
+                @Override
+                public void onFailure(Throwable throwable, String s) {
+                    Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
+                }
+
+            });
             newslistView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
                 @Override
                 public void onRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
@@ -319,7 +325,7 @@ public class NewsActivity extends FragmentActivity {
             return v;
         }
 
-        public void  NewsList(String response){
+        public void NewsList(String response) {
             try {
                 jsonArray = new JSONObject(response).getJSONArray("array");
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -334,15 +340,28 @@ public class NewsActivity extends FragmentActivity {
             }
         }
     }
-        public boolean onOptionsItemSelected(MenuItem item) {
-            switch (item.getItemId()) {
-                case android.R.id.home:
-                    onBackPressed();
-                    break;
 
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
-            return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
+        return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+}

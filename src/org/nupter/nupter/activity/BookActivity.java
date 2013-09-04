@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 import org.nupter.nupter.data.BookRecord;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -185,4 +186,15 @@ public class BookActivity extends ListActivity {
         return true;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

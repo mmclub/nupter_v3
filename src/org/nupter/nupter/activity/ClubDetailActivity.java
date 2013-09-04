@@ -27,6 +27,7 @@ import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.nupter.nupter.MyApplication;
@@ -412,4 +413,17 @@ public class ClubDetailActivity extends FragmentActivity {
         }
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

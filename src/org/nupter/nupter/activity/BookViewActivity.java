@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.analytics.MobclickAgent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -190,4 +191,17 @@ public class BookViewActivity extends ListActivity {
         }
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

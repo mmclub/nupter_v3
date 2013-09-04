@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONObject;
 import org.nupter.nupter.R;
 import org.nupter.nupter.data.MessageRecord;
@@ -117,6 +118,18 @@ public class MessageListActivity extends ListActivity {
                 break;
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }
 

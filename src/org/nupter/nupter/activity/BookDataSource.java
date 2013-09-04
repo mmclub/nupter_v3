@@ -2,6 +2,7 @@ package org.nupter.nupter.activity;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.analytics.MobclickAgent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +20,8 @@ import java.util.Map;
  * @author WangTao
  */
 
-public class BookDataActivity {
+public class BookDataSource
+{
     private static List<Map<String, String>> listMaps = new ArrayList<Map<String, String>>();
 
     public static List<Map<String, String>> getMaps(String searchBook) throws IOException {
@@ -107,5 +109,6 @@ public class BookDataActivity {
         listMaps.add(map1);
         return listMaps;
     }
+
 
 }

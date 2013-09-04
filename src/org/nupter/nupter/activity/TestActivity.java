@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 import java.util.ArrayList;
@@ -222,5 +223,16 @@ public class TestActivity extends FragmentActivity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

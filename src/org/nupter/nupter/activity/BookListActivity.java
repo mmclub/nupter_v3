@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.view.View;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.umeng.analytics.MobclickAgent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -247,4 +248,17 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
         }
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
 }

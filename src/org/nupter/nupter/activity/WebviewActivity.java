@@ -7,6 +7,7 @@ import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.Log;
 
@@ -69,5 +70,16 @@ public class WebviewActivity extends Activity {
         }
 
         return true;
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }
