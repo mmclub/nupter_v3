@@ -101,6 +101,13 @@ public class LifeAssistantActivity extends Activity {
             SGgroupData.add("108路");
             SGgroupData.add("146路");
             SGgroupData.add("D1路");
+            SGgroupData.add("321路");
+            SGgroupData.add("322路");
+            SGgroupData.add("323路");
+            SGgroupData.add("324路");
+            SGgroupData.add("地铁一号线");
+            SGgroupData.add("地铁一号线南延线");
+            SGgroupData.add("地铁二号线");
 
             List<String> sub1 = new ArrayList<String>();
             sub1.add(getString(R.string.route107));
@@ -129,6 +136,27 @@ public class LifeAssistantActivity extends Activity {
             List<String> sub9 = new ArrayList<String>();
             sub9.add(getString(R.string.routeD1));
             SGchildrenData.add(sub9);
+            List<String> sub10 = new ArrayList<String>();
+            sub10.add(getString(R.string.route321));
+            SGchildrenData.add(sub10);
+            List<String> sub11 = new ArrayList<String>();
+            sub11.add(getString(R.string.route322));
+            SGchildrenData.add(sub11);
+            List<String> sub12 = new ArrayList<String>();
+            sub12.add(getString(R.string.route323));
+            SGchildrenData.add(sub12);
+            List<String> sub13 = new ArrayList<String>();
+            sub13.add(getString(R.string.route324));
+            SGchildrenData.add(sub13);
+            List<String> sub14 = new ArrayList<String>();
+            sub14.add(getString(R.string.background1));
+            SGchildrenData.add(sub14);
+            List<String> sub15 = new ArrayList<String>();
+            sub15.add(getString(R.string.background1nanyanxian));
+            SGchildrenData.add(sub15);
+            List<String> sub16 = new ArrayList<String>();
+            sub16.add(getString(R.string.background2));
+            SGchildrenData.add(sub16);
 
 
 

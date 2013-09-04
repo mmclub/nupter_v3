@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 	android:shape="rectangle">
@@ -7,14 +6,4 @@
 	<corners android:radius="8dp" />
 	<solid android:color="#F5F5F5" />
 	<stroke android:width="3dip" android:color="#6F6F6F" />
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-	android:shape="rectangle">
-	<padding android:left="7dp" android:top="7dp" android:right="7dp"
-		android:bottom="7dp" />
-	<corners android:radius="8dp" />
-	<solid android:color="#F5F5F5" />
-	<stroke android:width="3dip" android:color="#6F6F6F" />
->>>>>>> 3071535a88c6664df7a23ca53e9e2d24943b356c
 </shape>

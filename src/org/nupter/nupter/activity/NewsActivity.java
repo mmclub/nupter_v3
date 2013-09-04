@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerTabStrip;
-import android.widget.AdapterView;
+import android.widget.*;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
@@ -31,9 +31,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 /**
  * 校园新闻板块和教务公告板块的主界面
@@ -44,22 +41,59 @@ import android.widget.Toast;
 public class NewsActivity extends FragmentActivity {
 
     List<Fragment> fragmentList = new ArrayList<Fragment>();
-    List<String> titleList = new ArrayList<String>();
+    private RadioGroup myRadioGroup;
+    private ViewPager vp;
+    private RadioButton btn_0,btn_1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_viewpager);
-        ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
-        PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pagerTab);
-
+        vp = (ViewPager) findViewById(R.id.viewPager);
+        btn_0 = (RadioButton)findViewById(R.id.btn_0);
+        btn_1 = (RadioButton)findViewById(R.id.btn_1);
+        myRadioGroup = (RadioGroup)findViewById(R.id.myRadiogroup);
         fragmentList.add(new NoticeFragment());
         fragmentList.add(new NewsFragment());
-        titleList.add("教务公告");
-        titleList.add("校园新闻");
+
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),
-                fragmentList, titleList));
-        pts.setTabIndicatorColorResource(R.color.blue);
-        pts.setTextSpacing(50);
+                fragmentList));
+
+         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+             @Override
+             public void onPageScrolled(int i, float v, int i2) {
+                 //To change body of implemented methods use File | Settings | File Templates.
+             }
+
+             @Override
+             public void onPageSelected(int i) {
+                 switch (i) {
+                     case 0:
+                         btn_0.setChecked(true);
+                         break;
+                     case 1:
+                         btn_1.setChecked(true);
+                         break;
+
+                 }
+             }
+
+             @Override
+             public void onPageScrollStateChanged(int i) {
+                 //To change body of implemented methods use File | Settings | File Templates.
+             }
+         });
+        myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            if (checkedId ==R.id.btn_0){
+                        vp.setCurrentItem(0);
+                }
+            else if (checkedId == R.id.btn_1){
+                         vp.setCurrentItem(1);
+            }
+            }
+        });
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -67,13 +101,12 @@ public class NewsActivity extends FragmentActivity {
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
-        private List<String> titleList;
 
-        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList,
-                              List<String> titleList) {
+
+        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList ) {
             super(fm);
             this.fragmentList = fragmentList;
-            this.titleList = titleList;
+
         }
 
         /**
@@ -83,14 +116,6 @@ public class NewsActivity extends FragmentActivity {
         public Fragment getItem(int arg0) {
             return (fragmentList == null || fragmentList.size() == 0) ? null
                     : fragmentList.get(arg0);
-        }
-
-        /**
-         * 每个页面的title
-         */
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titleList.get(position);
         }
 
         /**
