@@ -33,7 +33,6 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     private ViewPager mViewPager;
     private GridView gridViewBig;
     private GridView gridViewSmall;
-    private MyAdapter adapter;
     private ArrayList<Integer> backgroundBig = new ArrayList<Integer>();
     private ArrayList<Integer> backgroundSmall = new ArrayList<Integer>();
     private SharedPreferences preferences;

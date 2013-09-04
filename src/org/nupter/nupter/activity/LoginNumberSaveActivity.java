@@ -37,9 +37,9 @@ public class LoginNumberSaveActivity extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.save_btn_pressed);
+                    v.setBackgroundResource(R.drawable.login_btn_pressed);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.setBackgroundResource(R.drawable.save_btn);
+                    v.setBackgroundResource(R.drawable.login_btn);
                 }
                 return false;
             }
