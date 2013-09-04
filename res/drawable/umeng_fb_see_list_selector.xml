@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:state_pressed="true" android:drawable="@drawable/umeng_fb_see_list_pressed" />
 	<item android:state_pressed="false" android:drawable="@drawable/umeng_fb_see_list_normal" />
 </selector>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:state_pressed="true" android:drawable="@drawable/umeng_fb_see_list_pressed" />
+	<item android:state_pressed="false" android:drawable="@drawable/umeng_fb_see_list_normal" />
+</selector>
+>>>>>>> 3071535a88c6664df7a23ca53e9e2d24943b356c
