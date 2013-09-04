@@ -106,8 +106,10 @@
         <meta-data android:value="5226d90556240bec3b0419ec" android:name="UMENG_APPKEY"></meta-data>
         <meta-data android:value="Develop" android:name="UMENG_CHANNEL"/>
 
-        <activity android:name="com.umeng.fb.ConversationActivity"/>
-        <activity android:name="com.umeng.fb.ContactActivity"/>
+        <activity android:name="com.umeng.fb.ConversationActivity"
+                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+        <activity android:name="com.umeng.fb.ContactActivity"
+                  android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
 
 
     </application>

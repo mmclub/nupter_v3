@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentTop="true"
-        android:background="#000000" >
+        android:background="#3699CC" >
 
         <ImageView
             android:id="@+id/umeng_fb_back"
