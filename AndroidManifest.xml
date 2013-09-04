@@ -103,6 +103,11 @@
                 <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
+        <meta-data android:value="5226d90556240bec3b0419ec" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="Develop" android:name="UMENG_CHANNEL"/>
+
+        <activity android:name="com.umeng.fb.ConversationActivity"/>
+        <activity android:name="com.umeng.fb.ContactActivity"/>
 
 
     </application>
@@ -114,8 +119,7 @@
     </service>
 
 
-    <meta-data android:value="5226d90556240bec3b0419ec" android:name="UMENG_APPKEY"></meta-data>
-    <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>

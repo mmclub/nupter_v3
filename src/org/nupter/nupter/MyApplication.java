@@ -11,6 +11,7 @@ import com.orm.SugarApp;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
+import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.activity.MessageListActivity;
 
 
@@ -31,6 +32,7 @@ public class MyApplication extends SugarApp {
         MyApplication.context = getApplicationContext();
         instance = this;
 
+        MobclickAgent.setDebugMode(true);
         // 初始化Parse SDK
         Parse.initialize(this, AppConstants.ParseAppID, AppConstants.ParseClientKey);
         PushService.setDefaultPushCallback(this, MessageListActivity.class);
