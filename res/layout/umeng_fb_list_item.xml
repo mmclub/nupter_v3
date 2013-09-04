@@ -57,5 +57,4 @@
             android:textIsSelectable="true"
             android:textSize="15sp" />
     </RelativeLayout>
-
 </RelativeLayout>
