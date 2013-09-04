@@ -153,9 +153,6 @@ public class SettingActivity extends Activity {
         map.put("text", "版本号" + AppUtils.getVersionName(this));
         listData.add(map);
 
-        map = new HashMap<String, String>();
-        map.put("text", "版本" + String.valueOf(AppUtils.getVersionCode(this)));
-        listData.add(map);
 
     }
 
