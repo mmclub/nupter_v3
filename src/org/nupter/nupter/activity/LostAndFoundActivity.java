@@ -153,20 +153,23 @@ public class LostAndFoundActivity extends FragmentActivity {
                     contnet = infoEditText.getText().toString();
                     timeStamp = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
                     Log.d("Calendar_test", timeStamp);
-                    url = "http://nuptapi.nupter.org/lost/new";
+                    url = "http://nuptapi.nupter.org/lost/new/";
                     RequestParams params = new RequestParams();
                     params.put("content", contnet);
                     params.put("time", timeStamp);
                     params.put("title", "");
                     params.put("key", "llpzqxh");
                     params.put("url", "");
+                    Log.d("Calendar_test", contnet);
+                    url = url + "?time=20120307&title=&content=南京热死了&url=&key=llpzqxh";
                     if (NetUtils.isNewworkConnected()) {
-                        new AsyncHttpClient().post(url, params,
+                        new AsyncHttpClient().get(url, params,
                                 new AsyncHttpResponseHandler() {
                                     @Override
                                     public void onSuccess(String response) {
                                         try {
-                                            if (response.matches("ok")) {
+                                            Log.d("Calendar_test", response);
+                                            if (response.matches("(.*)ok(.*)")) {
                                                 Toast.makeText(LostAndFoundActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(LostAndFoundActivity.this, "发送失败", Toast.LENGTH_SHORT).show();

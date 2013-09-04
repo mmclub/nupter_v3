@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#f6f7f7"
               android:paddingLeft="15dp"
               android:paddingRight="15dp">
     <TextView
@@ -14,12 +15,16 @@
             android:textSize="20sp"/>
     <EditText
             android:id="@+id/publishInfoEditText"
-            android:background="@color/white"
-            android:layout_width="250dp"
+            android:background="@drawable/publish_edit_bg"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
-            android:layout_gravity="center_horizontal"
-            android:hint="&#x0A;        请详细描述,包括：具体内容，你的称呼，以及你的联系方式。审核成功后会发布到校会大服只归去来兮的人人主页&#x0A;"/>
+            android:gravity="top"
+            android:hint="&#x0A;  请详细描述,包括：具体内容，你的称呼，以及你的联系方式。审核成功后会发布到校会大服只归去来兮的人人主页&#x0A;"/>
     <Button
             android:id="@+id/publishButton"
             android:background="@drawable/publish_btn"
@@ -28,7 +33,6 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:layout_marginTop="5pt"
-            android:layout_gravity="center_horizontal"
             android:textSize="20sp"
             android:text="发       送"
             android:textColor="#fff"/>
