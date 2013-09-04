@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.*;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
+import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.AppUtils;
 import org.nupter.nupter.utils.CornerListView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,6 +149,13 @@ public class SettingActivity extends Activity {
         map.put("text", "反馈");
         listData.add(map);
 
+        map = new HashMap<String, String>();
+        map.put("text", "版本号" + AppUtils.getVersionName(this));
+        listData.add(map);
+
+        map = new HashMap<String, String>();
+        map.put("text", "版本" + String.valueOf(AppUtils.getVersionCode(this)));
+        listData.add(map);
 
     }
 
