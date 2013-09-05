@@ -5,19 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
 /**
  * 校园地图的列表
- * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  *
+ * @author <a href="mailto:lxyweb@gmail.com">Lin xiangyu</a>
  */
 
 
@@ -27,17 +25,33 @@ public class MapListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_activity);
-
         ListView mListView = (ListView) findViewById(R.id.listView);
+        Button button = (Button) findViewById(R.id.mButton);
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setBackgroundResource(R.drawable.app_list_corner_round);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    v.setBackgroundResource(R.drawable.login_edit);
+                }
+                return false;
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapListActivity.this, MapBaiduActivity.class);
+                MapListActivity.this.startActivity(intent);
+            }
+        });
         // 添加ListItem，设置事件响应
         mListView.setAdapter(new DemoListAdapter());
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-                Intent intent = new Intent(MapListActivity.this, demos[index].demoClass);
-                if (demos[index].demoClass != MapBaiduActivity.class){
-                    intent.putExtra(MapImageActivity.EXTRA_IMAGE_ID, images[index]);
-                    intent.putExtra(MapImageActivity.EXTRA_IMAGE_TITLE, demos[index].title);
-                }
+                Intent intent = new Intent(MapListActivity.this, MapImageActivity.class);
+                intent.putExtra(MapImageActivity.EXTRA_IMAGE_ID, images[index]);
+                intent.putExtra(MapImageActivity.EXTRA_IMAGE_TITLE, demos[index].title);
                 MapListActivity.this.startActivity(intent);
             }
         });
@@ -49,15 +63,13 @@ public class MapListActivity extends Activity {
 
 
     private static final ActivityInfo[] demos = {
-            new ActivityInfo(R.string.title_activity_baidumap, R.string.subtitle_activity_baidumap, MapBaiduActivity.class),
-            new ActivityInfo(R.string.title_activity_xianlin_area, R.string.subtitle_activity_xianlin_area, MapImageActivity.class),
-            new ActivityInfo(R.string.title_activity_nupt_draw, R.string.subtitle_activity_nupt_draw, MapImageActivity.class),
-            new ActivityInfo(R.string.title_activity_nupt_map, R.string.subtitle_activity_nupt_map, MapImageActivity.class)
+            new ActivityInfo(R.string.title_activity_xianlin_area, R.string.subtitle_activity_xianlin_area),
+            new ActivityInfo(R.string.title_activity_nupt_draw, R.string.subtitle_activity_nupt_draw),
+            new ActivityInfo(R.string.title_activity_nupt_map, R.string.subtitle_activity_nupt_map)
 
     };
 
     private static final int[] images = {
-            R.drawable.xianlin_area,
             R.drawable.xianlin_area,
             R.drawable.nupt_draw,
             R.drawable.nupt_map
@@ -73,10 +85,6 @@ public class MapListActivity extends Activity {
         public View getView(int index, View convertView, ViewGroup parent) {
             convertView = View.inflate(MapListActivity.this, R.layout.item_map_list, null);
             TextView title = (TextView) convertView.findViewById(R.id.title);
-            if (demos[index].demoClass == MainActivity.class
-                    ) {
-                title.setTextColor(Color.YELLOW);
-            }
             title.setText(demos[index].title);
             return convertView;
         }
@@ -101,19 +109,17 @@ public class MapListActivity extends Activity {
     private static class ActivityInfo {
         private final int title;
         private final int desc;
-        private final Class<? extends android.app.Activity> demoClass;
 
-        public ActivityInfo(int title, int desc, Class<? extends android.app.Activity> demoClass) {
+        public ActivityInfo(int title, int desc) {
             this.title = title;
             this.desc = desc;
-            this.demoClass = demoClass;
         }
     }
 
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
@@ -127,6 +133,7 @@ public class MapListActivity extends Activity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

@@ -139,7 +139,6 @@ public class MyTable extends View {
         Paint paint = new Paint();
         width = canvas.getWidth();
         offset = dip2px(MyApplication.getAppContext(), 20);
-        Log.i("TAG",offset+"");
         height = canvas.getHeight() - offset;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         skin = preferences.getInt("skin", 0);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import org.nupter.nupter.R;
@@ -13,11 +14,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+
 /**
- *  生活小秘书板块主界面
+ * 生活小秘书板块主界面
  *
- *  @author panlei e-mail:121531863@qq.com
- *
+ * @author panlei e-mail:121531863@qq.com
  */
 
 public class LifeAssistantActivity extends Activity {
@@ -33,14 +34,16 @@ public class LifeAssistantActivity extends Activity {
     private ArrayList<View> views;
 
     //定义各个界面View对象
-    private View view1,view2,view3,view4;
+    private View view1, view2, view3, view4;
 
     private RadioGroup mRadiogroup;
 
-    private RadioButton btn_0,btn_1,btn_2,btn_3;
+    private RadioButton btn_0, btn_1, btn_2, btn_3;
 
     private List<String> SGgroupData;
     private List<List<String>> SGchildrenData;
+    private int screenWidth;
+    private ImageView imageView;
 
     private int currIndex = 0;
     // 当前的位置索引值
@@ -54,11 +57,15 @@ public class LifeAssistantActivity extends Activity {
         initView();
         initData();
         loadData(0);
-        ExpandableListView expandableListView = (ExpandableListView)view1.findViewById(R.id.schoolGuideExpend);
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        imageView = (ImageView) findViewById(R.id.imgView);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 4, 5));
+        ExpandableListView expandableListView = (ExpandableListView) view1.findViewById(R.id.schoolGuideExpend);
         expandableListView.setGroupIndicator(null);
-        ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this,SGgroupData,SGchildrenData);
+        ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
         expandableListView.setAdapter(myAdapter);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -73,25 +80,24 @@ public class LifeAssistantActivity extends Activity {
         return true;
     }
 
-    private void loadData(int posion ) {
+    private void loadData(int posion) {
         SGgroupData = new ArrayList<String>();
         SGchildrenData = new ArrayList<List<String>>();
-        if (posion == 0){
-        SGgroupData.add("图书馆介绍");
-        SGgroupData.add("起居指南");
-        SGgroupData.add("通信指南");
+        if (posion == 0) {
+            SGgroupData.add("图书馆介绍");
+            SGgroupData.add("起居指南");
+            SGgroupData.add("通信指南");
 
-        List<String> sub1 = new ArrayList<String>();
-        sub1.add(getString(R.string.tushuguanbuchong));
-        SGchildrenData.add(sub1);
-        List<String> sub2 = new ArrayList<String>();
-        sub2.add(getString(R.string.qijuzhinan));
-        SGchildrenData.add(sub2);
-        List<String> sub3 = new ArrayList<String>();
-        sub3.add(getString(R.string.tongxinzhinan));
-        SGchildrenData.add(sub3);
-        }
-        else if (posion == 1){
+            List<String> sub1 = new ArrayList<String>();
+            sub1.add(getString(R.string.tushuguanbuchong));
+            SGchildrenData.add(sub1);
+            List<String> sub2 = new ArrayList<String>();
+            sub2.add(getString(R.string.qijuzhinan));
+            SGchildrenData.add(sub2);
+            List<String> sub3 = new ArrayList<String>();
+            sub3.add(getString(R.string.tongxinzhinan));
+            SGchildrenData.add(sub3);
+        } else if (posion == 1) {
             SGgroupData.add("107路");
             SGgroupData.add("165路");
             SGgroupData.add("177路");
@@ -159,9 +165,7 @@ public class LifeAssistantActivity extends Activity {
             SGchildrenData.add(sub16);
 
 
-
-        }
-        else if (posion == 2){
+        } else if (posion == 2) {
             SGgroupData.add("邮局");
             SGgroupData.add("派出所");
             SGgroupData.add("超市");
@@ -200,8 +204,7 @@ public class LifeAssistantActivity extends Activity {
             sub9.add(getString(R.string.xiuchedian));
             SGchildrenData.add(sub9);
 
-        }
-        else if (posion == 3){
+        } else if (posion == 3) {
             SGgroupData.add("三牌楼校区");
             SGgroupData.add("仙林校区");
 
@@ -235,12 +238,12 @@ public class LifeAssistantActivity extends Activity {
         // 实例化ViewPager适配器
         vpAdapter = new ViewPagerAdapter(views);
 
-        mRadiogroup = (RadioGroup)findViewById(R.id.mRadiogroup);
+        mRadiogroup = (RadioGroup) findViewById(R.id.mRadiogroup);
 
-        btn_0 = (RadioButton)findViewById(R.id.btn_0);
-        btn_1 = (RadioButton)findViewById(R.id.btn_1);
-        btn_2 = (RadioButton)findViewById(R.id.btn_2);
-        btn_3 = (RadioButton)findViewById(R.id.btn_3);
+        btn_0 = (RadioButton) findViewById(R.id.btn_0);
+        btn_1 = (RadioButton) findViewById(R.id.btn_1);
+        btn_2 = (RadioButton) findViewById(R.id.btn_2);
+        btn_3 = (RadioButton) findViewById(R.id.btn_3);
 
 
     }
@@ -254,33 +257,33 @@ public class LifeAssistantActivity extends Activity {
         mRadiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.btn_0){
+                if (checkedId == R.id.btn_0) {
                     viewPager.setCurrentItem(0);
                     loadData(0);
-                    ExpandableListView expandableListView = (ExpandableListView)findViewById(R.id.schoolGuideExpend);
+                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.schoolGuideExpend);
                     expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this,SGgroupData,SGchildrenData);
+                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
                     expandableListView.setAdapter(myAdapter);
-                } else if (checkedId == R.id.btn_1){
+                } else if (checkedId == R.id.btn_1) {
                     viewPager.setCurrentItem(1);
                     loadData(1);
-                    ExpandableListView expandableListView = (ExpandableListView)findViewById(R.id.busRouteExpend);
+                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.busRouteExpend);
                     expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this,SGgroupData,SGchildrenData);
+                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
                     expandableListView.setAdapter(myAdapter);
-                } else if (checkedId == R.id.btn_2){
+                } else if (checkedId == R.id.btn_2) {
                     viewPager.setCurrentItem(2);
                     loadData(2);
-                    ExpandableListView expandableListView = (ExpandableListView)findViewById(R.id.localInfoExpend);
+                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.localInfoExpend);
                     expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this,SGgroupData,SGchildrenData);
+                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
                     expandableListView.setAdapter(myAdapter);
-                }else if (checkedId == R.id.btn_3){
+                } else if (checkedId == R.id.btn_3) {
                     viewPager.setCurrentItem(3);
                     loadData(3);
-                    ExpandableListView expandableListView = (ExpandableListView)findViewById(R.id.restTimeExpend);
+                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.restTimeExpend);
                     expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this,SGgroupData,SGchildrenData);
+                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
                     expandableListView.setAdapter(myAdapter);
                 }
             }
@@ -294,66 +297,64 @@ public class LifeAssistantActivity extends Activity {
         views.add(view3);
         views.add(view4);
     }
-    public  class  ExpandableAdapter extends  BaseExpandableListAdapter
-    {
+
+    public class ExpandableAdapter extends BaseExpandableListAdapter {
         private Context context;
         private List<String> SGgroupData;
         private List<List<String>> SGchildrenData;
-        public  ExpandableAdapter(Context context, List<String> SGgroupData,List<List<String>> SGchildrenData)
-        {
-            this.context =context;
+
+        public ExpandableAdapter(Context context, List<String> SGgroupData, List<List<String>> SGchildrenData) {
+            this.context = context;
             this.SGgroupData = SGgroupData;
             this.SGchildrenData = SGchildrenData;
         }
 
 
+        public Object getChild(int groupPosition, int childPosition) {
+            return SGchildrenData.get(groupPosition).get(childPosition);
+        }
 
-        public  Object getChild(int  groupPosition, int  childPosition)
-        {
-            return   SGchildrenData.get(groupPosition).get(childPosition);
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
         }
-        public  long  getChildId(int  groupPosition, int  childPosition)
-        {
-            return  childPosition;
+
+        public int getChildrenCount(int groupPosition) {
+            return SGchildrenData.get(groupPosition).size();
         }
-        public  int  getChildrenCount(int  groupPosition)
-        {
-            return   SGchildrenData.get(groupPosition).size();
-        }
-        public  View getChildView(int  groupPosition, int  childPosition,
-                                  boolean  isLastChild, View convertView, ViewGroup parent)
-        {
-            String text = ((String)getChild(groupPosition,childPosition));
+
+        public View getChildView(int groupPosition, int childPosition,
+                                 boolean isLastChild, View convertView, ViewGroup parent) {
+            String text = ((String) getChild(groupPosition, childPosition));
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.view_child, null);
             TextView tv = (TextView) linearLayout.findViewById(R.id.childText);
             tv.setText(text);
             return linearLayout;
         }
+
         // group method stub
-        public  Object getGroup(int  groupPosition)
-        {
-            return  SGgroupData.get(groupPosition);
+        public Object getGroup(int groupPosition) {
+            return SGgroupData.get(groupPosition);
         }
-        public  int  getGroupCount()
-        {
-            return  SGgroupData.size();
+
+        public int getGroupCount() {
+            return SGgroupData.size();
         }
-        public  long  getGroupId(int  groupPosition)
-        {
-            return  groupPosition;
+
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
         }
-        public  View getGroupView(int  groupPosition, boolean  isExpanded,
-                                  View convertView, ViewGroup parent)
-        {
+
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                                 View convertView, ViewGroup parent) {
             String text = SGgroupData.get(groupPosition);
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             RelativeLayout linearLayout = (RelativeLayout) layoutInflater.inflate(R.layout.view_group, null);
-            TextView textView = (TextView)linearLayout.findViewById(R.id.groupText);
+            TextView textView = (TextView) linearLayout.findViewById(R.id.groupText);
             textView.setText(text);
-            ImageView imageView = (ImageView)linearLayout.findViewById(R.id.arrowImage);
-            if (isExpanded){
+            ImageView imageView = (ImageView) linearLayout.findViewById(R.id.arrowImage);
+            if (isExpanded) {
                 imageView.setImageResource(R.drawable.expend_arrow_clicked);
             } else {
                 imageView.setImageResource(R.drawable.expend_arrow_normal);
@@ -361,13 +362,12 @@ public class LifeAssistantActivity extends Activity {
             return linearLayout;
         }
 
-        public  boolean  hasStableIds()
-        {
-            return  false ;
+        public boolean hasStableIds() {
+            return false;
         }
-        public  boolean  isChildSelectable(int  groupPosition, int  childPosition)
-        {
-            return  true ;
+
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
         }
     }
 
@@ -400,7 +400,13 @@ public class LifeAssistantActivity extends Activity {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
+            for(int i=0;i<4;i++){
+                if (arg0 == i) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+                    params.setMargins(screenWidth / 4*i+arg2 / 4, 0, 0, 0);
+                    imageView.setLayoutParams(params);
+                }
+            }
         }
     }
 
@@ -408,13 +414,12 @@ public class LifeAssistantActivity extends Activity {
 }
 
 
-
 class ViewPagerAdapter extends PagerAdapter {
 
     //界面列表
     private ArrayList<View> views;
 
-    public ViewPagerAdapter (ArrayList<View> views){
+    public ViewPagerAdapter(ArrayList<View> views) {
         this.views = views;
     }
 
@@ -433,7 +438,7 @@ class ViewPagerAdapter extends PagerAdapter {
      * 初始化position位置的界面
      */
     @Override
-    public  Object instantiateItem(ViewGroup container , int position){
+    public Object instantiateItem(ViewGroup container, int position) {
         ((ViewPager) container).addView(views.get(position), 0);
         return views.get(position);
 
@@ -452,10 +457,9 @@ class ViewPagerAdapter extends PagerAdapter {
      * 销毁position位置的界面
      */
     @Override
-    public void destroyItem(ViewGroup  view, int position, Object arg2) {
+    public void destroyItem(ViewGroup view, int position, Object arg2) {
         ((ViewPager) view).removeView(views.get(position));
     }
-
 
 
 }

@@ -93,7 +93,6 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View view) {
                 gifView.setClickable(false);
-                gifView2.setShowDimension(32,32);
                 new GetCheckCode().start();
             }
         });
@@ -138,6 +137,7 @@ public class LoginActivity extends Activity {
         public void run() {
             URL loginUrl;
             try {
+                gifView2.setShowDimension(32,32);
                 //得到cookie
                 loginUrl = new URL(login_url);
                 getCookieConnection = (HttpURLConnection) loginUrl.openConnection();

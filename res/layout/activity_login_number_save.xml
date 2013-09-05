@@ -3,8 +3,8 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:paddingLeft="30dp"
-              android:paddingRight="30dp">
+              android:paddingLeft="25dp"
+              android:paddingRight="25dp">
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -74,7 +74,7 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:text="保    存"
+                android:text="保      存"
                 android:background="@drawable/login_btn"
                 android:layout_weight="1"/>
     </LinearLayout>
