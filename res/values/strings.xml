@@ -168,14 +168,14 @@ flashFXP 或CuteFTP 登录，资源非常丰富）
     <string name="title_activity_baidumap">仙林校区卫星地图</string>
     <string name="subtitle_activity_baidumap">仙林校区的地图</string>
 
-    <string name="title_activity_xianlin_area">仙林周边地图</string>
-    <string name="subtitle_activity_xianlin_area">仙林周边地图</string>
+    <string name="title_activity_xianlin_area">仙林周边手绘地图</string>
+    <string name="subtitle_activity_xianlin_area">仙林周边手绘地图</string>
 
-    <string name="title_activity_nupt_draw">仙林校区手绘地图</string>
-    <string name="subtitle_activity_nupt_draw">仙林校区手绘地图</string>
+    <string name="title_activity_nupt_draw">仙林校区Q版手绘地图</string>
+    <string name="subtitle_activity_nupt_draw">仙林校区Q版手绘地图</string>
 
-    <string name="title_activity_nupt_map">仙林校区地图</string>
-    <string name="subtitle_activity_nupt_map">仙林校区地图</string>
+    <string name="title_activity_nupt_map">仙林校区手绘地图</string>
+    <string name="subtitle_activity_nupt_map">仙林校区手绘地图</string>
     <string name="label_lost">寻物平台</string>
     <string name="label_book">图书信息</string>
     <string name="label_club_photo">社团相册</string>

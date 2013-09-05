@@ -447,7 +447,7 @@ public class ScheduleActivity extends Activity {
                 String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫", "自定义"};
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.skin_icon)
-                        .setTitle("更换皮肤")
+                        .setTitle("给你的桌面小工具换身衣裳吧~\\(≧▽≦)/~")
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
