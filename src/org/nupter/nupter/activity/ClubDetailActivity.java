@@ -68,11 +68,11 @@ public class ClubDetailActivity extends FragmentActivity {
         this.setTitle(clubName[position]);
         ViewPager vp = (ViewPager) findViewById(R.id.mViewPager);
         titleList.add("状态");
-        titleList.add("日志");
         titleList.add("相册");
+        titleList.add("日志");
         fragmentList.add(new StatusAndBlogFragment("status.gets", status));
-        fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
         fragmentList.add(new PhotosFragment());
+        fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
         PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pagerTabStrip);
         pts.setDrawFullUnderline(true);
@@ -172,17 +172,20 @@ public class ClubDetailActivity extends FragmentActivity {
             this.scrollState = i;
             if (lastItem >= adapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
+                progressDialog.show();
                 new AsyncHttpClient().post(url, null,
                         new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(String response) {
                                 msg(response);
                                 adapter.notifyDataSetChanged();
+                                progressDialog.dismiss();
                             }
 
                             @Override
                             public void onFailure(Throwable throwable, String s) {
                                 Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
                             }
                         });
             }

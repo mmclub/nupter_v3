@@ -45,6 +45,7 @@ public class LoginActivity extends Activity {
     private final static int MSG_TEST = 2;
 
     private GifView gifView;
+    private GifView gifView2;
     private String cookie = "";
     private String postData = "";
     private String postTestData = "";
@@ -75,15 +76,18 @@ public class LoginActivity extends Activity {
         intent = getIntent();
         Flag = intent.getStringExtra("JumpTo");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        jsoupTest=new JsoupTest();
+        jsoupTest = new JsoupTest();
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         username.setText(preferences.getString("user", null));
-        password.setText(preferences.getString("password",null));
+        password.setText(preferences.getString("password", null));
         check = (EditText) findViewById(R.id.identify);
         login = (Button) findViewById(R.id.login_schedule);
+        gifView2 = (GifView) findViewById(R.id.gifView2);
+        gifView2.setGifImage(R.drawable.refresh);
         gifView = (GifView) findViewById(R.id.gifView);
+        gifView.setClickable(true);
         new GetCheckCode().start();
         gifView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,11 +131,13 @@ public class LoginActivity extends Activity {
             }
         });
     }
+
     //访问正方主页得到cookie之后，带着cookie访问验证码显示在GifView控件上
     class GetCheckCode extends Thread {
         public void run() {
             URL loginUrl;
             try {
+                gifView2.setShowDimension(32,32);
                 //得到cookie
                 loginUrl = new URL(login_url);
                 getCookieConnection = (HttpURLConnection) loginUrl.openConnection();
@@ -162,8 +168,9 @@ public class LoginActivity extends Activity {
                 checkCodeInputStream = getIdentifyConnection.getInputStream();
                 gifView.setGifImage(checkCodeInputStream);
                 gifView.setShowDimension(90, 50);
-                gifView.setGifImageType(GifView.GifImageType.COVER);
+/*                gifView.setGifImageType(GifView.GifImageType.COVER);*/
                 gifView.setClickable(true);
+                gifView2.setShowDimension(1,1);
             } catch (IOException e) {
                 e.printStackTrace();
                 gifView.setClickable(true);
@@ -171,6 +178,7 @@ public class LoginActivity extends Activity {
             }
         }
     }
+
     //带着cookie，通过post用户名、密码、验证码登陆正方得到网页的InputStream流
     class Login extends Thread {
         URL loginUrl;
@@ -283,7 +291,7 @@ public class LoginActivity extends Activity {
                 getTestConnection.disconnect();
                 if (Flag.equals("Schedule")) {
                     flaghandler.sendEmptyMessage(MSG_TABLE);
-                } else if (Flag.equals("Test")){
+                } else if (Flag.equals("Test")) {
                     flaghandler.sendEmptyMessage(MSG_TEST);
                 }
             } catch (IOException e) {
@@ -302,12 +310,12 @@ public class LoginActivity extends Activity {
             } else if (msg.what == MSG_TEST) {
                 progressDialog.dismiss();
                 //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
-                testString=jsoupTest.parse(testHtml.toString());
+                testString = jsoupTest.parse(testHtml.toString());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();
                 Intent intent = new Intent(LoginActivity.this, TestActivity.class);
-                intent.putExtra("testString",testString);
+                intent.putExtra("testString", testString);
                 LoginActivity.this.startActivity(intent);
             } else if (msg.what == ERR_NET) {
                 Toast.makeText(LoginActivity.this, "网络出错了,请检查网络连接", Toast.LENGTH_LONG).show();

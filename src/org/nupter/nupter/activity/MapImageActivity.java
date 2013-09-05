@@ -239,4 +239,5 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
 }

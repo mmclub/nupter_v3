@@ -3,12 +3,14 @@ package org.nupter.nupter.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
@@ -17,6 +19,8 @@ import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.JsoupTable;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -45,6 +49,7 @@ public class ScheduleActivity extends Activity {
             {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
             {R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3},
             {R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red}};
+    private ArrayList<ArrayList<Integer>> colors = new ArrayList<ArrayList<Integer>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,13 @@ public class ScheduleActivity extends Activity {
         setContentView(R.layout.activity_schedule);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
         height = getWindowManager().getDefaultDisplay().getHeight();
+        for (int i = 0; i < 5; i++) {
+            ArrayList<Integer> arrayList = new ArrayList<Integer>();
+            for (int j = 0; j <= 5; j++) {
+                arrayList.add(color[i][j]);
+            }
+            colors.add(arrayList);
+        }
         preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         schedule = preferences.getString("schedule", null);
         skin = preferences.getInt("skin", 0);
@@ -66,6 +78,24 @@ public class ScheduleActivity extends Activity {
             linearLayout.setBackgroundResource(R.drawable.green_background);
         if (skin == 3)
             linearLayout.setBackgroundResource(R.drawable.blue_background);
+        if (skin == 5) {
+            if (preferences.getInt("custom_bigBackground", 0) != 0)
+                linearLayout.setBackgroundResource(preferences.getInt("custom_bigBackground", 0));
+            ArrayList<Integer> arrayList = new ArrayList<Integer>();
+            if (preferences.getInt("color_1", 0) != 0) {
+                arrayList.add(preferences.getInt("color_1", 0));
+                arrayList.add(preferences.getInt("color_2", 0));
+                arrayList.add(preferences.getInt("color_3", 0));
+                arrayList.add(preferences.getInt("color_4", 0));
+                arrayList.add(preferences.getInt("color_5", 0));
+                arrayList.add(preferences.getInt("color_6", 0));
+                colors.add(arrayList);
+            } else {
+                for (int i = 0; i < 6; i++)
+                    arrayList.add(colors.get(getIntent().getIntExtra("originColor", 0)).get(i));
+                colors.add(arrayList);
+            }
+        }
         linearLayout.post(
                 new Runnable() {
                     @Override
@@ -189,9 +219,9 @@ public class ScheduleActivity extends Activity {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                     className.setText(getClassName(list1.get(position)));
                     classLocation.setText(getClassLocation(list1.get(position)));
-                    convertView.setBackgroundResource(color[skin][position]);
+                    convertView.setBackgroundResource(colors.get(skin).get(position));
                 } else {
-                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height/6));
+                    convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
             } else if (position >= 5 && position < 10) {
                 if (!list2.get(position - 5).equals(" ")) {
@@ -202,7 +232,7 @@ public class ScheduleActivity extends Activity {
                     }
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
-                    convertView.setBackgroundResource(color[skin][position > 6 ? position - 7 : position - 1]);
+                    convertView.setBackgroundResource(colors.get(skin).get(position > 6 ? position - 7 : position - 1));
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
@@ -250,14 +280,14 @@ public class ScheduleActivity extends Activity {
                         if (isOneClass(list4.get(i))) {
                             view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
                         }
-                    }else {
+                    } else {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                     }
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
-                    view.setBackgroundResource(color[skin][i > 3 ? i - 4 : i + 2]);
-                }else {
-                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height/6));
+                    view.setBackgroundResource(colors.get(skin).get(i > 3 ? i - 4 : i + 2));
+                } else {
+                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
             } else if (i >= 5 && i < 10) {
                 if (!list4.get(i - 5).equals(" ")) {
@@ -265,7 +295,7 @@ public class ScheduleActivity extends Activity {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                         className.setText(getClassName(list4.get(i - 5)));
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
-                        view.setBackgroundResource(color[skin][i - 4]);
+                        view.setBackgroundResource(colors.get(skin).get(i - 4));
                     }
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
@@ -310,8 +340,8 @@ public class ScheduleActivity extends Activity {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
                 className.setText(getClassName(list5.get(i)));
                 classLocation.setText(getClassLocation(list5.get(i)));
-                view.setBackgroundResource(color[skin][i > 2 ? i - 3 : i + 3]);
-            }  else {
+                view.setBackgroundResource(colors.get(skin).get(i > 2 ? i - 3 : i + 3));
+            } else {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
             }
             return view;
@@ -397,68 +427,15 @@ public class ScheduleActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_schedule, menu);
-        menu.add("menu");
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫"};
-        new AlertDialog.Builder(this)
-                .setIcon(R.drawable.skin_icon)
-                .setTitle("更换皮肤")
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences.Editor editor = preferences.edit();
-                        switch (which) {
-                            case 0:
-                                editor.putInt("skin", 0);
-                                editor.commit();
-                                sendBroadcast();
-                                ScheduleActivity.this.recreate();
-                                break;
-                            case 1:
-                                editor.putInt("skin", 1);
-                                editor.commit();
-                                sendBroadcast();
-                                ScheduleActivity.this.recreate();
-                                break;
-                            case 2:
-                                editor.putInt("skin", 2);
-                                editor.commit();
-                                sendBroadcast();
-                                ScheduleActivity.this.recreate();
-                                break;
-                            case 3:
-                                editor.putInt("skin", 3);
-                                editor.commit();
-                                sendBroadcast();
-                                ScheduleActivity.this.recreate();
-                                break;
-                            case 4:
-                                editor.putInt("skin", 4);
-                                editor.commit();
-                                sendBroadcast();
-                                ScheduleActivity.this.recreate();
-                                break;
-                        }
-                    }
-                })
-                .setNegativeButton("取消",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                            }
-                        }).create().show();
-        return false;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                Intent intent = new Intent(ScheduleActivity.this, MainActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
             case R.id.action_login:
                 Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);
@@ -467,10 +444,10 @@ public class ScheduleActivity extends Activity {
                 this.finish();
                 break;
             case R.id.action_skin:
-                String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫"};
+                String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫", "自定义"};
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.skin_icon)
-                        .setTitle("更换皮肤")
+                        .setTitle("给你的桌面小工具换身衣裳吧~\\(≧▽≦)/~")
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -506,6 +483,14 @@ public class ScheduleActivity extends Activity {
                                         sendBroadcast();
                                         ScheduleActivity.this.recreate();
                                         break;
+                                    case 5:
+                                        Intent intent = new Intent(ScheduleActivity.this, ScheduleCustomSetting.class);
+                                        intent.putExtra("skin", skin);
+                                        startActivity(intent);
+                                      /*  Intent intent = new Intent(Intent.ACTION_PICK, null);
+                                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image*//*");
+                                        startActivityForResult(intent, 1);*/
+                                        break;
                                 }
                             }
                         })
@@ -521,6 +506,32 @@ public class ScheduleActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setDataAndType(data.getData(), "image/*");
+            // crop为true是设置在开启的intent中设置显示的view可以剪裁
+            intent.putExtra("crop", "true");
+            // aspectX aspectY 是宽高的比例
+            intent.putExtra("aspectX", 20);
+            intent.putExtra("aspectY", 33);
+            // outputX,outputY 是剪裁图片的宽高
+            intent.putExtra("outputX", 400);
+            intent.putExtra("outputY", 660);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, 2);
+        }
+        if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
+            Bundle bundle = data.getExtras();
+            if (bundle != null) {
+                Bitmap photo = bundle.getParcelable("data");
+                linearLayout.setBackgroundDrawable(new BitmapDrawable(photo));
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
