@@ -44,6 +44,8 @@ public class NewsActivity extends FragmentActivity {
     private RadioGroup myRadioGroup;
     private ViewPager vp;
     private RadioButton btn_0,btn_1;
+    private ImageView imageView;
+    private int screenWidth;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,9 @@ public class NewsActivity extends FragmentActivity {
         vp = (ViewPager) findViewById(R.id.viewPager);
         btn_0 = (RadioButton)findViewById(R.id.btn_0);
         btn_1 = (RadioButton)findViewById(R.id.btn_1);
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        imageView=(ImageView)findViewById(R.id.scrollImageView);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 2, 5));
         myRadioGroup = (RadioGroup)findViewById(R.id.myRadiogroup);
         fragmentList.add(new NoticeFragment());
         fragmentList.add(new NewsFragment());
@@ -61,7 +66,11 @@ public class NewsActivity extends FragmentActivity {
          vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
              @Override
              public void onPageScrolled(int i, float v, int i2) {
-                 //To change body of implemented methods use File | Settings | File Templates.
+                 if (i2!=0) {
+                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+                     params.setMargins(i2 / 2, 0, 0, 0);
+                     imageView.setLayoutParams(params);
+                 }
              }
 
              @Override
