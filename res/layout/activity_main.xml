@@ -182,7 +182,7 @@
               <ImageButton
                   android:id="@+id/schoolMapIB"
                   android:layout_width="35dp"
-                  android:layout_height="50dp"
+                  android:layout_height="48dp"
                   android:layout_marginTop="15dp"
                   android:background="@drawable/schoolmap_imagebutton"/>
           </LinearLayout>

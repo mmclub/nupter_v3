@@ -128,7 +128,7 @@ public class NewsActivity extends FragmentActivity {
     }
 
     public class NoticeFragment extends Fragment {
-        private ProgressDialog progressDialog;
+//        private ProgressDialog progressDialog;
         private Intent intent;
         private String URL_NOTICE = "http://nuptapi.nupter.org/jwc/";
         private SimpleAdapter noticeAdapter;
@@ -163,22 +163,25 @@ public class NewsActivity extends FragmentActivity {
                 noticelistView.setOnPullEventListener(soundListener);
             } else {
             }
-            progressDialog = new ProgressDialog(getActivity());
+
+            NewsActivity.this.setTitle("玩命加载中...");
+/*            progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("玩命加载ing");
             progressDialog.setMessage("别着急啊。。。");
             progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            progressDialog.show();*/
 
             AsyncHttpClient client = new AsyncHttpClient();
             client.get(URL_NOTICE, null, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(String response) {
                     NoticeList(response);
-                    noticeAdapter = new SimpleAdapter(getActivity(), noticeList, R.layout.view_notice_news,
+                    noticeAdapter = new SimpleAdapter(NewsActivity.this, noticeList, R.layout.view_notice_news,
                             new String[]{"Title"},
                             new int[]{R.id.Title});
                     noticelistView.setAdapter(noticeAdapter);
-                    progressDialog.dismiss();
+                NewsActivity.this.setTitle("南邮新闻");
+//                    progressDialog.dismiss();
                     noticelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         String str;
 
@@ -205,7 +208,7 @@ public class NewsActivity extends FragmentActivity {
 
                 @Override
                 public void onFailure(Throwable throwable, String s) {
-                    progressDialog.dismiss();
+//                    progressDialog.dismiss();
                     Toast.makeText(getActivity(), "网络不给力啊...", Toast.LENGTH_SHORT).show();
                 }
 
@@ -291,7 +294,7 @@ public class NewsActivity extends FragmentActivity {
                 @Override
                 public void onSuccess(String response) {
                     NewsList(response);
-                    newsAdapter = new SimpleAdapter(getActivity(), newsList, R.layout.view_notice_news,
+                    newsAdapter = new SimpleAdapter(NewsActivity.this, newsList, R.layout.view_notice_news,
                             new String[]{"Title"},
                             new int[]{R.id.Title});
                     newslistView.setAdapter(newsAdapter);
