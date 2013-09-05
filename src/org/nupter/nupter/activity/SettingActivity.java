@@ -94,26 +94,20 @@ public class SettingActivity extends Activity {
                     intent=new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
-                    intent.putExtra(Intent.EXTRA_TEXT, "嗨！童鞋们，快来使用‘掌上南邮’吧，太给力了！" +
-                            "我和小伙伴们都惊呆了。。。 ");
+                    intent.putExtra(Intent.EXTRA_TEXT, "掌上南邮是我们南邮学生自己开发的一款校园助手App，可以随时随地查课表，查成绩，查图书，浏览校园最新资讯～下载连接 http://host1.nupter.org/nupter.apk");
                     startActivity(Intent.createChooser(intent, getTitle()));
 
                     break;
 
                 case 2:
                     intent.setClass(SettingActivity.this, WebviewActivity.class);
-                    intent.putExtra(WebviewActivity.EXTRA_TITLE, "关于掌上南邮");
+                    intent.putExtra(WebviewActivity.EXTRA_TITLE, "掌上南邮与开发团队");
                     intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/about_us.html");
                     startActivity(intent);
                     break;
 
+
                 case 3:
-                    intent.setClass(SettingActivity.this, WebviewActivity.class);
-                    intent.putExtra(WebviewActivity.EXTRA_TITLE, "加入我们");
-                    intent.putExtra(WebviewActivity.EXTRA_URL, "file:///android_asset/join_us.html");
-                    startActivity(intent);
-                    break;
-                case 4:
                     FeedbackAgent agent = new FeedbackAgent(SettingActivity.this);
                     agent.startFeedbackActivity();
                     agent.sync();
@@ -137,12 +131,9 @@ public class SettingActivity extends Activity {
         listData.add(map);
 
         map = new HashMap<String, String>();
-        map.put("text", "关于掌上南邮");
+        map.put("text", "掌上南邮与开发团队");
         listData.add(map);
 
-        map = new HashMap<String, String>();
-        map.put("text", "加入开发团队");
-        listData.add(map);
 
         map = new HashMap<String, String>();
         map.put("text", "反馈");
