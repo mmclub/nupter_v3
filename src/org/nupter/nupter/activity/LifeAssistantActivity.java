@@ -23,7 +23,7 @@ import android.support.v4.view.ViewPager;
 
 public class LifeAssistantActivity extends Activity {
 
-
+    private ExpandableAdapter myAdapter;
     // 定义ViewPager对象
     private ViewPager viewPager;
 
@@ -56,14 +56,10 @@ public class LifeAssistantActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
         initData();
-        loadData(0);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
         imageView = (ImageView) findViewById(R.id.imgView);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 4, 5));
-        ExpandableListView expandableListView = (ExpandableListView) view1.findViewById(R.id.schoolGuideExpend);
-        expandableListView.setGroupIndicator(null);
-        ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
-        expandableListView.setAdapter(myAdapter);
+
     }
 
     @Override
@@ -98,71 +94,73 @@ public class LifeAssistantActivity extends Activity {
             sub3.add(getString(R.string.tongxinzhinan));
             SGchildrenData.add(sub3);
         } else if (posion == 1) {
+            SGgroupData.add("地铁一号线");
+            SGgroupData.add("地铁一号线南延线");
+            SGgroupData.add("地铁二号线");
+            SGgroupData.add("97路");
+            SGgroupData.add("D1路");
             SGgroupData.add("107路");
             SGgroupData.add("165路");
             SGgroupData.add("177路");
             SGgroupData.add("东上路");
-            SGgroupData.add("97路");
             SGgroupData.add("310路");
             SGgroupData.add("108路");
             SGgroupData.add("146路");
-            SGgroupData.add("D1路");
             SGgroupData.add("321路");
             SGgroupData.add("322路");
             SGgroupData.add("323路");
             SGgroupData.add("324路");
-            SGgroupData.add("地铁一号线");
-            SGgroupData.add("地铁一号线南延线");
-            SGgroupData.add("地铁二号线");
 
             List<String> sub1 = new ArrayList<String>();
-            sub1.add(getString(R.string.route107));
+            sub1.add(getString(R.string.background1));
             SGchildrenData.add(sub1);
             List<String> sub2 = new ArrayList<String>();
-            sub2.add(getString(R.string.route165));
+            sub2.add(getString(R.string.background1nanyanxian));
             SGchildrenData.add(sub2);
             List<String> sub3 = new ArrayList<String>();
-            sub3.add(getString(R.string.route177));
+            sub3.add(getString(R.string.background2));
             SGchildrenData.add(sub3);
             List<String> sub4 = new ArrayList<String>();
-            sub4.add(getString(R.string.routeDS));
+            sub4.add(getString(R.string.route97));
             SGchildrenData.add(sub4);
             List<String> sub5 = new ArrayList<String>();
-            sub5.add(getString(R.string.route97));
+            sub5.add(getString(R.string.routeD1));
             SGchildrenData.add(sub5);
             List<String> sub6 = new ArrayList<String>();
-            sub6.add(getString(R.string.route310));
+            sub6.add(getString(R.string.route107));
             SGchildrenData.add(sub6);
             List<String> sub7 = new ArrayList<String>();
-            sub7.add(getString(R.string.route108));
+            sub7.add(getString(R.string.route165));
             SGchildrenData.add(sub7);
             List<String> sub8 = new ArrayList<String>();
-            sub8.add(getString(R.string.route146));
+            sub8.add(getString(R.string.route177));
             SGchildrenData.add(sub8);
             List<String> sub9 = new ArrayList<String>();
-            sub9.add(getString(R.string.routeD1));
+            sub9.add(getString(R.string.routeDS));
             SGchildrenData.add(sub9);
             List<String> sub10 = new ArrayList<String>();
-            sub10.add(getString(R.string.route321));
+            sub10.add(getString(R.string.route310));
             SGchildrenData.add(sub10);
             List<String> sub11 = new ArrayList<String>();
-            sub11.add(getString(R.string.route322));
+            sub11.add(getString(R.string.route108));
             SGchildrenData.add(sub11);
             List<String> sub12 = new ArrayList<String>();
-            sub12.add(getString(R.string.route323));
+            sub12.add(getString(R.string.route146));
             SGchildrenData.add(sub12);
             List<String> sub13 = new ArrayList<String>();
-            sub13.add(getString(R.string.route324));
+            sub13.add(getString(R.string.route321));
             SGchildrenData.add(sub13);
             List<String> sub14 = new ArrayList<String>();
-            sub14.add(getString(R.string.background1));
+            sub14.add(getString(R.string.route322));
             SGchildrenData.add(sub14);
             List<String> sub15 = new ArrayList<String>();
-            sub15.add(getString(R.string.background1nanyanxian));
+            sub15.add(getString(R.string.route323));
             SGchildrenData.add(sub15);
             List<String> sub16 = new ArrayList<String>();
-            sub16.add(getString(R.string.background2));
+            sub16.add(getString(R.string.route324));
             SGchildrenData.add(sub16);
+
+
 
 
         } else if (posion == 2) {
@@ -246,6 +244,30 @@ public class LifeAssistantActivity extends Activity {
         btn_3 = (RadioButton) findViewById(R.id.btn_3);
 
 
+        loadData(0);
+        ExpandableListView expandableListView0 = (ExpandableListView)view1.findViewById(R.id.schoolGuideExpend);
+        expandableListView0.setGroupIndicator(null);
+        myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
+        expandableListView0.setAdapter(myAdapter);
+
+        loadData(1);
+        ExpandableListView expandableListView1 = (ExpandableListView)view2.findViewById(R.id.busRouteExpend);
+        expandableListView1.setGroupIndicator(null);
+        myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
+        expandableListView1.setAdapter(myAdapter);
+
+        loadData(2);
+        ExpandableListView expandableListView2 = (ExpandableListView)view3.findViewById(R.id.localInfoExpend);
+        expandableListView2.setGroupIndicator(null);
+        myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
+        expandableListView2.setAdapter(myAdapter);
+
+        loadData(3);
+        ExpandableListView expandableListView3 = (ExpandableListView) view4.findViewById(R.id.restTimeExpend);
+        expandableListView3.setGroupIndicator(null);
+        ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
+        expandableListView3.setAdapter(myAdapter);
+
     }
 
     /**
@@ -259,32 +281,16 @@ public class LifeAssistantActivity extends Activity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.btn_0) {
                     viewPager.setCurrentItem(0);
-                    loadData(0);
-                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.schoolGuideExpend);
-                    expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
-                    expandableListView.setAdapter(myAdapter);
+
                 } else if (checkedId == R.id.btn_1) {
                     viewPager.setCurrentItem(1);
-                    loadData(1);
-                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.busRouteExpend);
-                    expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
-                    expandableListView.setAdapter(myAdapter);
+
                 } else if (checkedId == R.id.btn_2) {
                     viewPager.setCurrentItem(2);
-                    loadData(2);
-                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.localInfoExpend);
-                    expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
-                    expandableListView.setAdapter(myAdapter);
+
                 } else if (checkedId == R.id.btn_3) {
                     viewPager.setCurrentItem(3);
-                    loadData(3);
-                    ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.restTimeExpend);
-                    expandableListView.setGroupIndicator(null);
-                    ExpandableAdapter myAdapter = new ExpandableAdapter(LifeAssistantActivity.this, SGgroupData, SGchildrenData);
-                    expandableListView.setAdapter(myAdapter);
+
                 }
             }
         });
