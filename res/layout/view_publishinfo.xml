@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
             android:gravity="top"
-            android:hint="&#x0A;  请详细描述,包括：具体内容，你的称呼，以及你的联系方式。审核成功后会发布到校会大服只归去来兮的人人主页&#x0A;"/>
+            android:hint="&#x0A;  请详细描述,包括：具体内容，你的姓名以及联系方式。审核成功后会发布到南邮校会大服之归去来兮的人人主页&#x0A;"/>
     <Button
             android:id="@+id/publishButton"
             android:background="@drawable/publish_btn"
