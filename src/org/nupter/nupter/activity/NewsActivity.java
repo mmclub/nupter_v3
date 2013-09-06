@@ -47,7 +47,7 @@ public class NewsActivity extends FragmentActivity {
     private ImageView imageView;
     private int screenWidth;
 
-    public void onCreate(Bundle savedInstanceState) {
+    public vo id onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_viewpager);
         vp = (ViewPager) findViewById(R.id.viewPager);
