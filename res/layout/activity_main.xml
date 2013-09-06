@@ -181,8 +181,8 @@
                   android:background="@drawable/sms_imagebutton"/>
               <ImageButton
                   android:id="@+id/schoolMapIB"
-                  android:layout_width="40dp"
-                  android:layout_height="52dp"
+                  android:layout_width="36dp"
+                  android:layout_height="50dp"
                   android:layout_marginTop="15dp"
                   android:background="@drawable/schoolmap_imagebutton"/>
           </LinearLayout>
