@@ -16,8 +16,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="教务公告"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textColor="@drawable/textcolor_radiobutton"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:checked="true"
@@ -28,8 +28,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="校园新闻"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textColor="@drawable/textcolor_radiobutton"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:button="@null"
@@ -37,7 +37,8 @@
     </RadioGroup>
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="3dp">
+            android:layout_height="3dp"
+            >
         <ImageView
                 android:id="@+id/scrollImageView"
                 android:layout_width="fill_parent"
