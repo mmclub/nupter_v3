@@ -163,7 +163,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                     params.put("url", "");
                     Log.d("Calendar_test", contnet);
                     if (contnet.isEmpty()) {
-                        Toast.makeText(LostAndFoundActivity.this, "还没填写内容哦", Toast.LENGTH_SHORT);
+                        Toast.makeText(LostAndFoundActivity.this, "还没填写内容哦", Toast.LENGTH_SHORT).show();
                     } else {
                         if (NetUtils.isNewworkConnected()) {
                             new AsyncHttpClient().get(url, params,

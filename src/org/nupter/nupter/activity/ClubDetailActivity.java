@@ -169,7 +169,6 @@ public class ClubDetailActivity extends FragmentActivity {
 
     public class StatusAndBlogFragment extends Fragment implements AbsListView.OnScrollListener{
 
-        private ProgressDialog progressDialog;
         private JSONArray jsonArray;
         private JSONObject jsonObject;
         private int frameState;
@@ -192,11 +191,7 @@ public class ClubDetailActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_status_blog_fragment, container, false);
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("努力加载ing");
-            progressDialog.setMessage("人人网API调皮了。。。");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            ClubDetailActivity.this.setTitle("努力加载ing");
             listView = (ListView) v.findViewById(R.id.fragment_listView);
             msg = new ArrayList<HashMap<String, Object>>();
             img = clubImage[position];
@@ -210,13 +205,13 @@ public class ClubDetailActivity extends FragmentActivity {
                                     new int[]{R.id.headimg, R.id.msg, R.id.time});
                             listView.setAdapter(adapter);
                             listView.setOnScrollListener(StatusAndBlogFragment.this);
-                            progressDialog.dismiss();
+                            ClubDetailActivity.this.setTitle(clubName[position]);
                         }
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
                             Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
-                            progressDialog.dismiss();
+                            ClubDetailActivity.this.setTitle(clubName[position]);
                         }
                     });
             return v;
@@ -227,20 +222,20 @@ public class ClubDetailActivity extends FragmentActivity {
             this.scrollState = i;
             if (lastItem >= adapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
-                progressDialog.show();
+                ClubDetailActivity.this.setTitle("努力加载ing");
                 new AsyncHttpClient().post(url, null,
                         new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(String response) {
                                 msg(response);
                                 adapter.notifyDataSetChanged();
-                                progressDialog.dismiss();
+                                ClubDetailActivity.this.setTitle(clubName[position]);
                             }
 
                             @Override
                             public void onFailure(Throwable throwable, String s) {
                                 Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
-                                progressDialog.dismiss();
+                                ClubDetailActivity.this.setTitle(clubName[position]);
                             }
                         });
             }
@@ -278,7 +273,6 @@ public class ClubDetailActivity extends FragmentActivity {
                 "api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&" +
                 "format=json&count=12&v=1.0";
         private MyAdapter adapter;
-        private ProgressDialog progressDialog;
         private PullToRefreshGridView mPullRefreshGridView;
         private int page, before_page = 1;
 
@@ -297,11 +291,7 @@ public class ClubDetailActivity extends FragmentActivity {
                 soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
                 mPullRefreshGridView.setOnPullEventListener(soundListener);
             }
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("努力加载ing");
-            progressDialog.setMessage("人人网API调皮了。。。");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            ClubDetailActivity.this.setTitle(clubName[position]);
             if (!NetUtils.isNewworkConnected()) {
                 mPullRefreshGridView.setPullToRefreshEnabled(false);
             }
@@ -311,13 +301,13 @@ public class ClubDetailActivity extends FragmentActivity {
                         public void onSuccess(String response) {
                             adapter = new MyAdapter(getActivity(), response);
                             mPullRefreshGridView.setAdapter(adapter);
-                            progressDialog.dismiss();
+                            ClubDetailActivity.this.setTitle(clubName[position]);
                         }
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
                             Toast.makeText(getActivity(), "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
-                            progressDialog.dismiss();
+                            ClubDetailActivity.this.setTitle(clubName[position]);
                         }
                     });
             // Set a listener to be invoked when the list should be refreshed.

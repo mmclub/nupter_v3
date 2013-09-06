@@ -23,7 +23,7 @@ public class JsoupBookList {
     private Map<String, String> map;
     public String name = "", href = "", num = "", author = "", press = "", authorAndPress = "", spanString = "";
 
-    public List<Map<String, String>> parse(String response,List<Map<String, String>> bookListMap) {
+    public List<Map<String, String>> parse(String response, List<Map<String, String>> bookListMap) {
         Document doc = Jsoup.parse(response);
         Elements bookLists = doc.getElementsByClass("list_books");
         int listSize = bookLists.size();
@@ -56,10 +56,10 @@ public class JsoupBookList {
             }
             if (!spanString.matches("(.*)期刊(.*)")) {
                 map = new HashMap<String, String>();
-                map.put("bookName",name);
-                map.put("bookNum",num);
-                map.put("bookHref",href);
-                map.put("bookAuthor",author);
+                map.put("bookName", name);
+                map.put("bookNum", num);
+                map.put("bookHref", href);
+                map.put("bookAuthor", author);
                 bookListMap.add(map);
 
             }
