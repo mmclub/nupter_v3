@@ -57,6 +57,8 @@ public class MainActivity extends Activity {
     private ImageView weatherIcon;
     private long firstTime;
 
+    private boolean isGotWeather = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +106,10 @@ public class MainActivity extends Activity {
 
 
 
-        new NanjingWeather().getNanjingWeather();
+        if (!isGotWeather){
+            new NanjingWeather().getNanjingWeather();
+            isGotWeather = true;
+        }
 
 
     }

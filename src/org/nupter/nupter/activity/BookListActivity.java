@@ -206,6 +206,12 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
         bookUrl = "http://202.119.228.6:8080/opac/" + bookHref;
         Log.d("bookView", bookUrl);
 
+        progressDialog = new ProgressDialog(BookListActivity.this);
+        progressDialog.setTitle("努力加载中。。。");
+        progressDialog.setMessage("南邮图书馆网站压力很大。。。");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
         new AsyncHttpClient().post(bookUrl, null,
                 new AsyncHttpResponseHandler() {
                     public void onSuccess(String response) {
@@ -230,6 +236,12 @@ public class BookListActivity extends ListActivity implements AbsListView.OnScro
                         }
                         intent.putExtra(EXTRA_BOOK_INFO, bookInfo);
                         startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        progressDialog.dismiss();
                     }
                 });
 
