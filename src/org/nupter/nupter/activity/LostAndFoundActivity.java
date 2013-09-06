@@ -162,29 +162,32 @@ public class LostAndFoundActivity extends FragmentActivity {
                     params.put("key", "llpzqxh");
                     params.put("url", "");
                     Log.d("Calendar_test", contnet);
-                    url = url + "?time=20120307&title=&content=南京热死了&url=&key=llpzqxh";
-                    if (NetUtils.isNewworkConnected()) {
-                        new AsyncHttpClient().get(url, params,
-                                new AsyncHttpResponseHandler() {
-                                    @Override
-                                    public void onSuccess(String response) {
-                                        try {
-                                            Log.d("Calendar_test", response);
-                                            if (response.matches("(.*)ok(.*)")) {
-                                                Toast.makeText(LostAndFoundActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(LostAndFoundActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+                    if (contnet.isEmpty()) {
+                        Toast.makeText(LostAndFoundActivity.this, "还没填写内容哦", Toast.LENGTH_SHORT);
+                    } else {
+                        if (NetUtils.isNewworkConnected()) {
+                            new AsyncHttpClient().get(url, params,
+                                    new AsyncHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(String response) {
+                                            try {
+                                                Log.d("Calendar_test", response);
+                                                if (response.matches("(.*)ok(.*)")) {
+                                                    Toast.makeText(LostAndFoundActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(LostAndFoundActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } catch (Exception e) {
+                                                Toast.makeText(LostAndFoundActivity.this, "发送失败，请检查网络", Toast.LENGTH_SHORT).show();
                                             }
-                                        } catch (Exception e) {
-                                            Toast.makeText(LostAndFoundActivity.this, "发送失败，请检查网络", Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                });
+                                    });
 
-                    } else
+                        } else
 
-                    {
-                        Toast.makeText(LostAndFoundActivity.this, "网络还没连接哦", Toast.LENGTH_SHORT).show();
+                        {
+                            Toast.makeText(LostAndFoundActivity.this, "网络还没连接哦", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
