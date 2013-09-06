@@ -197,19 +197,18 @@ public class ScheduleWidget extends AppWidgetProvider {
                     RemoteViews views_background5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background5);
                     switch (preferences.getInt("custom_bigBackground",0)) {
                         case R.drawable.colorbackground:
-                            views_background5.setImageViewResource(R.id.background5,R.layout.widget_remoteview_background1);
+                            views_background5.setImageViewResource(R.id.background5,R.drawable.widget_background);
                             break;
-                        case R.drawable.R.drawable.pink_background:
-                            views_background5.setImageViewResource(R.id.background5,R.layout.widget_remoteview_background2);
+                        case R.drawable.pink_background:
+                            views_background5.setImageViewResource(R.id.background5,R.drawable.widget_background1);
                             break;
                         case R.drawable.green_background:
-                            views_background5.setImageViewResource(R.id.background5,R.layout.widget_remoteview_background3);
+                            views_background5.setImageViewResource(R.id.background5,R.drawable.widget_background2);
                             break;
                         case  R.drawable.blue_background:
-                            views_background5.setImageViewResource(R.id.background5,R.layout.widget_remoteview_background4);
+                            views_background5.setImageViewResource(R.id.background5,R.drawable.widget_background3);
                             break;
                     }
-                    views_background5.setImageViewResource(R.id.background5,preferences.getInt("custom_bigBackground",0));
                     views.addView(R.id.background,views_background5);
                 }
         }
