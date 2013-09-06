@@ -236,6 +236,8 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("skin", 5);
                 editor.commit();
+                Intent intent1 = new Intent("org.nupter.widget.refresh");
+                this.sendBroadcast(intent1);
                 if (j >= 6) {
                     editor.putInt("color_1", select_smallBackground[0]);
                     editor.putInt("color_2", select_smallBackground[1]);
