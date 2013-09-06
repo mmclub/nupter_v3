@@ -17,9 +17,11 @@ import android.widget.*;
 import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.FileUtils;
 import org.nupter.nupter.utils.JsoupTable;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -44,6 +46,7 @@ public class ScheduleActivity extends Activity {
     private LinearLayout linearLayout;
     private String schedule;
     private ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
+    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
     private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
             {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
             {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
@@ -79,8 +82,16 @@ public class ScheduleActivity extends Activity {
         if (skin == 3)
             linearLayout.setBackgroundResource(R.drawable.blue_background);
         if (skin == 5) {
-            if (preferences.getInt("custom_bigBackground", 0) != 0)
-                linearLayout.setBackgroundResource(preferences.getInt("custom_bigBackground", 0));
+            int n = preferences.getInt("custom_bigBackground", 0);
+            if (n < 4) {
+                linearLayout.setBackgroundResource(background_big[n]);
+            } else {
+                ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
+                if (!arrayList.isEmpty()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
+                    linearLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                }
+            }
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
             if (preferences.getInt("color_1", 0) != 0) {
                 arrayList.add(preferences.getInt("color_1", 0));
@@ -89,10 +100,6 @@ public class ScheduleActivity extends Activity {
                 arrayList.add(preferences.getInt("color_4", 0));
                 arrayList.add(preferences.getInt("color_5", 0));
                 arrayList.add(preferences.getInt("color_6", 0));
-                colors.add(arrayList);
-            } else {
-                for (int i = 0; i < 6; i++)
-                    arrayList.add(colors.get(getIntent().getIntExtra("originColor", 0)).get(i));
                 colors.add(arrayList);
             }
         }
@@ -487,9 +494,6 @@ public class ScheduleActivity extends Activity {
                                         Intent intent = new Intent(ScheduleActivity.this, ScheduleCustomSetting.class);
                                         intent.putExtra("skin", skin);
                                         startActivity(intent);
-                                      /*  Intent intent = new Intent(Intent.ACTION_PICK, null);
-                                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image*//*");
-                                        startActivityForResult(intent, 1);*/
                                         break;
                                 }
                             }
@@ -506,32 +510,6 @@ public class ScheduleActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(data.getData(), "image/*");
-            // crop为true是设置在开启的intent中设置显示的view可以剪裁
-            intent.putExtra("crop", "true");
-            // aspectX aspectY 是宽高的比例
-            intent.putExtra("aspectX", 20);
-            intent.putExtra("aspectY", 33);
-            // outputX,outputY 是剪裁图片的宽高
-            intent.putExtra("outputX", 400);
-            intent.putExtra("outputY", 660);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, 2);
-        }
-        if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
-            Bundle bundle = data.getExtras();
-            if (bundle != null) {
-                Bitmap photo = bundle.getParcelable("data");
-                linearLayout.setBackgroundDrawable(new BitmapDrawable(photo));
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
