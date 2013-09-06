@@ -144,7 +144,7 @@
                 android:gravity="center"
                 android:textColor="#7CA3A2"
                 android:textSize="12sp"
-                android:text="点击验证码即刷新"/>
+                android:text="若长时间没有反应，请点击验证码重新加载"/>
     </LinearLayout>
 
 </LinearLayout>
