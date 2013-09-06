@@ -35,8 +35,11 @@ public class MyApplication extends SugarApp {
         MobclickAgent.setDebugMode(true);
         // 初始化Parse SDK
         Parse.initialize(this, AppConstants.ParseAppID, AppConstants.ParseClientKey);
-        PushService.setDefaultPushCallback(this, MessageListActivity.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        PushService.subscribe(this, "", MessageListActivity.class);
+
+        PushService.setDefaultPushCallback(this, MessageListActivity.class);
 
         // 初始化 ImageLoader
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).build();
