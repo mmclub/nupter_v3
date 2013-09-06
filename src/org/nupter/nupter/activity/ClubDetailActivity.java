@@ -69,7 +69,7 @@ public class ClubDetailActivity extends FragmentActivity {
         intent = getIntent();
         position = intent.getIntExtra("position", 0);
         page_id = clubId[position];
-        this.setTitle(clubName[position]);
+        this.setTitle("努力加载中。。。");
         vp = (ViewPager) findViewById(R.id.mViewPager);
         fragmentList.add(new StatusAndBlogFragment("status.gets", status));
         fragmentList.add(new PhotosFragment());
@@ -191,7 +191,7 @@ public class ClubDetailActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_status_blog_fragment, container, false);
-            ClubDetailActivity.this.setTitle("努力加载ing");
+            ClubDetailActivity.this.setTitle("努力加载ing。。。");
             listView = (ListView) v.findViewById(R.id.fragment_listView);
             msg = new ArrayList<HashMap<String, Object>>();
             img = clubImage[position];
@@ -222,7 +222,7 @@ public class ClubDetailActivity extends FragmentActivity {
             this.scrollState = i;
             if (lastItem >= adapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
-                ClubDetailActivity.this.setTitle("努力加载ing");
+                ClubDetailActivity.this.setTitle("努力加载ing。。。");
                 new AsyncHttpClient().post(url, null,
                         new AsyncHttpResponseHandler() {
                             @Override
@@ -291,7 +291,7 @@ public class ClubDetailActivity extends FragmentActivity {
                 soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
                 mPullRefreshGridView.setOnPullEventListener(soundListener);
             }
-            ClubDetailActivity.this.setTitle(clubName[position]);
+            ClubDetailActivity.this.setTitle("努力加载中。。。");
             if (!NetUtils.isNewworkConnected()) {
                 mPullRefreshGridView.setPullToRefreshEnabled(false);
             }
