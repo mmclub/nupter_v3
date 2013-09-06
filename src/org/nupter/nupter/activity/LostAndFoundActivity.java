@@ -65,6 +65,7 @@ public class LostAndFoundActivity extends FragmentActivity {
         fragmentList.add(new PublishFragment());
         titleList.add("瞄一眼");
         titleList.add("发布");
+        this.setTitle("努力加载中。。。");
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
     }
 
@@ -207,11 +208,6 @@ public class LostAndFoundActivity extends FragmentActivity {
         private ProgressDialog progressDialog;
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            progressDialog = new ProgressDialog(LostAndFoundActivity.this);
-            progressDialog.setTitle("努力加载中。。。");
-            progressDialog.setMessage("人人API又调皮了。。。");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
             lostURL = "https://api.renren.com/restserver.do?call_id=204763&api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&format=json&count=10&v=1.0&method=status.gets&page_id=601408737&page=1";
             View v = inflater.inflate(R.layout.view_lost, container, false);
             listView = (PullToRefreshListView) v.findViewById(R.id.lostListView);
