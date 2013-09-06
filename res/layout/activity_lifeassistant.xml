@@ -1,81 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
-    <LinearLayout
-            android:id="@+id/ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
-        <RadioGroup
-                android:id="@+id/mRadiogroup"
-                android:gravity="center"
-                android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <RadioGroup
+            android:id="@+id/mRadiogroup"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="40dp">
+        <RadioButton
+                android:id="@+id/btn_0"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                >
-            <RadioButton
-                    android:id="@+id/btn_0"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="校内指南"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:button="@null"
-                    android:background="@drawable/radiobutton"
-                    />
-            <RadioButton
-                    android:id="@+id/btn_1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="公交出行"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:background="@drawable/radiobutton"
-                    />
-            <RadioButton
-                    android:id="@+id/btn_2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="周边信息"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:background="@drawable/radiobutton"
-                    />
-            <RadioButton
-                    android:id="@+id/btn_3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="作息时间"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:background="@drawable/radiobutton"
-                    />
-        </RadioGroup>
-
-
+                android:layout_height="wrap_content"
+                android:text="校内指南"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:textColor="@drawable/textcolor_radiobutton"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:checked="true"
+                android:button="@null"
+                android:background="@drawable/radio_button"/>
+        <RadioButton
+                android:id="@+id/btn_1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="公交出行"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:textColor="@drawable/textcolor_radiobutton"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/radio_button"/>
+        <RadioButton
+                android:id="@+id/btn_2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="周边信息"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:textColor="@drawable/textcolor_radiobutton"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/radio_button"/>
+        <RadioButton
+                android:id="@+id/btn_3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="作息时间"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:textColor="@drawable/textcolor_radiobutton"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/radio_button"/>
+    </RadioGroup>
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="3dp">
+        <ImageView
+                android:id="@+id/imgView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/blue_bar"/>
     </LinearLayout>
+
     <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"/>
-
-
-</RelativeLayout>
+            android:background="@color/white"/>
+</LinearLayout>

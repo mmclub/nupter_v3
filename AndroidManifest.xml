@@ -45,7 +45,8 @@
         <activity android:name=".activity.NewspaperActivity"
                   android:label="@string/label_newspaper"/>
         <activity android:name=".activity.LifeAssistantActivity"
-                  android:label="@string/label_life"/>
+                  android:label="@string/label_life"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.LoginActivity"
                   android:label="@string/label_login"
                   android:screenOrientation="portrait"/>

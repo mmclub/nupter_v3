@@ -56,7 +56,11 @@ public class ClubDetailActivity extends FragmentActivity {
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
     private boolean rawString;
-
+    private RadioButton btn_0,btn_1,btn_2;
+    private ImageView imageView;
+    private int screenWidth;
+    private RadioGroup myRadioGroup;
+    private ViewPager vp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,32 +70,83 @@ public class ClubDetailActivity extends FragmentActivity {
         position = intent.getIntExtra("position", 0);
         page_id = clubId[position];
         this.setTitle(clubName[position]);
-        ViewPager vp = (ViewPager) findViewById(R.id.mViewPager);
-        titleList.add("状态");
-        titleList.add("相册");
-        titleList.add("日志");
+        vp = (ViewPager) findViewById(R.id.mViewPager);
         fragmentList.add(new StatusAndBlogFragment("status.gets", status));
         fragmentList.add(new PhotosFragment());
         fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
-        vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
-        PagerTabStrip pts = (PagerTabStrip) findViewById(R.id.pagerTabStrip);
-        pts.setDrawFullUnderline(true);
-        pts.setTextSpacing(50);
+        vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
         SharedPreferences preferences= getSharedPreferences("test",
                 Activity.MODE_PRIVATE);
         rawString = preferences.getBoolean("SoundFlag",true);
+        btn_0 = (RadioButton)findViewById(R.id.btn_0);
+        btn_1 = (RadioButton)findViewById(R.id.btn_1);
+        btn_2 = (RadioButton)findViewById(R.id.btn_2);
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        imageView=(ImageView)findViewById(R.id.scrollImageView);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 3, 5));
+
+        myRadioGroup = (RadioGroup)findViewById(R.id.myRadiogroup);
+        myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.btn_0){
+                    vp.setCurrentItem(0);
+                }
+                else if (checkedId == R.id.btn_1){
+                    vp.setCurrentItem(1);
+                }
+                else if (checkedId == R.id.btn_2){
+                    vp.setCurrentItem(2);
+                }
+            }
+        });
+
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                for(int i=0;i<3;i++){
+                    if (arg0 == i) {
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+                        params.setMargins(screenWidth / 3*i+arg2 / 4, 0, 0, 0);
+                        imageView.setLayoutParams(params);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                switch (i) {
+                    case 0:
+                        btn_0.setChecked(true);
+                        break;
+                    case 1:
+                        btn_1.setChecked(true);
+                        break;
+                    case 2:
+                        btn_2.setChecked(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 }
 
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
-        private List<String> titleList;
 
-        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList) {
+
+        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);
             this.fragmentList = fragmentList;
-            this.titleList = titleList;
+
         }
 
         @Override

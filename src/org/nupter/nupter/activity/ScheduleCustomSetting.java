@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import org.nupter.nupter.MyApplication;
@@ -40,6 +41,9 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
     private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3};
     private int[] select_smallBackground = new int[6];
+    private ImageView imageView1;
+    private int screenWidth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,9 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
         this.setTitle("秀出你的Style");
         preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        imageView1 = (ImageView) findViewById(R.id.imageView1);
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        imageView1.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 2, 5));
         mViewPager = (ViewPager) findViewById(R.id.viewPagerBackground);
         bottomRg = (RadioGroup) findViewById(R.id.bottomRg);
         rbBig = (RadioButton) findViewById(R.id.rbBig);
@@ -80,9 +87,15 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
         gridViewSmall.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                j++;
-                Toast.makeText(ScheduleCustomSetting.this, "已选择" + (j > 6 ? 6 : j) + "个小格子,请选择6个小格子，继续选择会默认放弃最初的选择", Toast.LENGTH_SHORT).show();
-                select_smallBackground[j - 1 > 5 ? j - 6 : j - 1] = background_small[i];
+                int m = j++;
+                if (j <= 6)
+                    Toast.makeText(ScheduleCustomSetting.this, "已选择" + (j > 6 ? 6 : j) + "个小格子,请选择6个小格子", 500).show();
+                else
+                    Toast.makeText(ScheduleCustomSetting.this, "<继续选择>默认放弃最初的选择", 500).show();
+                while (m > 5) {
+                    m = m - 6;
+                }
+                select_smallBackground[m] = background_small[i];
             }
         });
     }
@@ -186,10 +199,16 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
+
         }
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
+            if (arg2!=0) {
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView1.getLayoutParams();
+                params.setMargins(arg2 / 2, 0, 0, 0);
+                imageView1.setLayoutParams(params);
+            }
         }
 
         @Override
@@ -228,11 +247,11 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
                     Intent intent = new Intent(ScheduleCustomSetting.this, ScheduleActivity.class);
                     startActivity(intent);
                     this.finish();
-                }else if(j<6&&j>0){
+                } else if (j < 6 && j > 0) {
                     Toast.makeText(ScheduleCustomSetting.this, "请选择6个小格子", Toast.LENGTH_SHORT).show();
-                }else if(j==0){
+                } else if (j == 0) {
                     Intent intent = new Intent(ScheduleCustomSetting.this, ScheduleActivity.class);
-                    intent.putExtra("originColor",getIntent().getIntExtra("skin",0));
+                    intent.putExtra("originColor", getIntent().getIntExtra("skin", 0));
                     startActivity(intent);
                     this.finish();
                 }
