@@ -121,30 +121,29 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(data.getData(), "image/*");
+            Intent intent1 = new Intent("com.android.camera.action.CROP");
+            intent1.setDataAndType(data.getData(), "image/*");
             // crop为true是设置在开启的intent中设置显示的view可以剪裁
-            intent.putExtra("crop", "true");
+            intent1.putExtra("crop", "true");
             // aspectX aspectY 是宽高的比例
-            intent.putExtra("aspectX", 20);
-            intent.putExtra("aspectY", 33);
-/*            // outputX,outputY 是剪裁图片的宽高
-            intent.putExtra("outputX", 400);
-            intent.putExtra("outputY", 660);*/
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, 2);
+            intent1.putExtra("aspectX", 2);
+            intent1.putExtra("aspectY", 3);
+            // outputX,outputY 是剪裁图片的宽高
+            intent1.putExtra("outputX", 400);
+            intent1.putExtra("outputY", 600);
+            intent1.putExtra("outputFormat", "JPEG");
+            intent1.putExtra("return-data", true);
+            startActivityForResult(intent1, 2);
         }
-        Boolean aBoolean = false;
-        if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
+        Log.i("TAG", (data == null) + "data" + requestCode);
+        if (requestCode == 2 /*&& resultCode == RESULT_OK */ && null != data) {
             Bundle bundle = data.getExtras();
             if (bundle != null) {
                 Bitmap photo = bundle.getParcelable("data");
-                aBoolean = new FileUtils().write2SDFromBitmap("nupter/background", System.currentTimeMillis() + ".png", photo);
+                if (new FileUtils().write2SDFromBitmap("nupter/background", System.currentTimeMillis() + ".jpg", photo)){
+                    ScheduleCustomSetting.this.recreate();
+                }
             }
-        }
-        Log.i("TAG",aBoolean+"");
-        if (aBoolean) {
-            ScheduleCustomSetting.this.recreate();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -49,7 +49,7 @@ public class FileUtils {
             File [] fileArray = file.listFiles();
             if(null != fileArray && 0 != fileArray.length){
                 for (int i=0;i<fileArray.length;i++){
-                    if(fileArray[i].toString().endsWith(".png")){
+                    if(fileArray[i].toString().endsWith(".jpg")){
                          arrayList.add(fileArray[i].toString());
                     }
                 }
@@ -65,12 +65,13 @@ public class FileUtils {
                 try {
                     File file = createFileInSDCard(path, fileName);
                     FileOutputStream out = new FileOutputStream(file);
-                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)) {
+                    if (bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)) {
                         out.flush();
                         out.close();
                         return true;
                     }
                 } catch (Exception e) {
+                    Log.i("TAG","exception");
                     e.printStackTrace();
                 }
             }

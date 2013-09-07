@@ -136,7 +136,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
             }
         });
-}
+    }
 
     class MyPagerAdapter extends FragmentPagerAdapter {
 

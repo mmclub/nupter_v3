@@ -88,8 +88,11 @@ public class ScheduleActivity extends Activity {
             } else {
                 ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
                 if (!arrayList.isEmpty()) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
-                    linearLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                    try{
+                        Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
+                        linearLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                    } catch (Exception e){
+                    }
                 }
             }
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
