@@ -3,16 +3,12 @@ package org.nupter.nupter.utils;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.content.Context;
 import android.widget.RemoteViews;
 import org.nupter.nupter.MyApplication;
@@ -33,7 +29,7 @@ public class ScheduleWidget extends AppWidgetProvider {
     private int skin;
     private String schedule;
     private ArrayList<ArrayList<String>> tableList = new ArrayList<ArrayList<String>>();
-    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
+    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background,R.drawable.colorbackground};
     private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
             {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
             {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
@@ -57,8 +53,8 @@ public class ScheduleWidget extends AppWidgetProvider {
             }
             colors.add(arrayList);
         }
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
-        if (preferences.getInt("color_1", 0) != 0) {
+        if (preferences.getInt("color_1", 100000) != 100000) {
+            ArrayList<Integer> arrayList = new ArrayList<Integer>();
             arrayList.add(preferences.getInt("color_1", 0));
             arrayList.add(preferences.getInt("color_2", 0));
             arrayList.add(preferences.getInt("color_3", 0));
@@ -179,41 +175,25 @@ public class ScheduleWidget extends AppWidgetProvider {
                 views.addView(linearLayoutId[4][i], view5);
             }
         }
-        switch (skin) {
-            case 0:
-                RemoteViews views_background = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
-                views.addView(R.id.background, views_background);
-                break;
-            case 1:
-                RemoteViews views_background1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background1);
+        if (skin <= 4) {
+            RemoteViews views_background1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
+            views_background1.setImageViewResource(R.id.background1, background_big[skin]);
+            views.addView(R.id.background, views_background1);
+        } else if (skin == 5) {
+            int n = preferences.getInt("custom_bigBackground", 0);
+            if (n < 4) {
+                RemoteViews views_background1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
+                views_background1.setImageViewResource(R.id.background1, background_big[n]);
                 views.addView(R.id.background, views_background1);
-                break;
-            case 2:
-                RemoteViews views_background2 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background2);
-                views.addView(R.id.background, views_background2);
-                break;
-            case 3:
-                RemoteViews views_background3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background3);
-                views.addView(R.id.background, views_background3);
-            case 4:
-                RemoteViews views_background4 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background4);
-                views.addView(R.id.background, views_background4);
-                break;
-            case 5:
-                int n = preferences.getInt("custom_bigBackground", 0);
-                if (n < 4) {
-                    RemoteViews views_background5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background5);
-                    views_background5.setImageViewResource(R.id.background5, background_big[n]);
+            } else {
+                ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
+                if (!arrayList.isEmpty()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
+                    RemoteViews views_background5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
+                    views_background5.setImageViewBitmap(R.id.background1, bitmap);
                     views.addView(R.id.background, views_background5);
-                } else {
-                    ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
-                    if (!arrayList.isEmpty()) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
-                        RemoteViews views_background5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background5);
-                        views_background5.setImageViewBitmap(R.id.background5, bitmap);
-                        views.addView(R.id.background, views_background5);
-                    }
                 }
+            }
         }
         return views;
     }

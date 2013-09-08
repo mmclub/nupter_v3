@@ -2,7 +2,7 @@
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     android:minWidth="294dp" android:minHeight="294dp"
-                    android:minResizeHeight="72dp"  android:minResizeWidth="72dp"
+                    android:minResizeHeight="222dp"  android:minResizeWidth="222dp"
                     android:resizeMode="vertical|horizontal"
                     android:initialLayout="@layout/widget_schedule">
 </appwidget-provider>

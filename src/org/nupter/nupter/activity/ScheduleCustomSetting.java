@@ -48,7 +48,7 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
             {R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red}};
     private ArrayList<ArrayList<Integer>> colors = new ArrayList<ArrayList<Integer>>();
     private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
-    private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3};
+    private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3,R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red};
     private int[] select_smallBackground = new int[6];
     private ImageView imageView1;
     private int screenWidth;
@@ -332,12 +332,13 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
                         arrayList.add(preferences.getInt("color_6", 0));
                         colors.add(arrayList);
                     }
-                    editor.putInt("color_1", colors.get(getIntent().getIntExtra("skin", 0)).get(0));
-                    editor.putInt("color_2", colors.get(getIntent().getIntExtra("skin", 0)).get(1));
-                    editor.putInt("color_3", colors.get(getIntent().getIntExtra("skin", 0)).get(2));
-                    editor.putInt("color_4", colors.get(getIntent().getIntExtra("skin", 0)).get(3));
-                    editor.putInt("color_5", colors.get(getIntent().getIntExtra("skin", 0)).get(4));
-                    editor.putInt("color_6", colors.get(getIntent().getIntExtra("skin", 0)).get(5));
+                    int n=getIntent().getIntExtra("skin", 0);
+                    editor.putInt("color_1", colors.get(n).get(0));
+                    editor.putInt("color_2", colors.get(n).get(1));
+                    editor.putInt("color_3", colors.get(n).get(2));
+                    editor.putInt("color_4", colors.get(n).get(3));
+                    editor.putInt("color_5", colors.get(n).get(4));
+                    editor.putInt("color_6", colors.get(n).get(5));
                     editor.commit();
                     Intent intent = new Intent(ScheduleCustomSetting.this, ScheduleActivity.class);
                     startActivity(intent);

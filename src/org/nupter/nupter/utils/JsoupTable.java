@@ -20,13 +20,14 @@ import static org.nupter.nupter.utils.Log.*;
  * To change this template use File | Settings | File Templates.
  */
 public class JsoupTable {
+    Elements trs;
     public ArrayList<ArrayList<String>> parse(String html) {
         Document doc = null;
         try {
             doc = Jsoup.parse(html);
-        } catch (Exception e) {
-        }
-        Elements trs = doc.getElementById("Table1").getElementsByTag("tr");
+            trs = doc.getElementById("Table1").getElementsByTag("tr");
+
+
         Elements tds[] = new Elements[5];
         int pos[] = {2, 4, 7, 9, 11};
         ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
@@ -46,6 +47,10 @@ public class JsoupTable {
                 list.get(i).add(tds[i].get(j+(i+1)%2+1).text());
             }
         }
+
         return list;
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

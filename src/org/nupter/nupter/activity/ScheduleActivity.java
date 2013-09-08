@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-
 /**
  * 课表模块
  *
@@ -67,7 +66,7 @@ public class ScheduleActivity extends Activity {
             }
             colors.add(arrayList);
         }
-        preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         schedule = preferences.getString("schedule", null);
         skin = preferences.getInt("skin", 0);
         //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
@@ -88,15 +87,15 @@ public class ScheduleActivity extends Activity {
             } else {
                 ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
                 if (!arrayList.isEmpty()) {
-                    try{
+                    try {
                         Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
                         linearLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
-                    } catch (Exception e){
+                    } catch (Exception e) {
                     }
                 }
             }
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
-            if (preferences.getInt("color_1", 0) != 0) {
+            if (preferences.getInt("color_1", 100000) != 100000) {
                 arrayList.add(preferences.getInt("color_1", 0));
                 arrayList.add(preferences.getInt("color_2", 0));
                 arrayList.add(preferences.getInt("color_3", 0));
