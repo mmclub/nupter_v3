@@ -3,13 +3,12 @@ package org.nupter.nupter.utils;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.content.Context;
 import android.widget.RemoteViews;
 import org.nupter.nupter.MyApplication;
@@ -30,11 +29,13 @@ public class ScheduleWidget extends AppWidgetProvider {
     private int skin;
     private String schedule;
     private ArrayList<ArrayList<String>> tableList = new ArrayList<ArrayList<String>>();
+    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background,R.drawable.colorbackground};
     private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
             {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
             {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
             {R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3},
             {R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red}};
+    private ArrayList<ArrayList<Integer>> colors = new ArrayList<ArrayList<Integer>>();
     private int[][] linearLayoutId = new int[][]{{R.id.one_1, R.id.one_2, R.id.one_3, R.id.one_4, R.id.one_5},
             {R.id.two_1, R.id.two_2, R.id.two_3, R.id.two_4, R.id.two_5},
             {R.id.three_1, R.id.three_2, R.id.three_3, R.id.three_4, R.id.three_5},
@@ -45,6 +46,23 @@ public class ScheduleWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         skin = preferences.getInt("skin", 0);
+        for (int i = 0; i < 5; i++) {
+            ArrayList<Integer> arrayList = new ArrayList<Integer>();
+            for (int j = 0; j <= 5; j++) {
+                arrayList.add(color[i][j]);
+            }
+            colors.add(arrayList);
+        }
+        if (preferences.getInt("color_1", 100000) != 100000) {
+            ArrayList<Integer> arrayList = new ArrayList<Integer>();
+            arrayList.add(preferences.getInt("color_1", 0));
+            arrayList.add(preferences.getInt("color_2", 0));
+            arrayList.add(preferences.getInt("color_3", 0));
+            arrayList.add(preferences.getInt("color_4", 0));
+            arrayList.add(preferences.getInt("color_5", 0));
+            arrayList.add(preferences.getInt("color_6", 0));
+            colors.add(arrayList);
+        }
         schedule = preferences.getString("schedule", "null");
         if (intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE")) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -98,7 +116,7 @@ public class ScheduleWidget extends AppWidgetProvider {
                 RemoteViews view1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                 view1.setTextViewText(R.id.scheduleName, getClassName(tableList.get(0).get(i)));
                 view1.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(0).get(i)));
-                view1.setImageViewResource(R.id.background, color[skin][i]);
+                view1.setImageViewResource(R.id.background, colors.get(skin).get(i));
                 views.addView(linearLayoutId[0][i], view1);
             }
         }
@@ -109,13 +127,13 @@ public class ScheduleWidget extends AppWidgetProvider {
                     RemoteViews view2 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_half);
                     view2.setTextViewText(R.id.scheduleName, getClassName(tableList.get(1).get(i)));
                     view2.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(1).get(i)));
-                    view2.setImageViewResource(R.id.background, color[skin][i > 1 ? i - 2 : i + 4]);
+                    view2.setImageViewResource(R.id.background, colors.get(skin).get(i > 1 ? i - 2 : i + 4));
                     views.addView(linearLayoutId[1][i], view2);
                 } else {
                     RemoteViews view2 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                     view2.setTextViewText(R.id.scheduleName, getClassName(tableList.get(1).get(i)));
                     view2.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(1).get(i)));
-                    view2.setImageViewResource(R.id.background, color[skin][i > 1 ? i - 2 : i + 4]);
+                    view2.setImageViewResource(R.id.background, colors.get(skin).get(i > 1 ? i - 2 : i + 4));
                     views.addView(linearLayoutId[1][i], view2);
                 }
             }
@@ -131,7 +149,7 @@ public class ScheduleWidget extends AppWidgetProvider {
                     view3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_half);
                 view3.setTextViewText(R.id.scheduleName, getClassName(tableList.get(2).get(i)));
                 view3.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(2).get(i)));
-                view3.setImageViewResource(R.id.background, color[skin][i > 3 ? i - 4 : i + 2]);
+                view3.setImageViewResource(R.id.background, colors.get(skin).get(i > 3 ? i - 4 : i + 2));
                 views.addView(linearLayoutId[2][i], view3);
             }
         }
@@ -142,7 +160,7 @@ public class ScheduleWidget extends AppWidgetProvider {
                     RemoteViews view4 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                     view4.setTextViewText(R.id.scheduleName, getClassName(tableList.get(3).get(i)));
                     view4.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(3).get(i)));
-                    view4.setImageViewResource(R.id.background, color[skin][i + 1]);
+                    view4.setImageViewResource(R.id.background, colors.get(skin).get(i + 1));
                     views.addView(linearLayoutId[3][i], view4);
                 }
             }
@@ -153,26 +171,29 @@ public class ScheduleWidget extends AppWidgetProvider {
                 RemoteViews view5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                 view5.setTextViewText(R.id.scheduleName, getClassName(tableList.get(4).get(i)));
                 view5.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(4).get(i)));
-                view5.setImageViewResource(R.id.background, color[skin][i > 2 ? i - 3 : i + 3]);
+                view5.setImageViewResource(R.id.background, colors.get(skin).get(i > 2 ? i - 3 : i + 3));
                 views.addView(linearLayoutId[4][i], view5);
             }
         }
-        switch (skin) {
-            case 0:
-                RemoteViews views_background = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
-                views.addView(R.id.background, views_background);
-            case 1:
-                RemoteViews views_background1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background1);
+        if (skin <= 4) {
+            RemoteViews views_background1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
+            views_background1.setImageViewResource(R.id.background1, background_big[skin]);
+            views.addView(R.id.background, views_background1);
+        } else if (skin == 5) {
+            int n = preferences.getInt("custom_bigBackground", 0);
+            if (n < 4) {
+                RemoteViews views_background1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
+                views_background1.setImageViewResource(R.id.background1, background_big[n]);
                 views.addView(R.id.background, views_background1);
-            case 2:
-                RemoteViews views_background2 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background2);
-                views.addView(R.id.background, views_background2);
-            case 3:
-                RemoteViews views_background3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background3);
-                views.addView(R.id.background, views_background3);
-            case 4:
-                RemoteViews views_background4 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background4);
-                views.addView(R.id.background, views_background4);
+            } else {
+                ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
+                if (!arrayList.isEmpty()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
+                    RemoteViews views_background5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_background);
+                    views_background5.setImageViewBitmap(R.id.background1, bitmap);
+                    views.addView(R.id.background, views_background5);
+                }
+            }
         }
         return views;
     }

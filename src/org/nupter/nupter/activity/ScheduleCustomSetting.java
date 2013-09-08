@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -17,7 +18,9 @@ import android.view.*;
 import android.widget.*;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.FileUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -38,11 +41,18 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     private ArrayList<Integer> backgroundSmall = new ArrayList<Integer>();
     private SharedPreferences preferences;
     private int j = 0;
+    private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
+            {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
+            {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
+            {R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3},
+            {R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red}};
+    private ArrayList<ArrayList<Integer>> colors = new ArrayList<ArrayList<Integer>>();
     private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
-    private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3};
+    private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3,R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red};
     private int[] select_smallBackground = new int[6];
     private ImageView imageView1;
     private int screenWidth;
+    private MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +77,24 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
     private void initView() {
         for (int i = 0; i < background_big.length; i++)
             backgroundBig.add(background_big[i]);
+        backgroundBig.add(R.drawable.add_background);
         viewBig = getLayoutInflater().inflate(R.layout.view_schedule_customsetting_big, null);
         gridViewBig = (GridView) viewBig.findViewById(R.id.bigGridView);
-        gridViewBig.setAdapter(new MyAdapter(this, backgroundBig, 1));
+        myAdapter = new MyAdapter(this, backgroundBig, 1);
+        gridViewBig.setAdapter(myAdapter);
         gridViewBig.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ScheduleCustomSetting.this, "已选择大背景", Toast.LENGTH_SHORT).show();
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("custom_bigBackground", background_big[i]);
-                editor.commit();
+                if (i < adapterView.getCount() - 1) {
+                    Toast.makeText(ScheduleCustomSetting.this, "已选择大背景", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("custom_bigBackground", i);
+                    editor.commit();
+                } else if (i == adapterView.getCount() - 1) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, null);
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    startActivityForResult(intent, 1);
+                }
             }
         });
         for (int i = 0; i < background_small.length; i++)
@@ -100,20 +118,55 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
+            Intent intent1 = new Intent("com.android.camera.action.CROP");
+            intent1.setDataAndType(data.getData(), "image/*");
+            // crop为true是设置在开启的intent中设置显示的view可以剪裁
+            intent1.putExtra("crop", "true");
+            // aspectX aspectY 是宽高的比例
+            intent1.putExtra("aspectX", 2);
+            intent1.putExtra("aspectY", 3);
+            // outputX,outputY 是剪裁图片的宽高
+            intent1.putExtra("outputX", 400);
+            intent1.putExtra("outputY", 600);
+            intent1.putExtra("outputFormat", "JPEG");
+            intent1.putExtra("return-data", true);
+            startActivityForResult(intent1, 2);
+        }
+        Log.i("TAG", (data == null) + "data" + requestCode);
+        if (requestCode == 2 /*&& resultCode == RESULT_OK */ && null != data) {
+            Bundle bundle = data.getExtras();
+            if (bundle != null) {
+                Bitmap photo = bundle.getParcelable("data");
+                if (new FileUtils().write2SDFromBitmap("nupter/background", System.currentTimeMillis() + ".jpg", photo)){
+                    ScheduleCustomSetting.this.recreate();
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private class MyAdapter extends BaseAdapter {
         private LayoutInflater inflater;
         private int flag;
         private ArrayList<Integer> background = new ArrayList<Integer>();
+        private ArrayList<String> fileNameList;
 
         public MyAdapter(Context context, ArrayList<Integer> background, int flag) {
             this.inflater = LayoutInflater.from(context);
             this.background = background;
             this.flag = flag;
+            this.fileNameList = new FileUtils().readFileName("nupter/background");
         }
 
         @Override
         public int getCount() {
-            return background.size();
+            if (flag == 1 && (!fileNameList.isEmpty())) {
+                return background.size() + fileNameList.size();
+            } else
+                return background.size();
         }
 
         @Override
@@ -129,15 +182,25 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             if (flag == 1) {
-                view = inflater.inflate(R.layout.view_schedule_customsetting_adapter, null);
-                LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridViewSmall.getLayoutParams();
-                view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 300));
-                ImageView imageView = (ImageView) view.findViewById(R.id.schedule_background_big);
+                if (i < (background.size() - 1) || i == (background.size() + fileNameList.size() - 1)) {
+                    view = inflater.inflate(R.layout.view_schedule_customsetting_adapter, null);
+                    LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridViewSmall.getLayoutParams();
+                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 300));
+                    ImageView imageView = (ImageView) view.findViewById(R.id.schedule_background_big);
 /*                Bitmap unscaledBitmap = BitmapFactory.decodeResource(getResources(), background.get(i));
                 Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, 280, 420, true);
                 imageView.setBackgroundDrawable(new BitmapDrawable(scaledBitmap));*/
-                imageView.setImageResource(background.get(i));
-                return view;
+                    imageView.setImageResource(background.get(i >= (background.size() - 1) ? i - fileNameList.size() : i));
+                    return view;
+                } else {
+                    view = inflater.inflate(R.layout.view_schedule_customsetting_adapter, null);
+                    LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridViewSmall.getLayoutParams();
+                    view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 300));
+                    Bitmap bitmap = BitmapFactory.decodeFile(fileNameList.get(i - background.size() + 1));
+                    ImageView imageView = (ImageView) view.findViewById(R.id.schedule_background_big);
+                    imageView.setImageBitmap(bitmap);
+                    return view;
+                }
             } else {
                 view = inflater.inflate(R.layout.view_schedule_customsetting_adapter, null);
                 ImageView imageView = (ImageView) view.findViewById(R.id.schedule_background_big);
@@ -204,7 +267,7 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-            if (arg2!=0) {
+            if (arg2 != 0) {
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView1.getLayoutParams();
                 params.setMargins(arg2 / 2, 0, 0, 0);
                 imageView1.setLayoutParams(params);
@@ -236,6 +299,8 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("skin", 5);
                 editor.commit();
+                Intent intent1 = new Intent("org.nupter.widget.refresh");
+                this.sendBroadcast(intent1);
                 if (j >= 6) {
                     editor.putInt("color_1", select_smallBackground[0]);
                     editor.putInt("color_2", select_smallBackground[1]);
@@ -250,8 +315,32 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
                 } else if (j < 6 && j > 0) {
                     Toast.makeText(ScheduleCustomSetting.this, "请选择6个小格子", Toast.LENGTH_SHORT).show();
                 } else if (j == 0) {
+                    for (int i = 0; i < 5; i++) {
+                        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+                        for (int j = 0; j <= 5; j++) {
+                            arrayList.add(color[i][j]);
+                        }
+                        colors.add(arrayList);
+                    }
+                    ArrayList<Integer> arrayList = new ArrayList<Integer>();
+                    if (preferences.getInt("color_1", 0) != 0) {
+                        arrayList.add(preferences.getInt("color_1", 0));
+                        arrayList.add(preferences.getInt("color_2", 0));
+                        arrayList.add(preferences.getInt("color_3", 0));
+                        arrayList.add(preferences.getInt("color_4", 0));
+                        arrayList.add(preferences.getInt("color_5", 0));
+                        arrayList.add(preferences.getInt("color_6", 0));
+                        colors.add(arrayList);
+                    }
+                    int n=getIntent().getIntExtra("skin", 0);
+                    editor.putInt("color_1", colors.get(n).get(0));
+                    editor.putInt("color_2", colors.get(n).get(1));
+                    editor.putInt("color_3", colors.get(n).get(2));
+                    editor.putInt("color_4", colors.get(n).get(3));
+                    editor.putInt("color_5", colors.get(n).get(4));
+                    editor.putInt("color_6", colors.get(n).get(5));
+                    editor.commit();
                     Intent intent = new Intent(ScheduleCustomSetting.this, ScheduleActivity.class);
-                    intent.putExtra("originColor", getIntent().getIntExtra("skin", 0));
                     startActivity(intent);
                     this.finish();
                 }

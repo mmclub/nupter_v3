@@ -137,7 +137,7 @@ public class LoginActivity extends Activity {
         public void run() {
             URL loginUrl;
             try {
-                gifView2.setShowDimension(32,32);
+                gifView2.setShowDimension(32, 32);
                 //得到cookie
                 loginUrl = new URL(login_url);
                 getCookieConnection = (HttpURLConnection) loginUrl.openConnection();
@@ -170,7 +170,7 @@ public class LoginActivity extends Activity {
                 gifView.setShowDimension(90, 50);
 /*                gifView.setGifImageType(GifView.GifImageType.COVER);*/
                 gifView.setClickable(true);
-                gifView2.setShowDimension(1,1);
+                gifView2.setShowDimension(1, 1);
             } catch (IOException e) {
                 e.printStackTrace();
                 gifView.setClickable(true);
@@ -178,6 +178,7 @@ public class LoginActivity extends Activity {
             }
         }
     }
+
 
     //带着cookie，通过post用户名、密码、验证码登陆正方得到网页的InputStream流
     class Login extends Thread {

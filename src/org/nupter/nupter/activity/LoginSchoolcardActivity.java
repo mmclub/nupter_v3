@@ -67,7 +67,7 @@ public class LoginSchoolcardActivity extends Activity {
                 loginConnection.setDoInput(true);
                 loginConnection.setRequestMethod("POST");
                 loginConnection.setRequestProperty("Cookie", cookie);
-                loginConnection.setRequestProperty("Accept-Encoding","gzip,deflate,sdch");
+                loginConnection.setRequestProperty("Accept-Encoding","gzip");
                 loginConnection.setRequestProperty("Accept-Language","zh-CN");
                 loginConnection.setRequestProperty("Accept-Charset", "utf-8");
                 loginConnection.setConnectTimeout(10000);

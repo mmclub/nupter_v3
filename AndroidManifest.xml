@@ -48,6 +48,9 @@
         <activity android:name=".activity.LoginActivity"
                   android:label="@string/label_login"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.LoginSchoolcardActivity"
+                  android:label="@string/label_login"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".activity.LoginNumberSaveActivity"
                   android:label="@string/label_login_number_save"
                   android:screenOrientation="portrait"/>
