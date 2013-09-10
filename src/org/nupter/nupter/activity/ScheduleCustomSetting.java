@@ -1,7 +1,9 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -48,7 +50,7 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
             {R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red}};
     private ArrayList<ArrayList<Integer>> colors = new ArrayList<ArrayList<Integer>>();
     private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
-    private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3,R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red};
+    private int[] background_small = new int[]{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.blue_1, R.drawable.blue_2, R.drawable.blue_3, R.drawable.table_yellow, R.drawable.table_blue, R.drawable.table_green, R.drawable.table_orange, R.drawable.table_pink, R.drawable.table_red};
     private int[] select_smallBackground = new int[6];
     private ImageView imageView1;
     private int screenWidth;
@@ -82,6 +84,26 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
         gridViewBig = (GridView) viewBig.findViewById(R.id.bigGridView);
         myAdapter = new MyAdapter(this, backgroundBig, 1);
         gridViewBig.setAdapter(myAdapter);
+        gridViewBig.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view,final int position, long l) {
+                if (position > 3 && position < adapterView.getCount() - 1) {
+                    new AlertDialog.Builder(ScheduleCustomSetting.this).setTitle("是否删除图片？").setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    ArrayList<String> fileNameList = new FileUtils().readFileName("nupter/background");
+                                    File file = new File(fileNameList.get(position - 4));
+                                    file.delete();
+                                    ScheduleCustomSetting.this.recreate();
+                                }
+
+                            }).setNegativeButton("取消", null).show();
+                }
+                return false;
+            }
+        });
         gridViewBig.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -140,7 +162,7 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
             Bundle bundle = data.getExtras();
             if (bundle != null) {
                 Bitmap photo = bundle.getParcelable("data");
-                if (new FileUtils().write2SDFromBitmap("nupter/background", System.currentTimeMillis() + ".jpg", photo)){
+                if (new FileUtils().write2SDFromBitmap("nupter/background", System.currentTimeMillis() + ".jpg", photo)) {
                     ScheduleCustomSetting.this.recreate();
                 }
             }
@@ -332,7 +354,7 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
                         arrayList.add(preferences.getInt("color_6", 0));
                         colors.add(arrayList);
                     }
-                    int n=getIntent().getIntExtra("skin", 0);
+                    int n = getIntent().getIntExtra("skin", 0);
                     editor.putInt("color_1", colors.get(n).get(0));
                     editor.putInt("color_2", colors.get(n).get(1));
                     editor.putInt("color_3", colors.get(n).get(2));

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,7 +59,7 @@ public class LoginActivity extends Activity {
     private String checkNumber;
     private String userNumber;
     private String passNumber;
-    private StringBuffer tableHtml, testHtml;
+    private String tableHtml, testHtml;
     private Intent intent;
     private String Flag;
     private String testString;
@@ -235,71 +236,103 @@ public class LoginActivity extends Activity {
                 inPost.close();
                 loginConnection.disconnect();
 
-                //设置cookie和其他参数，访问课表网页得到String类型的HTML
-                getTable_url = getTable_url + userNumber;
-                getTableUrl = new URL(getTable_url);
-                getTableConnection = (HttpURLConnection) getTableUrl.openConnection();
-                getTableConnection.setRequestMethod("GET");
-                getTableConnection.setRequestProperty("Cookie", cookie);
-                getTableConnection.setRequestProperty("Accept-Charset", "gbk");
-                getTableConnection.setRequestProperty("Referer", "http://202.119.225.35/xs_main.aspx?xh=" + userNumber);
-                getTableConnection.connect();
-                tableInputStream = getTableConnection.getInputStream();
-                tableHtml = new StringBuffer();
-                int bufferSize;
-                byte[] buffer = new byte[1024];
-                bufferSize = tableInputStream.read(buffer, 0, 1024);
-                while (bufferSize != -1) {
-                    String res = new String(buffer, 0, bufferSize, "gbk");
-                    tableHtml.append(res);
-                    bufferSize = tableInputStream.read(buffer, 0, 1024);
-                }
-                //把数据存在本地，sharePreferences保存的是没有解析的原网页
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("schedule", tableHtml.toString());
-                editor.commit();
-                tableInputStream.close();
-                getTableConnection.disconnect();
 
-                //与课表一样，得到成绩网页String类型的html
-                getTest_url = getTest_url + userNumber + "&xm=%CB%D5%B6%AB%C9%FA&gnmkdm=N121605";
-                getTestUrl = new URL(getTest_url);
-                getTestConnection = (HttpURLConnection) getTestUrl.openConnection();
-                getTestConnection.setRequestMethod("POST");
-                getTestConnection.setDoOutput(true);
-                getTestConnection.setDoInput(true);
-                getTestConnection.setRequestProperty("Cookie", cookie);
-                getTestConnection.setRequestProperty("Accept-Charset", "gbk");
-                getTestConnection.setRequestProperty("Referer", "http://202.119.225.35/xs_main.aspx?xh=" + userNumber + "&xm=%EF%BF%BD%D5%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD&gnmkdm=N121605");
-                getTestConnection.connect();
-                DataOutputStream Out = new DataOutputStream(
-                        getTestConnection.getOutputStream());
-                Out.writeBytes(postTestData);
-                Out.flush();
-                Out.close();
-                testInputStream = getTestConnection.getInputStream();
-                testHtml = new StringBuffer();
-                int bufferSize2;
-                byte[] buffer2 = new byte[1024];
-                bufferSize2 = testInputStream.read(buffer2, 0, 1024);
-                while (bufferSize2 != -1) {
-                    String res = new String(buffer2, 0, bufferSize2, "gbk");
-                    testHtml.append(res);
-                    bufferSize2 = testInputStream.read(buffer2, 0, 1024);
-                }
-                testInputStream.close();
-                getTestConnection.disconnect();
                 if (Flag.equals("Schedule")) {
+                    //设置cookie和其他参数，访问课表网页得到String类型的HTML
+                    getTable_url = getTable_url + userNumber;
+                    getTableUrl = new URL(getTable_url);
+                    getTableConnection = (HttpURLConnection) getTableUrl.openConnection();
+                    getTableConnection.setRequestMethod("GET");
+                    getTableConnection.setRequestProperty("Cookie", cookie);
+                    getTableConnection.setRequestProperty("Accept-Charset", "gbk");
+                    getTableConnection.setRequestProperty("Referer", "http://202.119.225.35/xs_main.aspx?xh=" + userNumber);
+                    getTableConnection.connect();
+                    tableInputStream = getTableConnection.getInputStream();
+                    tableHtml = getHtmlString(tableInputStream);
+                    //把数据存在本地，sharePreferences保存的是没有解析的原网页
+                    if (!tableHtml.equals(null)) {
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("schedule", tableHtml.toString());
+                        editor.commit();
+                    }
+                    tableInputStream.close();
+                    getTableConnection.disconnect();
                     flaghandler.sendEmptyMessage(MSG_TABLE);
-                } else if (Flag.equals("Test")) {
+                }
+
+                if (Flag.equals("Test")) {
+                    //与课表一样，得到成绩网页String类型的html
+                    getTest_url = getTest_url + userNumber + "&xm=%CB%D5%B6%AB%C9%FA&gnmkdm=N121605";
+                    getTestUrl = new URL(getTest_url);
+                    getTestConnection = (HttpURLConnection) getTestUrl.openConnection();
+                    getTestConnection.setRequestMethod("POST");
+                    getTestConnection.setDoOutput(true);
+                    getTestConnection.setDoInput(true);
+                    getTestConnection.setRequestProperty("Cookie", cookie);
+                    getTestConnection.setRequestProperty("Accept-Charset", "gbk");
+                    getTestConnection.setRequestProperty("Referer", "http://202.119.225.35/xs_main.aspx?xh=" + userNumber + "&xm=%EF%BF%BD%D5%B6%EF%BF%BD%EF%BF%BD%EF%BF%BD&gnmkdm=N121605");
+                    getTestConnection.connect();
+                    DataOutputStream Out = new DataOutputStream(
+                            getTestConnection.getOutputStream());
+                    Out.writeBytes(postTestData);
+                    Out.flush();
+                    Out.close();
+                    testInputStream = getTestConnection.getInputStream();
+                    int bufferSize2;
+                    byte[] buffer2 = new byte[1024];
+                    bufferSize2 = testInputStream.read(buffer2, 0, 1024);
+                    while (bufferSize2 != -1) {
+                        String res = new String(buffer2, 0, bufferSize2, "gbk");
+                        testHtml+=res;
+                        bufferSize2 = testInputStream.read(buffer2, 0, 1024);
+                    }
+                    testInputStream.close();
+                    getTestConnection.disconnect();
                     flaghandler.sendEmptyMessage(MSG_TEST);
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 flaghandler.sendEmptyMessage(ERR_NET2);
             }
         }
+    }
+
+    public String getHtmlString(InputStream inputStream) {
+        int bufferSize;
+        byte[] buffer = new byte[1024];
+        byte b[] = new byte[20480];
+        String html = "";
+        String h[] = new String[10];
+        try {
+            bufferSize = inputStream.read(buffer, 0, 1024);
+            int j = 0;
+            while (bufferSize != -1) {
+                for (int i = 0; i < buffer.length; i++) {
+                    if (j != 20480) {
+                        b[j] = buffer[i];
+                        j++;
+                    } else {
+                        int k = 0;
+                        h[k++] = new String(b, "gbk");
+                        j = 0;
+                    }
+                }
+                bufferSize = inputStream.read(buffer, 0, 1024);
+            }
+            for (int i = 0; i < h.length; i++) {
+                html += h[i];
+            }
+            Log.i("string",j+"j");
+            for(int i=j;i<20480;i++){
+                b[j++]=0;
+            }
+            html=html+new String(b, "gbk");
+            Log.i("TAG",new String(b, "gbk"));
+        } catch (Exception e) {
+            flaghandler.sendEmptyMessage(ERR_NET2);
+        }
+        return html;
     }
 
     Handler flaghandler = new Handler() {
@@ -311,7 +344,8 @@ public class LoginActivity extends Activity {
             } else if (msg.what == MSG_TEST) {
                 progressDialog.dismiss();
                 //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
-                testString = jsoupTest.parse(testHtml.toString());
+                testString = jsoupTest.parse(testHtml);
+                Log.i("TAG", testString);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();
@@ -321,7 +355,7 @@ public class LoginActivity extends Activity {
             } else if (msg.what == ERR_NET) {
                 Toast.makeText(LoginActivity.this, "网络出错了,请检查网络连接", Toast.LENGTH_LONG).show();
             } else if (msg.what == ERR_NET2) {
-                Toast.makeText(LoginActivity.this, "网络出错了", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "读取数据失败，请重新登陆", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             } else if (msg.what == ERR_CHECK) {
                 progressDialog.dismiss();
