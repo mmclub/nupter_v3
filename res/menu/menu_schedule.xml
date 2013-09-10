@@ -1,4 +1,7 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/alarm"
+          android:icon="@drawable/alarm"
+          android:showAsAction="always"/>
     <item android:id="@+id/action_skin"
           android:icon="@drawable/change_skin"
           android:showAsAction="always"/>

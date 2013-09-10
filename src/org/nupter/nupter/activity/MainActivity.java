@@ -26,6 +26,7 @@ import org.nupter.nupter.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.nupter.nupter.utils.JsoupTable;
+import org.nupter.nupter.utils.JsoupTest;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,6 @@ public class MainActivity extends Activity {
         UmengUpdateAgent.update(this);
 
 
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(R.layout.activity_main);
 
@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
         associationIB = (ImageButton) findViewById(R.id.associationIB);
         newspaperIB = (ImageButton) findViewById(R.id.newspaperIB);
         lostAndFoundIB = (ImageButton) findViewById(R.id.lostAndFoundIB);
-        testIB = (ImageButton)findViewById(R.id.testIB);
+        testIB = (ImageButton) findViewById(R.id.testIB);
         schoolMapIB = (ImageButton) findViewById(R.id.schoolMapIB);
         setIB = (ImageButton) findViewById(R.id.setIB);
         smsIB = (ImageButton) findViewById(R.id.smsIB);
@@ -103,7 +103,6 @@ public class MainActivity extends Activity {
         smsIB.setOnClickListener(IBListener);
 
 
-
         new NanjingWeather().getNanjingWeather();
 
 
@@ -121,14 +120,23 @@ public class MainActivity extends Activity {
                     startActivity(intent);
                     break;
                 case R.id.schedulIB:
+                    ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                    String schedule = preferences.getString("schedule", "null");
-                    if ((!schedule.equals("null"))) {
-                        Intent inten = new Intent(MainActivity.this, ScheduleActivity.class);
-                        MainActivity.this.startActivity(inten);
-                    } else {
+                    String schedule = preferences.getString("schedule", "");
+                    tablelist = new JsoupTable().parse(schedule);
+                    try {
+                        tablelist.get(0).get(0);
+                        tablelist.get(0).get(1);
+                        tablelist.get(1);
+                        tablelist.get(2);
+                        tablelist.get(3);
+                        tablelist.get(4);
+                        intent.setClass(MainActivity.this, ScheduleActivity.class);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                  //      Log.i("TAG","exception");
                         intent.setClass(MainActivity.this, LoginActivity.class);
-                        intent.putExtra("JumpTo","Schedule");
+                        intent.putExtra("JumpTo", "Schedule");
                         startActivity(intent);
                     }
                     break;
@@ -158,19 +166,22 @@ public class MainActivity extends Activity {
                     startActivity(intent);
                     break;
                 case R.id.testIB:
-
                     SharedPreferences testPreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                    String testString = testPreferences.getString("test", "null");
-                    if ((!testString.equals("null"))) {
+                    String testString = testPreferences.getString("test", "");
+                    String testList[]=testString.split("\\$");
+                    try {
+                        String list[]=testList[testList.length-1].split("&");
+                        String a=list[0];
+                        a=list[14];
                         intent.setClass(MainActivity.this, TestActivity.class);
                         intent.putExtra("testString", testString);
                         startActivity(intent);
-                    } else {
-                        intent.setClass(MainActivity.this,LoginActivity.class);
-                        intent.putExtra("JumpTo","Test");
+                    } catch (Exception e) {
+                        //      Log.i("TAG","exception");
+                        intent.setClass(MainActivity.this, LoginActivity.class);
+                        intent.putExtra("JumpTo", "Test");
                         startActivity(intent);
                     }
-
                     break;
 
                 case R.id.schoolMapIB:
