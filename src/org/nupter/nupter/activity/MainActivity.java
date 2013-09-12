@@ -112,11 +112,10 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
             Intent intent = new Intent();
             switch (v.getId()) {
                 case R.id.libraryIB:
-                    intent.setClass(MainActivity.this, LoginSchoolcardActivity.class);
+                    intent.setClass(MainActivity.this, BookActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.schedulIB:
