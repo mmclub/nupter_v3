@@ -5,13 +5,13 @@
              android:layout_marginLeft="10dp"
              android:layout_marginRight="10dp">
     <LinearLayout
-            android:layout_height="17dp"
-            android:layout_width="17dp"
+            android:layout_height="12dp"
+            android:layout_width="12dp"
             android:background="#D3D3D3"/>
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_marginLeft="17dp"
-            android:layout_height="18dp"
+            android:layout_marginLeft="12dp"
+            android:layout_height="13dp"
             android:paddingBottom="1dp"
             android:paddingLeft="1dp"
             android:background="@color/white"
@@ -24,6 +24,7 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
                 android:text="一"/>
         <TextView
                 android:layout_height="fill_parent"
@@ -34,6 +35,7 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
                 android:text="二"/>
         <TextView
                 android:layout_height="fill_parent"
@@ -44,6 +46,7 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
                 android:text="三"/>
         <TextView
                 android:layout_height="fill_parent"
@@ -54,6 +57,7 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
                 android:text="四"/>
         <TextView
                 android:layout_height="fill_parent"
@@ -61,14 +65,15 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="0.5dp"
                 android:gravity="center"
+                android:textSize="10sp"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
                 android:text="五"/>
 
     </LinearLayout>
     <LinearLayout
-            android:layout_width="18dp"
-            android:layout_marginTop="17dp"
+            android:layout_width="13dp"
+            android:layout_marginTop="12dp"
             android:paddingTop="1dp"
             android:paddingRight="1dp"
             android:orientation="vertical"
@@ -172,6 +177,8 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
+                android:singleLine="true"
                 android:text="10"/>
         <TextView
                 android:layout_height="fill_parent"
@@ -182,6 +189,8 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
+                android:singleLine="true"
                 android:text="11"/>
         <TextView
                 android:layout_height="fill_parent"
@@ -191,19 +200,21 @@
                 android:gravity="center"
                 android:background="#D3D3D3"
                 android:textColor="#94A0A4"
+                android:textSize="10sp"
+                android:singleLine="true"
                 android:text="12"/>
     </LinearLayout>
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="18dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"
             android:id="@+id/background"/>
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="17dp"
-            android:layout_marginLeft="17dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="12dp"
             android:paddingTop="1dp"
             android:paddingLeft="1dp"
             android:orientation="vertical">

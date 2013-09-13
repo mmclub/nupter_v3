@@ -21,6 +21,7 @@ import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.JsoupTest;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -279,14 +280,7 @@ public class LoginActivity extends Activity {
                     Out.flush();
                     Out.close();
                     testInputStream = getTestConnection.getInputStream();
-                    int bufferSize2;
-                    byte[] buffer2 = new byte[1024];
-                    bufferSize2 = testInputStream.read(buffer2, 0, 1024);
-                    while (bufferSize2 != -1) {
-                        String res = new String(buffer2, 0, bufferSize2, "gbk");
-                        testHtml+=res;
-                        bufferSize2 = testInputStream.read(buffer2, 0, 1024);
-                    }
+                    testHtml=getHtmlString(testInputStream);
                     testInputStream.close();
                     getTestConnection.disconnect();
                     flaghandler.sendEmptyMessage(MSG_TEST);
@@ -299,36 +293,17 @@ public class LoginActivity extends Activity {
     }
 
     public String getHtmlString(InputStream inputStream) {
-        int bufferSize;
         byte[] buffer = new byte[1024];
-        byte b[] = new byte[20480];
+        ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
         String html = "";
-        String h[] = new String[10];
         try {
-            bufferSize = inputStream.read(buffer, 0, 1024);
             int j = 0;
-            while (bufferSize != -1) {
-                for (int i = 0; i < buffer.length; i++) {
-                    if (j != 20480) {
-                        b[j] = buffer[i];
-                        j++;
-                    } else {
-                        int k = 0;
-                        h[k++] = new String(b, "gbk");
-                        j = 0;
-                    }
-                }
-                bufferSize = inputStream.read(buffer, 0, 1024);
+            int bufferSize;
+            while ((bufferSize=inputStream.read(buffer)) != -1) {
+                outSteam.write(buffer,0,bufferSize);
             }
-            for (int i = 0; i < h.length; i++) {
-                html += h[i];
-            }
-            Log.i("string",j+"j");
-            for(int i=j;i<20480;i++){
-                b[j++]=0;
-            }
-            html=html+new String(b, "gbk");
-            Log.i("TAG",new String(b, "gbk"));
+            html=new String(outSteam.toByteArray(),"gbk");
+            outSteam.close();
         } catch (Exception e) {
             flaghandler.sendEmptyMessage(ERR_NET2);
         }
