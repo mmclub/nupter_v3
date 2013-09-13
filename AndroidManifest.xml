@@ -16,7 +16,7 @@
 
 
         <activity android:name=".activity.MapBaiduActivity"
-                  android:label="@string/title_activity_xianlin_area"/>
+                  android:label="@string/title_activity_baidumap"/>
         <activity android:name=".activity.MainActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.WelcomeActivity"

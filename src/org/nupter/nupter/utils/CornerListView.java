@@ -31,6 +31,7 @@ public class CornerListView extends ListView{
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
+
             case MotionEvent.ACTION_DOWN:
                 int x = (int) ev.getX();
                 int y = (int) ev.getY();
@@ -56,6 +57,7 @@ public class CornerListView extends ListView{
                 }
                 break;
             case MotionEvent.ACTION_UP:
+
                 break;
         }
         return super.onInterceptTouchEvent(ev);
