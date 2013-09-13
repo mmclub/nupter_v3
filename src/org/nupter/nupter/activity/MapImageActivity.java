@@ -64,7 +64,7 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scale);
+        setContentView(R.layout.activity_scale);
         imgView = (ImageView) findViewById(R.id.imag);// 获取控件
         String title = getString(getIntent().getIntExtra(EXTRA_IMAGE_TITLE, R.string.title_activity_xianlin_area));
         setTitle(title);
