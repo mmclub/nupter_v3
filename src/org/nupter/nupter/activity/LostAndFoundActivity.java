@@ -207,9 +207,14 @@ public class LostAndFoundActivity extends FragmentActivity {
         private PullToRefreshListView listView;
         private ProgressDialog progressDialog;
 
+
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             lostURL = "https://api.renren.com/restserver.do?call_id=204763&api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&format=json&count=10&v=1.0&method=status.gets&page_id=601408737&page=1";
             View v = inflater.inflate(R.layout.view_lost, container, false);
+            progressDialog = new ProgressDialog(LostAndFoundActivity.this);
+            progressDialog.setTitle("努力加载中。。。");
+            progressDialog.setMessage("南邮图书馆网站压力很大。。。");
+            progressDialog.setCanceledOnTouchOutside(false);
             listView = (PullToRefreshListView) v.findViewById(R.id.lostListView);
             listView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
 
