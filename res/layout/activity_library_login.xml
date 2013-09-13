@@ -74,7 +74,7 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:text="保      存"
+                android:text="登    录"
                 android:background="@drawable/login_btn"
                 android:layout_weight="1"/>
     </LinearLayout>

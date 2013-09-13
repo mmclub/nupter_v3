@@ -21,6 +21,8 @@ import org.nupter.nupter.utils.NetUtils;
 
 import java.security.PrivateKey;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -48,6 +50,9 @@ public class BookActivity extends ListActivity {
             public void onClick(View view) {
                 if (NetUtils.isNewworkConnected()) {
                     String searchBookName = searchBookEditText.getText().toString();
+                    Pattern pattern = Pattern.compile(" ");
+                    Matcher matcher = pattern.matcher(searchBookName);
+                    searchBookName = matcher.replaceAll("+");
                     Intent intent = new Intent(BookActivity.this, BookListActivity.class);
                     intent.putExtra("searchBookName", searchBookName);
                     startActivity(intent);
