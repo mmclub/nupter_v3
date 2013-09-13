@@ -40,13 +40,28 @@
             android:layout_height="fill_parent"
             android:background="@drawable/library_card_bg"
             android:orientation="vertical">
-        <TextView
+        <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="我的收藏"
-                android:textColor="@color/blue_bar"
-                android:textSize="20sp"/>
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="我的收藏"
+                    android:textColor="@color/blue_bar"
+                    android:textSize="20sp"/>
+            <Button
+                    android:id="@+id/libraryLoginButton"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="登录图书馆"
+                    />
+                </LinearLayout>
+
+
         <ListView
                 android:id="@android:id/list"
                 android:layout_width="fill_parent"

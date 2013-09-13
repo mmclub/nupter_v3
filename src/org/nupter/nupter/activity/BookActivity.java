@@ -32,7 +32,7 @@ import java.util.List;
 
 public class BookActivity extends ListActivity {
 
-    private Button searchBookButton;
+    private Button searchBookButton, libraryLoginButton;
     private EditText searchBookEditText;
     List<BookRecord> bookRecords;
     BaseAdapter bookCollectionAdapter;
@@ -57,6 +57,20 @@ public class BookActivity extends ListActivity {
                 }
             }
         });
+        libraryLoginButton = (Button) this.findViewById(R.id.libraryLoginButton);
+        libraryLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetUtils.isNewworkConnected()) {
+                    Intent intent = new Intent(BookActivity.this, LibraryLoginActivity.class);
+                    startActivity(intent);
+                } else {
+
+                }
+
+            }
+        });
+
     }
 
     public void onStart() {
