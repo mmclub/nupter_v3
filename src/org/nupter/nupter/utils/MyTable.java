@@ -31,8 +31,7 @@ public class MyTable extends View {
     private int skin;
     private String[] time = {"8:00-", "8:45", "8:50-", "9:35", "9:50-", "10:35", "10:40-", "11:25", "11:30-", "12:15", "13:45-", "14:30", "14:35-", "15:20", "15:35-", "16:20", "16:25-", "17:10", "18:30-", "19:15", "19:25-", "20:10", "20:20-", "21:05"};
     private String[] daily = {"一", "二", "三", "四", "五"};
-    private String[][] color = new String[][]{{"#D3D3D3", "#DDD2D2", "#94A0A4"}, {"#FB98ED", "#BDB4CD", "#A86BB2"}, {"#57DE54", "#9FE4B5", "#18AD15"}, {"#93DEFD", "#ABD9F2", "#5CA7BA"}, {"#94E1FF", "#AFD8EE", "#5CA7BA"},{"#D3D3D3", "#DDD2D2", "#94A0A4"}};
-
+    private String[][] color = new String[][]{{"#D3D3D3", "#DDD2D2", "#94A0A4"}, {"#FF94f4", "#BDB4CD", "#A86BB2"}, {"#57DE54", "#9FE4B5", "#18AD15"}, {"#93DEFD", "#ABD9F2", "#5CA7BA"}, {"#94E1FF", "#AFD8EE", "#5CA7BA"},{"#D3D3D3", "#DDD2D2", "#94A0A4"}};
     public MyTable(Context context, AttributeSet attrs) {
         super(context, attrs);
         long time = System.currentTimeMillis();
