@@ -206,7 +206,7 @@ public class ScheduleActivity extends Activity {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (a[1].substring(0, 7).indexOf("9") == -1) {
+        if (a[1].substring(0, 7).indexOf("9") == -1&&(!a[1].startsWith("{"))) {
             return true;
         }
         return false;

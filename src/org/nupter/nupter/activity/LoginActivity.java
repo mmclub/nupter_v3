@@ -322,7 +322,7 @@ public class LoginActivity extends Activity {
                 progressDialog.dismiss();
                 //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
                 testString = jsoupTest.parse(testHtml);
-                Log.i("TAG", testString);
+  //              Log.i("TAG", testString);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();
