@@ -43,7 +43,6 @@ public class NewspaperActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newspaper);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
         newspaperList = new ArrayList<HashMap<String, Object>>();
         newspaperListview = (PullToRefreshListView)findViewById(R.id.newspaperListview);
 

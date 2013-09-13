@@ -112,7 +112,7 @@ public class ScheduleWidget extends AppWidgetProvider {
         tableList = new JsoupTable().parse(schedule);
         //第一二节课
         for (int i = 0; i < 5; i++) {
-            if (!tableList.get(0).get(i).equals(" ")) {
+            if (!tableList.get(0).get(i).equals(" ")) {
                 RemoteViews view1 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                 view1.setTextViewText(R.id.scheduleName, getClassName(tableList.get(0).get(i)));
                 view1.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(0).get(i)));
@@ -122,7 +122,7 @@ public class ScheduleWidget extends AppWidgetProvider {
         }
         //第三四五节课
         for (int i = 0; i < 5; i++) {
-            if (!tableList.get(1).get(i).equals(" ")) {
+            if (!tableList.get(1).get(i).equals(" ")) {
                 if (isTwoClass(tableList.get(1).get(i))) {
                     RemoteViews view2 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_half);
                     view2.setTextViewText(R.id.scheduleName, getClassName(tableList.get(1).get(i)));
@@ -140,9 +140,9 @@ public class ScheduleWidget extends AppWidgetProvider {
         }
         //第六七节课
         for (int i = 0; i < 5; i++) {
-            if (!tableList.get(2).get(i).equals(" ")) {
+            if (!tableList.get(2).get(i).equals(" ")) {
                 RemoteViews view3 = null;
-                if (!tableList.get(3).get(i).equals(" ")) {
+                if (!tableList.get(3).get(i).equals(" ")) {
                     if (isOneClass(tableList.get(3).get(i)))
                         view3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                     else
@@ -157,7 +157,7 @@ public class ScheduleWidget extends AppWidgetProvider {
         }
         //第八九节课
         for (int i = 0; i < 5; i++) {
-            if (!tableList.get(3).get(i).equals(" ")) {
+            if (!tableList.get(3).get(i).equals(" ")) {
                 if (!isOneClass(tableList.get(3).get(i))) {
                     RemoteViews view4 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                     view4.setTextViewText(R.id.scheduleName, getClassName(tableList.get(3).get(i)));
@@ -169,7 +169,7 @@ public class ScheduleWidget extends AppWidgetProvider {
         }
         //第十十一十二节课
         for (int i = 0; i < 5; i++) {
-            if (!tableList.get(4).get(i).equals(" ")) {
+            if (!tableList.get(4).get(i).equals(" ")) {
                 RemoteViews view5 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
                 view5.setTextViewText(R.id.scheduleName, getClassName(tableList.get(4).get(i)));
                 view5.setTextViewText(R.id.scheduleLocation, getClassLocation(tableList.get(4).get(i)));

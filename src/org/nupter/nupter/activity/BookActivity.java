@@ -55,7 +55,6 @@ public class BookActivity extends ListActivity {
                     Toast toast = Toast.makeText(BookActivity.this, "网络没有连接啊！",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
             }
         });
     }
