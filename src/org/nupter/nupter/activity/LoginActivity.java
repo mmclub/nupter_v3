@@ -256,6 +256,8 @@ public class LoginActivity extends Activity {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("schedule", tableHtml.toString());
                         editor.commit();
+                        Intent intent = new Intent("org.nupter.widget.refresh");
+                        LoginActivity.this.sendBroadcast(intent);
                     }
                     tableInputStream.close();
                     getTableConnection.disconnect();
