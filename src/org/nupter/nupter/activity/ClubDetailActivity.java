@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,11 +57,12 @@ public class ClubDetailActivity extends FragmentActivity {
     List<Fragment> fragmentList = new ArrayList<Fragment>();
     List<String> titleList = new ArrayList<String>();
     private boolean rawString;
-    private RadioButton btn_0,btn_1,btn_2;
+    private RadioButton btn_0, btn_1, btn_2;
     private ImageView imageView;
     private int screenWidth;
     private RadioGroup myRadioGroup;
     private ViewPager vp;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,34 +71,32 @@ public class ClubDetailActivity extends FragmentActivity {
         intent = getIntent();
         position = intent.getIntExtra("position", 0);
         page_id = clubId[position];
-        this.setTitle("努力加载中。。。");
+        this.setTitle("加载ing。。。");
         vp = (ViewPager) findViewById(R.id.mViewPager);
         fragmentList.add(new StatusAndBlogFragment("status.gets", status));
         fragmentList.add(new PhotosFragment());
         fragmentList.add(new StatusAndBlogFragment("blog.gets", blog));
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList));
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        SharedPreferences preferences= getSharedPreferences("test",
+        SharedPreferences preferences = getSharedPreferences("test",
                 Activity.MODE_PRIVATE);
-        rawString = preferences.getBoolean("SoundFlag",true);
-        btn_0 = (RadioButton)findViewById(R.id.btn_0);
-        btn_1 = (RadioButton)findViewById(R.id.btn_1);
-        btn_2 = (RadioButton)findViewById(R.id.btn_2);
+        rawString = preferences.getBoolean("SoundFlag", true);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        btn_0 = (RadioButton) findViewById(R.id.btn_0);
+        btn_1 = (RadioButton) findViewById(R.id.btn_1);
+        btn_2 = (RadioButton) findViewById(R.id.btn_2);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        imageView=(ImageView)findViewById(R.id.scrollImageView);
+        imageView = (ImageView) findViewById(R.id.scrollImageView);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 3, 5));
-
-        myRadioGroup = (RadioGroup)findViewById(R.id.myRadiogroup);
+        myRadioGroup = (RadioGroup) findViewById(R.id.myRadiogroup);
         myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.btn_0){
+                if (checkedId == R.id.btn_0) {
                     vp.setCurrentItem(0);
-                }
-                else if (checkedId == R.id.btn_1){
+                } else if (checkedId == R.id.btn_1) {
                     vp.setCurrentItem(1);
-                }
-                else if (checkedId == R.id.btn_2){
+                } else if (checkedId == R.id.btn_2) {
                     vp.setCurrentItem(2);
                 }
             }
@@ -105,15 +105,13 @@ public class ClubDetailActivity extends FragmentActivity {
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
-                for(int i=0;i<3;i++){
+                for (int i = 0; i < 3; i++) {
                     if (arg0 == i) {
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-                        params.setMargins(screenWidth / 3*i+arg2 / 4, 0, 0, 0);
+                        params.setMargins(screenWidth / 3 * i + arg2 / 4, 0, 0, 0);
                         imageView.setLayoutParams(params);
                     }
                 }
-
-
             }
 
             @Override
@@ -137,7 +135,6 @@ public class ClubDetailActivity extends FragmentActivity {
             }
         });
     }
-
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
@@ -167,7 +164,7 @@ public class ClubDetailActivity extends FragmentActivity {
         }
     }
 
-    public class StatusAndBlogFragment extends Fragment implements AbsListView.OnScrollListener{
+    public class StatusAndBlogFragment extends Fragment implements AbsListView.OnScrollListener {
 
         private JSONArray jsonArray;
         private JSONObject jsonObject;
@@ -188,10 +185,26 @@ public class ClubDetailActivity extends FragmentActivity {
             this.url = this.url + "&method=" + text + "&page_id=" + page_id + "&page=1";
             this.frameState = frameState;
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.view_status_blog_fragment, container, false);
-            ClubDetailActivity.this.setTitle("努力加载ing。。。");
+            ClubDetailActivity.this.setTitle("加载ing。。。");
+            progressBar.setProgress(50);
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setProgress(10);
+                        sleep(500);
+                        progressBar.setProgress(20);
+                        sleep(500);
+                        progressBar.setProgress(50);
+                    } catch (Exception e) {
+                    }
+                }
+            }.start();
             listView = (ListView) v.findViewById(R.id.fragment_listView);
             msg = new ArrayList<HashMap<String, Object>>();
             img = clubImage[position];
@@ -206,12 +219,14 @@ public class ClubDetailActivity extends FragmentActivity {
                             listView.setAdapter(adapter);
                             listView.setOnScrollListener(StatusAndBlogFragment.this);
                             ClubDetailActivity.this.setTitle(clubName[position]);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
                             Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                             ClubDetailActivity.this.setTitle(clubName[position]);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
             return v;
@@ -222,7 +237,8 @@ public class ClubDetailActivity extends FragmentActivity {
             this.scrollState = i;
             if (lastItem >= adapter.getCount() && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 url = url.substring(0, url.length() - 1) + (adapter.getCount() / 10 + 1);
-                ClubDetailActivity.this.setTitle("努力加载ing。。。");
+                ClubDetailActivity.this.setTitle("加载ing。。。");
+                progressBar.setVisibility(View.VISIBLE);
                 new AsyncHttpClient().post(url, null,
                         new AsyncHttpResponseHandler() {
                             @Override
@@ -230,16 +246,19 @@ public class ClubDetailActivity extends FragmentActivity {
                                 msg(response);
                                 adapter.notifyDataSetChanged();
                                 ClubDetailActivity.this.setTitle(clubName[position]);
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
 
                             @Override
                             public void onFailure(Throwable throwable, String s) {
                                 Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                                 ClubDetailActivity.this.setTitle(clubName[position]);
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
             }
         }
+
         @Override
         public void onScroll(AbsListView absListView, int i, int i2, int i3) {
             lastItem = i + i2;
@@ -291,7 +310,8 @@ public class ClubDetailActivity extends FragmentActivity {
                 soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
                 mPullRefreshGridView.setOnPullEventListener(soundListener);
             }
-            ClubDetailActivity.this.setTitle("努力加载中。。。");
+            ClubDetailActivity.this.setTitle("加载ing。。。");
+            progressBar.setVisibility(View.VISIBLE);
             if (!NetUtils.isNewworkConnected()) {
                 mPullRefreshGridView.setPullToRefreshEnabled(false);
             }
@@ -302,12 +322,14 @@ public class ClubDetailActivity extends FragmentActivity {
                             adapter = new MyAdapter(getActivity(), response);
                             mPullRefreshGridView.setAdapter(adapter);
                             ClubDetailActivity.this.setTitle(clubName[position]);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
                             Toast.makeText(getActivity(), "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
                             ClubDetailActivity.this.setTitle(clubName[position]);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
             // Set a listener to be invoked when the list should be refreshed.
