@@ -112,7 +112,6 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
             Intent intent = new Intent();
             switch (v.getId()) {
                 case R.id.libraryIB:
@@ -123,10 +122,10 @@ public class MainActivity extends Activity {
                     ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                     String schedule = preferences.getString("schedule", "");
-                    tablelist = new JsoupTable().parse(schedule);
                     try {
+                        tablelist = new JsoupTable().parse(schedule);
                         tablelist.get(0).get(0);
-                        tablelist.get(0).get(1);
+                        tablelist.get(4).get(4);
                         tablelist.get(1);
                         tablelist.get(2);
                         tablelist.get(3);
@@ -134,45 +133,40 @@ public class MainActivity extends Activity {
                         intent.setClass(MainActivity.this, ScheduleActivity.class);
                         startActivity(intent);
                     } catch (Exception e) {
-                  //      Log.i("TAG","exception");
+                        //      Log.i("TAG","exception");
                         intent.setClass(MainActivity.this, LoginActivity.class);
                         intent.putExtra("JumpTo", "Schedule");
                         startActivity(intent);
                     }
                     break;
                 case R.id.lifeAssistantIB:
-
                     intent.setClass(MainActivity.this, LifeAssistantActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.nuptNewsIB:
-
                     intent.setClass(MainActivity.this, NewsActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.associationIB:
-
                     intent.setClass(MainActivity.this, ClubActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.newspaperIB:
-
                     intent.setClass(MainActivity.this, NewspaperActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.lostAndFoundIB:
-
                     intent.setClass(MainActivity.this, LostAndFoundActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.testIB:
                     SharedPreferences testPreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
                     String testString = testPreferences.getString("test", "");
-                    String testList[]=testString.split("\\$");
+                    String testList[] = testString.split("\\$");
                     try {
-                        String list[]=testList[testList.length-1].split("&");
-                        String a=list[0];
-                        a=list[14];
+                        String list[] = testList[testList.length - 2].split("&");
+                        String a = list[0];
+                        a = list[14];
                         intent.setClass(MainActivity.this, TestActivity.class);
                         intent.putExtra("testString", testString);
                         startActivity(intent);
