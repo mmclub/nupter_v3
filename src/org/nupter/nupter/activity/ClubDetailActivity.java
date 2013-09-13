@@ -213,7 +213,7 @@ public class ClubDetailActivity extends FragmentActivity {
                         @Override
                         public void onSuccess(String response) {
                             msg(response);
-                            adapter = new SimpleAdapter(getActivity(), msg, R.layout.view_club_listview,
+                            adapter = new SimpleAdapter(ClubDetailActivity.this, msg, R.layout.view_club_listview,
                                     new String[]{"img", "msg", "time"},
                                     new int[]{R.id.headimg, R.id.msg, R.id.time});
                             listView.setAdapter(adapter);
@@ -224,7 +224,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ClubDetailActivity.this, "获取人人数据失败", Toast.LENGTH_LONG).show();
                             ClubDetailActivity.this.setTitle(clubName[position]);
                             progressBar.setVisibility(View.INVISIBLE);
                         }
@@ -251,7 +251,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                             @Override
                             public void onFailure(Throwable throwable, String s) {
-                                Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
+                                Toast.makeText(ClubDetailActivity.this, "获取人人数据失败", Toast.LENGTH_LONG).show();
                                 ClubDetailActivity.this.setTitle(clubName[position]);
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
@@ -319,7 +319,7 @@ public class ClubDetailActivity extends FragmentActivity {
                     new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(String response) {
-                            adapter = new MyAdapter(getActivity(), response);
+                            adapter = new MyAdapter(ClubDetailActivity.this, response);
                             mPullRefreshGridView.setAdapter(adapter);
                             ClubDetailActivity.this.setTitle(clubName[position]);
                             progressBar.setVisibility(View.INVISIBLE);
@@ -327,7 +327,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                         @Override
                         public void onFailure(Throwable throwable, String s) {
-                            Toast.makeText(getActivity(), "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ClubDetailActivity.this, "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
                             ClubDetailActivity.this.setTitle(clubName[position]);
                             progressBar.setVisibility(View.INVISIBLE);
                         }
@@ -351,7 +351,7 @@ public class ClubDetailActivity extends FragmentActivity {
                                 @Override
                                 public void onSuccess(String response) {
                                     if (response.equals("[]")) {
-                                        Toast.makeText(getActivity(), "木有更多了。。。亲", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ClubDetailActivity.this, "木有更多了。。。亲", Toast.LENGTH_LONG).show();
                                     } else {
                                         adapter.Update(response);
                                         adapter.notifyDataSetChanged();
@@ -361,7 +361,7 @@ public class ClubDetailActivity extends FragmentActivity {
 
                                 @Override
                                 public void onFailure(Throwable throwable, String s) {
-                                    Toast.makeText(getActivity(), "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ClubDetailActivity.this, "获取人人相片失败，请检查网络", Toast.LENGTH_LONG).show();
                                     mPullRefreshGridView.onRefreshComplete();
                                 }
                             });
