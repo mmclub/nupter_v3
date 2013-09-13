@@ -3,8 +3,10 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:background="@drawable/score_bg"
-              android:layout_margin="10dp">
+              android:background="@drawable/test_background"
+              android:layout_margin="10dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="10dp">
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

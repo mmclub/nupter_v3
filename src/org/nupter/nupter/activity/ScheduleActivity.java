@@ -173,7 +173,7 @@ public class ScheduleActivity extends Activity {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (!a[1].substring(0, 6).endsWith("9")) {
+        if (a[1].substring(0, 7).indexOf("9")==-1) {
             return true;
         }
         return false;
@@ -288,6 +288,8 @@ public class ScheduleActivity extends Activity {
                     if (!list4.get(i).equals(" ")) {
                         if (isOneClass(list4.get(i))) {
                             view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
+                        } else {
+                            view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                         }
                     } else {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));

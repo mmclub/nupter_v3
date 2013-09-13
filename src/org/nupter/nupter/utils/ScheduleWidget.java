@@ -29,7 +29,7 @@ public class ScheduleWidget extends AppWidgetProvider {
     private int skin;
     private String schedule;
     private ArrayList<ArrayList<String>> tableList = new ArrayList<ArrayList<String>>();
-    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background,R.drawable.colorbackground};
+    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background, R.drawable.colorbackground};
     private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
             {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
             {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
@@ -63,12 +63,12 @@ public class ScheduleWidget extends AppWidgetProvider {
             arrayList.add(preferences.getInt("color_6", 0));
             colors.add(arrayList);
         }
-        schedule = preferences.getString("schedule", "null");
+        schedule = preferences.getString("schedule", "");
         if (intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE")) {
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(
                     context, ScheduleWidget.class));
-            if ((!schedule.equals("null"))) {
+            if ((!schedule.equals(""))) {
                 RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_schedule);
                 Intent intent1 = new Intent(context, ScheduleActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, 0);
@@ -145,6 +145,8 @@ public class ScheduleWidget extends AppWidgetProvider {
                 if (!tableList.get(3).get(i).equals(" ")) {
                     if (isOneClass(tableList.get(3).get(i)))
                         view3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview);
+                    else
+                        view3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_half);
                 } else
                     view3 = new RemoteViews(context.getPackageName(), R.layout.widget_remoteview_half);
                 view3.setTextViewText(R.id.scheduleName, getClassName(tableList.get(2).get(i)));

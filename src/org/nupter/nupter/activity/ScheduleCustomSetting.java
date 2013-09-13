@@ -158,7 +158,7 @@ public class ScheduleCustomSetting extends Activity implements RadioGroup.OnChec
             startActivityForResult(intent1, 2);
         }
         Log.i("TAG", (data == null) + "data" + requestCode);
-        if (requestCode == 2 /*&& resultCode == RESULT_OK */ && null != data) {
+        if (requestCode == 2 && resultCode == RESULT_OK  && null != data) {
             Bundle bundle = data.getExtras();
             if (bundle != null) {
                 Bitmap photo = bundle.getParcelable("data");
