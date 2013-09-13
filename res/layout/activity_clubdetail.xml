@@ -3,6 +3,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical" >
+    <ProgressBar
+            android:id="@+id/progressBar1"
+            android:max="100"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"/>
     <RadioGroup
             android:id="@+id/myRadiogroup"
             android:gravity="center"
