@@ -450,6 +450,7 @@ public class ScheduleActivity extends Activity {
                 break;
             case R.id.alarm:
 
+                break;
             case R.id.action_login:
                 Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);
                 intent1.putExtra("JumpTo", "Schedule");

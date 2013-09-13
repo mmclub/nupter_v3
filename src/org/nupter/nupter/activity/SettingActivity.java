@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
@@ -42,7 +43,6 @@ public class SettingActivity extends Activity {
         SharedPreferences sharedPreferences= getSharedPreferences("test",
                 Activity.MODE_PRIVATE);
         // 使用getString方法获得value，注意第2个参数是value的默认值
-        boolean getNewsFlog =sharedPreferences.getBoolean("NewsFlag",true);
         boolean getSoundFlog = sharedPreferences.getBoolean("SoundFlag",true);
         refreshsoundTB.setChecked(getSoundFlog);
 
@@ -55,6 +55,7 @@ public class SettingActivity extends Activity {
 
          getActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 
     CompoundButton.OnCheckedChangeListener checkedListener = new CompoundButton.OnCheckedChangeListener() {
 
@@ -145,6 +146,9 @@ public class SettingActivity extends Activity {
 
 
     }
+
+
+
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
