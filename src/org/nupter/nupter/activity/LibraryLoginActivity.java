@@ -10,25 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.nupter.nupter.R;
 import org.nupter.nupter.utils.NetUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -81,14 +72,15 @@ public class LibraryLoginActivity extends Activity {
     class LibraryCookie extends Thread {
         public void run() {
             try {
-                Log.d("lib_cookie", "run");
+
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpget = new HttpGet(postUrl);
                 Log.d("lib_postUrl", postUrl);
                 HttpResponse response = httpClient.execute(httpget);
                 cookies = httpClient.getCookieStore().getCookies();
+                Log.d("lib_cookie",cookies.toString());
                 if (cookies.isEmpty()) {
-                    Log.d("lib_cookie", "NONE");
+
                 }
 
                 HttpEntity entity = response.getEntity();
@@ -96,9 +88,10 @@ public class LibraryLoginActivity extends Activity {
                 String libBookHtml = getHtmlString(inputStream);
                 Log.d("lib_book_re1", libBookHtml);
                 if (libBookHtml.contains("密码错误")) {
-                    Toast.makeText(LibraryLoginActivity.this, "帐号与密码不匹配", Toast.LENGTH_SHORT).show();
+                    Log.d("lib_login_error", "Failed");
                 } else {
-                    Intent intent = new Intent(LibraryLoginActivity.this, BorrowBookList.class);
+                    Intent intent = new Intent(LibraryLoginActivity.this, BookBorrowActivity.class);
+                    intent.putExtra("cookieValue", cookies.get(cookies.size() - 1).getValue());
                     intent.putExtra("libCookie", "PHPSESSID=" + cookies.get(cookies.size() - 1).getValue());
 
                     startActivity(intent);

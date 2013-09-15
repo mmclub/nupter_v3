@@ -17,7 +17,7 @@
             android:textSize="20sp"
             android:textColor="@color/blue_bar"/>
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/libraryBorrowListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@null"

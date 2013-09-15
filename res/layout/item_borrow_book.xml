@@ -10,6 +10,7 @@
                   android:orientation="vertical"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
+                  android:layout_weight="1"
                   android:paddingLeft="5dp">
 
         <TextView
@@ -20,7 +21,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"/>
         <TextView
-                android:id="@+id/borrowBookNum"
+                android:id="@+id/borrowBookAuthor"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
@@ -35,4 +36,10 @@
 
 
     </LinearLayout>
+    <Button
+        android:id="@+id/renewButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:text="续借"/>
 </LinearLayout>
