@@ -1,5 +1,6 @@
 package org.nupter.nupter;
 
+import android.app.Application;
 import com.baidu.mapapi.BMapManager;
 import android.content.Context;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import com.parse.ParseInstallation;
 import com.parse.PushService;
 import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.activity.MessageListActivity;
+
+import java.net.CookieStore;
 
 
 /**
@@ -106,5 +109,18 @@ public class MyApplication extends SugarApp {
             }
         }
     }
+
+    //用于存储和读取图书馆的cookie
+    public class LibraryCookie extends Application {
+
+        private CookieStore librarytCookies;
+        public CookieStore getCookie(){
+            return librarytCookies;
+        }
+        public void setCookie(CookieStore cks){
+            librarytCookies = cks;
+        }
+    }
+
 
 }

@@ -94,6 +94,7 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.WebviewActivity"/>
         <activity android:name=".activity.LibraryLoginActivity"/>
+        <activity android:name=".activity.BorrowBookList"/>
         <receiver android:name=".utils.ScheduleWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
