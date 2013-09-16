@@ -75,7 +75,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:text="登    录"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/publish_btn"
                 android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
