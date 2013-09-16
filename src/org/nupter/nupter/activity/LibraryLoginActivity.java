@@ -1,9 +1,13 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +40,7 @@ public class LibraryLoginActivity extends Activity {
     private String libraryCookie;
     private SharedPreferences userInit, pwdInit;
     private List<Cookie> cookies;
+    private LibLoginHandler libLoginHandler = null ;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +53,7 @@ public class LibraryLoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 user = userEditText.getText().toString();
-                Log.d("lib_user",user);
+                Log.d("lib_user", user);
                 pwd = pwdEditText.getText().toString();
                 if (NetUtils.isNewworkConnected()) {
                     if (user.equals("")) {
@@ -69,16 +74,37 @@ public class LibraryLoginActivity extends Activity {
 
     }
 
+    private class LibLoginHandler extends Handler {
+        public LibLoginHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) { // 处理消息
+
+            Toast.makeText(LibraryLoginActivity.this, msg.obj.toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
     class LibraryCookie extends Thread {
         public void run() {
             try {
+                Looper curLooper = Looper.myLooper ();
+                Looper mainLooper = Looper.getMainLooper ();
+                String msg ;
+                if (curLooper== null ){
+                    libLoginHandler = new LibLoginHandler(mainLooper);
+                } else {
+                    libLoginHandler = new LibLoginHandler(curLooper);
+                }
+                libLoginHandler.removeMessages(0);
 
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpGet httpget = new HttpGet(postUrl);
                 Log.d("lib_postUrl", postUrl);
                 HttpResponse response = httpClient.execute(httpget);
                 cookies = httpClient.getCookieStore().getCookies();
-                Log.d("lib_cookie",cookies.toString());
+                Log.d("lib_cookie", cookies.toString());
                 if (cookies.isEmpty()) {
 
                 }
@@ -88,6 +114,10 @@ public class LibraryLoginActivity extends Activity {
                 String libBookHtml = getHtmlString(inputStream);
                 Log.d("lib_book_re1", libBookHtml);
                 if (libBookHtml.contains("密码错误")) {
+                    msg = "用户名与密码不匹配";
+                    Message m = libLoginHandler .obtainMessage(1, 1, 1, msg);
+                    libLoginHandler .sendMessage(m);
+
                     Log.d("lib_login_error", "Failed");
                 } else {
                     Intent intent = new Intent(LibraryLoginActivity.this, BookBorrowActivity.class);

@@ -3,6 +3,7 @@ package org.nupter.nupter.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class BookBorrowActivity extends Activity {
     private Map<String, String> map;
     private List<Map<String, String>> libBorrowList;
     private BookBorrowAdapter bookBorrowAdapter;
-
+    private ProgressDialog progressDialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,13 @@ public class BookBorrowActivity extends Activity {
         Intent intent = getIntent();
         libCookie = intent.getStringExtra("libCookie");
         cookieValue = intent.getStringExtra("cookieValue");
+
+        progressDialog = new ProgressDialog(BookBorrowActivity.this);
+        progressDialog.setTitle("努力加载中。。。");
+        progressDialog.setMessage("南邮图书馆压力很大。。。");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
         Log.d("ays_co", cookieValue);
 //        new LibraryBookList().start();
         AsyncHttpClient libBorrowClient = new AsyncHttpClient();
@@ -103,6 +111,7 @@ public class BookBorrowActivity extends Activity {
                             }
                             bookBorrowAdapter = new BookBorrowAdapter(BookBorrowActivity.this);
                             libraryBorrowListView.setAdapter(bookBorrowAdapter);
+                            progressDialog.dismiss();
                         }
                     }
                 });
