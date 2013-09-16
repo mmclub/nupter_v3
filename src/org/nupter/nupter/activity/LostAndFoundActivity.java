@@ -59,6 +59,7 @@ public class LostAndFoundActivity extends FragmentActivity {
     private RadioButton btn_0,btn_1;
     private ImageView imageView;
     private int screenWidth;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class LostAndFoundActivity extends FragmentActivity {
         btn_0 = (RadioButton)findViewById(R.id.btn_0);
         btn_1 = (RadioButton)findViewById(R.id.btn_1);
         screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        progressBar=(ProgressBar)findViewById(R.id.progressBar2);
         imageView=(ImageView)findViewById(R.id.scrollImageView);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 2, 5));
         vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList));
@@ -266,7 +268,8 @@ public class LostAndFoundActivity extends FragmentActivity {
                 @Override
                 public void onLastItemVisible() {
                     lostURL = lostURL.substring(0, lostURL.length() - 1) + (adapter.getCount() / 10 + 1);
-
+                    LostAndFoundActivity.this.setTitle("玩命加载中...");
+                    progressBar.setVisibility(View.VISIBLE);
                     new AsyncHttpClient().post(lostURL, null,
                             new AsyncHttpResponseHandler() {
                                 @Override
@@ -276,6 +279,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                                         for (int i = 0; i < jsonArray.length(); i++)
                                             lostList.add(jsonArray.getJSONObject(i).getString("message"));
                                         LostAndFoundActivity.this.setTitle("寻物平台");
+                                        progressBar.setVisibility(View.INVISIBLE);
                                     } catch (Exception e) {
 
                                     }
@@ -287,11 +291,25 @@ public class LostAndFoundActivity extends FragmentActivity {
                                 public void onFailure(Throwable throwable, String s) {
                                     Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
                                     LostAndFoundActivity.this.setTitle("寻物平台");
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
                 }
             });
-
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setProgress(10);
+                        sleep(500);
+                        progressBar.setProgress(20);
+                        sleep(500);
+                        progressBar.setProgress(50);
+                    } catch (Exception e) {
+                    }
+                }
+            }.start();
             lostList = new ArrayList<String>();
             AsyncHttpClient client = new AsyncHttpClient();
             if (NetUtils.isNewworkConnected()) {
@@ -306,6 +324,7 @@ public class LostAndFoundActivity extends FragmentActivity {
                             adapter = new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList);
                             listView.setAdapter(adapter);
                             LostAndFoundActivity.this.setTitle("寻物平台");
+                            progressBar.setVisibility(View.INVISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -313,6 +332,7 @@ public class LostAndFoundActivity extends FragmentActivity {
 
                     public void onFailure(Throwable throwable, String s) {
                         LostAndFoundActivity.this.setTitle("寻物平台");
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast toast = Toast.makeText(LostAndFoundActivity.this, "服务器歇菜了", Toast.LENGTH_SHORT);
                         toast.show();
                     }

@@ -24,6 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 课表模块
@@ -44,6 +46,7 @@ public class ScheduleActivity extends Activity {
     private SharedPreferences preferences;
     private LinearLayout linearLayout;
     private String schedule;
+    private int which_week;
     private ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
     private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
     private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
@@ -59,6 +62,7 @@ public class ScheduleActivity extends Activity {
         setContentView(R.layout.activity_schedule);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
         height = getWindowManager().getDefaultDisplay().getHeight();
+        which_week = getWeek();
         for (int i = 0; i < 5; i++) {
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
             for (int j = 0; j <= 5; j++) {
@@ -133,6 +137,18 @@ public class ScheduleActivity extends Activity {
                 });
     }
 
+    private int getWeek() {
+        Date date = new Date();
+        String startTime = "2013-09-01";
+        try {
+            Date m_endTime = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(startTime);
+            return (int) (date.getTime() - m_endTime.getTime()) / 86400000 / 7 + 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
     private String[] format(String s) {
         String a[] = s.split(" ");
         if ((!a[1].startsWith("周")) && a[1].length() < 5) {
@@ -144,6 +160,23 @@ public class ScheduleActivity extends Activity {
             }
         }
         return a;
+    }
+
+    private boolean noClassInThisWeek(String s) {
+        String a[] = format(s);
+        if (a[1].indexOf("|") != -1) {
+            if(which_week%2==1){
+                //单周
+                if(a[1].substring(a[1].indexOf("|")+1,a[1].indexOf("|")+2).equals("双")){
+                    return true;
+                }
+            } else {
+                if(a[1].substring(a[1].indexOf("|")+1,a[1].indexOf("|")+2).equals("单")){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private String getClassName(String s) {
@@ -173,7 +206,7 @@ public class ScheduleActivity extends Activity {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (a[1].substring(0, 7).indexOf("9")==-1) {
+        if (a[1].substring(0, 7).indexOf("9") == -1) {
             return true;
         }
         return false;
@@ -229,6 +262,9 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list1.get(position)));
                     classLocation.setText(getClassLocation(list1.get(position)));
                     convertView.setBackgroundResource(colors.get(skin).get(position));
+                    if (noClassInThisWeek(list1.get(position))) {
+                        convertView.setAlpha((float)0.3);
+                    }
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
@@ -242,6 +278,9 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
                     convertView.setBackgroundResource(colors.get(skin).get(position > 6 ? position - 7 : position - 1));
+                    if (noClassInThisWeek(list2.get(position-5))) {
+                        convertView.setAlpha((float)0.3);
+                    }
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
@@ -297,6 +336,9 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
                     view.setBackgroundResource(colors.get(skin).get(i > 3 ? i - 4 : i + 2));
+                    if (noClassInThisWeek(list3.get(i))) {
+                        view.setAlpha((float)0.3);
+                    }
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
@@ -307,6 +349,9 @@ public class ScheduleActivity extends Activity {
                         className.setText(getClassName(list4.get(i - 5)));
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
                         view.setBackgroundResource(colors.get(skin).get(i - 4));
+                        if (noClassInThisWeek(list4.get(i - 5))) {
+                            view.setAlpha((float)0.3);
+                        }
                     }
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
@@ -352,6 +397,9 @@ public class ScheduleActivity extends Activity {
                 className.setText(getClassName(list5.get(i)));
                 classLocation.setText(getClassLocation(list5.get(i)));
                 view.setBackgroundResource(colors.get(skin).get(i > 2 ? i - 3 : i + 3));
+                if (noClassInThisWeek(list5.get(i))) {
+                    view.setAlpha((float)0.3);
+                }
             } else {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
             }
