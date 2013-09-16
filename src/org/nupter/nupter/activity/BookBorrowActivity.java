@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -28,6 +29,8 @@ import org.nupter.nupter.R;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,6 +52,7 @@ public class BookBorrowActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_borrow_book);
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
         libraryBorrowListView = (ListView) this.findViewById(R.id.libraryBorrowListView);
         Intent intent = getIntent();
         libCookie = intent.getStringExtra("libCookie");
@@ -79,40 +83,46 @@ public class BookBorrowActivity extends Activity {
                         Log.d("asy_re", response);
                         Document doc = Jsoup.parse(response);
                         Elements table = doc.getElementsByTag("table");
-                        if (table.isEmpty()) {
+
+                        Elements trElements = table.select("tr");
+
+                        int trSize = trElements.size();
+                        Log.d("lib_t", trSize + "");
+                        for (int i = 1; i < trSize; i++) {
+                            Elements tdElements = trElements.get(i).select("td");
+                            Log.d("lib_t", tdElements.toString());
+                            String bookNum = tdElements.get(0).text();
+                            String bookAuthor = tdElements.get(2).text();
+                            Elements blueClass = trElements.get(i).getElementsByClass("blue");
+                            String bookName = blueClass.text();
+
+                            Pattern pattern = Pattern.compile(" ");
+                            Matcher matcher = pattern.matcher(bookName);
+                            bookName = matcher.replaceAll("");
+
+                            Elements deadLineElements = trElements.get(i).select("font");
+                            String deadLine = deadLineElements.text();
+                            Log.d("lib_t", bookNum + "-" + bookName + "-" + deadLine);
+                            if (!bookName.isEmpty()) {
+                                map = new HashMap<String, String>();
+                                map.put("bookName", bookName);
+                                map.put("bookAuthor", bookAuthor);
+                                map.put("bookNum", bookNum);
+                                map.put("deadLine", "应还日期:" + deadLine);
+                                libBorrowList.add(map);
+                            }
+                        }
+                        bookBorrowAdapter = new BookBorrowAdapter(BookBorrowActivity.this);
+                        libraryBorrowListView.setAdapter(bookBorrowAdapter);
+                        progressDialog.dismiss();
+                        if (libBorrowList.isEmpty()) {
                             new AlertDialog.Builder(BookBorrowActivity.this)
                                     .setTitle("续借反馈")
                                     .setMessage("还没有借书哦")
                                     .setNegativeButton(
                                             "确定", null).show();
-                        } else {
-                            Elements trElements = table.select("tr");
-
-                            int trSize = trElements.size();
-                            Log.d("lib_t", trSize + "");
-                            for (int i = 1; i < trSize; i++) {
-                                Elements tdElements = trElements.get(i).select("td");
-                                Log.d("lib_t", tdElements.toString());
-                                String bookNum = tdElements.get(0).text();
-                                String bookAuthor = tdElements.get(2).text();
-                                Elements blueClass = trElements.get(i).getElementsByClass("blue");
-                                String bookName = blueClass.text();
-                                Elements deadLineElements = trElements.get(i).select("font");
-                                String deadLine = deadLineElements.text();
-                                Log.d("lib_t", bookNum + "-" + bookName + "-" + deadLine);
-                                if (!bookName.isEmpty()) {
-                                    map = new HashMap<String, String>();
-                                    map.put("bookName", bookName);
-                                    map.put("bookAuthor", bookAuthor);
-                                    map.put("bookNum", bookNum);
-                                    map.put("deadLine", "应还日期:" + deadLine);
-                                    libBorrowList.add(map);
-                                }
-                            }
-                            bookBorrowAdapter = new BookBorrowAdapter(BookBorrowActivity.this);
-                            libraryBorrowListView.setAdapter(bookBorrowAdapter);
-                            progressDialog.dismiss();
                         }
+
                     }
                 });
     }
@@ -171,10 +181,10 @@ public class BookBorrowActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     String bookNum = libBorrowList.get(position).get("bookNum");
-                    renewUrl = "http://202.119.228.6:8080/reader/ajax_renew.php?bar_code="+bookNum;
-                    new AsyncHttpClient().post(renewUrl,null,new AsyncHttpResponseHandler(){
+                    renewUrl = "http://202.119.228.6:8080/reader/ajax_renew.php?bar_code=" + bookNum;
+                    new AsyncHttpClient().post(renewUrl, null, new AsyncHttpResponseHandler() {
                         public void onSuccess(String response) {
-                            Log.d("renew",response);
+                            Log.d("renew", response);
                             Document doc = Jsoup.parse(response);
                             Elements fontElements = doc.getElementsByTag("font");
                             String result = fontElements.text();
@@ -182,7 +192,7 @@ public class BookBorrowActivity extends Activity {
                                     .setTitle("续借反馈")
                                     .setMessage(result)
                                     .setNegativeButton(
-                                    "确定", null).show();
+                                            "确定", null).show();
 
 
                         }
@@ -194,6 +204,18 @@ public class BookBorrowActivity extends Activity {
             });
             return convertView;  //To change body of implemented methods use File | Settings | File Templates.
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
 }

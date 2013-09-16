@@ -48,7 +48,7 @@
             <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:text="我的收藏"
                     android:textColor="@color/blue_bar"
                     android:textSize="20sp"/>
@@ -57,9 +57,10 @@
                     android:background="@drawable/publish_btn"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="2"
                     android:textColor="@color/white"
-                    android:textSize="16"
+                    android:textSize="16sp"
                     android:text="登录图书馆"
                     />
                 </LinearLayout>

@@ -90,6 +90,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColor="#7CA3A2"
-                android:text="Tip：帐号可能是是卡号，密码可能是是学号"/>
+                android:text="Tip：默认帐号是学号，默认密码可能是学号，也可能是123456"/>
     </LinearLayout>
 </LinearLayout>

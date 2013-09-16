@@ -20,6 +20,7 @@
         android:id="@+id/libraryBorrowListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         android:divider="@null"
         />
 

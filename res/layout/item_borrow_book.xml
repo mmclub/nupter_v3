@@ -41,8 +41,8 @@
         android:background="@drawable/publish_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="7"
         android:textColor="@color/white"
         android:text="续借"/>
