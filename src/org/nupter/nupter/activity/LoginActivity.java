@@ -299,7 +299,6 @@ public class LoginActivity extends Activity {
         ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
         String html = "";
         try {
-            int j = 0;
             int bufferSize;
             while ((bufferSize=inputStream.read(buffer)) != -1) {
                 outSteam.write(buffer,0,bufferSize);

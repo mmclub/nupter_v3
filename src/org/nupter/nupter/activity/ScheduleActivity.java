@@ -75,6 +75,8 @@ public class ScheduleActivity extends Activity {
         skin = preferences.getInt("skin", 0);
         //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
         tablelist = new JsoupTable().parse(schedule);
+/*        for (int i=0;i<tablelist.size();i++)
+        Log.i("TAG",tablelist.get(i).get(0));*/
         linearLayout = (LinearLayout) findViewById(R.id.postLinearLayout);
         if (skin == 0)
             linearLayout.setBackgroundResource(R.drawable.colorbackground);
