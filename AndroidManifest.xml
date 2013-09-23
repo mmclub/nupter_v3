@@ -93,6 +93,9 @@
         <activity android:name=".activity.NewspaperDetailActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.WebviewActivity"/>
+        <activity android:name=".activity.ClassAlarmActivity"/>
+        <receiver android:name=".utils.CallAlarm"
+                             android:process=":remote"/>
         <receiver android:name=".utils.ScheduleWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
