@@ -54,10 +54,10 @@ public class NewspaperActivity extends Activity {
            update();
        }
         else{
-         onUpdateSuccess(rawString);
-           newspaperAdaper = new SimpleAdapter(NewspaperActivity.this, newspaperList, R.layout.view_notice_news,
-                   new String[]{"Title"},
-                   new int[]{R.id.Title});
+           onUpdateSuccess(rawString);
+           newspaperAdaper = new SimpleAdapter(NewspaperActivity.this, newspaperList, R.layout.view_newspaper_title,
+                   new String[]{"Title","Time"},
+                   new int[]{R.id.newsPaperTitle,R.id.newsPaperTime});
            newspaperListview.setAdapter(newspaperAdaper);
            try {
              newspaperJsonObject =new JSONObject(rawString);
@@ -121,8 +121,8 @@ public class NewspaperActivity extends Activity {
                     onUpdateSuccess(response);
                     newspaperJsonObject = new JSONObject(response);
                     newspaperAdaper = new SimpleAdapter(NewspaperActivity.this, newspaperList, R.layout.view_newspaper_title,
-                            new String[]{"Title"},
-                            new int[]{R.id.newsPaperTitle});
+                            new String[]{"Title","Time"},
+                            new int[]{R.id.newsPaperTitle,R.id.newsPaperTime});
                     newspaperListview.setAdapter(newspaperAdaper);
                     newspaperListview.onRefreshComplete();
 
@@ -150,10 +150,10 @@ public class NewspaperActivity extends Activity {
             newspaperJsonArry = new JSONObject(response).getJSONArray("array");
             for (int i = 0; i < newspaperJsonArry.length(); i++) {
                 newspaperJsonObject = newspaperJsonArry.getJSONObject(i);
-                Log.i("TAG",newspaperJsonObject.toString());
                 newspaperMap = new HashMap<String, Object>();
                 newspaperMap.put("Title",
                         newspaperJsonObject.getString("title"));
+                newspaperMap.put("Time",newspaperJsonObject.getString("time"));
                 newspaperList.add(newspaperMap);
 
 
@@ -165,7 +165,6 @@ public class NewspaperActivity extends Activity {
     private AdapterView.OnItemClickListener newspaperonListItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //To change body of implemented methods use File | Settings | File Templates.
         try{
             Intent intent = new Intent(NewspaperActivity.this, WebviewActivity.class);
             intent.putExtra(WebviewActivity.EXTRA_TITLE, newspaperJsonObject.getJSONArray("array").getJSONObject(position - 1).getString("title"));

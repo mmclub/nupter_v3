@@ -193,8 +193,8 @@ public class NewsActivity extends FragmentActivity {
                 public void onSuccess(String response) {
                     NoticeList(response);
                     noticeAdapter = new SimpleAdapter(NewsActivity.this, noticeList, R.layout.view_notice_news,
-                            new String[]{"Title"},
-                            new int[]{R.id.Title});
+                            new String[]{"Title","Time"},
+                            new int[]{R.id.Title,R.id.Time});
                     noticelistView.setAdapter(noticeAdapter);
                     NewsActivity.this.setTitle("南邮新闻");
                     progressBar.setVisibility(View.INVISIBLE);
@@ -237,7 +237,10 @@ public class NewsActivity extends FragmentActivity {
 
                             NoticeList(response);
 
-                            noticeAdapter.notifyDataSetChanged();
+                            noticeAdapter = new SimpleAdapter(NewsActivity.this, noticeList, R.layout.view_notice_news,
+                                    new String[]{"Title","Time"},
+                                    new int[]{R.id.Title,R.id.Time});
+                            noticelistView.setAdapter(noticeAdapter);
                             noticelistView.onRefreshComplete();
 
                         }
@@ -260,8 +263,8 @@ public class NewsActivity extends FragmentActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject = jsonArray.getJSONObject(i);
                     noticeMap = new HashMap<String, Object>();
-                    noticeMap.put("Title",
-                            jsonObject.getString("title"));
+                    noticeMap.put("Title", jsonObject.getString("title"));
+                    noticeMap.put("Time",jsonObject.getString("time"));
                     noticeList.add(noticeMap);
                 }
             } catch (Exception e) {
@@ -309,8 +312,8 @@ public class NewsActivity extends FragmentActivity {
                 public void onSuccess(String response) {
                     NewsList(response);
                     newsAdapter = new SimpleAdapter(NewsActivity.this, newsList, R.layout.view_notice_news,
-                            new String[]{"Title"},
-                            new int[]{R.id.Title});
+                            new String[]{"Title","Time"},
+                            new int[]{R.id.Title,R.id.Time});
                     newslistView.setAdapter(newsAdapter);
 
                     newslistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -348,7 +351,10 @@ public class NewsActivity extends FragmentActivity {
                     new AsyncHttpClient().get(URL_NEWS, null, new AsyncHttpResponseHandler() {
                         public void onSuccess(String response) {
                             NewsList(response);
-                            newsAdapter.notifyDataSetChanged();
+                            newsAdapter = new SimpleAdapter(NewsActivity.this, newsList, R.layout.view_notice_news,
+                                    new String[]{"Title","Time"},
+                                    new int[]{R.id.Title,R.id.Time});
+                            newslistView.setAdapter(newsAdapter);
                             newslistView.onRefreshComplete();
 
                         }
@@ -374,6 +380,7 @@ public class NewsActivity extends FragmentActivity {
                     newsMap = new HashMap<String, Object>();
                     newsMap.put("Title",
                             jsonObject.getString("title"));
+                    newsMap.put("Time",jsonObject.getString("time"));
                     newsList.add(newsMap);
                 }
             } catch (Exception e) {
