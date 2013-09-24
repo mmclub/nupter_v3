@@ -79,6 +79,7 @@ public class BookBorrowActivity extends Activity {
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(String response) {
+                        String bookName = "", bookAuthor = "", bookNum = "", deadLine = "";
                         libBorrowList = new LinkedList<Map<String, String>>();
                         Log.d("asy_re", response);
                         Document doc = Jsoup.parse(response);
@@ -91,17 +92,20 @@ public class BookBorrowActivity extends Activity {
                         for (int i = 1; i < trSize; i++) {
                             Elements tdElements = trElements.get(i).select("td");
                             Log.d("lib_t", tdElements.toString());
-                            String bookNum = tdElements.get(0).text();
-                            String bookAuthor = tdElements.get(2).text();
+                            bookNum = tdElements.get(0).text();
+                            int tdSize = tdElements.size();
+                            if (tdSize > 2) {
+                                bookAuthor = tdElements.get(2).text();
+                            }
                             Elements blueClass = trElements.get(i).getElementsByClass("blue");
-                            String bookName = blueClass.text();
+                            bookName = blueClass.text();
 
                             Pattern pattern = Pattern.compile(" ");
                             Matcher matcher = pattern.matcher(bookName);
                             bookName = matcher.replaceAll("");
 
                             Elements deadLineElements = trElements.get(i).select("font");
-                            String deadLine = deadLineElements.text();
+                            deadLine = deadLineElements.text();
                             Log.d("lib_t", bookNum + "-" + bookName + "-" + deadLine);
                             if (!bookName.isEmpty()) {
                                 map = new HashMap<String, String>();
