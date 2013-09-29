@@ -116,6 +116,7 @@ public class MainActivity extends Activity {
             switch (v.getId()) {
                 case R.id.libraryIB:
                     intent.setClass(MainActivity.this, BookActivity.class);
+//                    intent.setClass(MainActivity.this, LoginSchoolcardActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.schedulIB:

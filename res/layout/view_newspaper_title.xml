@@ -12,7 +12,14 @@
             android:textSize="16sp"
             android:autoLink="none"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:textColor="@color/black"/>
-
+    <TextView
+            android:id="@+id/newsPaperTime"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="none"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+        />
 </LinearLayout>

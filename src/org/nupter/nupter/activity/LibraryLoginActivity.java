@@ -113,8 +113,8 @@ public class LibraryLoginActivity extends Activity {
                 InputStream inputStream = entity.getContent();
                 String libBookHtml = getHtmlString(inputStream);
                 Log.d("lib_book_re1", libBookHtml);
-                if (libBookHtml.contains("密码错误")) {
-                    msg = "用户名与密码不匹配";
+                if (libBookHtml.contains("密码错误")||libBookHtml.contains("认证失败")) {
+                    msg = "用户名与密码不匹配或验证失败";
                     Message m = libLoginHandler .obtainMessage(1, 1, 1, msg);
                     libLoginHandler .sendMessage(m);
 

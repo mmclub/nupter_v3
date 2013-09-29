@@ -56,9 +56,6 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.SettingActivity"
                   android:label="@string/label_setting"/>
-        <!--        <activity android:name=".activity.LoginSchoolCardActivity"/>
-                <activity android:name=".activity.SchoolCardActivity"
-                        />-->
         <activity android:name=".activity.ScheduleActivity"
                   android:label="@string/title_activity_schedule"
                   android:screenOrientation="portrait"/>
@@ -95,6 +92,9 @@
         <activity android:name=".activity.WebviewActivity"/>
         <activity android:name=".activity.LibraryLoginActivity"/>
         <activity android:name=".activity.BookBorrowActivity"/>
+        <activity android:name=".activity.ClassAlarmActivity"/>
+        <receiver android:name=".utils.CallAlarm"
+                             android:process=":remote"/>
         <receiver android:name=".utils.ScheduleWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

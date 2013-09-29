@@ -45,6 +45,6 @@
             android:layout_height="50dp"
             android:focusable="false"
             android:background="@drawable/book_delete_btn"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1"/>
+
 </LinearLayout>

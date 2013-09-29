@@ -93,10 +93,7 @@ public class BookBorrowActivity extends Activity {
                             Elements tdElements = trElements.get(i).select("td");
                             Log.d("lib_t", tdElements.toString());
                             bookNum = tdElements.get(0).text();
-                            int tdSize = tdElements.size();
-                            if (tdSize > 2) {
-                                bookAuthor = tdElements.get(2).text();
-                            }
+                            bookAuthor = tdElements.get(2).text();
                             Elements blueClass = trElements.get(i).getElementsByClass("blue");
                             bookName = blueClass.text();
 
