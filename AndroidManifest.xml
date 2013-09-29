@@ -90,6 +90,8 @@
         <activity android:name=".activity.NewspaperDetailActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.WebviewActivity"/>
+        <activity android:name=".activity.LibraryLoginActivity"/>
+        <activity android:name=".activity.BookBorrowActivity"/>
         <activity android:name=".activity.ClassAlarmActivity"/>
         <receiver android:name=".utils.CallAlarm"
                              android:process=":remote"/>
