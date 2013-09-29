@@ -19,19 +19,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="22sp"
                 android:text="设置课前提醒时间:"/>
     </LinearLayout>
     <Spinner
             android:id="@+id/spinner"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:prompt="@string/spin_prompt"/>
     <Button
             android:id="@+id/spinner_button"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
-            android:background="@drawable/selected_button_login"
-            android:text="确     定"/>
+            android:background="@drawable/know_button"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:text="确            定"/>
 </LinearLayout>

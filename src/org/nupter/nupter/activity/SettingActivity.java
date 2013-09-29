@@ -67,26 +67,29 @@ public class SettingActivity extends Activity {
         cornerListView.setAdapter(adapter);
         cornerListView.setOnItemClickListener(LVlistener);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 
+
     private void alarm(String string) {
-        Intent intent = new Intent(SettingActivity.this, CallAlarm.class);
         alarmList = new JsoupTable().parse(string);
+        Intent intent = new Intent(SettingActivity.this, CallAlarm.class);
         calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         /*AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingInten0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
-        setAlarm(7, 20, 45);
+        setAlarm(1, 21, 33);
         Log.i("TAG", calendar.getTime() + "");
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                 ,240000,
                 pendingInten0);
         PendingIntent pendingInten1 = PendingIntent.getBroadcast(SettingActivity.this, 1, intent, 1);
-        setAlarm(7, 20, 47);
+        setAlarm(1, 21, 35);
         Log.i("TAG", calendar.getTime() + "");
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                 ,240000,
-                pendingInten1);*/
+                pendingInten1);  */
         //周一
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
@@ -97,6 +100,7 @@ public class SettingActivity extends Activity {
         } else if (!alarmList.get(1).get(0).equals(" ")) {
             setAlarm(2, 9, 35);
             am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent0);
+
         }
 
         PendingIntent pendingIntent1 = PendingIntent.getBroadcast(SettingActivity.this, 1, intent, 1);
@@ -267,8 +271,8 @@ public class SettingActivity extends Activity {
                             dialog.show();
                             dialog.getWindow().setContentView(R.layout.view_alarm_dialog);
                             Spinner spinner = (Spinner) dialog.getWindow().findViewById(R.id.spinner);
-                            String spinner_text[] = new String[61];
-                            for (int i = 0; i <= 60; i++) {
+                            String spinner_text[] = new String[31];
+                            for (int i = 0; i <= 30; i++) {
                                 spinner_text[i] = i + "分钟";
                             }
                             ;
@@ -279,7 +283,6 @@ public class SettingActivity extends Activity {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                     alarmTime=i;
-                                    Toast.makeText(SettingActivity.this, "课前提醒设置成功！！！", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -291,6 +294,7 @@ public class SettingActivity extends Activity {
                                 @Override
                                 public void onClick(View view) {
                                     alarm(getSchedule);
+                                    Toast.makeText(SettingActivity.this, "课前提醒设置成功！！！", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
                             });

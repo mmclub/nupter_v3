@@ -90,9 +90,14 @@
         <activity android:name=".activity.NewspaperDetailActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.WebviewActivity"/>
+        <activity android:name=".activity.ClassAlarmActivity"
+                           android:theme="@android:style/Theme.Dialog"
+                           />
+
         <activity android:name=".activity.LibraryLoginActivity"/>
         <activity android:name=".activity.BookBorrowActivity"/>
         <activity android:name=".activity.ClassAlarmActivity"/>
+
         <receiver android:name=".utils.CallAlarm"
                              android:process=":remote"/>
         <receiver android:name=".utils.ScheduleWidget">
@@ -147,7 +152,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_GPS"></uses-permission>
-
+    <uses-permission android:name="android.permission.VIBRATE" ></uses-permission>
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE"></permission>
 
 

@@ -243,6 +243,7 @@ public class LoginActivity extends Activity {
                     getTableConnection.connect();
                     tableInputStream = getTableConnection.getInputStream();
                     tableHtml = getHtmlString(tableInputStream);
+                    Log.i("TAG",tableHtml);
                     //把数据存在本地，sharePreferences保存的是没有解析的原网页
                     if (!tableHtml.equals(null)) {
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
