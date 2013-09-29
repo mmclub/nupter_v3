@@ -38,11 +38,18 @@ public class ClassAlarmActivity extends Activity {
                                 alarmMusic.stop();
                                 // 结束该Activity
                                 System.exit(0);
-                                android.os.Process
-                                        .killProcess(android.os.Process
-                                                .myPid());
+                                android.os.Process.killProcess(android.os.Process.myPid());
                             }
                         }).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        alarmMusic.stop();
+        // 结束该Activity
+        System.exit(0);
+        android.os.Process
+                .killProcess(android.os.Process
+                        .myPid());
+    }
 }

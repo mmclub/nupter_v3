@@ -499,7 +499,8 @@ public class ScheduleActivity extends Activity {
                 this.finish();
                 break;
             case R.id.alarm:
-
+                Intent intent2 = new Intent(ScheduleActivity.this, SettingActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.action_login:
                 Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);

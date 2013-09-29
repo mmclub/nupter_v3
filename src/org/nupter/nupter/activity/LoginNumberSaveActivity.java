@@ -33,17 +33,6 @@ public class LoginNumberSaveActivity extends Activity {
         username = (EditText) findViewById(R.id.user);
         password = (EditText) findViewById(R.id.pwd);
         save = (Button) findViewById(R.id.save);
-        save.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.login_btn_pressed);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.setBackgroundResource(R.drawable.login_btn);
-                }
-                return false;
-            }
-        });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

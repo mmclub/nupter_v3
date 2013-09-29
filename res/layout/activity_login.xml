@@ -124,7 +124,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:text="登      录"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/selected_button_login"
                 android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
