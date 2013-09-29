@@ -40,9 +40,10 @@ import java.util.regex.Pattern;
 public class LoginActivity extends Activity {
     private final static int ERR_NET = 0;
     private final static int ERR_NET2 = -1;
-    private final static int ERR_CHECK = -2;
-    private final static int ERR_PASS = -3;
-    private final static int ERR_USER = -4;
+    private final static int ERR_NET3 = -2;
+    private final static int ERR_CHECK = -3;
+    private final static int ERR_PASS = -4;
+    private final static int ERR_USER = -5;
     private final static int MSG_TABLE = 1;
     private final static int MSG_TEST = 2;
 
@@ -115,7 +116,8 @@ public class LoginActivity extends Activity {
                     Toast.makeText(LoginActivity.this, "密码不能为空", Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 } else {
-                    postData = "__VIEWSTATE=dDwtMTg3MTM5OTI5MTs7PmemTdyOgz7iR3IwB6rzBV6MRdNi&TextBox1=" + userNumber + "&TextBox2=" + passNumber + "&TextBox3=" + checkNumber + "&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=";
+                    postData = "__VIEWSTATE=dDwtMTMxNjk0NzYxNTs7PrijMvEwnNhVEOrHIDtWahK2Iyyj&txtUserName="+ userNumber+"&TextBox2="+ passNumber +"&txtSecretCode="+checkNumber +"&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=";
+                //    postData = "__VIEWSTATE=dDwtMTg3MTM5OTI5MTs7PmemTdyOgz7iR3IwB6rzBV6MRdNi&TextBox1=" + userNumber + "&TextBox2=" + passNumber + "&TextBox3=" + checkNumber + "&RadioButtonList1=%D1%A7%C9%FA&Button1=&lbLanguage=";
                     postTestData = "__VIEWSTATE=dDwtMTU5ODUyNjk2MTt0PHA8bDx4aDs%2BO2w8QjExMDQwOTE2Oz4%2BO2w8aTwxPjs%2BO2w8dDw7bDxpPDE%2BO2k8Mz47aTw1PjtpPDc%2BO2k8OT47aTwxMT47aTwxMz47aTwxNj47aTwyNj47aTwyNz47aTwyOD47aTwzNT47aTwzNz47aTwzOT47aTw0MT47aTw0NT47PjtsPHQ8cDxwPGw8VGV4dDs%2BO2w85a2m5Y%2B377yaQjExMDQwOTE2Oz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDzlp5PlkI3vvJroi4%2FkuJznlJ87Pj47Pjs7Pjt0PHA8cDxsPFRleHQ7PjtsPOWtpumZou%2B8mui9r%2BS7tuWtpumZojs%2BPjs%2BOzs%2BO3Q8cDxwPGw8VGV4dDs%2BO2w85LiT5Lia77yaOz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDzova%2Fku7blt6XnqIvvvIhOSUlU77yJOz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDzooYzmlL%2Fnj63vvJpCMTEwNDA5Oz4%2BOz47Oz47dDxwPHA8bDxUZXh0Oz47bDwyMDExMTUwMjs%2BPjs%2BOzs%2BO3Q8dDw7dDxpPDE0PjtAPFxlOzIwMDEtMjAwMjsyMDAyLTIwMDM7MjAwMy0yMDA0OzIwMDQtMjAwNTsyMDA1LTIwMDY7MjAwNi0yMDA3OzIwMDctMjAwODsyMDA4LTIwMDk7MjAwOS0yMDEwOzIwMTAtMjAxMTsyMDExLTIwMTI7MjAxMi0yMDEzOzIwMTMtMjAxNDs%2BO0A8XGU7MjAwMS0yMDAyOzIwMDItMjAwMzsyMDAzLTIwMDQ7MjAwNC0yMDA1OzIwMDUtMjAwNjsyMDA2LTIwMDc7MjAwNy0yMDA4OzIwMDgtMjAwOTsyMDA5LTIwMTA7MjAxMC0yMDExOzIwMTEtMjAxMjsyMDEyLTIwMTM7MjAxMy0yMDE0Oz4%2BOz47Oz47dDxwPDtwPGw8b25jbGljazs%2BO2w8d2luZG93LnByaW50KClcOzs%2BPj47Oz47dDxwPDtwPGw8b25jbGljazs%2BO2w8d2luZG93LmNsb3NlKClcOzs%2BPj47Oz47dDxwPHA8bDxWaXNpYmxlOz47bDxvPHQ%2BOz4%2BOz47Oz47dDxAMDw7Ozs7Ozs7Ozs7Pjs7Pjt0PEAwPDs7Ozs7Ozs7Ozs%2BOzs%2BO3Q8QDA8Ozs7Ozs7Ozs7Oz47Oz47dDw7bDxpPDA%2BO2k8MT47aTwyPjtpPDQ%2BOz47bDx0PDtsPGk8MD47aTwxPjs%2BO2w8dDw7bDxpPDA%2BO2k8MT47PjtsPHQ8QDA8Ozs7Ozs7Ozs7Oz47Oz47dDxAMDw7Ozs7Ozs7Ozs7Pjs7Pjs%2BPjt0PDtsPGk8MD47aTwxPjs%2BO2w8dDxAMDw7Ozs7Ozs7Ozs7Pjs7Pjt0PEAwPDs7Ozs7Ozs7Ozs%2BOzs%2BOz4%2BOz4%2BO3Q8O2w8aTwwPjs%2BO2w8dDw7bDxpPDA%2BOz47bDx0PEAwPDs7Ozs7Ozs7Ozs%2BOzs%2BOz4%2BOz4%2BO3Q8O2w8aTwwPjtpPDE%2BOz47bDx0PDtsPGk8MD47PjtsPHQ8QDA8cDxwPGw8VmlzaWJsZTs%2BO2w8bzxmPjs%2BPjs%2BOzs7Ozs7Ozs7Oz47Oz47Pj47dDw7bDxpPDA%2BOz47bDx0PEAwPHA8cDxsPFZpc2libGU7PjtsPG88Zj47Pj47Pjs7Ozs7Ozs7Ozs%2BOzs%2BOz4%2BOz4%2BO3Q8O2w8aTwwPjs%2BO2w8dDw7bDxpPDA%2BOz47bDx0PHA8cDxsPFRleHQ7PjtsPFpKVTs%2BPjs%2BOzs%2BOz4%2BOz4%2BOz4%2BO3Q8QDA8Ozs7Ozs7Ozs7Oz47Oz47Pj47Pj47Pp9OID21POtPt9O28KvUp1SXJHl%2F&ddlXN=&ddlXQ=&Button1=%B0%B4%D1%A7%C6%DA%B2%E9%D1%AF";
                     new Login().start();
                 }
@@ -225,8 +227,10 @@ public class LoginActivity extends Activity {
                 }
                 inPost.close();
                 loginConnection.disconnect();
-
-
+            } catch (Exception e) {
+                flaghandler.sendEmptyMessage(ERR_NET3);
+            }
+            try {
                 if (Flag.equals("Schedule")) {
                     //设置cookie和其他参数，访问课表网页得到String类型的HTML
                     getTable_url = getTable_url + userNumber;
@@ -271,7 +275,7 @@ public class LoginActivity extends Activity {
                     Out.flush();
                     Out.close();
                     testInputStream = getTestConnection.getInputStream();
-                    testHtml=getHtmlString(testInputStream);
+                    testHtml = getHtmlString(testInputStream);
                     testInputStream.close();
                     getTestConnection.disconnect();
                     flaghandler.sendEmptyMessage(MSG_TEST);
@@ -289,13 +293,13 @@ public class LoginActivity extends Activity {
         String html = "";
         try {
             int bufferSize;
-            while ((bufferSize=inputStream.read(buffer)) != -1) {
-                outSteam.write(buffer,0,bufferSize);
+            while ((bufferSize = inputStream.read(buffer)) != -1) {
+                outSteam.write(buffer, 0, bufferSize);
             }
-            html=new String(outSteam.toByteArray(),"gbk");
+            html = new String(outSteam.toByteArray(), "gbk");
             outSteam.close();
         } catch (Exception e) {
-            flaghandler.sendEmptyMessage(ERR_NET2);
+            flaghandler.sendEmptyMessage(ERR_NET3);
         }
         return html;
     }
@@ -310,7 +314,7 @@ public class LoginActivity extends Activity {
                 progressDialog.dismiss();
                 //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
                 testString = jsoupTest.parse(testHtml);
-  //              Log.i("TAG", testString);
+                //              Log.i("TAG", testString);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();
@@ -320,7 +324,10 @@ public class LoginActivity extends Activity {
             } else if (msg.what == ERR_NET) {
                 Toast.makeText(LoginActivity.this, "网络出错了,请检查网络连接", Toast.LENGTH_LONG).show();
             } else if (msg.what == ERR_NET2) {
-                Toast.makeText(LoginActivity.this, "读取数据失败，请重新登陆", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "获取数据失败,请重新登陆", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            } else if (msg.what == ERR_NET3) {
+                Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             } else if (msg.what == ERR_CHECK) {
                 progressDialog.dismiss();
