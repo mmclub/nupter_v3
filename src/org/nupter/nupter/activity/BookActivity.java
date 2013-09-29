@@ -21,6 +21,8 @@ import org.nupter.nupter.utils.NetUtils;
 
 import java.security.PrivateKey;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -32,7 +34,7 @@ import java.util.List;
 
 public class BookActivity extends ListActivity {
 
-    private Button searchBookButton;
+    private Button searchBookButton, libraryLoginButton;
     private EditText searchBookEditText;
     List<BookRecord> bookRecords;
     BaseAdapter bookCollectionAdapter;
@@ -48,6 +50,9 @@ public class BookActivity extends ListActivity {
             public void onClick(View view) {
                 if (NetUtils.isNewworkConnected()) {
                     String searchBookName = searchBookEditText.getText().toString();
+                    Pattern pattern = Pattern.compile(" ");
+                    Matcher matcher = pattern.matcher(searchBookName);
+                    searchBookName = matcher.replaceAll("+");
                     Intent intent = new Intent(BookActivity.this, BookListActivity.class);
                     intent.putExtra("searchBookName", searchBookName);
                     startActivity(intent);
@@ -57,6 +62,21 @@ public class BookActivity extends ListActivity {
                 }
             }
         });
+        libraryLoginButton = (Button) this.findViewById(R.id.libraryLoginButton);
+        libraryLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetUtils.isNewworkConnected()) {
+                    Intent intent = new Intent(BookActivity.this, LibraryLoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(BookActivity.this, "网络没有连接啊",Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
     }
 
     public void onStart() {
