@@ -1,6 +1,7 @@
 package org.nupter.nupter.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,7 @@ public class LibraryLoginActivity extends Activity {
     private SharedPreferences userInit, pwdInit;
     private List<Cookie> cookies;
     private LibLoginHandler libLoginHandler = null ;
+    private ProgressDialog progressDialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,11 @@ public class LibraryLoginActivity extends Activity {
         libraryLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(LibraryLoginActivity.this);
+                progressDialog.setTitle("登录中。。。");
+                progressDialog.setMessage("正在进入南邮图书馆。。。");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
                 user = userEditText.getText().toString();
                 Log.d("lib_user", user);
                 pwd = pwdEditText.getText().toString();
@@ -72,6 +79,7 @@ public class LibraryLoginActivity extends Activity {
             }
         });
 
+
     }
 
     private class LibLoginHandler extends Handler {
@@ -81,7 +89,7 @@ public class LibraryLoginActivity extends Activity {
 
         @Override
         public void handleMessage(Message msg) { // 处理消息
-
+            progressDialog.dismiss();
             Toast.makeText(LibraryLoginActivity.this, msg.obj.toString(),Toast.LENGTH_SHORT).show();
         }
     }
@@ -125,6 +133,7 @@ public class LibraryLoginActivity extends Activity {
                     intent.putExtra("libCookie", "PHPSESSID=" + cookies.get(cookies.size() - 1).getValue());
 
                     startActivity(intent);
+                    progressDialog.dismiss();
                 }
 
             } catch (Exception e) {
