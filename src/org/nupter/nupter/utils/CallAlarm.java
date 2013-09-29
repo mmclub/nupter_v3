@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 import org.nupter.nupter.activity.ClassAlarmActivity;
 
 /**
@@ -15,6 +14,8 @@ import org.nupter.nupter.activity.ClassAlarmActivity;
  * To change this template use File | Settings | File Templates.
  */
 public class CallAlarm extends BroadcastReceiver {
+
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -26,5 +27,7 @@ public class CallAlarm extends BroadcastReceiver {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         context.startActivity(i);
+
+
     }
 }

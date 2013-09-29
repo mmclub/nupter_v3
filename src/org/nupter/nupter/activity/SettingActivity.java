@@ -71,48 +71,48 @@ public class SettingActivity extends Activity {
     }
 
     private void alarm(String string){
+
+        alarmList   = new JsoupTable().parse(string);
+
         Intent intent = new Intent(SettingActivity.this,
                 CallAlarm.class);
 
         calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System
-                .currentTimeMillis());
-        alarmList   = new JsoupTable().parse(string);
-     /*AlarmManager am;
-        am = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        /*AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent0 = PendingIntent
                 .getBroadcast(SettingActivity.this, 0,
                         intent, 0);
         calendar.set(Calendar.DAY_OF_WEEK, 3);
-        calendar.set(Calendar.HOUR_OF_DAY, 19);
-        calendar.set(Calendar.MINUTE, 24);
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 52);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         if(System.currentTimeMillis() > calendar.getTimeInMillis()){
             calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);
         }
-
+        am.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent0);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                 , (60 * 60 * 24 * 7 * 1000),
                 pendingIntent0);
 
 
-        AlarmManager am1;
-        am1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManager am1 = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent1 = PendingIntent
                 .getBroadcast(SettingActivity.this, 1,
                         intent, 0);
         calendar.set(Calendar.DAY_OF_WEEK, 3);
-        calendar.set(Calendar.HOUR_OF_DAY, 19);
-        calendar.set(Calendar.MINUTE, 22);
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 54);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         if(System.currentTimeMillis() > calendar.getTimeInMillis()){
             calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + 7);
         }
+        am1.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent1);
         am1.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                 , (60 * 60 * 24 * 7 * 1000),
-                pendingIntent1);      */
+                pendingIntent1); */
 
        //周一
 
