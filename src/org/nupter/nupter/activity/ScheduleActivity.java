@@ -75,6 +75,8 @@ public class ScheduleActivity extends Activity {
         skin = preferences.getInt("skin", 0);
         //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
         tablelist = new JsoupTable().parse(schedule);
+/*        for (int i=0;i<tablelist.size();i++)
+        Log.i("TAG",tablelist.get(i).get(0));*/
         linearLayout = (LinearLayout) findViewById(R.id.postLinearLayout);
         if (skin == 0)
             linearLayout.setBackgroundResource(R.drawable.colorbackground);
@@ -206,7 +208,7 @@ public class ScheduleActivity extends Activity {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (a[1].substring(0, 7).indexOf("9") == -1) {
+        if (a[1].substring(0, 7).indexOf("9") == -1&&(!a[1].startsWith("{"))) {
             return true;
         }
         return false;
@@ -497,7 +499,8 @@ public class ScheduleActivity extends Activity {
                 this.finish();
                 break;
             case R.id.alarm:
-
+                Intent intent2 = new Intent(ScheduleActivity.this, SettingActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.action_login:
                 Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);
@@ -509,7 +512,7 @@ public class ScheduleActivity extends Activity {
                 String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫", "自定义"};
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.skin_icon)
-                        .setTitle("给你的桌面小工具换身衣裳吧~\\(≧▽≦)/~")
+                        .setTitle("换身衣裳吧~\\(≧▽≦)/~")
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

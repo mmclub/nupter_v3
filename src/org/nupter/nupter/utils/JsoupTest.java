@@ -31,6 +31,7 @@ public class JsoupTest {
 
             Elements tds = doc.getElementById("TabTj").getElementsByTag("tr").get(14).getElementsByTag("td");
             testString.append(tds.get(0).text()).append("&").append(tds.get(1).text()).append("&").append(tds.get(2).text()).append("&").append(tds.get(3).text());
+            Log.i("TAG",testString.toString());
         } catch (Exception e) {
         }
         return testString.toString();

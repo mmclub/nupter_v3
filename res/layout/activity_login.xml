@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:background="#F6F7F7"
               android:paddingLeft="25dp"
               android:paddingRight="25dp">
     <LinearLayout
@@ -123,7 +124,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:text="登      录"
-                android:background="@drawable/login_btn"
+                android:background="@drawable/selected_button_login"
                 android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout

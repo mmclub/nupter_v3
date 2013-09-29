@@ -238,7 +238,7 @@ public class ScheduleWidget extends AppWidgetProvider {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (!a[1].substring(0, 6).endsWith("9")) {
+        if (a[1].substring(0, 7).indexOf("9") == -1&&(!a[1].startsWith("{"))) {
             return true;
         }
         return false;
