@@ -3,48 +3,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#F6F7F7"
               android:orientation="vertical">
-    <ProgressBar
-            android:id="@+id/progressBar3"
-            android:max="100"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="3dp"/>
-    <RadioGroup
-            android:id="@+id/myRadiogroup"
-            android:gravity="center"
-            android:background="@color/white"
-            android:orientation="horizontal"
+    <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="40dp">
-        <RadioButton
-                android:id="@+id/btn_0"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="教务公告"
-                android:textSize="20sp"
-                android:textColor="@drawable/textcolor_radiobutton"
+        <RadioGroup
+                android:id="@+id/myRadiogroup"
                 android:gravity="center"
-                android:layout_weight="1"
-                android:checked="true"
-                android:button="@null"
-                android:background="@drawable/radio_button"/>
-        <RadioButton
-                android:id="@+id/btn_1"
+                android:background="@color/white"
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="校园新闻"
-                android:textSize="20sp"
-                android:textColor="@drawable/textcolor_radiobutton"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:background="@drawable/radio_button_right"/>
-    </RadioGroup>
+                android:layout_height="fill_parent">
+            <RadioButton
+                    android:id="@+id/btn_0"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="教务公告"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/textcolor_radiobutton"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:button="@null"
+                    android:background="@drawable/radio_button"/>
+            <RadioButton
+                    android:id="@+id/btn_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="校园新闻"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/textcolor_radiobutton"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:background="@drawable/radio_button_right"/>
+        </RadioGroup>
+        <ProgressBar
+                android:id="@+id/progressBar3"
+                android:max="100"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"/>
+    </FrameLayout>
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="3dp"
-            >
+            android:layout_height="3dp">
         <ImageView
                 android:id="@+id/scrollImageView"
                 android:layout_width="fill_parent"

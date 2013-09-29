@@ -98,17 +98,6 @@ public class LoginActivity extends Activity {
                 new GetCheckCode().start();
             }
         });
-        login.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.login_btn_pressed);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.setBackgroundResource(R.drawable.login_btn);
-                }
-                return false;
-            }
-        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,6 +239,7 @@ public class LoginActivity extends Activity {
                     getTableConnection.connect();
                     tableInputStream = getTableConnection.getInputStream();
                     tableHtml = getHtmlString(tableInputStream);
+                    Log.i("TAG",tableHtml);
                     //把数据存在本地，sharePreferences保存的是没有解析的原网页
                     if (!tableHtml.equals(null)) {
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
@@ -299,7 +289,6 @@ public class LoginActivity extends Activity {
         ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
         String html = "";
         try {
-            int j = 0;
             int bufferSize;
             while ((bufferSize=inputStream.read(buffer)) != -1) {
                 outSteam.write(buffer,0,bufferSize);
@@ -322,7 +311,7 @@ public class LoginActivity extends Activity {
                 progressDialog.dismiss();
                 //解析网页，得到干净的有效数据全部存放在testString中，每一项用‘*’分隔，每一项里的绩点分数成绩什么的用‘&’分隔
                 testString = jsoupTest.parse(testHtml);
-                Log.i("TAG", testString);
+  //              Log.i("TAG", testString);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("test", testString);
                 editor.commit();

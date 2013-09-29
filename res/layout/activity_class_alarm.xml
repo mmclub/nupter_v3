@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+        android:id="@+id/linear">
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:text="课前提醒"
+
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@color/blue_bar"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:text="要上课了，亲！！！"
+            android:textSize="20sp"
+            android:textColor="@color/blue"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
+    <Button
+        android:id="@+id/sureButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="关       闭"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:background="@drawable/know_button"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
+
+
+
+</LinearLayout>

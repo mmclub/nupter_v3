@@ -52,8 +52,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:scrollbars="none"
-                ></ListView>
+                android:scrollbars="none"/>
 
     </LinearLayout>
 </LinearLayout>
