@@ -7,13 +7,13 @@
               android:background="@color/white">
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
             android:background="@color/blue_bar">
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:src="@drawable/alarm"/>
         <TextView
                 android:layout_width="wrap_content"
@@ -32,9 +32,11 @@
     <Button
             android:id="@+id/spinner_button"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/know_button"
             android:textSize="18sp"
             android:textColor="@color/white"
-            android:text="确            定"/>
+            android:text="确            定"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"/>
 </LinearLayout>
