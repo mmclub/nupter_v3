@@ -79,17 +79,17 @@ public class SettingActivity extends Activity {
         calendar.setTimeInMillis(System.currentTimeMillis());
         /*AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingInten0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
-        setAlarm(1, 21, 33);
+        setAlarm(4, 23, 21);
         Log.i("TAG", calendar.getTime() + "");
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                 ,240000,
                 pendingInten0);
         PendingIntent pendingInten1 = PendingIntent.getBroadcast(SettingActivity.this, 1, intent, 1);
-        setAlarm(1, 21, 35);
+        setAlarm(4, 23, 23);
         Log.i("TAG", calendar.getTime() + "");
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                 ,240000,
-                pendingInten1);  */
+                pendingInten1); */
         //周一
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
