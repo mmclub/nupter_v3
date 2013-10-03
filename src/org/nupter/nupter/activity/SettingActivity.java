@@ -76,26 +76,27 @@ public class SettingActivity extends Activity {
         alarmList = new JsoupTable().parse(string);
         Intent intent = new Intent(SettingActivity.this, CallAlarm.class);
         calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        /*AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        PendingIntent pendingInten0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
-        setAlarm(4, 23, 21);
-        Log.i("TAG", calendar.getTime() + "");
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        //calendar.setTimeInMillis(System.currentTimeMillis());
+
+
+        /*PendingIntent pendingInten0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
+        setAlarm(5, 10, 35);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                ,240000,
+                ,60*60*24*7*1000,
                 pendingInten0);
         PendingIntent pendingInten1 = PendingIntent.getBroadcast(SettingActivity.this, 1, intent, 1);
-        setAlarm(4, 23, 23);
-        Log.i("TAG", calendar.getTime() + "");
+        setAlarm(5, 10, 36);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                ,240000,
+                ,60*60*24*7*1000,
                 pendingInten1); */
+
+
         //周一
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
         if (!alarmList.get(0).get(0).equals(" ")) {
             setAlarm(2, 7, 45);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), (60 * 60 * 24 * 7 * 1000), pendingIntent0);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent0);
 
         } else if (!alarmList.get(1).get(0).equals(" ")) {
             setAlarm(2, 9, 35);
@@ -122,7 +123,7 @@ public class SettingActivity extends Activity {
         PendingIntent pendingIntent3 = PendingIntent.getBroadcast(SettingActivity.this, 3, intent, 1);
         if (!alarmList.get(0).get(1).equals(" ")) {
             setAlarm(3, 7, 45);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), (60 * 60 * 24 * 7 * 1000), pendingIntent3);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent3);
 
         } else if (!alarmList.get(1).get(1).equals(" ")) {
             setAlarm(3, 9, 35);
@@ -148,7 +149,7 @@ public class SettingActivity extends Activity {
         PendingIntent pendingIntent6 = PendingIntent.getBroadcast(SettingActivity.this, 6, intent, 1);
         if (!alarmList.get(0).get(2).equals(" ")) {
             setAlarm(4, 7, 45);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), (60 * 60 * 24 * 7 * 1000), pendingIntent6);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent6);
 
         } else if (!alarmList.get(1).get(2).equals(" ")) {
             setAlarm(4, 9, 35);
@@ -174,7 +175,7 @@ public class SettingActivity extends Activity {
         PendingIntent pendingIntent9 = PendingIntent.getBroadcast(SettingActivity.this, 9, intent, 1);
         if (!alarmList.get(0).get(3).equals(" ")) {
             setAlarm(5, 7, 45);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), (60 * 60 * 24 * 7 * 1000), pendingIntent9);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent9);
 
         } else if (!alarmList.get(1).get(3).equals(" ")) {
             setAlarm(5, 9, 35);
@@ -199,7 +200,7 @@ public class SettingActivity extends Activity {
         PendingIntent pendingIntent12 = PendingIntent.getBroadcast(SettingActivity.this, 12, intent, 1);
         if (!alarmList.get(0).get(4).equals(" ")) {
             setAlarm(6, 7, 45);
-            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), (60 * 60 * 24 * 7 * 1000), pendingIntent12);
+            am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent12);
         } else if (!alarmList.get(1).get(4).equals(" ")) {
             setAlarm(6, 9, 35);
             am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent12);
