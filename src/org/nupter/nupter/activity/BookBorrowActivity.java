@@ -183,22 +183,48 @@ public class BookBorrowActivity extends Activity {
                 public void onClick(View v) {
                     String bookNum = libBorrowList.get(position).get("bookNum");
                     renewUrl = "http://202.119.228.6:8080/reader/ajax_renew.php?bar_code=" + bookNum;
-                    new AsyncHttpClient().post(renewUrl, null, new AsyncHttpResponseHandler() {
-                        public void onSuccess(String response) {
-                            Log.d("renew", response);
-                            Document doc = Jsoup.parse(response);
-                            Elements fontElements = doc.getElementsByTag("font");
-                            String result = fontElements.text();
-                            new AlertDialog.Builder(BookBorrowActivity.this)
-                                    .setTitle("续借反馈")
-                                    .setMessage(result)
-                                    .setNegativeButton(
-                                            "确定", null).show();
 
 
-                        }
+                    AsyncHttpClient libBorrowClient = new AsyncHttpClient();
+                    PersistentCookieStore libCookieStore = new PersistentCookieStore(BookBorrowActivity.this);
+                    BasicClientCookie libClientCookie = new BasicClientCookie("PHPSESSID", cookieValue);
 
-                    });
+                    libClientCookie.setDomain("202.119.228.6");
+                    libClientCookie.setPath("/");
+                    libCookieStore.addCookie(libClientCookie);
+                    libBorrowClient.setCookieStore(libCookieStore);
+
+                    libBorrowClient.post(renewUrl, null,
+                            new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    Document doc = Jsoup.parse(response);
+                                    Elements fontElements = doc.getElementsByTag("font");
+                                    String result = fontElements.text();
+                                    new AlertDialog.Builder(BookBorrowActivity.this)
+                                            .setTitle("续借反馈")
+                                            .setMessage(result)
+                                            .setNegativeButton(
+                                                    "确定", null).show();
+
+                                }});
+
+//                    new AsyncHttpClient().post(renewUrl, null, new AsyncHttpResponseHandler() {
+//                        public void onSuccess(String response) {
+//                            Log.d("renew", response);
+//                            Document doc = Jsoup.parse(response);
+//                            Elements fontElements = doc.getElementsByTag("font");
+//                            String result = fontElements.text();
+//                            new AlertDialog.Builder(BookBorrowActivity.this)
+//                                    .setTitle("续借反馈")
+//                                    .setMessage(result)
+//                                    .setNegativeButton(
+//                                            "确定", null).show();
+//
+//
+//                        }
+//
+//                    });
                     Log.d("lib_id", bookNum);
                     //To change body of implemented methods use File | Settings | File Templates.
                 }
