@@ -96,7 +96,6 @@
 
         <activity android:name=".activity.LibraryLoginActivity"/>
         <activity android:name=".activity.BookBorrowActivity"/>
-        <activity android:name=".activity.ClassAlarmActivity"/>
 
         <receiver android:name=".utils.CallAlarm"
                              android:process=":remote"/>
