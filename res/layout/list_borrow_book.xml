@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:paddingTop="30dp"
+              android:paddingLeft="30dp"
+              android:paddingRight="30dp"
+              android:paddingBottom="40dp"
+              android:background="@drawable/library_card_bg">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="已借图书"
+            android:textSize="20sp"
+            android:textColor="@color/blue_bar"/>
+    <ListView
+        android:id="@+id/libraryBorrowListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:divider="@null"
+        />
+
+
+
+</LinearLayout>

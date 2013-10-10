@@ -54,18 +54,69 @@ public class LostAndFoundActivity extends FragmentActivity {
     private JSONArray jsonArray;
     private String lostURL, foundURL;
     ArrayAdapter adapter;
+    private RadioGroup myRadioGroup;
+    private ViewPager vp;
+    private RadioButton btn_0,btn_1;
+    private ImageView imageView;
+    private int screenWidth;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        ViewPager vp = (ViewPager) findViewById(R.id.viewPager);
+
         fragmentList.add(new LostInfoFragment());
         fragmentList.add(new PublishFragment());
-        titleList.add("瞄一眼");
-        titleList.add("发布");
-        vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList, titleList));
+        myRadioGroup = (RadioGroup)findViewById(R.id.myRadiogroup);
+        vp = (ViewPager) findViewById(R.id.viewPager);
+        btn_0 = (RadioButton)findViewById(R.id.btn_0);
+        btn_1 = (RadioButton)findViewById(R.id.btn_1);
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        progressBar=(ProgressBar)findViewById(R.id.progressBar2);
+        imageView=(ImageView)findViewById(R.id.scrollImageView);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(screenWidth / 2, 5));
+        vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragmentList));
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i2) {
+                if (i2!=0) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+                    params.setMargins(i2 / 2, 0, 0, 0);
+                    imageView.setLayoutParams(params);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                switch (i) {
+                    case 0:
+                        btn_0.setChecked(true);
+                        break;
+                    case 1:
+                        btn_1.setChecked(true);
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+        myRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId ==R.id.btn_0){
+                    vp.setCurrentItem(0);
+                }
+                else if (checkedId == R.id.btn_1){
+                    vp.setCurrentItem(1);
+                }
+            }
+        });
     }
 
     //过滤人人客户端
@@ -96,12 +147,12 @@ public class LostAndFoundActivity extends FragmentActivity {
     class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragmentList;
-        private List<String> titleList;
 
-        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> titleList) {
+
+        public MyPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);
             this.fragmentList = fragmentList;
-            this.titleList = titleList;
+
         }
 
         /**
@@ -204,14 +255,11 @@ public class LostAndFoundActivity extends FragmentActivity {
 
         private List<String> lostList;
         private PullToRefreshListView listView;
-        private ProgressDialog progressDialog;
+
+
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            progressDialog = new ProgressDialog(LostAndFoundActivity.this);
-            progressDialog.setTitle("努力加载中。。。");
-            progressDialog.setMessage("人人API又调皮了。。。");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
+            LostAndFoundActivity.this.setTitle("玩命加载中...");
             lostURL = "https://api.renren.com/restserver.do?call_id=204763&api_key=e4e12cd61ab542f3a6e45fee619c46f3&secret_key=1e7a17db78e74ed6964601ab89ea6444&format=json&count=10&v=1.0&method=status.gets&page_id=601408737&page=1";
             View v = inflater.inflate(R.layout.view_lost, container, false);
             listView = (PullToRefreshListView) v.findViewById(R.id.lostListView);
@@ -220,7 +268,8 @@ public class LostAndFoundActivity extends FragmentActivity {
                 @Override
                 public void onLastItemVisible() {
                     lostURL = lostURL.substring(0, lostURL.length() - 1) + (adapter.getCount() / 10 + 1);
-                    progressDialog.show();
+                    LostAndFoundActivity.this.setTitle("玩命加载中...");
+                    progressBar.setVisibility(View.VISIBLE);
                     new AsyncHttpClient().post(lostURL, null,
                             new AsyncHttpResponseHandler() {
                                 @Override
@@ -229,22 +278,38 @@ public class LostAndFoundActivity extends FragmentActivity {
                                         jsonArray = new JSONArray(response);
                                         for (int i = 0; i < jsonArray.length(); i++)
                                             lostList.add(jsonArray.getJSONObject(i).getString("message"));
+                                        LostAndFoundActivity.this.setTitle("寻物平台");
+                                        progressBar.setVisibility(View.INVISIBLE);
                                     } catch (Exception e) {
 
                                     }
                                     adapter.notifyDataSetChanged();
-                                    progressDialog.dismiss();
+
                                 }
 
                                 @Override
                                 public void onFailure(Throwable throwable, String s) {
                                     Toast.makeText(getActivity(), "获取人人数据失败", Toast.LENGTH_LONG).show();
-                                    progressDialog.dismiss();
+                                    LostAndFoundActivity.this.setTitle("寻物平台");
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
                 }
             });
-
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setProgress(10);
+                        sleep(500);
+                        progressBar.setProgress(20);
+                        sleep(500);
+                        progressBar.setProgress(50);
+                    } catch (Exception e) {
+                    }
+                }
+            }.start();
             lostList = new ArrayList<String>();
             AsyncHttpClient client = new AsyncHttpClient();
             if (NetUtils.isNewworkConnected()) {
@@ -258,14 +323,16 @@ public class LostAndFoundActivity extends FragmentActivity {
                             Log.d("lostList", lostList.toString());
                             adapter = new ArrayAdapter<String>(LostAndFoundActivity.this, R.layout.item_lost, lostList);
                             listView.setAdapter(adapter);
-                            progressDialog.dismiss();
+                            LostAndFoundActivity.this.setTitle("寻物平台");
+                            progressBar.setVisibility(View.INVISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
 
                     public void onFailure(Throwable throwable, String s) {
-                        progressDialog.dismiss();
+                        LostAndFoundActivity.this.setTitle("寻物平台");
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast toast = Toast.makeText(LostAndFoundActivity.this, "服务器歇菜了", Toast.LENGTH_SHORT);
                         toast.show();
                     }

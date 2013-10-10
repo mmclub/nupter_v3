@@ -96,7 +96,7 @@ public class MapBaiduActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // 初始化BMapManager
         MyApplication app = (MyApplication) this.getApplication();

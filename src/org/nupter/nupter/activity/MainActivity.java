@@ -26,6 +26,7 @@ import org.nupter.nupter.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.nupter.nupter.utils.JsoupTable;
+import org.nupter.nupter.utils.JsoupTest;
 
 import java.util.ArrayList;
 
@@ -57,8 +58,6 @@ public class MainActivity extends Activity {
     private ImageView weatherIcon;
     private long firstTime;
 
-    private boolean isGotWeather = false;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +65,6 @@ public class MainActivity extends Activity {
 
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
-
 
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
@@ -79,7 +77,7 @@ public class MainActivity extends Activity {
         associationIB = (ImageButton) findViewById(R.id.associationIB);
         newspaperIB = (ImageButton) findViewById(R.id.newspaperIB);
         lostAndFoundIB = (ImageButton) findViewById(R.id.lostAndFoundIB);
-        testIB = (ImageButton)findViewById(R.id.testIB);
+        testIB = (ImageButton) findViewById(R.id.testIB);
         schoolMapIB = (ImageButton) findViewById(R.id.schoolMapIB);
         setIB = (ImageButton) findViewById(R.id.setIB);
         smsIB = (ImageButton) findViewById(R.id.smsIB);
@@ -105,11 +103,7 @@ public class MainActivity extends Activity {
         smsIB.setOnClickListener(IBListener);
 
 
-
-        if (!isGotWeather){
-            new NanjingWeather().getNanjingWeather();
-            isGotWeather = true;
-        }
+        new NanjingWeather().getNanjingWeather();
 
 
     }
@@ -118,64 +112,71 @@ public class MainActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            // TODO Auto-generated method stub
             Intent intent = new Intent();
             switch (v.getId()) {
                 case R.id.libraryIB:
                     intent.setClass(MainActivity.this, BookActivity.class);
+//                    intent.setClass(MainActivity.this, LoginSchoolcardActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.schedulIB:
+                    ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                    String schedule = preferences.getString("schedule", "null");
-                    if ((!schedule.equals("null"))) {
-                        Intent inten = new Intent(MainActivity.this, ScheduleActivity.class);
-                        MainActivity.this.startActivity(inten);
-                    } else {
+                    String schedule = preferences.getString("schedule", "");
+                    try {
+                        tablelist = new JsoupTable().parse(schedule);
+                        tablelist.get(0).get(0);
+                        tablelist.get(4).get(4);
+                        tablelist.get(1);
+                        tablelist.get(2);
+                        tablelist.get(3);
+                        tablelist.get(4);
+                        intent.setClass(MainActivity.this, ScheduleActivity.class);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        //      Log.i("TAG","exception");
                         intent.setClass(MainActivity.this, LoginActivity.class);
-                        intent.putExtra("JumpTo","Schedule");
+                        intent.putExtra("JumpTo", "Schedule");
                         startActivity(intent);
                     }
                     break;
                 case R.id.lifeAssistantIB:
-
                     intent.setClass(MainActivity.this, LifeAssistantActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.nuptNewsIB:
-
                     intent.setClass(MainActivity.this, NewsActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.associationIB:
-
                     intent.setClass(MainActivity.this, ClubActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.newspaperIB:
-
                     intent.setClass(MainActivity.this, NewspaperActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.lostAndFoundIB:
-
                     intent.setClass(MainActivity.this, LostAndFoundActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.testIB:
-
                     SharedPreferences testPreferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
-                    String testString = testPreferences.getString("test", "null");
-                    if ((!testString.equals("null"))) {
+                    String testString = testPreferences.getString("test", "");
+                    String testList[] = testString.split("\\$");
+                    try {
+                        String list[] = testList[testList.length - 2].split("&");
+                        String a = list[0];
+                        a = list[14];
                         intent.setClass(MainActivity.this, TestActivity.class);
                         intent.putExtra("testString", testString);
                         startActivity(intent);
-                    } else {
-                        intent.setClass(MainActivity.this,LoginActivity.class);
-                        intent.putExtra("JumpTo","Test");
+                    } catch (Exception e) {
+                        //      Log.i("TAG","exception");
+                        intent.setClass(MainActivity.this, LoginActivity.class);
+                        intent.putExtra("JumpTo", "Test");
                         startActivity(intent);
                     }
-
                     break;
 
                 case R.id.schoolMapIB:

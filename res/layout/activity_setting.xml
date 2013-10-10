@@ -5,30 +5,60 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white">
-
     <LinearLayout
             android:orientation="vertical"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:gravity="bottom"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_weight="2"
+            android:gravity="bottom">
 
         <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:background="@drawable/list_bg"
                 android:orientation="vertical">
-
             <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="fill_parent">
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="刷新声音"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="4"
+                    android:textColor="@color/black"/>
+            <ToggleButton
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/refreshsoundTB"
+                    android:background="@drawable/togglebutton"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:textOn=""
+                    android:textOff=""/>
+            </LinearLayout>
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:background="@drawable/zebra_img_line"/>
+            <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:orientation="horizontal"
+                    >
+
                 <TextView
+                        android:id="@+id/classNoticeTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="刷新声音"
+                        android:text="课前提醒"
                         android:textSize="18sp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="10dp"
@@ -37,23 +67,26 @@
                         android:layout_weight="4"
                         android:textColor="@color/black"/>
                 <ToggleButton
-                        android:layout_width="80dp"
+                        android:layout_width="75dp"
                         android:layout_height="25dp"
-                        android:id="@+id/refreshsoundTB"
+                        android:id="@+id/classNoticeTB"
                         android:background="@drawable/togglebutton"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="10dp"
                         android:textOn=""
-                        android:textOff=""/>
+                        android:textOff=""
+                        />
             </LinearLayout>
         </LinearLayout>
+
+
+
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:layout_width="fill_parent"
-            android:layout_marginBottom="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center">
@@ -61,6 +94,8 @@
                 android:id="@+id/settinglistview"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:background="@drawable/list_bg"/>
+                android:background="@drawable/list_bg"
+                android:layout_gravity="center_vertical"/>
     </LinearLayout>
+
 </LinearLayout>

@@ -17,12 +17,15 @@ import android.widget.*;
 import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
+import org.nupter.nupter.utils.FileUtils;
 import org.nupter.nupter.utils.JsoupTable;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 课表模块
@@ -43,7 +46,9 @@ public class ScheduleActivity extends Activity {
     private SharedPreferences preferences;
     private LinearLayout linearLayout;
     private String schedule;
+    private int which_week;
     private ArrayList<ArrayList<String>> tablelist = new ArrayList<ArrayList<String>>();
+    private int[] background_big = new int[]{R.drawable.colorbackground, R.drawable.pink_background, R.drawable.green_background, R.drawable.blue_background};
     private int[][] color = new int[][]{{R.drawable.color_1, R.drawable.color_2, R.drawable.color_3, R.drawable.color_4, R.drawable.color_5, R.drawable.color_6},
             {R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3, R.drawable.pink_1, R.drawable.pink_2, R.drawable.pink_3},
             {R.drawable.green_1, R.drawable.green_2, R.drawable.green_3, R.drawable.green_1, R.drawable.green_2, R.drawable.green_3},
@@ -57,6 +62,7 @@ public class ScheduleActivity extends Activity {
         setContentView(R.layout.activity_schedule);
         this.getActionBar().setDisplayHomeAsUpEnabled(true);
         height = getWindowManager().getDefaultDisplay().getHeight();
+        which_week = getWeek();
         for (int i = 0; i < 5; i++) {
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
             for (int j = 0; j <= 5; j++) {
@@ -64,11 +70,13 @@ public class ScheduleActivity extends Activity {
             }
             colors.add(arrayList);
         }
-        preferences = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         schedule = preferences.getString("schedule", null);
         skin = preferences.getInt("skin", 0);
         //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
         tablelist = new JsoupTable().parse(schedule);
+/*        for (int i=0;i<tablelist.size();i++)
+        Log.i("TAG",tablelist.get(i).get(0));*/
         linearLayout = (LinearLayout) findViewById(R.id.postLinearLayout);
         if (skin == 0)
             linearLayout.setBackgroundResource(R.drawable.colorbackground);
@@ -79,20 +87,27 @@ public class ScheduleActivity extends Activity {
         if (skin == 3)
             linearLayout.setBackgroundResource(R.drawable.blue_background);
         if (skin == 5) {
-            if (preferences.getInt("custom_bigBackground", 0) != 0)
-                linearLayout.setBackgroundResource(preferences.getInt("custom_bigBackground", 0));
+            int n = preferences.getInt("custom_bigBackground", 0);
+            if (n < 4) {
+                linearLayout.setBackgroundResource(background_big[n]);
+            } else {
+                ArrayList<String> arrayList = new FileUtils().readFileName("nupter/background");
+                if (!arrayList.isEmpty()) {
+                    try {
+                        Bitmap bitmap = BitmapFactory.decodeFile(arrayList.get(n - 4));
+                        linearLayout.setBackgroundDrawable(new BitmapDrawable(bitmap));
+                    } catch (Exception e) {
+                    }
+                }
+            }
             ArrayList<Integer> arrayList = new ArrayList<Integer>();
-            if (preferences.getInt("color_1", 0) != 0) {
+            if (preferences.getInt("color_1", 100000) != 100000) {
                 arrayList.add(preferences.getInt("color_1", 0));
                 arrayList.add(preferences.getInt("color_2", 0));
                 arrayList.add(preferences.getInt("color_3", 0));
                 arrayList.add(preferences.getInt("color_4", 0));
                 arrayList.add(preferences.getInt("color_5", 0));
                 arrayList.add(preferences.getInt("color_6", 0));
-                colors.add(arrayList);
-            } else {
-                for (int i = 0; i < 6; i++)
-                    arrayList.add(colors.get(getIntent().getIntExtra("originColor", 0)).get(i));
                 colors.add(arrayList);
             }
         }
@@ -124,6 +139,18 @@ public class ScheduleActivity extends Activity {
                 });
     }
 
+    private int getWeek() {
+        Date date = new Date();
+        String startTime = "2013-09-01";
+        try {
+            Date m_endTime = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(startTime);
+            return (int) (date.getTime() - m_endTime.getTime()) / 86400000 / 7 + 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
     private String[] format(String s) {
         String a[] = s.split(" ");
         if ((!a[1].startsWith("周")) && a[1].length() < 5) {
@@ -135,6 +162,23 @@ public class ScheduleActivity extends Activity {
             }
         }
         return a;
+    }
+
+    private boolean noClassInThisWeek(String s) {
+        String a[] = format(s);
+        if (a[1].indexOf("|") != -1) {
+            if(which_week%2==1){
+                //单周
+                if(a[1].substring(a[1].indexOf("|")+1,a[1].indexOf("|")+2).equals("双")){
+                    return true;
+                }
+            } else {
+                if(a[1].substring(a[1].indexOf("|")+1,a[1].indexOf("|")+2).equals("单")){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private String getClassName(String s) {
@@ -164,7 +208,7 @@ public class ScheduleActivity extends Activity {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (!a[1].substring(0, 6).endsWith("9")) {
+        if (a[1].substring(0, 7).indexOf("9") == -1&&(!a[1].startsWith("{"))) {
             return true;
         }
         return false;
@@ -220,6 +264,9 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list1.get(position)));
                     classLocation.setText(getClassLocation(list1.get(position)));
                     convertView.setBackgroundResource(colors.get(skin).get(position));
+                    if (noClassInThisWeek(list1.get(position))) {
+                        convertView.setAlpha((float)0.3);
+                    }
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
@@ -233,6 +280,9 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
                     convertView.setBackgroundResource(colors.get(skin).get(position > 6 ? position - 7 : position - 1));
+                    if (noClassInThisWeek(list2.get(position-5))) {
+                        convertView.setAlpha((float)0.3);
+                    }
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
                 }
@@ -279,6 +329,8 @@ public class ScheduleActivity extends Activity {
                     if (!list4.get(i).equals(" ")) {
                         if (isOneClass(list4.get(i))) {
                             view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 4));
+                        } else {
+                            view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                         }
                     } else {
                         view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
@@ -286,6 +338,9 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list3.get(i)));
                     classLocation.setText(getClassLocation(list3.get(i)));
                     view.setBackgroundResource(colors.get(skin).get(i > 3 ? i - 4 : i + 2));
+                    if (noClassInThisWeek(list3.get(i))) {
+                        view.setAlpha((float)0.3);
+                    }
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
                 }
@@ -296,6 +351,9 @@ public class ScheduleActivity extends Activity {
                         className.setText(getClassName(list4.get(i - 5)));
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
                         view.setBackgroundResource(colors.get(skin).get(i - 4));
+                        if (noClassInThisWeek(list4.get(i - 5))) {
+                            view.setAlpha((float)0.3);
+                        }
                     }
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
@@ -341,6 +399,9 @@ public class ScheduleActivity extends Activity {
                 className.setText(getClassName(list5.get(i)));
                 classLocation.setText(getClassLocation(list5.get(i)));
                 view.setBackgroundResource(colors.get(skin).get(i > 2 ? i - 3 : i + 3));
+                if (noClassInThisWeek(list5.get(i))) {
+                    view.setAlpha((float)0.3);
+                }
             } else {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
             }
@@ -437,6 +498,10 @@ public class ScheduleActivity extends Activity {
                 startActivity(intent);
                 this.finish();
                 break;
+            case R.id.alarm:
+                Intent intent2 = new Intent(ScheduleActivity.this, SettingActivity.class);
+                startActivity(intent2);
+                break;
             case R.id.action_login:
                 Intent intent1 = new Intent(ScheduleActivity.this, LoginActivity.class);
                 intent1.putExtra("JumpTo", "Schedule");
@@ -447,7 +512,7 @@ public class ScheduleActivity extends Activity {
                 String[] items = {"梦幻水晶", "粉红卡通", "绿意萦绕", "蓝色天空", "纯真浪漫", "自定义"};
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.skin_icon)
-                        .setTitle("给你的桌面小工具换身衣裳吧~\\(≧▽≦)/~")
+                        .setTitle("换身衣裳吧~\\(≧▽≦)/~")
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -487,9 +552,6 @@ public class ScheduleActivity extends Activity {
                                         Intent intent = new Intent(ScheduleActivity.this, ScheduleCustomSetting.class);
                                         intent.putExtra("skin", skin);
                                         startActivity(intent);
-                                      /*  Intent intent = new Intent(Intent.ACTION_PICK, null);
-                                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image*//*");
-                                        startActivityForResult(intent, 1);*/
                                         break;
                                 }
                             }
@@ -506,32 +568,6 @@ public class ScheduleActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(data.getData(), "image/*");
-            // crop为true是设置在开启的intent中设置显示的view可以剪裁
-            intent.putExtra("crop", "true");
-            // aspectX aspectY 是宽高的比例
-            intent.putExtra("aspectX", 20);
-            intent.putExtra("aspectY", 33);
-            // outputX,outputY 是剪裁图片的宽高
-            intent.putExtra("outputX", 400);
-            intent.putExtra("outputY", 660);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, 2);
-        }
-        if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
-            Bundle bundle = data.getExtras();
-            if (bundle != null) {
-                Bitmap photo = bundle.getParcelable("data");
-                linearLayout.setBackgroundDrawable(new BitmapDrawable(photo));
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

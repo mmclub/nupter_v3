@@ -9,7 +9,7 @@
         android:id="@+id/childText"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:layout_gravity="center_horizontal"
         android:textSize="16sp"/>
 

@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
 
 
 /**
@@ -65,22 +64,12 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.scale);
-
-
+        setContentView(R.layout.activity_scale);
         imgView = (ImageView) findViewById(R.id.imag);// 获取控件
-
-
         String title = getString(getIntent().getIntExtra(EXTRA_IMAGE_TITLE, R.string.title_activity_xianlin_area));
-
-
         setTitle(title);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
         Toast.makeText(this, "双指拖动可缩放图片~", Toast.LENGTH_SHORT).show();
-
-
         bitmap = BitmapFactory.decodeResource(getResources(), getIntent().getIntExtra(EXTRA_IMAGE_ID, R.drawable.xianlin_area));// 获取图片资源
         imgView.setImageBitmap(bitmap);// 填充控件
         imgView.setOnTouchListener(this);// 设置触屏监听
@@ -159,8 +148,8 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
      */
     private void minZoom() {
         minScaleR = Math.min(
-                (float) dm.widthPixels / (float) bitmap.getWidth(),
-                (float) dm.heightPixels / (float) bitmap.getHeight());
+                (float) dm.widthPixels/ (float) bitmap.getWidth(),
+                (float) (dm.heightPixels-110) / (float) bitmap.getHeight());
         if (minScaleR < 1.0) {
             matrix.postScale(minScaleR, minScaleR);
         }
@@ -187,7 +176,7 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
 
         if (vertical) {
             // 图片小于屏幕大小，则居中显示。大于屏幕，上方留空则往上移，下方留空则往下移
-            int screenHeight = dm.heightPixels;
+            int screenHeight = dm.heightPixels-110;
             if (height < screenHeight) {
                 deltaY = (screenHeight - height) / 2 - rect.top;
             } else if (rect.top > 0) {
@@ -239,5 +228,4 @@ public class MapImageActivity extends Activity implements View.OnTouchListener {
         super.onResume();
         MobclickAgent.onResume(this);
     }
-
 }
