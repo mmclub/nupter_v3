@@ -205,9 +205,6 @@ public class SettingActivity extends Activity {
             setAlarm(6, 18, 15);
             am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent14);
         }
-        PendingIntent pendingIntent15 = PendingIntent.getBroadcast(SettingActivity.this, 15, intent, 1);
-        setAlarm(5, 10, 25);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent15);
     }
 
     private void setAlarm(int week, int hour, int minute) {

@@ -83,22 +83,6 @@ public class ClassAlarmActivity extends Activity {
             }
         }
     }
-    /*@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_HOME:
-                Log.i("TAG",""+123);
-                alarmMusic.stop();
-                // 结束该Activity
-                System.exit(0);
-                android.os.Process
-                        .killProcess(android.os.Process
-                                .myPid());
-                break;
-        }
-
-        return false;//如果不想让父类继续处理，直接改为return false
-    }*/
 
    /* @Override
     public void onBackPressed() {
