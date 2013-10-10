@@ -72,7 +72,7 @@
                   android:label="@string/label_maplist"/>
         <activity android:name=".activity.MapImageActivity"/>
         <activity android:name=".activity.NewsDetailActivity"
-                android:label="@string/label_news"/>
+                  android:label="@string/label_news"/>
 
 
         <activity android:name=".activity.TestActivity"
@@ -91,14 +91,12 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.WebviewActivity"/>
         <activity android:name=".activity.ClassAlarmActivity"
-                           android:theme="@android:style/Theme.Dialog"
-                           />
-
+                  android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".activity.LibraryLoginActivity"/>
         <activity android:name=".activity.BookBorrowActivity"/>
 
         <receiver android:name=".utils.CallAlarm"
-                             android:process=":remote"/>
+                  android:process=":remote"/>
         <receiver android:name=".utils.ScheduleWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -120,20 +118,16 @@
         <meta-data android:value="Develop" android:name="UMENG_CHANNEL"/>
 
         <activity android:name="com.umeng.fb.ConversationActivity"
-                android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
+                  android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
         <activity android:name="com.umeng.fb.ContactActivity"
                   android:theme="@android:style/Theme.Holo.Light.NoActionBar"/>
         <service
                 android:name="com.umeng.common.net.DownloadingService"
-                android:process=":DownloadingService" >
+                android:process=":DownloadingService">
         </service>
 
 
-
     </application>
-
-
-
 
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
@@ -151,7 +145,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_GPS"></uses-permission>
-    <uses-permission android:name="android.permission.VIBRATE" ></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE"></permission>
 
 

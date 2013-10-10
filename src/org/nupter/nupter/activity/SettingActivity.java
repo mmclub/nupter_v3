@@ -50,8 +50,7 @@ public class SettingActivity extends Activity {
         refreshsoundTB.setOnCheckedChangeListener(checkedListener);
         classNoticeTB.setOnCheckedChangeListener(checkedListener);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("test",
-                Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("test",Activity.MODE_PRIVATE);
         // 使用getString方法获得value，注意第2个参数是value的默认值
         boolean getSoundFlag = sharedPreferences.getBoolean("SoundFlag", true);
         boolean getClassNoticeFlag = sharedPreferences.getBoolean("ClassNoticeFlag", false);
@@ -76,23 +75,9 @@ public class SettingActivity extends Activity {
         alarmList = new JsoupTable().parse(string);
         Intent intent = new Intent(SettingActivity.this, CallAlarm.class);
         calendar = Calendar.getInstance();
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        //calendar.setTimeInMillis(System.currentTimeMillis());
-
-
-        /*PendingIntent pendingInten0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
-        setAlarm(5, 10, 35);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                ,60*60*24*7*1000,
-                pendingInten0);
-        PendingIntent pendingInten1 = PendingIntent.getBroadcast(SettingActivity.this, 1, intent, 1);
-        setAlarm(5, 10, 36);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                ,60*60*24*7*1000,
-                pendingInten1); */
-
 
         //周一
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         PendingIntent pendingIntent0 = PendingIntent.getBroadcast(SettingActivity.this, 0, intent, 1);
         if (!alarmList.get(0).get(0).equals(" ")) {
             setAlarm(2, 7, 45);
@@ -220,9 +205,13 @@ public class SettingActivity extends Activity {
             setAlarm(6, 18, 15);
             am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent14);
         }
+        PendingIntent pendingIntent15 = PendingIntent.getBroadcast(SettingActivity.this, 15, intent, 1);
+        setAlarm(5, 10, 25);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60 * 60 * 24 * 7 * 1000, pendingIntent15);
     }
 
     private void setAlarm(int week, int hour, int minute) {
+        calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.DAY_OF_WEEK, week);
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute + 15 - alarmTime);
