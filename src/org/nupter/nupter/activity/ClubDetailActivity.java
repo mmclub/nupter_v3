@@ -476,7 +476,9 @@ public class ClubDetailActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+
                 break;
+
 
             default:
                 return super.onOptionsItemSelected(item);

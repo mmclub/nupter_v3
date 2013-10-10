@@ -28,6 +28,7 @@ import org.nupter.nupter.utils.Log;
 public class MapBaiduActivity extends Activity {
 
     final static String TAG = "MainActivity";
+
     private MapView mMapView = null;
     private MapController mMapController = null;
     MKMapViewListener mMapListener = null;
@@ -175,6 +176,9 @@ public class MapBaiduActivity extends Activity {
 
 
         mMapView.regMapViewListener(MyApplication.getInstance().baiduMapManager, mMapListener);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 

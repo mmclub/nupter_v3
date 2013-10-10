@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import org.json.JSONObject;
 import org.nupter.nupter.R;
@@ -36,12 +37,15 @@ public class MessageListActivity extends ListActivity {
         try {
             Log.d(s);
             JSONObject json = new JSONObject(s);
-            MessageRecord record = new MessageRecord(this, "我是标题"  , json.getString("alert"));
+            MessageRecord record = new MessageRecord(this, ""  , json.getString("alert"));
             record.save();
         }catch (Exception e){
 
         }
         messageRecordList = MessageRecord.listAll(MessageRecord.class);
+        if (messageRecordList.size() == 0) {
+            Toast.makeText(this, "暂时没有推送消息", Toast.LENGTH_SHORT);
+        }
         setListAdapter(new MyAdapter(this));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -90,7 +94,7 @@ public class MessageListActivity extends ListActivity {
                 holder=new ViewHolder();
 
                 convertView = mInflater.inflate(R.layout.item_message, null);
-                holder.title = (TextView)convertView.findViewById(R.id.message_content);
+                holder.title = (TextView)convertView.findViewById(R.id.message_title);
                 holder.content = (TextView)convertView.findViewById(R.id.message_content);
                 convertView.setTag(holder);
 

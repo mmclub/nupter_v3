@@ -319,7 +319,7 @@ public class SettingActivity extends Activity {
                     intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
-                    intent.putExtra(Intent.EXTRA_TEXT, "掌上南邮是我们南邮学生自己开发的一款校园助手App，可以随时随地查课表，查成绩，查图书，浏览校园最新资讯～下载连接 http://host1.nupter.org/nupter.apk");
+                    intent.putExtra(Intent.EXTRA_TEXT, "掌上南邮是我们南邮学生自己开发的一款校园助手App，可以随时随地查课表，查成绩，查图书，浏览校园最新资讯～下载链接 http://host1.nupter.org/nupter.apk");
                     startActivity(Intent.createChooser(intent, getTitle()));
                     break;
 
