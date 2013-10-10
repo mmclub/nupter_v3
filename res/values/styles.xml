@@ -12,6 +12,8 @@
 
         <item name="android:background">@color/blue_bar</item>
         <item name="android:displayOptions"> showHome|showTitle</item>
+        <item name="android:actionBarDivider">@drawable/a_0</item>
+
 
         <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
 

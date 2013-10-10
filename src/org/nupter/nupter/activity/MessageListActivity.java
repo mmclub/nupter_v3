@@ -43,7 +43,7 @@ public class MessageListActivity extends ListActivity {
 
         }
         messageRecordList = MessageRecord.listAll(MessageRecord.class);
-        if (messageRecordList.isEmpty()) {
+        if (messageRecordList.size() == 0) {
             Toast.makeText(this, "暂时没有推送消息", Toast.LENGTH_SHORT);
         }
         setListAdapter(new MyAdapter(this));
