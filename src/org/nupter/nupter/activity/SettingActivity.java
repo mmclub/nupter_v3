@@ -261,8 +261,7 @@ public class SettingActivity extends Activity {
                             String spinner_text[] = new String[31];
                             for (int i = 0; i <= 30; i++) {
                                 spinner_text[i] = i + "分钟";
-                            }
-                            ;
+                            };
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(SettingActivity.this, android.R.layout.simple_spinner_item, spinner_text);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinner.setAdapter(adapter);

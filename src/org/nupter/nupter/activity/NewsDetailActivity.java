@@ -28,7 +28,6 @@ public class NewsDetailActivity extends Activity{
     private String getContent;
        @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_content);
         contentIntent = getIntent();

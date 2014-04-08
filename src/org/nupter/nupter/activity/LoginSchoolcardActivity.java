@@ -2,27 +2,29 @@ package org.nupter.nupter.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.R;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESedeKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.security.Key;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,12 +40,15 @@ public class LoginSchoolcardActivity extends Activity {
     private final static int ERR_USER = -3;
     private final static int MSG_SCHOOLCARD = 1;
 
-    private String cookie = "";
+    final byte[] key192 = {(byte) 0x45, (byte) 0x8A, (byte) 0x91, (byte) 0x9E, (byte) 0x18, (byte) 0x5F, (byte) 0x3E, (byte) 0x11, (byte) 0xAE, (byte) 0xBC, (byte) 0xBA, (byte) 0x87, (byte) 0x59, (byte) 0x6E, (byte) 0x31, (byte) 0x01, (byte) 0x14, (byte) 0x82, (byte) 0xC3, (byte) 0x34, (byte) 0xFF, (byte) 0xBB, (byte) 0xEA, (byte) 0xD1};
+    final byte[] keyiv = { };
+
+    private String str;
     private String postData;
     private Button login;
     private ProgressDialog progressDialog;
     private HttpURLConnection loginConnection;
-    private String login_url = "http://my.njupt.edu.cn/ccs/main.login.do";
+    private String login_url = "http://geek58.byethost6.com/test1.php";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,53 +61,76 @@ public class LoginSchoolcardActivity extends Activity {
                 progressDialog.setMessage("正在登陆中。。。");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
-                postData = "email=B11040916&password=282155";
-                new Login().start();
+                str = "B11011319$*%&123456";
+                try {
+                    byte[] data = str.getBytes("UTF-8");
+                    Log.i("TAG", "字符串:" + data.length);
+                    byte[] encodeByte_CBC = des3EncodeCBC(data);
+                    Log.i("TAG", "加密字符串:" + encodeByte_CBC.length);
+                    postData = "userStudentIdPassword=" + Base64.encodeToString(encodeByte_CBC, Base64.DEFAULT);
+                    Log.i("TAG", "加密后的字符串:" + postData);
+                } catch (Exception e) {
+                }
+                progressDialog.dismiss();
+                //        new Login().start();
             }
         });
     }
 
+    public byte[] des3EncodeCBC(byte[] data) {
+        try {
+            Key deskey = null;
+            DESedeKeySpec spec = new DESedeKeySpec(key192);
+            SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
+            deskey = keyfactory.generateSecret(spec);
+
+            Cipher cipher = Cipher.getInstance("desede" + "/CBC/PKCS5Padding");
+            IvParameterSpec ips = new IvParameterSpec(keyiv);
+            cipher.init(Cipher.ENCRYPT_MODE, deskey, ips);
+            byte[] bOut = cipher.doFinal(data);
+
+            return bOut;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String byte2hex(byte[] b) {
+        String hs = "";
+        String stmp = "";
+        for (int n = 0; n < b.length; n++) {
+            stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
+            if (stmp.length() == 1)
+                hs = hs + "0" + stmp;
+            else
+                hs = hs + stmp;
+        }
+        return hs.toUpperCase();
+    }
+
+
     class Login extends Thread {
         public void run() {
-
             try {
                 URL loginUrl = new URL(login_url);
                 loginConnection = (HttpURLConnection) loginUrl.openConnection();
                 loginConnection.setDoOutput(true);
                 loginConnection.setDoInput(true);
                 loginConnection.setRequestMethod("POST");
-                loginConnection.setRequestProperty("Accept-Encoding","gzip");
-                loginConnection.setRequestProperty("Accept-Language","zh-CN");
-          //      loginConnection.setRequestProperty("Referer","http://my.njupt.edu.cn/ccs/main/loginIndex.do");
                 loginConnection.setConnectTimeout(10000);
                 loginConnection.setReadTimeout(10000);
                 loginConnection.setUseCaches(false);
                 loginConnection.connect();
                 DataOutputStream out = new DataOutputStream(loginConnection.getOutputStream());
                 out.writeBytes(postData);
-                String key = "";
-                if (loginConnection != null) {
-                    for (int i = 1; (key = loginConnection.getHeaderFieldKey(i)) != null; i++) {
-                        if (key.equalsIgnoreCase("set-cookie")) {
-                            cookie = loginConnection.getHeaderField(key);
-                            cookie = cookie.substring(0,
-                                    cookie.indexOf(";"));
-                        }
-                    }
-                }
-                Log.i("string", cookie);
-
-                byte[] bin = new byte[1024];
-                InputStream inputStream = loginConnection.getInputStream();
-                while (inputStream.read(bin) != -1) {
-                    String s = new String(bin,"utf-8");
-                    Log.i("TAG", s);
-                }
-/*                InputStream inputStream = loginConnection.getInputStream();
-                Log.i("string", getHtmlString(inputStream));*/
                 out.flush();
-                inputStream.close();
                 out.close();
+
+                InputStream inputStream = loginConnection.getInputStream();
+                Log.i("string", getHtmlString(inputStream));
+                inputStream.close();
+
                 loginConnection.disconnect();
                 flaghandler.sendEmptyMessage(MSG_SCHOOLCARD);
             } catch (IOException e) {
@@ -111,60 +139,6 @@ public class LoginSchoolcardActivity extends Activity {
         }
     }
 
-    /*           try {
-                   URL loginUrl = new URL(login_url);
-                   loginConnection = (HttpURLConnection) loginUrl.openConnection();
-                   loginConnection.setDoOutput(true);
-                   loginConnection.setDoInput(true);
-                   loginConnection.setRequestMethod("POST");
-                   loginConnection.setConnectTimeout(10000);
-                   loginConnection.setReadTimeout(10000);
-                   loginConnection.setUseCaches(false);
-               } catch (MalformedURLException e) {
-                   e.printStackTrace();
-                   Log.i("TAG",e.getMessage());
-                   flaghandler.sendEmptyMessage(ERR_NET);
-               } catch (IOException e) {
-                   e.printStackTrace();
-                   Log.i("TAG",e.getMessage());
-                   flaghandler.sendEmptyMessage(ERR_NET);
-               }
-               try {
-                   loginConnection.connect();
-                   DataOutputStream out = new DataOutputStream(
-                           loginConnection.getOutputStream());
-                   out.writeBytes(postData);
-
-                   int chByte1 = 0;
-                   byte[] bin = new byte[512];
-                   InputStream inpost = loginConnection.getInputStream();
-
-                   chByte1 = inpost.read(bin);
-                   String s = new String(bin, 0, chByte1, "gbk");
-                   Log.i("TAG",s);
-                   String key = "";
-                   if (loginConnection != null) {
-                       for (int i = 1; (key = loginConnection.getHeaderFieldKey(i)) != null; i++) {
-                           if (key.equalsIgnoreCase("set-cookie")) {
-                               cookie = loginConnection.getHeaderField(key);
-                               cookie = cookie.substring(0,
-                                       cookie.indexOf(";"));
-                               Log.i("TAG",cookie);
-                           }
-                       }
-                   }
-                   out.flush();
-                   inpost.close();
-                   out.close(); // flush and close
-                   loginConnection.disconnect();
-
-               } catch (IOException e) {
-                   Log.i("TAG",e.getMessage());
-                   flaghandler.sendEmptyMessage(ERR_NET);
-               }
-           }
-       }
-      */
     public String getHtmlString(InputStream inputStream) {
         byte[] buffer = new byte[512];
         ByteArrayOutputStream outSteam = new ByteArrayOutputStream();

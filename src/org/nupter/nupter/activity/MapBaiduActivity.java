@@ -13,7 +13,6 @@ import com.umeng.analytics.MobclickAgent;
 import org.nupter.nupter.AppConstants;
 import org.nupter.nupter.MyApplication;
 import org.nupter.nupter.R;
-import org.nupter.nupter.utils.Log;
 
 
 
