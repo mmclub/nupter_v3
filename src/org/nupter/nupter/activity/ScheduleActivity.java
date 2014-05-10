@@ -75,8 +75,8 @@ public class ScheduleActivity extends Activity {
         skin = preferences.getInt("skin", 0);
         //解析网页，tableList存放5组数据，（从星期一到星期五）早上1、2节，3、4、5节，下午6、7节，7、8节，晚上9，10，11节
         tablelist = new JsoupTable().parse(schedule);
-//        for (int i=0;i<tablelist.size();i++)
-//        Log.i("TAG",tablelist.get(i).get(0));
+        for (int i = 0; i < tablelist.size(); i++)
+            Log.i("TAG", tablelist.get(i).toString());
         linearLayout = (LinearLayout) findViewById(R.id.postLinearLayout);
         if (skin == 0)
             linearLayout.setBackgroundResource(R.drawable.colorbackground);
@@ -153,7 +153,8 @@ public class ScheduleActivity extends Activity {
 
     private String[] format(String s) {
         String a[] = s.split(" ");
-        if ((!a[1].startsWith("周")) && a[1].length() < 5) {
+//        if ((!a[1].startsWith("周")) && a[1].length() < 5) {
+        if ((!a[1].startsWith("周")) && a[1].length() < 10) {
             a[0] = a[0] + a[1];
             a[1] = a[2];
             a[2] = a[3];
@@ -167,13 +168,13 @@ public class ScheduleActivity extends Activity {
     private boolean noClassInThisWeek(String s) {
         String a[] = format(s);
         if (a[1].indexOf("|") != -1) {
-            if(which_week%2==1){
+            if (which_week % 2 == 1) {
                 //单周
-                if(a[1].substring(a[1].indexOf("|")+1,a[1].indexOf("|")+2).equals("双")){
+                if (a[1].substring(a[1].indexOf("|") + 1, a[1].indexOf("|") + 2).equals("双")) {
                     return true;
                 }
             } else {
-                if(a[1].substring(a[1].indexOf("|")+1,a[1].indexOf("|")+2).equals("单")){
+                if (a[1].substring(a[1].indexOf("|") + 1, a[1].indexOf("|") + 2).equals("单")) {
                     return true;
                 }
             }
@@ -208,16 +209,18 @@ public class ScheduleActivity extends Activity {
 
     private Boolean isOneClass(String s) {
         String a[] = format(s);
-        if (a[1].substring(0, 7).indexOf("9") == -1&&(!a[1].startsWith("{"))) {
-            return true;
+        if (a[1].startsWith("周")) {
+            if (a[1].substring(0, 7).indexOf("9") == -1 && (!a[1].startsWith("{")))
+                return true;
         }
         return false;
     }
 
     private Boolean isTwoClass(String s) {
         String a[] = format(s);
-        if (a[1].substring(0, 8).endsWith("5")) {
-            return false;
+        if (a[1].startsWith("周")) {
+            if (a[1].substring(0, 8).endsWith("5"))
+                return false;
         }
         return true;
     }
@@ -227,7 +230,6 @@ public class ScheduleActivity extends Activity {
         private LayoutInflater inflater;
         private ArrayList<String> list1 = new ArrayList<String>();
         private ArrayList<String> list2 = new ArrayList<String>();
-
 
         public MorningAdapter(Context context, ArrayList<String> list1, ArrayList<String> list2) {
             this.inflater = LayoutInflater.from(context);
@@ -265,7 +267,7 @@ public class ScheduleActivity extends Activity {
                     classLocation.setText(getClassLocation(list1.get(position)));
                     convertView.setBackgroundResource(colors.get(skin).get(position));
                     if (noClassInThisWeek(list1.get(position))) {
-                        convertView.setAlpha((float)0.3);
+                        convertView.setAlpha((float) 0.3);
                     }
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
@@ -280,8 +282,8 @@ public class ScheduleActivity extends Activity {
                     className.setText(getClassName(list2.get(position - 5)));
                     classLocation.setText(getClassLocation(list2.get(position - 5)));
                     convertView.setBackgroundResource(colors.get(skin).get(position > 6 ? position - 7 : position - 1));
-                    if (noClassInThisWeek(list2.get(position-5))) {
-                        convertView.setAlpha((float)0.3);
+                    if (noClassInThisWeek(list2.get(position - 5))) {
+                        convertView.setAlpha((float) 0.3);
                     }
                 } else {
                     convertView.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));
@@ -339,7 +341,7 @@ public class ScheduleActivity extends Activity {
                     classLocation.setText(getClassLocation(list3.get(i)));
                     view.setBackgroundResource(colors.get(skin).get(i > 3 ? i - 4 : i + 2));
                     if (noClassInThisWeek(list3.get(i))) {
-                        view.setAlpha((float)0.3);
+                        view.setAlpha((float) 0.3);
                     }
                 } else {
                     view.setLayoutParams(new GridView.LayoutParams(linearParams.width, height / 6));
@@ -352,7 +354,7 @@ public class ScheduleActivity extends Activity {
                         classLocation.setText(getClassLocation(list4.get(i - 5)));
                         view.setBackgroundResource(colors.get(skin).get(i - 4));
                         if (noClassInThisWeek(list4.get(i - 5))) {
-                            view.setAlpha((float)0.3);
+                            view.setAlpha((float) 0.3);
                         }
                     }
                 } else {
@@ -400,7 +402,7 @@ public class ScheduleActivity extends Activity {
                 classLocation.setText(getClassLocation(list5.get(i)));
                 view.setBackgroundResource(colors.get(skin).get(i > 2 ? i - 3 : i + 3));
                 if (noClassInThisWeek(list5.get(i))) {
-                    view.setAlpha((float)0.3);
+                    view.setAlpha((float) 0.3);
                 }
             } else {
                 view.setLayoutParams(new GridView.LayoutParams(linearParams.width, 0));

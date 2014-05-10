@@ -37,7 +37,7 @@ public class MyApplication extends SugarApp {
 
         MobclickAgent.setDebugMode(true);
         // 初始化Parse SDK
-        Parse.initialize(this, AppConstants.ParseAppID, AppConstants.ParseClientKey);
+        Parse.initialize(this, AppConstants.ParseAPPIDProdction, AppConstants.ParseClientKeyProdcution);
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         PushService.subscribe(this, "", MessageListActivity.class);

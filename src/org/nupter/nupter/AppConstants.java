@@ -14,4 +14,7 @@ public class AppConstants {
     public static final String ParseAppID = "mxaqbNAIiZM5GWvEu7VjhirjyH91Stj5yZsBbRV0"; // 开发版本的 Parse.com 的 AppID
     public static final String ParseClientKey = "ndVZEEFO7xGkP8ayXLux2dTBThVKWecc0pEigRdk";
 
+    public static final String ParseAPPIDProdction = "TCN21m1PAl7yCRj8flU0GwryeU1dgVtuY7QoHjjE";
+    public static final String ParseClientKeyProdcution = "TCN21m1PAl7yCRj8flU0GwryeU1dgVtuY7QoHjjE";
+
 }
